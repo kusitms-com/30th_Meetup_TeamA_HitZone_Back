@@ -1,10 +1,10 @@
-package kusitms.bakend;
+package kusitms.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class BakendApplicationTests {
+@SpringBootTest(classes = BackendApplicationTests.class)
+class BackendApplicationTests {
 
     @Test
     void contextLoads() {
