@@ -1,6 +1,10 @@
 package kusitms.backend.auth.jwt;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import kusitms.backend.auth.status.AuthErrorStatus;
+import kusitms.backend.global.exception.CustomException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -40,6 +44,35 @@ public class JWTUtil {
                 .expiration(new Date(System.currentTimeMillis() + expirationMillis))
                 .signWith(secretKey)
                 .compact();
+    }
+
+    // 토큰 파싱 메소드
+    public Claims tokenParser(String token) {
+        try {
+            return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();
+        } catch (ExpiredJwtException e) {
+            log.error("Expired JWT : {}", token);
+            throw new CustomException(AuthErrorStatus._EXPIRED_TOKEN);
+        } catch (Exception e) {
+            log.error("Invalid JWT : {}", token);
+            throw new CustomException(AuthErrorStatus._INVALID_TOKEN);
+        }
+    }
+
+    public Long getUserIdFromToken(String token) {
+        return tokenParser(token).get("userId", Long.class);
+    }
+
+    public String getProviderFromRegisterToken(String token) {
+        return tokenParser(token).get("provider", String.class);
+    }
+
+    public String getProviderIdFromRegisterToken(String token) {
+        return tokenParser(token).get("providerId", String.class);
+    }
+
+    public String getEmailFromRegisterToken(String token) {
+        return tokenParser(token).get("email", String.class);
     }
 
 }
