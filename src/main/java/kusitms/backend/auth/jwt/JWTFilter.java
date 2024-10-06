@@ -45,7 +45,9 @@ public class JWTFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
         return path.equals("/") || path.equals("/login") || path.startsWith("/public")
-                || path.equals("/test-error") || path.equals("/health-check");
+                || path.equals("/test-error") || path.equals("/health-check")
+                || path.equals("/token/re-issue")
+                ;
     }
 
     // 쿠키에서 액세스 토큰 추출

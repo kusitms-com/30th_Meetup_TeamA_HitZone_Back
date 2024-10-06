@@ -1,5 +1,9 @@
 package kusitms.backend.global.config;
 
+import kusitms.backend.auth.handler.OAuth2LoginFailureHandler;
+import kusitms.backend.auth.handler.OAuth2LoginSuccessHandler;
+import kusitms.backend.auth.jwt.JWTFilter;
+import kusitms.backend.auth.jwt.JWTUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,49 +11,60 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
 import java.util.Collections;
 
-@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    private final OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
+    private final JWTUtil jwtUtil;
+
     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration config = new CorsConfiguration();
-        // 우선 모두 허용
-        config.setAllowedOrigins(Collections.singletonList("*"));
-        config.setAllowedMethods(Collections.singletonList("*"));
-        config.setAllowedHeaders(Collections.singletonList("*"));
-        config.setAllowCredentials(true);
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .cors(corsCustomizer -> corsCustomizer.configurationSource(corsConfigurationSource()))
+                .csrf(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .httpBasic(HttpBasicConfigurer::disable)
+                .addFilterBefore(new JWTFilter(jwtUtil), ExceptionTranslationFilter.class)
+                .oauth2Login((oauth2) -> oauth2
+                        .successHandler(oAuth2LoginSuccessHandler)
+                        .failureHandler(oAuth2LoginFailureHandler))
+                .authorizeHttpRequests((auth) -> auth
+                        .requestMatchers(
+                                "/", "/login", "/login/google", "/login/naver", "/login/kakao",
+                                "/health-check", "/test-error",
+                                "/token/re-issue").permitAll()  // 인증이 필요 없는 경로 설정
+                        .anyRequest().authenticated())
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        return http.build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:5173"));
+        configuration.setAllowedMethods(Collections.singletonList("*"));
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(Collections.singletonList("*"));
+        configuration.setMaxAge(3600L);
+        configuration.setExposedHeaders(Arrays.asList("Set-Cookie", "Authorization"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                .httpBasic(HttpBasicConfigurer::disable)
-                .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource()))
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authorize ->
-                        authorize
-                                .requestMatchers("/**").permitAll()
-                );
-                /* 소셜 로그인 구현 후 추가
-                .oauth2Login(oauth -> // OAuth2 로그인 기능에 대한 여러 설정의 진입점
-                        oauth
-                                .successHandler(oAuthLoginSuccessHandler) // 로그인 성공 시 핸들러
-                                .failureHandler(oAuthLoginFailureHandler) // 로그인 실패 시 핸들러
-                );*/
-
-        return httpSecurity.build();
-    }
 }
+
