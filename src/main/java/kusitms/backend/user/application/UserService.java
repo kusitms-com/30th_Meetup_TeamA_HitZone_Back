@@ -8,6 +8,8 @@ import kusitms.backend.user.domain.ProviderStatusType;
 import kusitms.backend.user.domain.User;
 import kusitms.backend.user.domain.repository.UserRepository;
 import kusitms.backend.user.dto.request.OnboardingReq;
+import kusitms.backend.user.dto.request.SendAuthCodeReq;
+import kusitms.backend.user.dto.request.VerifyAuthCodeReq;
 import kusitms.backend.user.dto.response.UserInfoRes;
 import kusitms.backend.user.status.UserErrorStatus;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
     private final UserRepository userRepository;
     private final JWTUtil jwtUtil;
+    private final SmsService smsService;
     private final RedisManager redisManager;
 
     @Transactional
@@ -61,5 +64,28 @@ public class UserService {
         return UserInfoRes.of(user);
     }
 
+    @Transactional
+    public void sendAuthCode(SendAuthCodeReq request) {
+        String authCode = generateAuthCode();
+        redisManager.saveAuthCode(request.getPhoneNumber(), authCode);
+        smsService.sendSms(request.getPhoneNumber(),"인증 코드 번호 : " + authCode);
+    }
+
+    // 랜덤 인증 코드 생성
+    private String generateAuthCode() {
+        return String.valueOf((int) (Math.random() * 900000) + 100000); // 6자리 인증 코드 생성
+    }
+
+    @Transactional(readOnly = true)
+    public void verifyAuthCode(VerifyAuthCodeReq request) {
+        String savedCode = redisManager.getAuthCode(request.getPhoneNumber());
+        if (savedCode == null) {
+            throw new CustomException(UserErrorStatus._EXPIRED_AUTH_CODE);
+        }
+        // 인증코드 틀릴 경우
+        if (!request.getAuthCode().equals(savedCode)){
+            throw new CustomException(UserErrorStatus._MISS_MATCH_AUTH_CODE);
+        }
+    }
 
 }
