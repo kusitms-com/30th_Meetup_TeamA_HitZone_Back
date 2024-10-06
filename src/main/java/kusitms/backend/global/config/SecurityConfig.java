@@ -45,6 +45,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/", "/login", "/login/google", "/login/naver", "/login/kakao",
                                 "/health-check", "/test-error",
+                                "/signup", "/send-code","/verify-code",
                                 "/token/re-issue").permitAll()  // 인증이 필요 없는 경로 설정
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
