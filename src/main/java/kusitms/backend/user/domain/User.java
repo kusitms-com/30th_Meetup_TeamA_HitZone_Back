@@ -2,8 +2,12 @@ package kusitms.backend.user.domain;
 
 import jakarta.persistence.*;
 import kusitms.backend.global.domain.BaseTimeEntity;
+import kusitms.backend.global.exception.CustomException;
+import kusitms.backend.user.status.UserErrorStatus;
 import lombok.*;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Entity(name="users")
 @Getter
@@ -39,8 +43,23 @@ public class User extends BaseTimeEntity {
                 .providerId(providerId)
                 .email(email)
                 .name(name)
-                .phoneNumber(phoneNumber)
+                .phoneNumber(formatPhoneNumber(phoneNumber))
                 .build();
+    }
+
+    // 전화번호를 010-xxxx-xxxx 형식으로 변환
+    private static String formatPhoneNumber(String phoneNumber) {
+        String pattern = "^010(\\d{4})(\\d{4})$";
+        Pattern regex = Pattern.compile(pattern);
+        // "-"를 제거한 후 정규식과 매칭 시도
+        Matcher matcher = regex.matcher(phoneNumber.replaceAll("-", "")); // 입력값에서 "-" 제거
+        // 정규식이 맞으면 010-xxxx-xxxx 형식으로 변환
+        if (matcher.matches()) {
+            return "010-" + matcher.group(1) + "-" + matcher.group(2);  // 010-xxxx-xxxx 형식으로 변환
+        } else {
+            // 정규식에 맞지 않으면 예외 발생
+            throw new CustomException(UserErrorStatus._BAD_REQUEST_PHONE_NUMBER_TYPE);
+        }
     }
 
 }
