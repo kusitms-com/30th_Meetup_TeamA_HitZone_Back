@@ -21,7 +21,7 @@ public class TestController {
 
     // 테스트 에러용 API
     @GetMapping("/test-error")
-    public ResponseEntity<ApiResponse<Void>> getError() {
+    public void getError() {
         throw new CustomException(TestErrorStatus._TEST_ERROR);
     }
 
