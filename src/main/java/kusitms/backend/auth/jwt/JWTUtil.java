@@ -59,6 +59,19 @@ public class JWTUtil {
         }
     }
 
+    // 토큰 파싱 메소드
+    public Claims refreshTokenParser(String token) {
+        try {
+            return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();
+        } catch (ExpiredJwtException e) {
+            log.error("Expired Refresh Token : {}", token);
+            throw new CustomException(AuthErrorStatus._EXPIRED_REFRESH_TOKEN);
+        } catch (Exception e) {
+            log.error("Invalid Refresh Token : {}", token);
+            throw new CustomException(AuthErrorStatus._INVALID_TOKEN);
+        }
+    }
+
     public Long getUserIdFromToken(String token) {
         return tokenParser(token).get("userId", Long.class);
     }
