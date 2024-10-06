@@ -1,4 +1,4 @@
-package kuback.kubacklogin.global.domain;
+package kusitms.backend.global.domain;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
