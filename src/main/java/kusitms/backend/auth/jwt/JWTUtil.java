@@ -88,4 +88,14 @@ public class JWTUtil {
         return tokenParser(token).get("email", String.class);
     }
 
+    // 일반 토큰 유효성 검사 (리프레쉬 제외)
+    public void validateToken(String token) {
+        tokenParser(token);
+    }
+
+    // 리프레쉬 토큰 유효성 검사
+    public void validateRefreshToken(String token) {
+        refreshTokenParser(token);
+    }
+
 }
