@@ -9,6 +9,8 @@ import kusitms.backend.auth.status.AuthErrorStatus;
 import kusitms.backend.global.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -24,6 +26,8 @@ public class JWTFilter extends OncePerRequestFilter {
         try {
             String accessToken = getAccessTokenFromCookies(request);
             jwtUtil.validateToken(accessToken);
+            Long userId = jwtUtil.getUserIdFromToken(accessToken);
+            setAuthentication(request, userId);
         }
         catch (CustomException e) {
             handleCustomException(response, e);
@@ -54,6 +58,13 @@ public class JWTFilter extends OncePerRequestFilter {
             }
         }
         throw new CustomException(AuthErrorStatus._MISSING_TOKEN);
+    }
+
+    // 사용자 인증 설정
+    private void setAuthentication(HttpServletRequest request, Long userId) {
+        UserAuthentication authentication = new UserAuthentication(userId, null, null);
+        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
     // 토큰 예외 처리 메서드
