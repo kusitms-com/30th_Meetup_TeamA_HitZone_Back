@@ -28,11 +28,11 @@ public class AuthService {
 
     @Transactional
     public void reIssueToken(String refreshToken, HttpServletResponse response) {
-        Long userId = jwtUtil.getUserIdFromToken(refreshToken);
-        String storedRefreshToken = redisManager.getRefreshToken(userId.toString());
-        if (storedRefreshToken == null){
+        if (refreshToken == null) {
             throw new CustomException(AuthErrorStatus._EXPIRED_REFRESH_TOKEN);
         }
+        Long userId = jwtUtil.getUserIdFromToken(refreshToken);
+        String storedRefreshToken = redisManager.getRefreshToken(userId.toString());
         if (!storedRefreshToken.equals(refreshToken)){
             throw new CustomException(AuthErrorStatus._TOKEN_USER_MISMATCH);
         }
