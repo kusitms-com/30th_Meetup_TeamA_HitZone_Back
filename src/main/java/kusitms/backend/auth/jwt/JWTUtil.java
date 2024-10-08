@@ -47,7 +47,7 @@ public class JWTUtil {
     }
 
     // 토큰 파싱 메소드
-    public Claims tokenParser(String token) {
+    private Claims tokenParser(String token) {
         try {
             return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();
         } catch (ExpiredJwtException e) {
@@ -59,8 +59,8 @@ public class JWTUtil {
         }
     }
 
-    // 리프레쉬토큰 파싱 메소드
-    public Claims refreshTokenParser(String token) {
+    // 리프레쉬 토큰 파싱 메소드
+    private Claims refreshTokenParser(String token) {
         try {
             return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();
         } catch (ExpiredJwtException e) {
