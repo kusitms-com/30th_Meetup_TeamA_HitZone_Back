@@ -45,7 +45,7 @@ public class UserService {
         }
 
         userRepository.save(
-                User.to(
+                SignUpReq.toEntity(
                         provider,
                         providerId,
                         email,
