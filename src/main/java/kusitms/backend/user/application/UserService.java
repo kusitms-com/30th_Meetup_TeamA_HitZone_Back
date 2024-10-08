@@ -7,7 +7,7 @@ import kusitms.backend.global.redis.RedisManager;
 import kusitms.backend.user.domain.ProviderStatusType;
 import kusitms.backend.user.domain.User;
 import kusitms.backend.user.domain.repository.UserRepository;
-import kusitms.backend.user.dto.request.OnboardingReq;
+import kusitms.backend.user.dto.request.SignUpReq;
 import kusitms.backend.user.dto.request.SendAuthCodeReq;
 import kusitms.backend.user.dto.request.VerifyAuthCodeReq;
 import kusitms.backend.user.dto.response.UserInfoRes;
@@ -27,7 +27,7 @@ public class UserService {
     private final RedisManager redisManager;
 
     @Transactional
-    public void signupUser(String registerToken, OnboardingReq request) {
+    public void signupUser(String registerToken, SignUpReq request) {
         jwtUtil.validateToken(registerToken);
         String provider = jwtUtil.getProviderFromRegisterToken(registerToken);
         String providerId = jwtUtil.getProviderIdFromRegisterToken(registerToken);

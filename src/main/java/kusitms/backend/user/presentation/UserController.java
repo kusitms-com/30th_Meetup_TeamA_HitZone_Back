@@ -3,7 +3,7 @@ package kusitms.backend.user.presentation;
 import jakarta.validation.Valid;
 import kusitms.backend.global.dto.ApiResponse;
 import kusitms.backend.user.application.UserService;
-import kusitms.backend.user.dto.request.OnboardingReq;
+import kusitms.backend.user.dto.request.SignUpReq;
 import kusitms.backend.user.dto.request.SendAuthCodeReq;
 import kusitms.backend.user.dto.request.VerifyAuthCodeReq;
 import kusitms.backend.user.dto.response.UserInfoRes;
@@ -20,7 +20,7 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<ApiResponse<Void>> signupUser(@CookieValue String registerToken,
-                                                        @Valid @RequestBody OnboardingReq request){
+                                                        @Valid @RequestBody SignUpReq request){
         userService.signupUser(registerToken, request);
         return ApiResponse.onSuccess(UserSuccessStatus._CREATED_USER);
     }
