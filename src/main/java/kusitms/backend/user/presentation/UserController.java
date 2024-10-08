@@ -19,7 +19,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<ApiResponse<Void>> signupUser(@CookieValue String registerToken,
+    public ResponseEntity<ApiResponse<Void>> signupUser(@CookieValue(required = false) String registerToken,
                                                         @Valid @RequestBody SignUpReq request){
         userService.signupUser(registerToken, request);
         return ApiResponse.onSuccess(UserSuccessStatus._CREATED_USER);

@@ -76,8 +76,9 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
             redisManager.saveRefreshToken(existUser.getId().toString(), refreshToken);
             // 액세스 토큰과 리프레시 토큰을 쿠키로 설정
-            CookieUtil.setCookie(response, "accessToken", accessToken, (int) ACCESS_TOKEN_EXPIRATION_TIME / 1000);
+            CookieUtil.setCookie(response, "accessToken", accessToken, (int) (ACCESS_TOKEN_EXPIRATION_TIME * 1.5) / 1000);
             CookieUtil.setCookie(response, "refreshToken", refreshToken, (int) REFRESH_TOKEN_EXPIRATION_TIME / 1000);
+//            CookieUtil.setNotHttpOnlyCookie(response, "expirationTime", (int) ACCESS_TOKEN_EXPIRATION_TIME / 1000, (int) ACCESS_TOKEN_EXPIRATION_TIME / 1000);
             getRedirectStrategy().sendRedirect(request, response, REDIRECT_URI_BASE);
         }
     }

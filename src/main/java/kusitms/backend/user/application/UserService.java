@@ -2,6 +2,7 @@ package kusitms.backend.user.application;
 
 import kusitms.backend.auth.jwt.JWTUtil;
 import kusitms.backend.auth.jwt.SecurityContextProvider;
+import kusitms.backend.auth.status.AuthErrorStatus;
 import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.global.redis.RedisManager;
 import kusitms.backend.user.domain.ProviderStatusType;
@@ -28,6 +29,9 @@ public class UserService {
 
     @Transactional
     public void signupUser(String registerToken, SignUpReq request) {
+        if (registerToken == null){
+            throw new CustomException(UserErrorStatus._EXPIRED_REGISTER_TOKEN);
+        }
         jwtUtil.validateToken(registerToken);
         String provider = jwtUtil.getProviderFromRegisterToken(registerToken);
         String providerId = jwtUtil.getProviderIdFromRegisterToken(registerToken);

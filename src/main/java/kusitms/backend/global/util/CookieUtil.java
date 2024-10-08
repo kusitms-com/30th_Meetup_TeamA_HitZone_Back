@@ -18,6 +18,15 @@ public class CookieUtil {
         response.addCookie(cookie);
     }
 
+    public static void setNotHttpOnlyCookie(HttpServletResponse response, String name, String value, int maxAge) {
+        Cookie cookie = new Cookie(name, value);
+        cookie.setPath("/");
+        cookie.setHttpOnly(false);
+        // cookie.setSecure(true); // 프론트가 https로 배포시 주석제거
+        cookie.setMaxAge(maxAge);
+        response.addCookie(cookie);
+    }
+
     // 쿠키에서 액세스 토큰 추출
     public static String getAccessTokenFromCookies(HttpServletRequest request) {
         if (request.getCookies() != null) {
@@ -29,5 +38,4 @@ public class CookieUtil {
         }
         throw new CustomException(AuthErrorStatus._MISSING_TOKEN);
     }
-
 }

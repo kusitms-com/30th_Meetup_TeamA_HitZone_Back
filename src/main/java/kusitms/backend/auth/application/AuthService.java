@@ -44,7 +44,7 @@ public class AuthService {
         String newRefreshToken = jwtUtil.generateToken(userId, REFRESH_TOKEN_EXPIRATION_TIME);  // 14일 유효기간
         redisManager.saveRefreshToken(userId.toString(), newRefreshToken);
 
-        CookieUtil.setCookie(response, "accessToken", newAccessToken, (int) ACCESS_TOKEN_EXPIRATION_TIME / 1000);  // 1시간
+        CookieUtil.setCookie(response, "accessToken", newAccessToken, (int) (ACCESS_TOKEN_EXPIRATION_TIME * 1.5) / 1000);  // 1시간
         CookieUtil.setCookie(response, "refreshToken", newRefreshToken, (int) REFRESH_TOKEN_EXPIRATION_TIME / 1000);  // 14일
     }
 

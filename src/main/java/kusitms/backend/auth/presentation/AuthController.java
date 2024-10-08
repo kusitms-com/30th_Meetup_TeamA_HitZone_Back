@@ -19,7 +19,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PutMapping("/token/re-issue")
-    public ResponseEntity<ApiResponse<Void>> reIssueToken(@CookieValue String refreshToken,
+    public ResponseEntity<ApiResponse<Void>> reIssueToken(@CookieValue(required = false) String refreshToken,
                                                           HttpServletResponse response) {
         authService.reIssueToken(refreshToken, response);
         return ApiResponse.onSuccess(AuthSuccessStatus._OK_RE_ISSUE_TOKEN);
