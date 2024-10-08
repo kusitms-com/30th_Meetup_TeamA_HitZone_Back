@@ -59,7 +59,7 @@ public class JWTUtil {
         }
     }
 
-    // 토큰 파싱 메소드
+    // 리프레쉬토큰 파싱 메소드
     public Claims refreshTokenParser(String token) {
         try {
             return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();
