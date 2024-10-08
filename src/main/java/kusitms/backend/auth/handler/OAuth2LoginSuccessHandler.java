@@ -1,6 +1,5 @@
 package kusitms.backend.auth.handler;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kusitms.backend.auth.dto.response.GoogleUserInfo;
@@ -22,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.Map;
+
+import static kusitms.backend.global.util.CookieUtil.setCookie;
 
 @Slf4j
 @Component
@@ -78,29 +79,9 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             // 액세스 토큰과 리프레시 토큰을 쿠키로 설정
             setCookie(response, "accessToken", accessToken, (int) ACCESS_TOKEN_EXPIRATION_TIME / 1000);
             setCookie(response, "refreshToken", refreshToken, (int) REFRESH_TOKEN_EXPIRATION_TIME / 1000);
-            // 온보딩이 끝난 이후인경우, 이전에 설정했던 `registerToken`이 있을 시 삭제
-            deleteCookie(response, "registerToken");
             getRedirectStrategy().sendRedirect(request, response, REDIRECT_URI_BASE);
         }
     }
 
-    // 쿠키 설정 메서드
-    private void setCookie(HttpServletResponse response, String name, String value, int maxAge) {
-        Cookie cookie = new Cookie(name, value);
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        // cookie.setSecure(true); // 프론트가 https로 배포시 주석제거
-        cookie.setMaxAge(maxAge);
-        response.addCookie(cookie);
-    }
 
-    // 쿠키 삭제 메서드
-    private void deleteCookie(HttpServletResponse response, String name) {
-        Cookie cookie = new Cookie(name, null);
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-//        cookie.setSecure(true);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
-    }
 }
