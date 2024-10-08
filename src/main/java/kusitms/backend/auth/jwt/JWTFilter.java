@@ -15,6 +15,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+import static kusitms.backend.global.util.CookieUtil.getAccessTokenFromCookies;
+
 @Slf4j
 @RequiredArgsConstructor
 public class JWTFilter extends OncePerRequestFilter {
@@ -48,18 +50,6 @@ public class JWTFilter extends OncePerRequestFilter {
                 || path.equals("/test-error") || path.equals("/health-check")
                 || path.equals("/signup") || path.equals("/send-code") || path.equals("/verify-code")
                 || path.equals("/token/re-issue");
-    }
-
-    // 쿠키에서 액세스 토큰 추출
-    private String getAccessTokenFromCookies(HttpServletRequest request) {
-        if (request.getCookies() != null) {
-            for (Cookie cookie : request.getCookies()) {
-                if ("accessToken".equals(cookie.getName())) {
-                    return cookie.getValue();
-                }
-            }
-        }
-        throw new CustomException(AuthErrorStatus._MISSING_TOKEN);
     }
 
     // 사용자 인증 설정

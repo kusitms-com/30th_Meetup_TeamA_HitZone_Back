@@ -1,7 +1,10 @@
 package kusitms.backend.global.util;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import kusitms.backend.auth.status.AuthErrorStatus;
+import kusitms.backend.global.exception.CustomException;
 
 public class CookieUtil {
 
@@ -15,5 +18,16 @@ public class CookieUtil {
         response.addCookie(cookie);
     }
 
+    // 쿠키에서 액세스 토큰 추출
+    public static String getAccessTokenFromCookies(HttpServletRequest request) {
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                if ("accessToken".equals(cookie.getName())) {
+                    return cookie.getValue();
+                }
+            }
+        }
+        throw new CustomException(AuthErrorStatus._MISSING_TOKEN);
+    }
 
 }
