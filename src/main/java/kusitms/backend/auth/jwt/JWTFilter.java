@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kusitms.backend.auth.status.AuthErrorStatus;
 import kusitms.backend.global.exception.CustomException;
+import kusitms.backend.global.util.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,8 +15,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-
-import static kusitms.backend.global.util.CookieUtil.getAccessTokenFromCookies;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -26,7 +25,7 @@ public class JWTFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws CustomException, ServletException, IOException {
         try {
-            String accessToken = getAccessTokenFromCookies(request);
+            String accessToken = CookieUtil.getAccessTokenFromCookies(request);
             jwtUtil.validateToken(accessToken);
             Long userId = jwtUtil.getUserIdFromToken(accessToken);
             setAuthentication(request, userId);

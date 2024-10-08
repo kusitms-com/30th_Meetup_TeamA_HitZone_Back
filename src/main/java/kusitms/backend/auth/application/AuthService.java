@@ -1,18 +1,16 @@
 package kusitms.backend.auth.application;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import kusitms.backend.auth.jwt.JWTUtil;
 import kusitms.backend.auth.status.AuthErrorStatus;
 import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.global.redis.RedisManager;
+import kusitms.backend.global.util.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import static kusitms.backend.global.util.CookieUtil.setCookie;
 
 @Slf4j
 @Service
@@ -46,8 +44,8 @@ public class AuthService {
         String newRefreshToken = jwtUtil.generateToken(userId, REFRESH_TOKEN_EXPIRATION_TIME);  // 14일 유효기간
         redisManager.saveRefreshToken(userId.toString(), newRefreshToken);
 
-        setCookie(response, "accessToken", newAccessToken, (int) ACCESS_TOKEN_EXPIRATION_TIME / 1000);  // 1시간
-        setCookie(response, "refreshToken", newRefreshToken, (int) REFRESH_TOKEN_EXPIRATION_TIME / 1000);  // 14일
+        CookieUtil.setCookie(response, "accessToken", newAccessToken, (int) ACCESS_TOKEN_EXPIRATION_TIME / 1000);  // 1시간
+        CookieUtil.setCookie(response, "refreshToken", newRefreshToken, (int) REFRESH_TOKEN_EXPIRATION_TIME / 1000);  // 14일
     }
 
 

@@ -8,6 +8,7 @@ import kusitms.backend.auth.dto.response.NaverUserInfo;
 import kusitms.backend.auth.dto.response.OAuth2UserInfo;
 import kusitms.backend.auth.jwt.JWTUtil;
 import kusitms.backend.global.redis.RedisManager;
+import kusitms.backend.global.util.CookieUtil;
 import kusitms.backend.user.domain.User;
 import kusitms.backend.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.Map;
-
-import static kusitms.backend.global.util.CookieUtil.setCookie;
 
 @Slf4j
 @Component
@@ -68,7 +67,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         if (existUser == null) {
             log.info("신규 유저입니다.");
             String registerToken = jwtUtil.generateRegisterToken(provider, providerId, email, REGISTER_TOKEN_EXPIRATION_TIME);
-            setCookie(response, "registerToken", registerToken, (int) REGISTER_TOKEN_EXPIRATION_TIME / 1000);
+            CookieUtil.setCookie(response, "registerToken", registerToken, (int) REGISTER_TOKEN_EXPIRATION_TIME / 1000);
             getRedirectStrategy().sendRedirect(request, response, REDIRECT_URI_ONBOARDING);
         } else {
             log.info("기존 유저입니다.");
@@ -77,8 +76,8 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
             redisManager.saveRefreshToken(existUser.getId().toString(), refreshToken);
             // 액세스 토큰과 리프레시 토큰을 쿠키로 설정
-            setCookie(response, "accessToken", accessToken, (int) ACCESS_TOKEN_EXPIRATION_TIME / 1000);
-            setCookie(response, "refreshToken", refreshToken, (int) REFRESH_TOKEN_EXPIRATION_TIME / 1000);
+            CookieUtil.setCookie(response, "accessToken", accessToken, (int) ACCESS_TOKEN_EXPIRATION_TIME / 1000);
+            CookieUtil.setCookie(response, "refreshToken", refreshToken, (int) REFRESH_TOKEN_EXPIRATION_TIME / 1000);
             getRedirectStrategy().sendRedirect(request, response, REDIRECT_URI_BASE);
         }
     }
