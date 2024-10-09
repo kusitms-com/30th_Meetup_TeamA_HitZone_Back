@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 @Getter
 @RequiredArgsConstructor
 public class ApiResponse<T> {
-    @JsonProperty("is_success")
     private final Boolean isSuccess;
     private final String code;
     private final String message;
