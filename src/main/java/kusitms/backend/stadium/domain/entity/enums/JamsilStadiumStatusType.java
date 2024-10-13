@@ -1,5 +1,6 @@
 package kusitms.backend.stadium.domain.entity.enums;
 
+import kusitms.backend.stadium.common.Reference;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -200,13 +201,6 @@ public enum JamsilStadiumStatusType {
     private final List<String> page2Keywords;
     private final List<String> page3Keywords;
     private final List<String> forbiddenKeywords;
-
-    @Getter
-    @RequiredArgsConstructor
-    public static class Reference {
-        private final String title;
-        private final List<String> contents;
-    }
 
     public static int getMatchingKeywordCount(List<String> keywords, List<String> clientKeywords){
         return (int) keywords.stream()
