@@ -264,11 +264,11 @@ public enum JamsilStadiumStatusType {
                 })
                 .limit(3)
                 .map(result -> {
+                    log.info("zone: {}, totalMatchCount: {}, page1Count: {}, page2Count: {}, page3Count: {}", result.get("zone"), result.get("totalMatchCount"), result.get("page1Count"), result.get("page2Count"), result.get("page3Count"));
                     result.remove("totalMatchCount");
                     result.remove("page1Count");
                     result.remove("page2Count");
                     result.remove("page3Count");
-                    log.info("totalMatchCount: {}, page1Count: {}, page2Count: {}, page3Count: {}", result.get("totalMatchCount"), result.get("page1Count"), result.get("page2Count"), result.get("page3Count"));
                     return result;
                 })
                 .toList();
