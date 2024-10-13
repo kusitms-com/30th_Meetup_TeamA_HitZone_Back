@@ -22,6 +22,10 @@ public enum JamsilStadiumStatusType {
                             List.of("오렌지석이 앞에 있어서 스피커 때문에 많이 시끄러워요. 조용한 관람을 원하시면 다른 구역을 추천해요!")
                     )
             ),
+            List.of("나 혼자", "같은 팀 팬과"),
+            List.of(),
+            List.of(),
+            List.of("선수들 가까이", "경기장 한눈에 보기")
 
     ),
     BLUE("블루석",
@@ -37,7 +41,10 @@ public enum JamsilStadiumStatusType {
                             List.of("비교적 조용히 경기를 관람하고 적당히 응원할 수 있는 곳이에요. 열정적인 응원을 하고 싶으신 분들은 다른 구역을 더 추천해요!")
                     )
             ),
-
+            List.of("나 혼자", "같은 팀 팬과", "다른 팀 팬과"),
+            List.of("빠른 퇴장 가능", "편리한 화장실 이용", "선수들 가까이"),
+            List.of(),
+            List.of("열정적인 응원")
     ),
     NAVY("네이비석",
             List.of("해당 구역은 높은 층수에 위치해 있어요."),
@@ -60,6 +67,10 @@ public enum JamsilStadiumStatusType {
                             )
                     )
             ),
+            List.of("나 혼자", "같은 팀 팬과", "다른 팀 팬과"),
+            List.of("경기장 한눈에 보기"),
+            List.of("햇빛 싫어요", "비 맞기 싫어요"),
+            List.of("열정적인 응원", "선수들 가까이")
     ),
     ORANGE("오렌지석",
             List.of("야구장의 응원이 가장 열정적인 응원석 구역이에요!"),
@@ -80,6 +91,10 @@ public enum JamsilStadiumStatusType {
                             List.of("비교적 조용히 경기를 관람하고 적당히 응원할 수 있는 곳이에요. 열정적인 응원을 하고 싶으신 분들은 다른 구역을 더 추천해요!")
                     )
             ),
+            List.of("나 혼자", "같은 팀 팬과"),
+            List.of("열정적인 응원", "선수들 가까이"),
+            List.of(),
+            List.of("다른 팀 팬과", "큰 소리 싫어요", "경기장 한눈에 보기")
 
     ),
     EXITING("익사이팅석",
@@ -102,6 +117,10 @@ public enum JamsilStadiumStatusType {
                             )
                     )
             ),
+            List.of("나 혼자", "같은 팀 팬과"),
+            List.of("선수들 가까이", "열정적인 응원"),
+            List.of(),
+            List.of("다른 팀 팬과", "큰 소리 싫어요", "경기장 한눈에 보기")
     ),
     GREEN("그린(외야)석",
             List.of("사람들이 몰리지 않아 비교적 한적하게 경기를 즐길 수 있는 구역이에요!"),
@@ -119,6 +138,10 @@ public enum JamsilStadiumStatusType {
                             List.of("1,3루 출입구의 반대쪽에 있는 외야출입구로만 입장이 가능해요. 입장에 참고하세요!")
                     )
             ),
+            List.of("나 혼자", "같은 팀 팬과", "다른 팀 팬과"),
+            List.of("경기장 한눈에 보기"),
+            List.of(),
+            List.of("열정적인 응원", "선수들 가까이", "빠른 퇴장 가능", "편리한 화장실 이용", "햇빛 싫어요", "비 맞기 싫어요")
     ),
     TABLE("테이블석",
             List.of("다양한 음식을 골라 테이블에 펼쳐놓고 먹을 수 있는 구역이에요!"),
@@ -134,6 +157,10 @@ public enum JamsilStadiumStatusType {
                             )
                     )
             ),
+            List.of("나 혼자", "같은 팀 팬과"),
+            List.of("음식 먹기 편한", "빠른 퇴장 가능", "편리한 화장실 이용"),
+            List.of(),
+            List.of("다른 팀 팬과", "경기장 한눈에 보기")
     ),
     PREMIUM("프리미엄석",
             List.of("테이블에서 맛있는 음식을 먹으면서 선수들을 가장 가까이서 볼 수 있는 구역이에요!"),
@@ -156,6 +183,10 @@ public enum JamsilStadiumStatusType {
                             )
                     )
             ),
+            List.of("나 혼자", "같은 팀 팬과"),
+            List.of("음식 먹기 편한", "선수들 가까이", "열정적인 응원", "빠른 퇴장 가능", "편리한 화장실 이용"),
+            List.of(),
+            List.of("다른 팀 팬과", "큰 소리 싫어요", "경기장 한눈에 보기")
     ),
     ;
 
@@ -163,6 +194,10 @@ public enum JamsilStadiumStatusType {
     private final List<String> explanations;
     private final String tip;
     private final List<Reference> references;
+    private final List<String> page1Keywords;
+    private final List<String> page2Keywords;
+    private final List<String> page3Keywords;
+    private final List<String> forbiddenKeywords;
 
     @Getter
     @RequiredArgsConstructor
