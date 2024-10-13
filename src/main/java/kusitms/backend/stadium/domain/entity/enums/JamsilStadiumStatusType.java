@@ -2,9 +2,11 @@ package kusitms.backend.stadium.domain.entity.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-import java.util.List;
+import java.util.*;
 
+@Slf4j
 @Getter
 @RequiredArgsConstructor
 public enum JamsilStadiumStatusType {
@@ -206,6 +208,69 @@ public enum JamsilStadiumStatusType {
         private final List<String> contents;
     }
 
+    public static int getMatchingKeywordCount(List<String> keywords, List<String> clientKeywords){
+        return (int) keywords.stream()
+                .filter(clientKeywords::contains)
+                .count();
+    }
 
+    public static boolean hasForbiddenKeywords(List<String> forbiddenKeywords, List<String> clientKeywords){
+        return forbiddenKeywords.stream()
+                .anyMatch(clientKeywords::contains);
+    }
 
+    public static List<Map<String, Object>> getTopRankedZones(List<String> clientKeywords){
+        return Arrays.stream(JamsilStadiumStatusType.values())
+                .map(zone -> {
+                    if (hasForbiddenKeywords(zone.getForbiddenKeywords(), clientKeywords)){
+                        return null;
+                    }
+
+                    int page1Count = getMatchingKeywordCount(zone.getPage1Keywords(), clientKeywords);
+                    int page2Count = getMatchingKeywordCount(zone.getPage2Keywords(), clientKeywords);
+                    int page3Count = getMatchingKeywordCount(zone.getPage3Keywords(), clientKeywords);
+
+                    // 총 겹치는 개수 계산
+                    int totalMatchCount = page1Count + page2Count + page3Count;
+
+                    Map<String, Object> result = new HashMap<>();
+                    result.put("stadium", "잠실");
+                    result.put("zone", zone.zone);
+                    result.put("explanations", zone.getExplanations());
+                    result.put("tip", zone.tip);
+                    result.put("references", zone.getReferences());
+                    result.put("totalMatchCount", totalMatchCount);
+                    result.put("page1Count", page1Count);
+                    result.put("page2Count", page2Count);
+                    result.put("page3Count", page3Count);
+                    return result;
+                })
+                .filter(Objects::nonNull)
+                .filter(result -> (int) result.get("totalMatchCount") > 0)
+                .sorted((a, b) -> {
+                    int totalCompare = Integer.compare((int) b.get("totalMatchCount"), (int) a.get("totalMatchCount"));
+                    if (totalCompare == 0) {
+                        int page2Compare = Integer.compare((int) b.get("page2Count"), (int) a.get("page2Count"));
+                        if (page2Compare == 0) {
+                            int page3Compare = Integer.compare((int) b.get("page3Count"), (int) a.get("page3Count"));
+                            if (page3Compare == 0) {
+                                return Integer.compare((int) b.get("page1Count"), (int) a.get("page1Count"));
+                            }
+                            return page3Compare;
+                        }
+                        return page2Compare;
+                    }
+                    return totalCompare;
+                })
+                .limit(3)
+                .map(result -> {
+                    result.remove("totalMatchCount");
+                    result.remove("page1Count");
+                    result.remove("page2Count");
+                    result.remove("page3Count");
+                    log.info("totalMatchCount: {}, page1Count: {}, page2Count: {}, page3Count: {}", result.get("totalMatchCount"), result.get("page1Count"), result.get("page2Count"), result.get("page3Count"));
+                    return result;
+                })
+                .toList();
+    }
 }
