@@ -8,6 +8,6 @@ import java.util.List;
 @Getter
 @RequiredArgsConstructor
 public class Reference {
-    private final String title;
+    private final String referenceTitle;
     private final List<String> contents;
 }
