@@ -26,7 +26,7 @@ public class TopRankedZones {
                     result.put("zone", zone.getZone());
                     result.put("explanations", zone.getExplanations());
                     result.put("tip", zone.getTip());
-                    result.put("references", zone.getReferencesGroup());
+                    result.put("referencesGroup", zone.getReferencesGroup());
                     result.put("totalMatchCount", totalMatchCount);
                     result.put("page1Count", page1Count);
                     result.put("page2Count", page2Count);
