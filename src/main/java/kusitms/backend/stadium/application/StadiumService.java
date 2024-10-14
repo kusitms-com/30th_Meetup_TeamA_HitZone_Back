@@ -1,11 +1,13 @@
 package kusitms.backend.stadium.application;
 
+import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.stadium.common.TopRankedZones;
 import kusitms.backend.stadium.domain.enums.JamsilStadiumStatusType;
 import kusitms.backend.stadium.domain.enums.KtWizStadiumStatusType;
 import kusitms.backend.stadium.domain.enums.StadiumStatusType;
 import kusitms.backend.stadium.dto.request.TopRankedZoneRequestDto;
 import kusitms.backend.stadium.dto.response.TopRankedZoneResponseDto;
+import kusitms.backend.stadium.status.StadiumErrorStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +25,7 @@ public class StadiumService {
         T[] zones = switch (request.stadium()) {
             case "잠실종합운동장" -> (T[]) JamsilStadiumStatusType.values();
             case "수원KT위즈파크" -> (T[]) KtWizStadiumStatusType.values();
-            default -> null;
+            default -> throw new CustomException(StadiumErrorStatus._BAD_REQUEST_STADIUM);
         };
 
         List<Map<String, Object>> recommendZones = TopRankedZones.getTopRankedZones(
