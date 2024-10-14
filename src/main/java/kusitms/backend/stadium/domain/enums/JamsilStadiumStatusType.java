@@ -20,7 +20,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType{
                             List.of(
                                     new Reference(
                                             "시야가 중요하신 분",
-                                            List.of("외야와 가까운 쪽은 예매 시 시야 확인이 필요해요. 기둥이나 그물망이 앞에 있어 시야 방해를 받을 수 있어요!")
+                                            List.of("외야와 가까운 쪽은 예매 시 시야 확인이 필요해요. 기둥이나 그물망으로 시야 방해를 받을 수 있어요!")
                                     ),
                                     new Reference(
                                             "시끄러운 것을 좋아하지 않는 분",
@@ -36,7 +36,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType{
 
     ),
     BLUE("블루석",
-            List.of("언제는 옆 오렌지석과 힘차게 응원하고, 언제는 야구에 집중하며 둘다 즐길 수 있는 구역이에요!"),
+            List.of("힘차게 응원도 가능하고, 야구에 집중도 할 수 있는 구역이에요!"),
             "해당 구역은 비교적 조용히 경기 관람이 가능한 구역이예요.",
             List.of(
                     new ReferencesGroup(
@@ -44,7 +44,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType{
                             List.of(
                                     new Reference(
                                             "시야가 중요하신 분",
-                                            List.of("홈과 가까운 쪽은 예매 시 시야 확인이 필요해요. 그물망이 시야 가리기 때문에 방해를 받을 수 있어요!")
+                                            List.of("홈과 가까운 쪽은 예매 시 시야 확인이 필요해요. 그물망으로 인해 시야 방해를 받을 수 있어요!")
                                     ),
                                     new Reference(
                                             "적당한 응원을 하고 싶으신 분",
@@ -59,8 +59,8 @@ public enum JamsilStadiumStatusType implements StadiumStatusType{
             List.of("열정적인 응원")
     ),
     NAVY("네이비석",
-            List.of("해당 구역은 높은 층수에 위치해 있어요."),
-            "해당 구역은 시야 제한석이 있어요.",
+            List.of("높은 곳에서 야구를 전체적으로 볼 수 있는 구역이에요!"),
+            "해당 구역은 높은 층수에 위치해 있어요.",
             List.of(
                     new ReferencesGroup(
                             JamsilStadiumStatusType.DEFAULT_TITLE,
@@ -99,16 +99,12 @@ public enum JamsilStadiumStatusType implements StadiumStatusType{
                                     new Reference(
                                             "시끄러운 것을 좋아하지 않는 분",
                                             List.of(
-                                                    "오렌지석은 응원단상이 앞에 위치해 있어요.",
+                                                    "응원단상이 앞에 위치해 있어요.",
                                                     "치어리더 공연도 이루어지며,",
                                                     "관중들도 열정적인 응원을 합니다!",
-                                                    "해당 구역 앞에는 응원을 위한 앰프가 설치되어 있어요.",
+                                                    "해당 구역 앞에 응원을 위한 앰프가 설치되어 있어요.",
                                                     "조용한 관람을 원하시면 다른 구역을 추천해요!"
                                             )
-                                    ),
-                                    new Reference(
-                                            "적당한 응원을 하고 싶으신 분",
-                                            List.of("비교적 조용히 경기를 관람하고 적당히 응원할 수 있는 곳이에요. 열정적인 응원을 하고 싶으신 분들은 다른 구역을 더 추천해요!")
                                     )
                             )
 
@@ -130,14 +126,14 @@ public enum JamsilStadiumStatusType implements StadiumStatusType{
                                     new Reference(
                                             "연령제한에 적용되는 분",
                                             List.of(
-                                                    "익사이팅석은 파울볼이 튀어 들어올 수 있는",
+                                                    "파울볼이 튀어 들어올 수 있는",
                                                     "위험 때문에 13세 이상만 입장할 수 있어요."
                                             )
                                     ),
                                     new Reference(
                                             "야구 관람에서 시야가 중요하신 분",
                                             List.of(
-                                                    "익사이팅석은 경기장과 매우 가까운 곳에",
+                                                    "경기장과 매우 가까운 곳에",
                                                     "위치하고 있기 때문에",
                                                     "오히려 시야가 좋지 않을 수 있어요."
                                             )
@@ -150,7 +146,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType{
             List.of(),
             List.of("다른 팀 팬과", "큰 소리 싫어요", "경기장 한눈에 보기")
     ),
-    GREEN("그린(외야)석",
+    GREEN("그린석(외야)",
             List.of("사람들이 몰리지 않아 비교적 한적하게 경기를 즐길 수 있는 구역이에요!"),
             "해당 구역은 시야 제한석이 있어요.",
             List.of(
@@ -160,13 +156,12 @@ public enum JamsilStadiumStatusType implements StadiumStatusType{
                                     new Reference(
                                             "시야가 중요하신 분",
                                             List.of(
-                                                    "시야 제한석이 존재하며, 위치 특성상 야구 경기 흐름을 한눈에 파악하기 어려워요.",
-                                                    "다만 사람들이 몰리지 않아 비교적 한적하게 경기를 즐길 수 있어요!"
+                                                    "시야 제한석이 존재하며, 위치 특성상 야구 경기 흐름을 한눈에 파악하기 어려워요."
                                             )
                                     ),
                                     new Reference(
                                             "그린석 입장 입구",
-                                            List.of("1,3루 출입구의 반대쪽에 있는 외야출입구로만 입장이 가능해요. 입장에 참고하세요!")
+                                            List.of("1,3루 출입구의 반대쪽에 있는 외야 출입구로만 입장이 가능해요. 입장에 참고하세요!")
                                     )
                             )
                     )
@@ -189,7 +184,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType{
                                                     "응원단상과는 다소 거리가 있어,",
                                                     "응원을 원하시는 분들께는 다소 아쉬울 수 있어요.",
                                                     "또한 햇빛이 뜨거울 수 있으니 참고하세요!",
-                                                    "특히 3루 테이블석 112블록은 앞에는 공을 막는 그물, 옆에 기둥 있어서 시야 방해를 받을 수 있어요!"
+                                                    "특히 3루 테이블석 112블록은 앞에는 공을 막는 그물, 옆에는 기둥이 있어서 시야 방해를 받을 수 있어요!"
                                             )
                                     )
                             )
@@ -211,14 +206,12 @@ public enum JamsilStadiumStatusType implements StadiumStatusType{
                                             "두 번의 티켓 확인",
                                             List.of(
                                                     "입구에서 티켓 보여주면 1차 통과,",
-                                                    "중앙 출입구나 내야 출입구로 입장 후 직원이",
-                                                    "2차로 티켓을 검사하고 자리 안내를 해줄 거예요!"
+                                                    "입장 후 직원이 2차로 티켓을 검사하고 자리 안내를 해줄 거예요!"
                                             )
                                     ),
                                     new Reference("입장 후 팔찌",
                                             List.of(
                                                     "프리미엄석은 입장 후 팔찌를 받아요.",
-                                                    "경기장 밖으로 나가는 것이 아닌,",
                                                     "내야 쪽에서 이동하는 경우에는",
                                                     "이 팔찌만 보여주면 자유롭게 재출입할 수 있어요!"
                                             )
