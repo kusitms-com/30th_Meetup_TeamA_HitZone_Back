@@ -9,7 +9,7 @@ import java.util.*;
 public class TopRankedZones {
 
     public static <T extends Enum<T> & StadiumStatusType> List<Map<String, Object>> getTopRankedZones(
-            T[] zones, String stadiumName, List<String> clientKeywords) {
+            T[] zones, List<String> clientKeywords) {
 
         return Arrays.stream(zones)
                 .filter(zone -> !KeywordManager.hasForbiddenKeywords(zone.getForbiddenKeywords(), clientKeywords))
@@ -23,7 +23,6 @@ public class TopRankedZones {
                     int totalMatchCount = page1Count + page2Count + page3Count;
 
                     Map<String, Object> result = new HashMap<>();
-                    result.put("stadium", stadiumName);
                     result.put("zone", zone.getZone());
                     result.put("explanations", zone.getExplanations());
                     result.put("tip", zone.getTip());

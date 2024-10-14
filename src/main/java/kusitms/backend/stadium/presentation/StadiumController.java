@@ -1,9 +1,14 @@
 package kusitms.backend.stadium.presentation;
 
+import kusitms.backend.global.dto.ApiResponse;
+import kusitms.backend.stadium.application.StadiumService;
 import kusitms.backend.stadium.common.TopRankedZones;
 import kusitms.backend.stadium.domain.enums.JamsilStadiumStatusType;
 import kusitms.backend.stadium.dto.request.TopRankedZoneRequestDto;
+import kusitms.backend.stadium.dto.response.TopRankedZoneResponseDto;
+import kusitms.backend.stadium.status.StadiumSuccessStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,11 +22,10 @@ import java.util.Map;
 @RequestMapping("/api/v1")
 public class StadiumController {
 
-    @PostMapping("/zones/recommend")
-    public Object serveZones(@RequestBody TopRankedZoneRequestDto request){
-        List<Map<String, Object>> jamsilTopZones = TopRankedZones.getTopRankedZones(
-                JamsilStadiumStatusType.values(), request.stadium(), List.of(request.clientKeywords()));
+    private final StadiumService stadiumService;
 
-        return jamsilTopZones;
+    @PostMapping("/zones/recommend")
+    public ResponseEntity<ApiResponse<TopRankedZoneResponseDto>> recommendZones(@RequestBody TopRankedZoneRequestDto request){
+        return ApiResponse.onSuccess(StadiumSuccessStatus._OK_RECOMMEND_ZONES, stadiumService.recommendZones(request));
     }
 }
