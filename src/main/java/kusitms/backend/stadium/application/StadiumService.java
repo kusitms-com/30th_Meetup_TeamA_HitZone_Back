@@ -20,22 +20,18 @@ public class StadiumService {
     @Transactional
     public <T extends Enum<T> & StadiumStatusType> TopRankedZoneResponseDto recommendZones(TopRankedZoneRequestDto request) {
 
-        T[] zones = null;
+        T[] zones = switch (request.stadium()) {
+            case "잠실종합운동장" -> (T[]) JamsilStadiumStatusType.values();
+            case "수원KT위즈파크" -> (T[]) KtWizStadiumStatusType.values();
+            default -> null;
+        };
 
-        switch(request.stadium()){
-            case "잠실종합운동장":
-                zones = (T[]) JamsilStadiumStatusType.values();
-            case "수원KT위즈파크":
-                zones = (T[]) KtWizStadiumStatusType.values();
-
-        }
-
-        List<Map<String, Object>> jamsilTopZones = TopRankedZones.getTopRankedZones(
+        List<Map<String, Object>> recommendZones = TopRankedZones.getTopRankedZones(
                 zones, List.of(request.clientKeywords()));
         return TopRankedZoneResponseDto.builder()
                 .stadium(request.stadium())
                 .preference(request.preference())
-                .recommendZones(jamsilTopZones)
+                .recommendZones(recommendZones)
                 .build();
     }
 }

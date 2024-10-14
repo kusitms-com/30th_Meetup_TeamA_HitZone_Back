@@ -2,8 +2,6 @@ package kusitms.backend.stadium.presentation;
 
 import kusitms.backend.global.dto.ApiResponse;
 import kusitms.backend.stadium.application.StadiumService;
-import kusitms.backend.stadium.common.TopRankedZones;
-import kusitms.backend.stadium.domain.enums.JamsilStadiumStatusType;
 import kusitms.backend.stadium.dto.request.TopRankedZoneRequestDto;
 import kusitms.backend.stadium.dto.response.TopRankedZoneResponseDto;
 import kusitms.backend.stadium.status.StadiumSuccessStatus;
@@ -13,9 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
