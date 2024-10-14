@@ -12,10 +12,8 @@ public class TopRankedZones {
             T[] zones, String stadiumName, List<String> clientKeywords) {
 
         return Arrays.stream(zones)
+                .filter(zone -> !KeywordManager.hasForbiddenKeywords(zone.getForbiddenKeywords(), clientKeywords))
                 .map(zone -> {
-                    if (KeywordManager.hasForbiddenKeywords(zone.getForbiddenKeywords(), clientKeywords)) {
-                        return null;
-                    }
 
                     int page1Count = KeywordManager.getMatchingKeywordCount(zone.getPage1Keywords(), clientKeywords);
                     int page2Count = KeywordManager.getMatchingKeywordCount(zone.getPage2Keywords(), clientKeywords);
@@ -29,14 +27,13 @@ public class TopRankedZones {
                     result.put("zone", zone.getZone());
                     result.put("explanations", zone.getExplanations());
                     result.put("tip", zone.getTip());
-                    result.put("references", zone.getReferences());
+                    result.put("references", zone.getReferencesGroup());
                     result.put("totalMatchCount", totalMatchCount);
                     result.put("page1Count", page1Count);
                     result.put("page2Count", page2Count);
                     result.put("page3Count", page3Count);
                     return result;
                 })
-                .filter(Objects::nonNull)
                 .filter(result -> (int) result.get("totalMatchCount") > 0)
                 .sorted((a, b) -> {
                     int totalCompare = Integer.compare((int) b.get("totalMatchCount"), (int) a.get("totalMatchCount"));
