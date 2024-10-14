@@ -17,10 +17,10 @@ import java.util.Map;
 @RequestMapping("/api/v1")
 public class StadiumController {
 
-    @PostMapping("/zone")
+    @PostMapping("/zones/recommend")
     public Object serveZones(@RequestBody TopRankedZoneRequestDto request){
         List<Map<String, Object>> jamsilTopZones = TopRankedZones.getTopRankedZones(
-                JamsilStadiumStatusType.values(), "잠실", List.of(request.clientKeywords()));
+                JamsilStadiumStatusType.values(), request.stadium(), List.of(request.clientKeywords()));
 
         return jamsilTopZones;
     }

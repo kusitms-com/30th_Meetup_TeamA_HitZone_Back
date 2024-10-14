@@ -1,4 +1,7 @@
 package kusitms.backend.stadium.dto.request;
 
-public record TopRankedZoneRequestDto(String[] clientKeywords) {
+import lombok.Builder;
+
+@Builder
+public record TopRankedZoneRequestDto(String stadium, String preference, String[] clientKeywords) {
 }
