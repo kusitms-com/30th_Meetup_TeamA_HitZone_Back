@@ -1,4 +1,4 @@
-package kusitms.backend.stadium.domain.entity.enums;
+package kusitms.backend.stadium.domain.enums;
 
 import kusitms.backend.stadium.common.ReferencesGroup;
 

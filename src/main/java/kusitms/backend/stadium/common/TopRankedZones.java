@@ -1,6 +1,6 @@
 package kusitms.backend.stadium.common;
 
-import kusitms.backend.stadium.domain.entity.enums.StadiumStatusType;
+import kusitms.backend.stadium.domain.enums.StadiumStatusType;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;

@@ -1,7 +1,7 @@
 package kusitms.backend.stadium.presentation;
 
 import kusitms.backend.stadium.common.TopRankedZones;
-import kusitms.backend.stadium.domain.entity.enums.JamsilStadiumStatusType;
+import kusitms.backend.stadium.domain.enums.JamsilStadiumStatusType;
 import kusitms.backend.stadium.dto.request.TopRankedZoneRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
