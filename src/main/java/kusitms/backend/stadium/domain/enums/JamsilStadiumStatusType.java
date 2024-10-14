@@ -16,7 +16,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType{
             "해당 구역은 다양한 것들을 모두 적절히 즐길 수 있는 구역이예요.",
             List.of(
                     new ReferencesGroup(
-                            "참고하세요",
+                            JamsilStadiumStatusType.DEFAULT_TITLE,
                             List.of(
                                     new Reference(
                                             "시야가 중요하신 분",
@@ -40,7 +40,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType{
             "해당 구역은 비교적 조용히 경기 관람이 가능한 구역이예요.",
             List.of(
                     new ReferencesGroup(
-                            "참고하세요",
+                            JamsilStadiumStatusType.DEFAULT_TITLE,
                             List.of(
                                     new Reference(
                                             "시야가 중요하신 분",
@@ -63,7 +63,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType{
             "해당 구역은 시야 제한석이 있어요.",
             List.of(
                     new ReferencesGroup(
-                            "참고하세요",
+                            JamsilStadiumStatusType.DEFAULT_TITLE,
                             List.of(
                                     new Reference(
                                             "높은 곳을 안 좋아하시는 분",
@@ -94,7 +94,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType{
             "해당 구역은 열정적인 응원이 이루어져요.",
             List.of(
                     new ReferencesGroup(
-                            "참고하세요",
+                            JamsilStadiumStatusType.DEFAULT_TITLE,
                             List.of(
                                     new Reference(
                                             "시끄러운 것을 좋아하지 않는 분",
@@ -125,7 +125,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType{
             "해당 구역은 연령제한이 있어요.",
             List.of(
                     new ReferencesGroup(
-                            "참고하세요",
+                            JamsilStadiumStatusType.DEFAULT_TITLE,
                             List.of(
                                     new Reference(
                                             "연령제한에 적용되는 분",
@@ -155,7 +155,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType{
             "해당 구역은 시야 제한석이 있어요.",
             List.of(
                     new ReferencesGroup(
-                            "참고하세요",
+                            JamsilStadiumStatusType.DEFAULT_TITLE,
                             List.of(
                                     new Reference(
                                             "시야가 중요하신 분",
@@ -181,7 +181,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType{
             "해당 구역은 예매 시 위치 확인이 필요해요.",
             List.of(
                     new ReferencesGroup(
-                            "참고하세요",
+                            JamsilStadiumStatusType.DEFAULT_TITLE,
                             List.of(
                                     new Reference(
                                             "3루 테이블석",
@@ -205,7 +205,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType{
             "해당 구역은 티켓 확인을 2번 해요.",
             List.of(
                     new ReferencesGroup(
-                            "참고하세요",
+                            JamsilStadiumStatusType.DEFAULT_TITLE,
                             List.of(
                                     new Reference(
                                             "두 번의 티켓 확인",
@@ -233,6 +233,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType{
     ),
     ;
 
+    private static final String DEFAULT_TITLE = "참고하세요";
     private final String zone;
     private final List<String> explanations;
     private final String tip;

@@ -16,7 +16,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
             "해당 구역은 예매 시 응원단상 위치 확인이 필요해요.",
             List.of(
                     new ReferencesGroup(
-                            "참고하세요",
+                            KtWizStadiumStatusType.DEFAULT_TITLE,
                             List.of(
                                     new Reference(
                                             "응원단상 위치 고려",
@@ -48,7 +48,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
             "해당 구역은 편하게 관람이 가능해요.",
             List.of(
                     new ReferencesGroup(
-                            "참고하세요",
+                            KtWizStadiumStatusType.DEFAULT_TITLE,
                             List.of(
                                     new Reference(
                                             "전용 게이트, 전용 팔찌",
@@ -77,7 +77,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
             "해당 구역은 다 함께 응원할 수 있어요.",
             List.of(
                     new ReferencesGroup(
-                            "참고하세요",
+                            KtWizStadiumStatusType.DEFAULT_TITLE,
                             List.of(
                                     new Reference(
                                             "타 팀 팬들과 함께",
@@ -99,7 +99,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
             "해당 구역은 편리하게 음식을 먹을 수 있어요.",
             List.of(
                     new ReferencesGroup(
-                            "참고하세요",
+                            KtWizStadiumStatusType.DEFAULT_TITLE,
                             List.of(
                                     new Reference(
                                             "편리한 음식 섭취",
@@ -129,7 +129,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
             "해당 구역은 편하게 좌석을 찾아갈 수 있어요.",
             List.of(
                     new ReferencesGroup(
-                            "참고하세요",
+                            KtWizStadiumStatusType.DEFAULT_TITLE,
                             List.of(
                                     new Reference(
                                             "별도의 티켓 부스",
@@ -159,7 +159,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
             "해당 구역은 높은 곳에 위치해있어요!",
             List.of(
                     new ReferencesGroup(
-                            "참고하세요",
+                            KtWizStadiumStatusType.DEFAULT_TITLE,
                             List.of(
                                     new Reference(
                                             "높은 곳을 안 좋아하시는 분",
@@ -243,7 +243,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
             "해당 구역은 빨리 예매하는 것이 좋아요.",
             List.of(
                     new ReferencesGroup(
-                            "참고하세요",
+                            KtWizStadiumStatusType.DEFAULT_TITLE,
                             List.of(
                                     new Reference(
                                             "빠른 매진",
@@ -272,7 +272,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
             "해당 구역은 포수 뒤에서 볼 수 있어요.",
             List.of(
                     new ReferencesGroup(
-                            "참고하세요",
+                            KtWizStadiumStatusType.DEFAULT_TITLE,
                             List.of(
                                     new Reference(
                                             "포수 뒤 관람 공간",
@@ -296,7 +296,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
             "해당 구역은 테이블이 있어요.",
             List.of(
                     new ReferencesGroup(
-                            "참고하세요",
+                            KtWizStadiumStatusType.DEFAULT_TITLE,
                             List.of(
                                     new Reference(
                                             "외야에 위치",
@@ -318,7 +318,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
             "해당 구역은 피크닉 기분을 낼 수 있어요.",
             List.of(
                     new ReferencesGroup(
-                            "참고하세요",
+                            KtWizStadiumStatusType.DEFAULT_TITLE,
                             List.of(
                                     new Reference(
                                             "관중이 몰릴 땐 일찍",
@@ -348,7 +348,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
             "해당 구역은 고기와 함께 즐길 수 있어요.",
             List.of(
                     new ReferencesGroup(
-                            "참고하세요",
+                            KtWizStadiumStatusType.DEFAULT_TITLE,
                             List.of(
                                     new Reference(
                                             "고기와 함께",
@@ -377,6 +377,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
             List.of("선수들 가까이", "높은 곳 싫어요")
     );
 
+    private static final String DEFAULT_TITLE = "참고하세요";
     private final String zone;
     private final List<String> explanations;
     private final String tip;
