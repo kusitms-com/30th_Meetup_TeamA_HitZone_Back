@@ -374,7 +374,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
             List.of("나 혼자", "같은 팀 팬과"),
             List.of("삼겹살 구워먹기 가능", "음식 먹기 편한", "빠른 퇴장 가능", "편리한 화장실 이용", "경기장 한 눈에 보기"),
             List.of("비 맞기 싫어요"),
-            List.of("선수들 가까이", "높은 곳 싫어요")
+            List.of()
     );
 
     private static final String DEFAULT_TITLE = "참고하세요";
