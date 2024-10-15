@@ -3,6 +3,7 @@ package kusitms.backend.test.presentation;
 import kusitms.backend.global.dto.ApiResponse;
 import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.global.status.SuccessStatus;
+import kusitms.backend.test.application.TestService;
 import kusitms.backend.test.dto.request.TestDocsRequestDto;
 import kusitms.backend.test.dto.response.TestDocsResponseDto;
 import kusitms.backend.test.status.TestErrorStatus;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
 public class TestController {
+
+    private final TestService testService;
 
     // 헬스체크용 API
     @GetMapping("/health-check")
@@ -33,9 +36,7 @@ public class TestController {
     public ResponseEntity<ApiResponse<TestDocsResponseDto>> testDocs(@RequestParam String name,
                                                       @RequestParam String keyword,
                                                       @RequestBody TestDocsRequestDto request) {
-        TestDocsResponseDto response = TestDocsResponseDto.builder().keyword(keyword).tip(request.tip()).build();
-
-        return ApiResponse.onSuccess(SuccessStatus._CREATED, response);
+        return ApiResponse.onSuccess(SuccessStatus._CREATED, testService.testDocs(name, keyword, request));
 
     }
 
