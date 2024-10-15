@@ -46,7 +46,7 @@ public class JWTFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
         return path.equals("/") || path.equals("/login") || path.equals("/login/kakao") || path.equals("/login/naver") || path.equals("/login/google")
-                || path.startsWith("/public") || path.equals("/api/v1/test-error") || path.equals("/api/v1/health-check")
+                || path.startsWith("/public") || path.equals("/api/v1/health-check") || path.equals("/api/v1/test-error") || path.equals("/api/v1/test/docs")
                 || path.equals("/api/v1/signup") || path.equals("/api/v1/send-code") || path.equals("/api/v1/verify-code")
                 || path.equals("/api/v1/token/re-issue");
     }

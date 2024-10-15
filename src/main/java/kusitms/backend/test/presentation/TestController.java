@@ -2,13 +2,14 @@ package kusitms.backend.test.presentation;
 
 import kusitms.backend.global.dto.ApiResponse;
 import kusitms.backend.global.exception.CustomException;
+import kusitms.backend.global.status.SuccessStatus;
+import kusitms.backend.test.dto.request.TestDocsRequestDto;
+import kusitms.backend.test.dto.response.TestDocsResponseDto;
 import kusitms.backend.test.status.TestErrorStatus;
 import kusitms.backend.test.status.TestSuccessStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,6 +26,17 @@ public class TestController {
     @GetMapping("/test-error")
     public void getError() {
         throw new CustomException(TestErrorStatus._TEST_ERROR);
+    }
+
+    // rest-docs 테스트용 API
+    @PostMapping("/test/docs")
+    public ResponseEntity<ApiResponse<TestDocsResponseDto>> testDocs(@RequestParam String name,
+                                                      @RequestParam String keyword,
+                                                      @RequestBody TestDocsRequestDto request) {
+        TestDocsResponseDto response = TestDocsResponseDto.builder().keyword(keyword).tip(request.tip()).build();
+
+        return ApiResponse.onSuccess(SuccessStatus._CREATED, response);
+
     }
 
 }
