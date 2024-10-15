@@ -1,9 +1,11 @@
 package kusitms.backend.stadium.application;
 
 import kusitms.backend.global.exception.CustomException;
+import kusitms.backend.stadium.common.RecommendedUserProfile;
 import kusitms.backend.stadium.common.TopRankedZones;
 import kusitms.backend.stadium.domain.enums.JamsilStadiumStatusType;
 import kusitms.backend.stadium.domain.enums.KtWizStadiumStatusType;
+import kusitms.backend.stadium.domain.enums.ProfileStatusType;
 import kusitms.backend.stadium.domain.enums.StadiumStatusType;
 import kusitms.backend.stadium.dto.request.TopRankedZoneRequestDto;
 import kusitms.backend.stadium.dto.response.TopRankedZoneResponseDto;
@@ -28,11 +30,15 @@ public class StadiumService {
             default -> throw new CustomException(StadiumErrorStatus._BAD_REQUEST_STADIUM);
         };
 
+        Map<String, Object> recommendedProfile = RecommendedUserProfile.getRecommendedUserProfile(
+                ProfileStatusType.values(), List.of(request.clientKeywords()));
         List<Map<String, Object>> recommendZones = TopRankedZones.getTopRankedZones(
                 zones, List.of(request.clientKeywords()));
+
         return TopRankedZoneResponseDto.builder()
                 .stadium(request.stadium())
                 .preference(request.preference())
+                .recommendedProfile(recommendedProfile)
                 .recommendZones(recommendZones)
                 .build();
     }

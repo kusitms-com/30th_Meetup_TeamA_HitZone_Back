@@ -9,5 +9,6 @@ import java.util.Map;
 public record TopRankedZoneResponseDto(
         String stadium,
         String preference,
+        Map<String, Object> recommendedProfile,
         List<Map<String, Object>> recommendZones) {
 }
