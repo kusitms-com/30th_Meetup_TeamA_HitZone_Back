@@ -11,7 +11,7 @@ public class RecommendedTopRankedZones {
     public static <T extends Enum<T> & StadiumStatusType> List<Map<String, Object>> getTopRankedZones(
             T[] zones, List<String> clientKeywords) {
 
-        return Arrays.stream(zones)
+        List<Map<String, Object>> filteredZones = Arrays.stream(zones)
                 .filter(zone -> !KeywordManager.hasForbiddenKeywords(zone.getForbiddenKeywords(), clientKeywords))
                 .map(zone -> {
 
@@ -59,5 +59,23 @@ public class RecommendedTopRankedZones {
                     return result;
                 })
                 .toList();
+
+        // 필터링된 결과가 없을 경우 첫 번째 구역을 반환
+        if (filteredZones.isEmpty()) {
+            return Arrays.stream(zones)
+                    .findFirst()  // 첫 번째 구역을 선택
+                    .map(zone -> {
+                        // 필요한 필드들만 포함한 Map 생성
+                        Map<String, Object> result = new HashMap<>();
+                        result.put("zone", zone.getZone());
+                        result.put("explanations", zone.getExplanations());
+                        result.put("tip", zone.getTip());
+                        result.put("referencesGroup", zone.getReferencesGroup());
+                        return Collections.singletonList(result);
+                    })
+                    .orElse(Collections.emptyList());
+        }
+
+        return filteredZones;
     }
 }
