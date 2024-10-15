@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 public class TestService {
 
     public TestDocsResponseDto testDocs(String name, String keyword, TestDocsRequestDto request){
-        TestDocsResponseDto response = TestDocsResponseDto.builder().keyword(keyword).tip(request.tip()).build();
-        return response;
+        return TestDocsResponseDto.builder().keyword(keyword).tip(request.tip()).build();
     }
 }

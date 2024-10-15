@@ -36,7 +36,7 @@ public class TestController {
     public ResponseEntity<ApiResponse<TestDocsResponseDto>> testDocs(@RequestParam String name,
                                                       @RequestParam String keyword,
                                                       @RequestBody TestDocsRequestDto request) {
-        return ApiResponse.onSuccess(SuccessStatus._CREATED, testService.testDocs(name, keyword, request));
+        return ApiResponse.onSuccess(SuccessStatus._OK, testService.testDocs(name, keyword, request));
 
     }
 
