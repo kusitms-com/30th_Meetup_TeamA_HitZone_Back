@@ -71,6 +71,7 @@ public class RecommendedTopRankedZones {
                         result.put("explanations", zone.getExplanations());
                         result.put("tip", zone.getTip());
                         result.put("referencesGroup", zone.getReferencesGroup());
+                        log.info("zone: {}", result.get("zone"));
                         return Collections.singletonList(result);
                     })
                     .orElse(Collections.emptyList());
