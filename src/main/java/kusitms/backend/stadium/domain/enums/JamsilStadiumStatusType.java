@@ -146,7 +146,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType{
             List.of(),
             List.of("다른 팀 팬과", "큰 소리 싫어요", "경기장 한눈에 보기")
     ),
-    GREEN("그린석(외야)",
+    GREEN("외야그린석",
             List.of("사람들이 몰리지 않아 비교적 한적하게 경기를 즐길 수 있는 구역이에요!"),
             "해당 구역은 시야 제한석이 있어요.",
             List.of(

@@ -45,7 +45,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
     ),
     GENIETV("지니TV석",
             List.of("테이블 석이라 음식 취식이 편리한 구역이에요!"),
-            "해당 구역은 3루 테이블석이라 편하게 관람이 가능해요.",
+            "해당 구역은 3루 테이블석이라 편하게 관람을 할 수 있어요.",
             List.of(
                     new ReferencesGroup(
                             KtWizStadiumStatusType.DEFAULT_TITLE,
