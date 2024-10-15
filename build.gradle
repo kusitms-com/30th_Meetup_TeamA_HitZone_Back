@@ -2,7 +2,9 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.4'
     id 'io.spring.dependency-management' version '1.1.6'
-    id 'com.epages.restdocs-api-spec' version '0.18.4'
+    id "org.asciidoctor.jvm.convert" version "3.3.2" // Asciidoctor 플러그인
+    id 'org.hidetake.swagger.generator' version '2.18.2'
+    id 'com.epages.restdocs-api-spec' version '0.17.1'
 }
 
 group = 'kusitms'
@@ -14,14 +16,12 @@ java {
     }
 }
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
-
 repositories {
     mavenCentral()
+}
+
+ext {
+    snippetsDir = file('build/generated-snippets') // 스니펫이 생성되는 디렉터리 경로를 설정
 }
 
 //twilio이 jjwt-jackson 0.11.2를 의존해서 0.12.3으로 강제 의존성 주입
@@ -54,21 +54,52 @@ dependencies {
     // Twilio SDK
     implementation 'com.twilio.sdk:twilio:8.24.0'
 
-    //rest-docs
+    // REST Docs & API Spec
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-    testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.18.4'
-}
+    testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.17.1'
+    implementation 'org.springframework.restdocs:spring-restdocs-asciidoctor:2.0.6.RELEASE' // Asciidoctor 의존성
 
-tasks.named('test') {
-    useJUnitPlatform()
+    // MockWebServer
+    testImplementation 'com.squareup.okhttp3:mockwebserver'
 }
 
 openapi3 {
-    servers = [
-            { url = 'http://localhost:8080' }
-    ]
-    title = 'HitZone'
-    description = '히트존의 API 명세서입니다.'
-    version = '1.0.0'
+    server = "http://localhost:8080"
+    title = "히틎본 API 문서"
+    description = "Spring REST Docs with SwaggerUI."
+    version = "0.0.1"
+    outputFileNamePrefix = 'open-api-3.0.1'
     format = 'json'
+
+    // /static/docs/open-api-3.0.1.json 생성 → jar 파일만 배포할 예정이기에 build 에 출력
+    outputDirectory = 'build/resources/main/static/docs'
+}
+
+// 테스트 스니펫 출력 위치 정의
+tasks.named('test') {
+    useJUnitPlatform()
+    outputs.dir snippetsDir // 스니펫 디렉터리를 지정
+}
+
+tasks.named('asciidoctor') {
+    inputs.dir snippetsDir
+    dependsOn test
+}
+
+tasks.named("bootJar") {
+    dependsOn asciidoctor
+    from("${asciidoctor.outputDir}") {
+        into 'static/docs'
+    }
+    dependsOn openapi3
+}
+
+tasks.register('copyDocument', Copy) {
+    dependsOn asciidoctor
+    from file("$buildDir/docs/asciidoc")
+    into file("src/main/resources/static/docs")
+}
+
+tasks.named("build") {
+    dependsOn copyDocument
 }
