@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.*;
 
 @Slf4j
-public class TopRankedZones {
+public class RecommendedTopRankedZones {
 
     public static <T extends Enum<T> & StadiumStatusType> List<Map<String, Object>> getTopRankedZones(
             T[] zones, List<String> clientKeywords) {
