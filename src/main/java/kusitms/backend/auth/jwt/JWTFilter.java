@@ -2,10 +2,8 @@ package kusitms.backend.auth.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kusitms.backend.auth.status.AuthErrorStatus;
 import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.global.util.CookieUtil;
 import lombok.RequiredArgsConstructor;
@@ -46,12 +44,9 @@ public class JWTFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
         return path.equals("/") || path.equals("/login") || path.equals("/login/kakao") || path.equals("/login/naver") || path.equals("/login/google")
-                || path.startsWith("/public") || path.equals("/api/v1/health-check") || path.equals("/api/v1/test-error")
 
-                || path.equals("/api/v1/test/docs") || path.equals("/docs/swagger-ui/index.html") || path.equals("/docs/swagger-ui/swagger-ui.css") || path.equals("/docs/swagger-ui/index.css")
-                || path.equals("/docs/swagger-ui/swagger-ui-bundle.js") || path.equals("/docs/swagger-ui/swagger-ui-standalone-preset.js") || path.equals("/docs/swagger-ui/swagger-initializer.js")
-                || path.equals("/docs/swagger-ui/favicon-32x32.png") || path.equals("/docs/swagger-ui/favicon-16x16.png")
-                || path.equals("/v3/api-docs/swagger-config") || path.equals("/docs/open-api-3.0.1.json")
+                || path.startsWith("/public") || path.equals("/api/v1/health-check") || path.equals("/api/v1/test-error") || path.equals("/api/v1/test/docs")
+                || path.startsWith("/docs/swagger-ui") || path.equals("/v3/api-docs/swagger-config") || path.equals("/docs/open-api-3.0.1.json")
 
                 || path.equals("/api/v1/signup") || path.equals("/api/v1/send-code") || path.equals("/api/v1/verify-code")
                 || path.equals("/api/v1/token/re-issue");
