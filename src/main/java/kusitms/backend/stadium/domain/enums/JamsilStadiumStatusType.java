@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 @RequiredArgsConstructor
-public enum JamsilStadiumStatusType implements StadiumStatusType{
+public enum JamsilStadiumStatusType implements StadiumStatusType {
 
     RED("레드석",
             List.of("응원도 적당히 즐길 수 있지만, 야구나 함께 온 동행자와의 대화에도 집중할 수 있는 구역이에요!"),
