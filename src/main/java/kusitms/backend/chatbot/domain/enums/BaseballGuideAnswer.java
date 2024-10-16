@@ -1,8 +1,10 @@
 package kusitms.backend.chatbot.domain.enums;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum BaseballGuideAnswer implements GuideAnswer {
 
     Q1(1, null,
@@ -37,11 +39,4 @@ public enum BaseballGuideAnswer implements GuideAnswer {
     private final String stadiumName;
     private final String[] answers;
     private final String imgUrl;
-
-    BaseballGuideAnswer(int id, String stadiumName, String[] answers, String imgUrl) {
-        this.id = id;
-        this.stadiumName = stadiumName;
-        this.answers = answers;
-        this.imgUrl = imgUrl;
-    }
 }
