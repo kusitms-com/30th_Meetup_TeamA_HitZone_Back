@@ -46,7 +46,8 @@ public class SecurityConfig {
                                 "/", "/login", "/login/google", "/login/naver", "/login/kakao",
                                 "/api/v1/health-check", "/api/v1/test-error",
                                 "/api/v1/signup", "/api/v1/send-code","/api/v1/verify-code",
-                                "/api/v1/token/re-issue").permitAll()  // 인증이 필요 없는 경로 설정
+                                "/api/v1/token/re-issue",
+                                "/api/v1/zones/recommend").permitAll()  // 인증이 필요 없는 경로 설정
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
