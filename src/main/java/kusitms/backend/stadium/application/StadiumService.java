@@ -35,11 +35,11 @@ public class StadiumService {
         List<Map<String, Object>> recommendZones = RecommendedTopRankedZones.getTopRankedZones(
                 zones, List.of(request.clientKeywords()));
 
-        return TopRankedZoneResponseDto.builder()
-                .stadium(request.stadium())
-                .preference(request.preference())
-                .recommendedProfile(recommendedProfile)
-                .recommendZones(recommendZones)
-                .build();
+        return TopRankedZoneResponseDto.of(
+                request.stadium(),
+                request.preference(),
+                recommendedProfile,
+                recommendZones
+        );
     }
 }

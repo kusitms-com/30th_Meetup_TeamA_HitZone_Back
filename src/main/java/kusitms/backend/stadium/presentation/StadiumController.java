@@ -1,5 +1,6 @@
 package kusitms.backend.stadium.presentation;
 
+import jakarta.validation.Valid;
 import kusitms.backend.global.dto.ApiResponse;
 import kusitms.backend.stadium.application.StadiumService;
 import kusitms.backend.stadium.dto.request.TopRankedZoneRequestDto;
@@ -20,7 +21,7 @@ public class StadiumController {
     private final StadiumService stadiumService;
 
     @PostMapping("/zones/recommend")
-    public ResponseEntity<ApiResponse<TopRankedZoneResponseDto>> recommendZones(@RequestBody TopRankedZoneRequestDto request){
+    public ResponseEntity<ApiResponse<TopRankedZoneResponseDto>> recommendZones(@Valid @RequestBody TopRankedZoneRequestDto request){
         return ApiResponse.onSuccess(StadiumSuccessStatus._OK_RECOMMEND_ZONES, stadiumService.recommendZones(request));
     }
 }
