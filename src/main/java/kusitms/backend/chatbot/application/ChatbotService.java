@@ -52,7 +52,7 @@ public class ChatbotService {
 
         // 2. stadiumName이 일치하는 답변 찾기
         for (T answer : matchingAnswers) {
-            if (Objects.equals(answer.getStadiumName(), stadiumName)) {
+            if (stadiumName.equals(answer.getStadiumName())) {
                 return GetGuideChatbotAnswerResponse.of(answer.getAnswers(), answer.getImgUrl());
             }
         }
