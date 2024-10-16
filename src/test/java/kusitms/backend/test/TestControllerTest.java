@@ -1,7 +1,5 @@
 package kusitms.backend.test;
 
-import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
-
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
@@ -20,8 +18,7 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
@@ -50,6 +47,9 @@ public class TestControllerTest extends ControllerTestConfig {
                 .tip("테스트팁")
                 .build();
         Mockito.when(testService.testDocs(anyString(), anyString(), any(TestDocsRequestDto.class))).thenReturn(testDocsResponseDto);
+
+        //만약 Response가 없을 경우엔 아래와 같이 실행한다.
+        //Mockito.doNothing().when(testService).testDocs(anyString(), anyString(), any(TestDocsRequestDto.class));
 
         // when
         ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.post("/api/v1/test/docs")
