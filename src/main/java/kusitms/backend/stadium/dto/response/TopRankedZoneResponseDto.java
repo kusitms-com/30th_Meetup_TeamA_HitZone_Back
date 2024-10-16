@@ -11,4 +11,9 @@ public record TopRankedZoneResponseDto(
         String preference,
         Map<String, Object> recommendedProfile,
         List<Map<String, Object>> recommendZones) {
+
+    private static TopRankedZoneResponseDto of(String stadium, String preference, Map<String, Object> recommendedProfile, List<Map<String, Object>> recommendZones) {
+        return new TopRankedZoneResponseDto(stadium, preference, recommendedProfile, recommendZones);
+    }
+
 }
