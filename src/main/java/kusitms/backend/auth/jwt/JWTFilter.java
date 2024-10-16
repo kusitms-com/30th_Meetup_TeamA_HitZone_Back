@@ -48,7 +48,8 @@ public class JWTFilter extends OncePerRequestFilter {
         return path.equals("/") || path.equals("/login") || path.equals("/login/kakao") || path.equals("/login/naver") || path.equals("/login/google")
                 || path.startsWith("/public") || path.equals("/api/v1/test-error") || path.equals("/api/v1/health-check")
                 || path.equals("/api/v1/signup") || path.equals("/api/v1/send-code") || path.equals("/api/v1/verify-code")
-                || path.equals("/api/v1/token/re-issue");
+                || path.equals("/api/v1/token/re-issue")
+                || path.startsWith("/api/v1/chatbot");
     }
 
     // 사용자 인증 설정
