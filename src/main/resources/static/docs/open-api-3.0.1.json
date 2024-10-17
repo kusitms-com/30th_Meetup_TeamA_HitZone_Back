@@ -1,0 +1,115 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "히트존 API 문서",
+    "description" : "Spring REST Docs with SwaggerUI.",
+    "version" : "0.0.1"
+  },
+  "servers" : [ {
+    "url" : "http://localhost:8080"
+  } ],
+  "tags" : [ ],
+  "paths" : {
+    "/api/v1/test/docs" : {
+      "post" : {
+        "tags" : [ "TEST" ],
+        "summary" : "Rest Docs post 테스트용 API",
+        "description" : "Rest Docs post 테스트용 API",
+        "operationId" : "test/docs",
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "query",
+          "description" : "테스트 네임",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "keyword",
+          "in" : "query",
+          "description" : "테스트 키워드",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=UTF-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/api-v1-test-docs1498556744"
+              },
+              "examples" : {
+                "test/docs" : {
+                  "value" : "{\n  \"tip\" : \"테스트팁\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TestDocsResponseDto"
+                },
+                "examples" : {
+                  "test/docs" : {
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"code\" : \"200\",\n  \"message\" : \"성공입니다.\",\n  \"payload\" : {\n    \"keyword\" : \"테스트키워드\",\n    \"tip\" : \"테스트팁\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "TestDocsResponseDto" : {
+        "title" : "TestDocsResponseDto",
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "응답 코드"
+          },
+          "payload" : {
+            "type" : "object",
+            "properties" : {
+              "tip" : {
+                "type" : "string",
+                "description" : "팁"
+              },
+              "keyword" : {
+                "type" : "string",
+                "description" : "키워드"
+              }
+            },
+            "description" : "응답 데이터"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "응답 메시지"
+          },
+          "isSuccess" : {
+            "type" : "boolean",
+            "description" : "성공 여부"
+          }
+        }
+      },
+      "api-v1-test-docs1498556744" : {
+        "type" : "object",
+        "properties" : {
+          "tip" : {
+            "type" : "string",
+            "description" : "테스트 팁"
+          }
+        }
+      }
+    }
+  }
+}
