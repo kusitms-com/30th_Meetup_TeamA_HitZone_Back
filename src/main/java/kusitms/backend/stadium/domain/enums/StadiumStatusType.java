@@ -5,7 +5,7 @@ import kusitms.backend.stadium.common.ReferencesGroup;
 import java.util.List;
 
 public interface StadiumStatusType {
-    String getZone();
+    String getZoneName();
     List<String> getExplanations();
     String getTip();
     List<ReferencesGroup> getReferencesGroup();

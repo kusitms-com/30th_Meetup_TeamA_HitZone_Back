@@ -217,7 +217,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
     ;
 
     private static final String DEFAULT_TITLE = "참고하세요";
-    private final String zone;
+    private final String zoneName;
     private final List<String> explanations;
     private final String tip;
     private final List<ReferencesGroup> referencesGroup;
