@@ -11,6 +11,7 @@ import kusitms.backend.stadium.domain.enums.JamsilStadiumStatusType;
 import kusitms.backend.stadium.domain.enums.KtWizStadiumStatusType;
 import kusitms.backend.stadium.domain.enums.ProfileStatusType;
 import kusitms.backend.stadium.domain.enums.StadiumStatusType;
+import kusitms.backend.stadium.domain.repository.ProfileRepository;
 import kusitms.backend.stadium.domain.repository.ResultRepository;
 import kusitms.backend.stadium.domain.repository.StadiumRepository;
 import kusitms.backend.stadium.domain.repository.ZoneRepository;
@@ -32,6 +33,7 @@ public class StadiumService {
     private final StadiumRepository stadiumRepository;
     private final ResultRepository resultRepository;
     private final ZoneRepository zoneRepository;
+    private final ProfileRepository profileRepository;
 
     @Transactional
     public <T extends Enum<T> & StadiumStatusType> SaveTopRankedZoneResponseDto recommendZones(SaveTopRankedZoneRequestDto request) {
@@ -62,6 +64,7 @@ public class StadiumService {
                 .explanation(recommendedProfile.getExplanation())
                 .hashTags(recommendedProfile.getHastTags())
                 .build();
+        profileRepository.save(profile);
 
        recommendZones.forEach(zoneEnum -> {
            Zone zone = Zone.builder()
