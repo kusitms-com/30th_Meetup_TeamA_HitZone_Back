@@ -3,15 +3,12 @@ package kusitms.backend.stadium.common;
 import kusitms.backend.stadium.domain.enums.ProfileStatusType;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 public class RecommendedUserProfile {
 
-    public static Map<String, Object> getRecommendedUserProfile(
+    public static Optional<ProfileStatusType> getRecommendedUserProfile(
             ProfileStatusType[] profiles, List<String> clientKeywords) {
 
         return Arrays.stream(profiles)
@@ -20,15 +17,10 @@ public class RecommendedUserProfile {
                     int page1Count = KeywordManager.getMatchingKeywordCount(profile.getPage1Keywords(), clientKeywords);
                     int page2Count = KeywordManager.getMatchingKeywordCount(profile.getPage2Keywords(), clientKeywords);
                     int page3Count = KeywordManager.getMatchingKeywordCount(profile.getPage3Keywords(), clientKeywords);
-
-                    // 총 겹치는 개수 계산
                     int totalMatchCount = page1Count + page2Count + page3Count;
 
                     Map<String, Object> result = new HashMap<>();
-                    result.put("nickname", profile.getNickName());
-                    result.put("type", profile.getType());
-                    result.put("explanation", profile.getExplanation());
-                    result.put("hashTags", profile.getHastTags());
+                    result.put("profile", profile);
                     result.put("totalMatchCount", totalMatchCount);
                     result.put("page1Count", page1Count);
                     result.put("page2Count", page2Count);
@@ -53,15 +45,11 @@ public class RecommendedUserProfile {
                 })
                 .findFirst()  // 첫 번째 결과를 가져옴
                 .map(result -> {
+                    ProfileStatusType profile = (ProfileStatusType) result.get("profile");
                     log.info("zone: {}, totalMatchCount: {}, page1Count: {}, page2Count: {}, page3Count: {}",
-                            result.get("nickname"), result.get("totalMatchCount"),
+                            result.get("profile"), result.get("totalMatchCount"),
                             result.get("page1Count"), result.get("page2Count"), result.get("page3Count"));
-                    result.remove("totalMatchCount");
-                    result.remove("page1Count");
-                    result.remove("page2Count");
-                    result.remove("page3Count");
-                    return result;
-                })
-                .orElse(new HashMap<>());
+                    return profile;
+                });
     }
 }
