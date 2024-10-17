@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
 
+    /**
+     * 유저 회원가입을 진행한다.
+     * @return X
+     */
     @PostMapping("/signup")
     public ResponseEntity<ApiResponse<Void>> signupUser(@CookieValue(required = false) String registerToken,
                                                         @Valid @RequestBody SignUpRequestDto request){
@@ -25,17 +29,30 @@ public class UserController {
         return ApiResponse.onSuccess(UserSuccessStatus._CREATED_USER);
     }
 
+    /**
+     * 유저 정보를 조회한다.
+     * @return 이름, 이메일, 휴대폰번호
+     */
     @GetMapping("/user-info")
     public ResponseEntity<ApiResponse<UserInfoResponseDto>> getUserInfo() {
         return ApiResponse.onSuccess(UserSuccessStatus._OK_GET_USER_INFO, userService.getUserInfo());
     }
 
+    /**
+     * 휴대폰에 6자리 인증코드를 보낸다.
+     * @return X
+     */
 //    @PostMapping("/send-code")
 //    public ResponseEntity<ApiResponse<Void>> sendAuthCode(@Valid @RequestBody SendAuthCodeRequestDto request) {
 //        userService.sendAuthCode(request);
 //        return ApiResponse.onSuccess(UserSuccessStatus._OK_SEND_AUTH_CODE);
 //    }
 //
+
+    /**
+     * 인증코드를 확인하여 휴대폰 인증을 진행한다.
+     * @return X
+     */
 //    @PostMapping("/verify-code")
 //    public ResponseEntity<ApiResponse<Void>> verifyAuthCode(@Valid @RequestBody VerifyAuthCodeRequestDto request) {
 //        userService.verifyAuthCode(request);
