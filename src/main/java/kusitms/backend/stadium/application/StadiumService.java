@@ -17,6 +17,7 @@ import kusitms.backend.stadium.domain.repository.StadiumRepository;
 import kusitms.backend.stadium.domain.repository.ZoneRepository;
 import kusitms.backend.stadium.dto.request.SaveTopRankedZoneRequestDto;
 import kusitms.backend.stadium.dto.response.GetProfileResponseDto;
+import kusitms.backend.stadium.dto.response.GetZonesResponseDto;
 import kusitms.backend.stadium.dto.response.SaveTopRankedZoneResponseDto;
 import kusitms.backend.stadium.status.StadiumErrorStatus;
 import kusitms.backend.user.domain.repository.UserRepository;
@@ -89,5 +90,17 @@ public class StadiumService {
                 .orElseThrow(() -> new CustomException(StadiumErrorStatus._NOT_FOUND_RESULT));
         Profile profile = profileRepository.findByResult(result);
         return GetProfileResponseDto.from(profile);
+    }
+
+    @Transactional(readOnly = true)
+    public GetZonesResponseDto getRecommendedZones(Long resultId, Long count) {
+        Result result = resultRepository.findById(resultId)
+                .orElseThrow(() -> new CustomException(StadiumErrorStatus._NOT_FOUND_RESULT));
+        List<GetZonesResponseDto.ZoneResponseDto> zones = zoneRepository.findAllByResult(result)
+                .stream()
+                .limit(count)
+                .map(GetZonesResponseDto.ZoneResponseDto::from)
+                .toList();
+        return GetZonesResponseDto.from(zones);
     }
 }

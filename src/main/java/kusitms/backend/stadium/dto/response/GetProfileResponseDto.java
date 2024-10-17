@@ -10,7 +10,7 @@ public record GetProfileResponseDto(
         String type,
         String explanation,
         List<String> hashTags
-){
+) {
     public static GetProfileResponseDto from(Profile profile) {
         return new GetProfileResponseDto(
                 profile.getId(),
