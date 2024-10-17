@@ -47,7 +47,9 @@ public class SecurityConfig {
                                 "/api/v1/health-check", "/api/v1/test-error",
                                 "/api/v1/test/docs","/docs/swagger-ui/**", "/v3/api-docs/**", "/docs/open-api-3.0.1.json",
                                 "/api/v1/signup", "/api/v1/send-code","/api/v1/verify-code",
-                                "/api/v1/token/re-issue").permitAll()  // 인증이 필요 없는 경로 설정
+                                "/api/v1/token/re-issue", "/api/v1/zones/recommend",
+                                "/api/v1/chatbot/**").permitAll()  // 인증이 필요 없는 경로 설정
+
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
@@ -57,7 +59,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:5173"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "http://211.188.55.153:8080"));
         configuration.setAllowedMethods(Collections.singletonList("*"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Collections.singletonList("*"));
@@ -69,3 +71,4 @@ public class SecurityConfig {
         return source;
     }
 }
+
