@@ -5,18 +5,14 @@ import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.user.domain.ProviderStatusType;
 import kusitms.backend.user.domain.User;
 import kusitms.backend.user.status.UserErrorStatus;
-import lombok.Getter;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Getter
-public class SignUpReq {
-        @NotBlank(message = "이름은 공백이나 빈칸일 수 없습니다.")
-        private String name;
-        @NotBlank(message = "휴대폰 번호는 공백이나 빈칸일 수 없습니다.")
-        private String phoneNumber;
-
+public record SignUpRequestDto(
+        @NotBlank(message = "이름은 공백이나 빈칸일 수 없습니다.") String name,
+        @NotBlank(message = "휴대폰 번호는 공백이나 빈칸일 수 없습니다.") String phoneNumber
+){
         public static User toEntity(String provider, String providerId, String email, String name, String phoneNumber) {
                 return User.builder()
                         .provider(ProviderStatusType.of(provider))
