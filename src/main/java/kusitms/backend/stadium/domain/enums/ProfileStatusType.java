@@ -59,7 +59,7 @@ public enum ProfileStatusType {
     private final String nickName;
     private final String type;
     private final String explanation;
-    private final List<String> hastTags;
+    private final List<String> hashTags;
     private final List<String> page1Keywords;
     private final List<String> page2Keywords;
     private final List<String> page3Keywords;

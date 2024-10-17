@@ -20,11 +20,13 @@ import kusitms.backend.stadium.dto.response.SaveTopRankedZoneResponseDto;
 import kusitms.backend.stadium.status.StadiumErrorStatus;
 import kusitms.backend.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class StadiumService {
@@ -46,7 +48,7 @@ public class StadiumService {
 
         ProfileStatusType recommendedProfile = RecommendedUserProfile.getRecommendedUserProfile(
                 ProfileStatusType.values(), List.of(request.clientKeywords()));
-        List<T> recommendZones = RecommendedTopRankedZones.getTopRankedZones(
+        List<T> recommendedZones = RecommendedTopRankedZones.getTopRankedZones(
                 zones, List.of(request.clientKeywords()));
 
         Stadium stadium = stadiumRepository.findByName(request.stadium())
@@ -62,11 +64,11 @@ public class StadiumService {
                 .nickname(recommendedProfile.getNickName())
                 .type(recommendedProfile.getType())
                 .explanation(recommendedProfile.getExplanation())
-                .hashTags(recommendedProfile.getHastTags())
+                .hashTags(recommendedProfile.getHashTags())
                 .build();
         profileRepository.save(profile);
 
-       recommendZones.forEach(zoneEnum -> {
+       recommendedZones.forEach(zoneEnum -> {
            Zone zone = Zone.builder()
                    .result(result)
                    .name(zoneEnum.getZoneName())
@@ -76,6 +78,7 @@ public class StadiumService {
                    .build();
            zoneRepository.save(zone);
        });
+
        return SaveTopRankedZoneResponseDto.from(result.getId());
     }
 }

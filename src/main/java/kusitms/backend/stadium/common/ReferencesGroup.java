@@ -1,13 +1,22 @@
 package kusitms.backend.stadium.common;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 @Getter
-@RequiredArgsConstructor
 public class ReferencesGroup {
-    private final String groupTitle;
-    private final List<Reference> references;
+
+    private String groupTitle;
+    private List<Reference> references;
+
+    @JsonCreator
+    public ReferencesGroup(@JsonProperty("groupTitle") String groupTitle,
+                           @JsonProperty("references") List<Reference> references
+    ) {
+        this.groupTitle = groupTitle;
+        this.references = references;
+    }
 }

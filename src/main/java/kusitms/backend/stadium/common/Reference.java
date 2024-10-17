@@ -1,13 +1,21 @@
 package kusitms.backend.stadium.common;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
-import java.util.List;
 
 @Getter
-@RequiredArgsConstructor
 public class Reference {
-    private final String title;
-    private final String content;
+
+    private String title;
+    private String content;
+
+    @JsonCreator
+    public Reference(
+            @JsonProperty("title") String title,
+            @JsonProperty("content") String content
+    ) {
+        this.title = title;
+        this.content = content;
+    }
 }

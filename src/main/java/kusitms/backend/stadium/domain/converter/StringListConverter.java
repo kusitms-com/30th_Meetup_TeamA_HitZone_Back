@@ -19,6 +19,9 @@ public class StringListConverter implements AttributeConverter<List<String>, Str
     @Override
     public String convertToDatabaseColumn(List<String> attribute) {
         try {
+            if (attribute == null || attribute.isEmpty()) {
+                return "[]";
+            }
             return objectMapper.writeValueAsString(attribute);
         } catch (JsonProcessingException e) {
             throw new CustomException(ErrorStatus._FAILED_SERIALIZING_JSON);
@@ -28,6 +31,9 @@ public class StringListConverter implements AttributeConverter<List<String>, Str
     @Override
     public List<String> convertToEntityAttribute(String dbData) {
         try {
+            if (dbData == null || dbData.isEmpty()) {
+                return List.of();
+            }
             return objectMapper.readValue(dbData, new TypeReference<List<String>>() {});
         } catch (IOException e) {
             throw new CustomException(ErrorStatus._FAILED_DESERIALIZING_JSON);

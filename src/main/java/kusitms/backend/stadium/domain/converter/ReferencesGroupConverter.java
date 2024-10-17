@@ -8,10 +8,12 @@ import jakarta.persistence.Converter;
 import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.global.status.ErrorStatus;
 import kusitms.backend.stadium.common.ReferencesGroup;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.util.List;
 
+@Slf4j
 @Converter
 public class ReferencesGroupConverter implements AttributeConverter<List<ReferencesGroup>, String> {
 
@@ -20,6 +22,9 @@ public class ReferencesGroupConverter implements AttributeConverter<List<Referen
     @Override
     public String convertToDatabaseColumn(List<ReferencesGroup> attribute) {
         try {
+            if (attribute == null || attribute.isEmpty()) {
+                return "[]";
+            }
             return objectMapper.writeValueAsString(attribute);
         } catch (JsonProcessingException e) {
             throw new CustomException(ErrorStatus._FAILED_SERIALIZING_JSON);
@@ -29,10 +34,12 @@ public class ReferencesGroupConverter implements AttributeConverter<List<Referen
     @Override
     public List<ReferencesGroup> convertToEntityAttribute(String dbData) {
         try {
+            if (dbData == null || dbData.isEmpty()) {
+                return List.of();
+            }
             return objectMapper.readValue(dbData, new TypeReference<List<ReferencesGroup>>() {});
         } catch (IOException e) {
             throw new CustomException(ErrorStatus._FAILED_DESERIALIZING_JSON);
         }
     }
 }
-
