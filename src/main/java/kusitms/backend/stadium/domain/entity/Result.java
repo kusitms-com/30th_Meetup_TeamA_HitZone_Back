@@ -32,8 +32,9 @@ public class Result extends BaseTimeEntity {
     @Column(nullable = false)
     private String preference;
 
-    @Enumerated(EnumType.STRING)
-    private ProfileStatusType profile;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "profile_id", nullable = false)
+    private Profile profile;
 
     @OneToMany(mappedBy = "result", cascade = CascadeType.ALL)
     @Builder.Default
