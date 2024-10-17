@@ -45,11 +45,10 @@ public class RecommendedUserProfile {
                 })
                 .findFirst()  // 첫 번째 결과를 가져옴
                 .map(result -> {
-                    ProfileStatusType profile = (ProfileStatusType) result.get("profile");
                     log.info("zone: {}, totalMatchCount: {}, page1Count: {}, page2Count: {}, page3Count: {}",
                             result.get("profile"), result.get("totalMatchCount"),
                             result.get("page1Count"), result.get("page2Count"), result.get("page3Count"));
-                    return profile;
+                    return (ProfileStatusType) result.get("profile");
                 });
     }
 }
