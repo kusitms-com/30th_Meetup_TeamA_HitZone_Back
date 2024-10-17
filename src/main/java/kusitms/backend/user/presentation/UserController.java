@@ -30,15 +30,15 @@ public class UserController {
         return ApiResponse.onSuccess(UserSuccessStatus._OK_GET_USER_INFO, userService.getUserInfo());
     }
 
-    @PostMapping("/send-code")
-    public ResponseEntity<ApiResponse<Void>> sendAuthCode(@Valid @RequestBody SendAuthCodeRequestDto request) {
-        userService.sendAuthCode(request);
-        return ApiResponse.onSuccess(UserSuccessStatus._OK_SEND_AUTH_CODE);
-    }
-
-    @PostMapping("/verify-code")
-    public ResponseEntity<ApiResponse<Void>> verifyAuthCode(@Valid @RequestBody VerifyAuthCodeRequestDto request) {
-        userService.verifyAuthCode(request);
-        return ApiResponse.onSuccess(UserSuccessStatus._OK_VERIFY_AUTH_CODE);
-    }
+//    @PostMapping("/send-code")
+//    public ResponseEntity<ApiResponse<Void>> sendAuthCode(@Valid @RequestBody SendAuthCodeRequestDto request) {
+//        userService.sendAuthCode(request);
+//        return ApiResponse.onSuccess(UserSuccessStatus._OK_SEND_AUTH_CODE);
+//    }
+//
+//    @PostMapping("/verify-code")
+//    public ResponseEntity<ApiResponse<Void>> verifyAuthCode(@Valid @RequestBody VerifyAuthCodeRequestDto request) {
+//        userService.verifyAuthCode(request);
+//        return ApiResponse.onSuccess(UserSuccessStatus._OK_VERIFY_AUTH_CODE);
+//    }
 }
