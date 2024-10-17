@@ -36,5 +36,6 @@ public class StadiumService {
                 zones, List.of(request.clientKeywords()));
 
 
+
     }
 }
