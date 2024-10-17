@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import kusitms.backend.global.dto.ApiResponse;
 import kusitms.backend.stadium.application.StadiumService;
 import kusitms.backend.stadium.dto.request.SaveTopRankedZoneRequestDto;
+import kusitms.backend.stadium.dto.response.GetProfileResponseDto;
 import kusitms.backend.stadium.dto.response.SaveTopRankedZoneResponseDto;
 import kusitms.backend.stadium.status.StadiumSuccessStatus;
 import lombok.RequiredArgsConstructor;
