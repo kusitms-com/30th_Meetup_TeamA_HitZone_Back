@@ -8,10 +8,12 @@ import java.util.*;
 @Slf4j
 public class RecommendedUserProfile {
 
-    public static Optional<ProfileStatusType> getRecommendedUserProfile(
-            ProfileStatusType[] profiles, List<String> clientKeywords) {
+    public static ProfileStatusType getRecommendedUserProfile(
+            ProfileStatusType[] profiles,
+            List<String> clientKeywords
+    ) {
 
-        return Arrays.stream(profiles)
+        ProfileStatusType filteredProfile = Arrays.stream(profiles)
                 .filter(profile -> !KeywordManager.hasForbiddenKeywords(profile.getForbiddenKeywords(), clientKeywords))
                 .map(profile -> {
                     int page1Count = KeywordManager.getMatchingKeywordCount(profile.getPage1Keywords(), clientKeywords);
@@ -49,6 +51,15 @@ public class RecommendedUserProfile {
                             result.get("profile"), result.get("totalMatchCount"),
                             result.get("page1Count"), result.get("page2Count"), result.get("page3Count"));
                     return (ProfileStatusType) result.get("profile");
-                });
+                })
+                .orElse(null);
+
+        if (filteredProfile == null) {
+            return Arrays.stream(profiles)
+                    .findFirst()
+                    .orElse(null);
+        }
+
+        return filteredProfile;
     }
 }
