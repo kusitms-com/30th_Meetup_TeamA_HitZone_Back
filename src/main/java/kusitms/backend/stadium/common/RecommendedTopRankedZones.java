@@ -8,25 +8,20 @@ import java.util.*;
 @Slf4j
 public class RecommendedTopRankedZones {
 
-    public static <T extends Enum<T> & StadiumStatusType> List<Map<String, Object>> getTopRankedZones(
+    public static <T extends Enum<T> & StadiumStatusType> List<T> getTopRankedZones(
             T[] zones, List<String> clientKeywords) {
 
-        List<Map<String, Object>> filteredZones = Arrays.stream(zones)
+        List<T> filteredZones = Arrays.stream(zones)
                 .filter(zone -> !KeywordManager.hasForbiddenKeywords(zone.getForbiddenKeywords(), clientKeywords))
                 .map(zone -> {
 
                     int page1Count = KeywordManager.getMatchingKeywordCount(zone.getPage1Keywords(), clientKeywords);
                     int page2Count = KeywordManager.getMatchingKeywordCount(zone.getPage2Keywords(), clientKeywords);
                     int page3Count = KeywordManager.getMatchingKeywordCount(zone.getPage3Keywords(), clientKeywords);
-
-                    // 총 겹치는 개수 계산
                     int totalMatchCount = page1Count + page2Count + page3Count;
 
                     Map<String, Object> result = new HashMap<>();
-                    result.put("zone", zone.getZone());
-                    result.put("explanations", zone.getExplanations());
-                    result.put("tip", zone.getTip());
-                    result.put("referencesGroup", zone.getReferencesGroup());
+                    result.put("zone", zone);
                     result.put("totalMatchCount", totalMatchCount);
                     result.put("page1Count", page1Count);
                     result.put("page2Count", page2Count);
@@ -52,28 +47,15 @@ public class RecommendedTopRankedZones {
                 .limit(3)
                 .map(result -> {
                     log.info("zone: {}, totalMatchCount: {}, page1Count: {}, page2Count: {}, page3Count: {}", result.get("zone"), result.get("totalMatchCount"), result.get("page1Count"), result.get("page2Count"), result.get("page3Count"));
-                    result.remove("totalMatchCount");
-                    result.remove("page1Count");
-                    result.remove("page2Count");
-                    result.remove("page3Count");
-                    return result;
+                    return (T) result.get("zone");
                 })
                 .toList();
 
         // 필터링된 결과가 없을 경우 첫 번째 구역을 반환
         if (filteredZones.isEmpty()) {
             return Arrays.stream(zones)
-                    .findFirst()  // 첫 번째 구역을 선택
-                    .map(zone -> {
-                        // 필요한 필드들만 포함한 Map 생성
-                        Map<String, Object> result = new HashMap<>();
-                        result.put("zone", zone.getZone());
-                        result.put("explanations", zone.getExplanations());
-                        result.put("tip", zone.getTip());
-                        result.put("referencesGroup", zone.getReferencesGroup());
-                        log.info("zone: {}", result.get("zone"));
-                        return Collections.singletonList(result);
-                    })
+                    .findFirst()
+                    .map(List::of)
                     .orElse(Collections.emptyList());
         }
 
