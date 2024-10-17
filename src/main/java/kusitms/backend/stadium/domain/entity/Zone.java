@@ -37,7 +37,7 @@ public class Zone extends BaseTimeEntity {
     private String tip;
 
     @Lob
-    @Convert(converter = ReferencesGroupConverter.class)  // referencesGroup을 JSON으로 직렬화
+    @Convert(converter = ReferencesGroupConverter.class)
     private List<ReferencesGroup> referencesGroup;
 
 }

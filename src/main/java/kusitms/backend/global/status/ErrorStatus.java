@@ -16,6 +16,8 @@ public enum ErrorStatus implements BaseErrorCode {
     _FORBIDDEN(HttpStatus.FORBIDDEN, "403", "금지된 요청 입니다."),
     _METHOD_NOT_ALLOWED(HttpStatus.FORBIDDEN, "403", "금지된 요청 입니다."),
     _FAILED_SAVE_REDIS(HttpStatus.INTERNAL_SERVER_ERROR, "500", "Redis 저장에 실패하였습니다."),
+    _FAILED_SERIALIZING_JSON(HttpStatus.INTERNAL_SERVER_ERROR, "500", "JSON으로의 직렬화에 실패했습니다."),
+    _FAILED_DESERIALIZING_JSON(HttpStatus.INTERNAL_SERVER_ERROR, "500", "JSON에서 역직렬화에 실패했습니다.")
     ;
 
     private final HttpStatus httpStatus;

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+import kusitms.backend.global.exception.CustomException;
+import kusitms.backend.global.status.ErrorStatus;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,20 +19,18 @@ public class StringListConverter implements AttributeConverter<List<String>, Str
     @Override
     public String convertToDatabaseColumn(List<String> attribute) {
         try {
-            // List<String>을 JSON으로 직렬화
             return objectMapper.writeValueAsString(attribute);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("Error serializing list to JSON", e);
+            throw new CustomException(ErrorStatus._FAILED_SERIALIZING_JSON);
         }
     }
 
     @Override
     public List<String> convertToEntityAttribute(String dbData) {
         try {
-            // JSON 문자열을 List<String>으로 역직렬화
             return objectMapper.readValue(dbData, new TypeReference<List<String>>() {});
         } catch (IOException e) {
-            throw new RuntimeException("Error deserializing JSON to list", e);
+            throw new CustomException(ErrorStatus._FAILED_DESERIALIZING_JSON);
         }
     }
 }

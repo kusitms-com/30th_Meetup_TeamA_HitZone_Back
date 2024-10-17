@@ -5,6 +5,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+import kusitms.backend.global.exception.CustomException;
+import kusitms.backend.global.status.ErrorStatus;
 import kusitms.backend.stadium.common.ReferencesGroup;
 
 import java.io.IOException;
@@ -18,20 +20,18 @@ public class ReferencesGroupConverter implements AttributeConverter<List<Referen
     @Override
     public String convertToDatabaseColumn(List<ReferencesGroup> attribute) {
         try {
-            // List<ReferencesGroup>을 JSON으로 직렬화
             return objectMapper.writeValueAsString(attribute);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("Error serializing list to JSON", e);
+            throw new CustomException(ErrorStatus._FAILED_SERIALIZING_JSON);
         }
     }
 
     @Override
     public List<ReferencesGroup> convertToEntityAttribute(String dbData) {
         try {
-            // JSON을 List<ReferencesGroup>으로 역직렬화
             return objectMapper.readValue(dbData, new TypeReference<List<ReferencesGroup>>() {});
         } catch (IOException e) {
-            throw new RuntimeException("Error deserializing JSON to list", e);
+            throw new CustomException(ErrorStatus._FAILED_DESERIALIZING_JSON);
         }
     }
 }
