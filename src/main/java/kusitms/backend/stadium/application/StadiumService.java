@@ -30,16 +30,11 @@ public class StadiumService {
             default -> throw new CustomException(StadiumErrorStatus._BAD_REQUEST_STADIUM);
         };
 
-        Map<String, Object> recommendedProfile = RecommendedUserProfile.getRecommendedUserProfile(
+        ProfileStatusType recommendedProfile = RecommendedUserProfile.getRecommendedUserProfile(
                 ProfileStatusType.values(), List.of(request.clientKeywords()));
-        List<Map<String, Object>> recommendZones = RecommendedTopRankedZones.getTopRankedZones(
+        List<T> recommendZones = RecommendedTopRankedZones.getTopRankedZones(
                 zones, List.of(request.clientKeywords()));
 
-        return TopRankedZoneResponseDto.of(
-                request.stadium(),
-                request.preference(),
-                recommendedProfile,
-                recommendZones
-        );
+
     }
 }
