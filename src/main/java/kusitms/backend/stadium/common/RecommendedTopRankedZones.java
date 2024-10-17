@@ -9,12 +9,13 @@ import java.util.*;
 public class RecommendedTopRankedZones {
 
     public static <T extends Enum<T> & StadiumStatusType> List<T> getTopRankedZones(
-            T[] zones, List<String> clientKeywords) {
+            T[] zones,
+            List<String> clientKeywords
+    ) {
 
         List<T> filteredZones = Arrays.stream(zones)
                 .filter(zone -> !KeywordManager.hasForbiddenKeywords(zone.getForbiddenKeywords(), clientKeywords))
                 .map(zone -> {
-
                     int page1Count = KeywordManager.getMatchingKeywordCount(zone.getPage1Keywords(), clientKeywords);
                     int page2Count = KeywordManager.getMatchingKeywordCount(zone.getPage2Keywords(), clientKeywords);
                     int page3Count = KeywordManager.getMatchingKeywordCount(zone.getPage3Keywords(), clientKeywords);
