@@ -3,6 +3,7 @@ package kusitms.backend.stadium.domain.entity;
 import jakarta.persistence.*;
 import kusitms.backend.global.domain.BaseTimeEntity;
 import kusitms.backend.stadium.domain.enums.ProfileStatusType;
+import kusitms.backend.stadium.domain.enums.StadiumStatusType;
 import lombok.*;
 
 @Entity
@@ -21,7 +22,7 @@ public class RecommendZone extends BaseTimeEntity {
     @JoinColumn(name = "result_id", nullable = false)
     private Result result;
 
-    @Column(nullable = false)
-    private ProfileStatusType zone;
+    @Enumerated(EnumType.STRING)
+    private StadiumStatusType zone;
 
 }

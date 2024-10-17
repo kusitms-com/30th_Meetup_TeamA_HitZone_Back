@@ -3,8 +3,8 @@ package kusitms.backend.stadium.presentation;
 import jakarta.validation.Valid;
 import kusitms.backend.global.dto.ApiResponse;
 import kusitms.backend.stadium.application.StadiumService;
-import kusitms.backend.stadium.dto.request.TopRankedZoneRequestDto;
-import kusitms.backend.stadium.dto.response.TopRankedZoneResponseDto;
+import kusitms.backend.stadium.dto.request.SaveTopRankedZoneRequestDto;
+import kusitms.backend.stadium.dto.response.SaveTopRankedZoneResponseDto;
 import kusitms.backend.stadium.status.StadiumSuccessStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ public class StadiumController {
     private final StadiumService stadiumService;
 
     @PostMapping("/zones/recommend")
-    public ResponseEntity<ApiResponse<TopRankedZoneResponseDto>> recommendZones(@Valid @RequestBody TopRankedZoneRequestDto request){
+    public ResponseEntity<ApiResponse<SaveTopRankedZoneResponseDto>> recommendZones(@Valid @RequestBody SaveTopRankedZoneRequestDto request){
         return ApiResponse.onSuccess(StadiumSuccessStatus._OK_RECOMMEND_ZONES, stadiumService.recommendZones(request));
     }
 }
