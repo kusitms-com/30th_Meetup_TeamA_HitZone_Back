@@ -2,6 +2,7 @@ package kusitms.backend.stadium.domain.entity;
 
 import jakarta.persistence.*;
 import kusitms.backend.stadium.domain.enums.ProfileStatusType;
+import kusitms.backend.user.domain.User;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -22,6 +23,10 @@ public class Result {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stadium_id", nullable = false)
     private Stadium stadium;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(nullable = false)
     private String preference;

@@ -6,6 +6,7 @@ import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.user.status.UserErrorStatus;
 import lombok.*;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,6 +37,5 @@ public class User extends BaseTimeEntity {
 
     @Column(nullable = false, unique = true)
     private String phoneNumber;
-
 
 }
