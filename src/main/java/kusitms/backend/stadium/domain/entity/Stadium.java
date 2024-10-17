@@ -1,6 +1,7 @@
 package kusitms.backend.stadium.domain.entity;
 
 import jakarta.persistence.*;
+import kusitms.backend.global.domain.BaseTimeEntity;
 import lombok.*;
 
 @Entity
@@ -8,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class Stadium {
+public class Stadium extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
