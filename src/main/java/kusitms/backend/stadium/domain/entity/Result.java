@@ -2,7 +2,6 @@ package kusitms.backend.stadium.domain.entity;
 
 import jakarta.persistence.*;
 import kusitms.backend.global.domain.BaseTimeEntity;
-import kusitms.backend.stadium.domain.enums.ProfileStatusType;
 import kusitms.backend.user.domain.User;
 import lombok.*;
 
@@ -38,6 +37,6 @@ public class Result extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "result", cascade = CascadeType.ALL)
     @Builder.Default
-    private List<RecommendZone> zones = new ArrayList<>();
+    private List<Zone> zones = new ArrayList<>();
 
 }

@@ -3,7 +3,7 @@ package kusitms.backend.stadium.application;
 import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.stadium.common.RecommendedUserProfile;
 import kusitms.backend.stadium.common.RecommendedTopRankedZones;
-import kusitms.backend.stadium.domain.entity.RecommendZone;
+import kusitms.backend.stadium.domain.entity.Zone;
 import kusitms.backend.stadium.domain.entity.Result;
 import kusitms.backend.stadium.domain.entity.Stadium;
 import kusitms.backend.stadium.domain.enums.JamsilStadiumStatusType;
@@ -53,7 +53,7 @@ public class StadiumService {
         resultRepository.save(result);
 
        recommendZones.forEach(zoneEnum -> {
-           RecommendZone zone = RecommendZone.builder()
+           Zone zone = Zone.builder()
                    .result(result)
                    .zone((StadiumStatusType) zoneEnum)
                    .build();
