@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import kusitms.backend.stadium.domain.enums.ProfileStatusType;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -25,4 +28,9 @@ public class Result {
 
     @Enumerated(EnumType.STRING)
     private ProfileStatusType profile;
+
+    @OneToMany(mappedBy = "result", cascade = CascadeType.ALL)
+    @Builder.Default
+    private List<RecommendedZone> zones = new ArrayList<>();
+
 }
