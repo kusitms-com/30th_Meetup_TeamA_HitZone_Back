@@ -1,5 +1,7 @@
 package kusitms.backend.stadium.dto.response;
 
+import kusitms.backend.stadium.domain.entity.Profile;
+
 import java.util.List;
 
 public record GetProfileResponseDto(
@@ -9,7 +11,13 @@ public record GetProfileResponseDto(
         String explanation,
         List<String> hashTags
 ){
-    public static GetProfileResponseDto of(Long profileId, String nickname, String type, String explanation, List<String> hashTags) {
-        return new GetProfileResponseDto(profileId, nickname, type, explanation, hashTags);
+    public static GetProfileResponseDto from(Profile profile) {
+        return new GetProfileResponseDto(
+                profile.getId(),
+                profile.getNickname(),
+                profile.getType(),
+                profile.getExplanation(),
+                profile.getHashTags()
+                );
     }
 }

@@ -16,6 +16,7 @@ import kusitms.backend.stadium.domain.repository.ResultRepository;
 import kusitms.backend.stadium.domain.repository.StadiumRepository;
 import kusitms.backend.stadium.domain.repository.ZoneRepository;
 import kusitms.backend.stadium.dto.request.SaveTopRankedZoneRequestDto;
+import kusitms.backend.stadium.dto.response.GetProfileResponseDto;
 import kusitms.backend.stadium.dto.response.SaveTopRankedZoneResponseDto;
 import kusitms.backend.stadium.status.StadiumErrorStatus;
 import kusitms.backend.user.domain.repository.UserRepository;
@@ -80,5 +81,13 @@ public class StadiumService {
        });
 
        return SaveTopRankedZoneResponseDto.from(result.getId());
+    }
+
+    @Transactional(readOnly = true)
+    public GetProfileResponseDto getRecommendedProfile(Long resultId) {
+        Result result = resultRepository.findById(resultId)
+                .orElseThrow(() -> new CustomException(StadiumErrorStatus._NOT_FOUND_RESULT));
+        Profile profile = profileRepository.findByResult(result);
+        return GetProfileResponseDto.from(profile);
     }
 }
