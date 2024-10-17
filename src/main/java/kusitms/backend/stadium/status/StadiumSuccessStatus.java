@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 @AllArgsConstructor
 public enum StadiumSuccessStatus implements BaseCode {
-    _OK_RECOMMEND_ZONES(HttpStatus.OK, "200", "조건에 맞는 구역 추천이 완료되었습니다."),
+    _OK_SAVE_RECOMMEND_ZONES(HttpStatus.OK, "200", "추천 받은 유저성향과 구역을 저장하였습니다."),
     ;
 
     private final HttpStatus httpStatus;

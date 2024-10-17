@@ -36,7 +36,7 @@ public class StadiumService {
     private final ProfileRepository profileRepository;
 
     @Transactional
-    public <T extends Enum<T> & StadiumStatusType> SaveTopRankedZoneResponseDto recommendZones(SaveTopRankedZoneRequestDto request) {
+    public <T extends Enum<T> & StadiumStatusType> SaveTopRankedZoneResponseDto saveRecommendedZones(SaveTopRankedZoneRequestDto request) {
 
         T[] zones = switch (request.stadium()) {
             case "잠실종합운동장" -> (T[]) JamsilStadiumStatusType.values();

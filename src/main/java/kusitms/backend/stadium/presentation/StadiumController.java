@@ -21,7 +21,7 @@ public class StadiumController {
     private final StadiumService stadiumService;
 
     @PostMapping("/zones/recommend")
-    public ResponseEntity<ApiResponse<SaveTopRankedZoneResponseDto>> recommendZones(@Valid @RequestBody SaveTopRankedZoneRequestDto request){
-        return ApiResponse.onSuccess(StadiumSuccessStatus._OK_RECOMMEND_ZONES, stadiumService.recommendZones(request));
+    public ResponseEntity<ApiResponse<SaveTopRankedZoneResponseDto>> saveRecommendedZones(@Valid @RequestBody SaveTopRankedZoneRequestDto request){
+        return ApiResponse.onSuccess(StadiumSuccessStatus._OK_SAVE_RECOMMEND_ZONES, stadiumService.saveRecommendedZones(request));
     }
 }
