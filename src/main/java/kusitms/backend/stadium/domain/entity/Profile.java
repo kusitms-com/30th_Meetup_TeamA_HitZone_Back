@@ -18,6 +18,10 @@ public class Profile {
     @Column(name = "profile_id", nullable = false)
     private Long id;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "result_id", nullable = false)
+    private Result result;
+
     @Column(nullable = false)
     private String nickname;
 
