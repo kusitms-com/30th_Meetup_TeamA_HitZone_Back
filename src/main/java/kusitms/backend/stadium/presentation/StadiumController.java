@@ -26,4 +26,13 @@ public class StadiumController {
         return ApiResponse.onSuccess(StadiumSuccessStatus._OK_SAVE_RECOMMEND_ZONES, stadiumService.saveRecommendedZones(request));
     }
 
+    /**
+     * 해당 결과의 프로필 정보를 조회한다.
+     * @return 프로필id, 닉네임, 타입, 설명, 해시태그
+     */
+    @GetMapping("/profiles")
+    public ResponseEntity<ApiResponse<GetProfileResponseDto>> getRecommendedProfile(@RequestParam Long resultId){
+        return ApiResponse.onSuccess(StadiumSuccessStatus._OK_GET_RECOMMEND_PROFILE, stadiumService.getRecommendedProfile(resultId));
+    }
+
 }
