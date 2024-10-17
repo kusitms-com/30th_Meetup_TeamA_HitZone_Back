@@ -36,4 +36,12 @@ public class StadiumController {
         return ApiResponse.onSuccess(StadiumSuccessStatus._OK_GET_RECOMMEND_PROFILE, stadiumService.getRecommendedProfile(resultId));
     }
 
+    @GetMapping("/zones/recommend")
+    public ResponseEntity<ApiResponse<GetZonesResponseDto>> getRecommendedZones(
+            @RequestParam Long resultId,
+            @RequestParam Long count
+    ){
+        return ApiResponse.onSuccess(StadiumSuccessStatus._OK_GET_RECOMMEND_ZONES, stadiumService.getRecommendedZones(resultId, count));
+    }
+
 }
