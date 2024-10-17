@@ -31,6 +31,6 @@ public class Result {
 
     @OneToMany(mappedBy = "result", cascade = CascadeType.ALL)
     @Builder.Default
-    private List<RecommendedZone> zones = new ArrayList<>();
+    private List<RecommendZone> zones = new ArrayList<>();
 
 }

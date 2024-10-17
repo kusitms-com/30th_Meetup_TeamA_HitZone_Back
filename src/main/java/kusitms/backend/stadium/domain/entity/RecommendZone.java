@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class RecommendedZone {
+public class RecommendZone {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
