@@ -9,8 +9,8 @@ import org.springframework.http.HttpStatus;
 @Getter
 @RequiredArgsConstructor
 public enum StadiumErrorStatus implements BaseErrorCode {
-    _NOT_FOUND_STADIUM(HttpStatus.NOT_FOUND, "8201", "해당하는 스타디움이 존재하지 않습니다. 구장이름을 다시 한번 확인해주세요."),
-    _NOT_FOUND_RESULT(HttpStatus.NOT_FOUND, "8202", "해당하는 추천 결과가 존재하지 않습니다.");
+    _NOT_FOUND_STADIUM(HttpStatus.NOT_FOUND, "STADIUM-001", "해당하는 스타디움이 존재하지 않습니다. 구장이름을 다시 한번 확인해주세요."),
+    _NOT_FOUND_RESULT(HttpStatus.NOT_FOUND, "STADIUM-002", "해당하는 추천 결과가 존재하지 않습니다.");
 
     private final HttpStatus httpStatus;
     private final String code;
