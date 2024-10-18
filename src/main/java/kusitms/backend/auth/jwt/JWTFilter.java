@@ -43,13 +43,12 @@ public class JWTFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
-        return path.equals("/") || path.equals("/login") || path.equals("/login/kakao") || path.equals("/login/naver") || path.equals("/login/google")
-                || path.startsWith("/public") || path.equals("/api/v1/test-error") || path.equals("/api/v1/health-check")
+        return path.equals("/") || path.startsWith("/login") || path.startsWith("/public")
+                || path.equals("/api/v1/test-error") || path.equals("/api/v1/health-check")
                 || path.equals("/api/v1/signup") || path.equals("/api/v1/send-code") || path.equals("/api/v1/verify-code")
                 || path.equals("/api/v1/token/re-issue")
-                || path.equals("/api/v1/zones/recommend")
-                || path.startsWith("/api/v1/chatbot")
-                || path.equals("/api/v1/zones/recommend");
+                || path.equals("/api/v1/zones/recommend") || path.equals("/api/v1/profiles")
+                || path.startsWith("/api/v1/chatbot");
     }
 
     // 사용자 인증 설정
@@ -69,7 +68,7 @@ public class JWTFilter extends OncePerRequestFilter {
         response.getWriter().write(jsonResponse);
     }
 
-    // 토큰 예외 처리 메서드
+    // 공통 예외 처리 메서드
     private void handleException(HttpServletResponse response, Exception e) throws IOException {
         log.error("서버 예외 발생: {}", e.getMessage());
         response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

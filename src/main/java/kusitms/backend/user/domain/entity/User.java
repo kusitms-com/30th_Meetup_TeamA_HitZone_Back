@@ -1,14 +1,9 @@
-package kusitms.backend.user.domain;
+package kusitms.backend.user.domain.entity;
 
 import jakarta.persistence.*;
 import kusitms.backend.global.domain.BaseTimeEntity;
-import kusitms.backend.global.exception.CustomException;
-import kusitms.backend.user.status.UserErrorStatus;
+import kusitms.backend.user.domain.enums.ProviderStatusType;
 import lombok.*;
-
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Entity(name="users")
 @Getter

@@ -7,10 +7,15 @@ import java.util.List;
 
 public record GetZonesResponseDto (List<ZoneResponseDto> zones) {
 
-    public record ZoneResponseDto (Long zoneId, String name, List<String> explanations, String tip, List<ReferencesGroup> referencesGroup) {
+    public record ZoneResponseDto (
+            Long zoneId,
+            String name,
+            List<String> explanations,
+            String tip,
+            List<ReferencesGroup> referencesGroup
+    ) {
         public static ZoneResponseDto from(Zone zone) {
-            return new ZoneResponseDto(zone.getId(), zone.getName(), zone.getExplanations(), zone.getTip(), zone.getReferencesGroup()
-            );
+            return new ZoneResponseDto(zone.getId(), zone.getName(), zone.getExplanations(), zone.getTip(), zone.getReferencesGroup());
         }
     }
 

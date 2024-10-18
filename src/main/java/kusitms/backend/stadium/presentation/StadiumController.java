@@ -24,7 +24,9 @@ public class StadiumController {
      * @return 저장결과id
      */
     @PostMapping("/zones/recommend")
-    public ResponseEntity<ApiResponse<SaveTopRankedZoneResponseDto>> saveRecommendedZones(@Valid @RequestBody SaveTopRankedZoneRequestDto request){
+    public ResponseEntity<ApiResponse<SaveTopRankedZoneResponseDto>> saveRecommendedZones(
+            @Valid @RequestBody SaveTopRankedZoneRequestDto request
+    ) {
         return ApiResponse.onSuccess(StadiumSuccessStatus._OK_SAVE_RECOMMEND_ZONES, stadiumService.saveRecommendedZones(request));
     }
 
@@ -33,7 +35,9 @@ public class StadiumController {
      * @return 프로필id, 닉네임, 타입, 설명, 해시태그
      */
     @GetMapping("/profiles")
-    public ResponseEntity<ApiResponse<GetProfileResponseDto>> getRecommendedProfile(@RequestParam Long resultId){
+    public ResponseEntity<ApiResponse<GetProfileResponseDto>> getRecommendedProfile(
+            @RequestParam Long resultId
+    ) {
         return ApiResponse.onSuccess(StadiumSuccessStatus._OK_GET_RECOMMEND_PROFILE, stadiumService.getRecommendedProfile(resultId));
     }
 
@@ -41,7 +45,7 @@ public class StadiumController {
     public ResponseEntity<ApiResponse<GetZonesResponseDto>> getRecommendedZones(
             @RequestParam Long resultId,
             @RequestParam Long count
-    ){
+    ) {
         return ApiResponse.onSuccess(StadiumSuccessStatus._OK_GET_RECOMMEND_ZONES, stadiumService.getRecommendedZones(resultId, count));
     }
 

@@ -8,12 +8,10 @@ import jakarta.persistence.Converter;
 import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.global.status.ErrorStatus;
 import kusitms.backend.stadium.common.ReferencesGroup;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.util.List;
 
-@Slf4j
 @Converter
 public class ReferencesGroupConverter implements AttributeConverter<List<ReferencesGroup>, String> {
 

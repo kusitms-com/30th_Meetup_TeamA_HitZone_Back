@@ -23,8 +23,10 @@ public class UserController {
      * @return X
      */
     @PostMapping("/signup")
-    public ResponseEntity<ApiResponse<Void>> signupUser(@CookieValue(required = false) String registerToken,
-                                                        @Valid @RequestBody SignUpRequestDto request){
+    public ResponseEntity<ApiResponse<Void>> signupUser(
+            @CookieValue(required = false) String registerToken,
+            @Valid @RequestBody SignUpRequestDto request
+    ) {
         userService.signupUser(registerToken, request);
         return ApiResponse.onSuccess(UserSuccessStatus._CREATED_USER);
     }
@@ -43,18 +45,22 @@ public class UserController {
      * @return X
      */
 //    @PostMapping("/send-code")
-//    public ResponseEntity<ApiResponse<Void>> sendAuthCode(@Valid @RequestBody SendAuthCodeRequestDto request) {
+//    public ResponseEntity<ApiResponse<Void>> sendAuthCode(
+//        @Valid @RequestBody SendAuthCodeRequestDto request
+//    ) {
 //        userService.sendAuthCode(request);
 //        return ApiResponse.onSuccess(UserSuccessStatus._OK_SEND_AUTH_CODE);
 //    }
-//
+
 
     /**
      * 인증코드를 확인하여 휴대폰 인증을 진행한다.
      * @return X
      */
 //    @PostMapping("/verify-code")
-//    public ResponseEntity<ApiResponse<Void>> verifyAuthCode(@Valid @RequestBody VerifyAuthCodeRequestDto request) {
+//    public ResponseEntity<ApiResponse<Void>> verifyAuthCode(
+//            @Valid @RequestBody VerifyAuthCodeRequestDto request
+//    ) {
 //        userService.verifyAuthCode(request);
 //        return ApiResponse.onSuccess(UserSuccessStatus._OK_VERIFY_AUTH_CODE);
 //    }

@@ -1,6 +1,6 @@
 package kusitms.backend.user.domain.repository;
 
-import kusitms.backend.user.domain.User;
+import kusitms.backend.user.domain.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {

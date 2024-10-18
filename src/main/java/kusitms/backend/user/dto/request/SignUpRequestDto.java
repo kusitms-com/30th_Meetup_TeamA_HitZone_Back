@@ -2,8 +2,8 @@ package kusitms.backend.user.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import kusitms.backend.global.exception.CustomException;
-import kusitms.backend.user.domain.ProviderStatusType;
-import kusitms.backend.user.domain.User;
+import kusitms.backend.user.domain.enums.ProviderStatusType;
+import kusitms.backend.user.domain.entity.User;
 import kusitms.backend.user.status.UserErrorStatus;
 
 import java.util.regex.Matcher;
@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 public record SignUpRequestDto(
         @NotBlank(message = "이름은 공백이나 빈칸일 수 없습니다.") String name,
         @NotBlank(message = "휴대폰 번호는 공백이나 빈칸일 수 없습니다.") String phoneNumber
-){
+) {
         public static User toEntity(String provider, String providerId, String email, String name, String phoneNumber) {
                 return User.builder()
                         .provider(ProviderStatusType.of(provider))

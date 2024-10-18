@@ -1,4 +1,4 @@
-package kusitms.backend.user.domain;
+package kusitms.backend.user.domain.enums;
 
 import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.user.status.UserErrorStatus;

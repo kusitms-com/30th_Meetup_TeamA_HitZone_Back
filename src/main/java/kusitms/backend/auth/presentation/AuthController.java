@@ -18,9 +18,15 @@ public class AuthController {
 
     private final AuthService authService;
 
+    /**
+     * 리프레시토큰을 통해 토큰을 재발급하여 쿠키에 넣어준다.
+     * @return X
+     */
     @PutMapping("/token/re-issue")
-    public ResponseEntity<ApiResponse<Void>> reIssueToken(@CookieValue(required = false) String refreshToken,
-                                                          HttpServletResponse response) {
+    public ResponseEntity<ApiResponse<Void>> reIssueToken(
+            @CookieValue(required = false) String refreshToken,
+            HttpServletResponse response
+    ) {
         authService.reIssueToken(refreshToken, response);
         return ApiResponse.onSuccess(AuthSuccessStatus._OK_RE_ISSUE_TOKEN);
     }

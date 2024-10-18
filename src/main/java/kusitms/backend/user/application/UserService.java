@@ -4,8 +4,8 @@ import kusitms.backend.auth.jwt.JWTUtil;
 import kusitms.backend.auth.jwt.SecurityContextProvider;
 import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.global.redis.RedisManager;
-import kusitms.backend.user.domain.ProviderStatusType;
-import kusitms.backend.user.domain.User;
+import kusitms.backend.user.domain.enums.ProviderStatusType;
+import kusitms.backend.user.domain.entity.User;
 import kusitms.backend.user.domain.repository.UserRepository;
 import kusitms.backend.user.dto.request.SignUpRequestDto;
 import kusitms.backend.user.dto.request.SendAuthCodeRequestDto;
@@ -71,7 +71,7 @@ public class UserService {
     public void sendAuthCode(SendAuthCodeRequestDto request) {
         String authCode = generateAuthCode();
         redisManager.saveAuthCode(request.phoneNumber(), authCode);
-        smsService.sendSms(request.phoneNumber(),"인증 코드 번호 : " + authCode);
+        smsService.sendSms(request.phoneNumber(),"히트존 인증 코드 번호 : " + authCode);
     }
 
     // 랜덤 인증 코드 생성

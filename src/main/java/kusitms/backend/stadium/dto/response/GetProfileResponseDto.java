@@ -12,12 +12,6 @@ public record GetProfileResponseDto(
         List<String> hashTags
 ) {
     public static GetProfileResponseDto from(Profile profile) {
-        return new GetProfileResponseDto(
-                profile.getId(),
-                profile.getNickname(),
-                profile.getType(),
-                profile.getExplanation(),
-                profile.getHashTags()
-                );
+        return new GetProfileResponseDto(profile.getId(), profile.getNickname(), profile.getType(), profile.getExplanation(), profile.getHashTags());
     }
 }

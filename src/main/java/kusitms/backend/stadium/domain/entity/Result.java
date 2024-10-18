@@ -2,7 +2,7 @@ package kusitms.backend.stadium.domain.entity;
 
 import jakarta.persistence.*;
 import kusitms.backend.global.domain.BaseTimeEntity;
-import kusitms.backend.user.domain.User;
+import kusitms.backend.user.domain.entity.User;
 import lombok.*;
 
 import java.util.ArrayList;

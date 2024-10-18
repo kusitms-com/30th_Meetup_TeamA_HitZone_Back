@@ -59,7 +59,6 @@ public class RecommendedUserProfile {
                     .findFirst()
                     .orElse(null);
         }
-
         return filteredProfile;
     }
 }

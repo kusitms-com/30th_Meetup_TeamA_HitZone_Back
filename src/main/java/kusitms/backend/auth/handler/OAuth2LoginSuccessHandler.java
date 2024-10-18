@@ -9,7 +9,7 @@ import kusitms.backend.auth.dto.response.OAuth2UserInfo;
 import kusitms.backend.auth.jwt.JWTUtil;
 import kusitms.backend.global.redis.RedisManager;
 import kusitms.backend.global.util.CookieUtil;
-import kusitms.backend.user.domain.User;
+import kusitms.backend.user.domain.entity.User;
 import kusitms.backend.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,13 +35,13 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
     private String REDIRECT_URI_BASE; // 기존 유저 리다이렉트할 URI
 
     @Value("${spring.jwt.register-token.expiration-time}")
-    private long REGISTER_TOKEN_EXPIRATION_TIME; // 레지스터 토큰 유효기간
+    private long REGISTER_TOKEN_EXPIRATION_TIME;
 
     @Value("${spring.jwt.access-token.expiration-time}")
-    private long ACCESS_TOKEN_EXPIRATION_TIME; // 액세스 토큰 유효기간
+    private long ACCESS_TOKEN_EXPIRATION_TIME;
 
     @Value("${spring.jwt.refresh-token.expiration-time}")
-    private long REFRESH_TOKEN_EXPIRATION_TIME; // 리프레시 토큰 유효기간
+    private long REFRESH_TOKEN_EXPIRATION_TIME;
 
     private OAuth2UserInfo oAuth2UserInfo = null;
     private final JWTUtil jwtUtil;
@@ -75,13 +75,10 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             String refreshToken = jwtUtil.generateToken(existUser.getId(), REFRESH_TOKEN_EXPIRATION_TIME);
 
             redisManager.saveRefreshToken(existUser.getId().toString(), refreshToken);
-            // 액세스 토큰과 리프레시 토큰을 쿠키로 설정
             CookieUtil.setCookie(response, "accessToken", accessToken, (int) (ACCESS_TOKEN_EXPIRATION_TIME * 1.5) / 1000);
             CookieUtil.setCookie(response, "refreshToken", refreshToken, (int) REFRESH_TOKEN_EXPIRATION_TIME / 1000);
-//            CookieUtil.setNotHttpOnlyCookie(response, "expirationTime", (int) ACCESS_TOKEN_EXPIRATION_TIME / 1000, (int) ACCESS_TOKEN_EXPIRATION_TIME / 1000);
+            CookieUtil.setNotHttpOnlyCookie(response, "expirationTime", String.valueOf((int) ACCESS_TOKEN_EXPIRATION_TIME / 1000), (int) (ACCESS_TOKEN_EXPIRATION_TIME * 1.5) / 1000);
             getRedirectStrategy().sendRedirect(request, response, REDIRECT_URI_BASE);
         }
     }
-
-
 }

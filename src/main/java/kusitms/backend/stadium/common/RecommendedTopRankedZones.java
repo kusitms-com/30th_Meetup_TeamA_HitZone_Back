@@ -59,7 +59,6 @@ public class RecommendedTopRankedZones {
                     .map(List::of)
                     .orElse(Collections.emptyList());
         }
-
         return filteredZones;
     }
 }
