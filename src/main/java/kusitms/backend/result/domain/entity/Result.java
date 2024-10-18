@@ -21,7 +21,7 @@ public class Result extends BaseTimeEntity {
     @Column(name = "result_id", nullable = false)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stadium_id", nullable = false)
     private Stadium stadium;
 

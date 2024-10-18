@@ -1,5 +1,6 @@
 package kusitms.backend.result.application;
 
+import kusitms.backend.auth.jwt.JWTUtil;
 import kusitms.backend.auth.jwt.SecurityContextProvider;
 import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.result.common.RecommendUserProfile;
@@ -42,21 +43,10 @@ public class ResultService {
     private final ResultRepository resultRepository;
     private final ZoneRepository zoneRepository;
     private final ProfileRepository profileRepository;
+    private final JWTUtil jwtUtil;
 
     @Transactional
-    public <T extends Enum<T> & StadiumStatusType> SaveTopRankedZoneResponseDto saveRecommendedZones(SaveTopRankedZoneRequestDto request) {
-        Long userId = SecurityContextProvider.getAuthenticatedUserId();
-
-        if (userId == null){
-            log.info("널이다");
-        } else {
-            log.info("널아니다");
-        }
-
-//        User user = userRepository.findById(userId)
-//                .orElseThrow(() -> new CustomException(UserErrorStatus._NOT_FOUND_USER));
-//        log.info("유저 정보 조회 성공");
-
+    public <T extends Enum<T> & StadiumStatusType> SaveTopRankedZoneResponseDto saveRecommendedZones(String accessToken, SaveTopRankedZoneRequestDto request) {
 
         T[] zones = switch (request.stadium()) {
             case "잠실종합운동장" -> (T[]) JamsilStadiumStatusType.values();
@@ -71,11 +61,27 @@ public class ResultService {
 
         Stadium stadium = stadiumRepository.findByName(request.stadium())
                 .orElseThrow(() -> new CustomException(StadiumErrorStatus._NOT_FOUND_STADIUM));
-        Result result = Result.builder()
-                .stadium(stadium)
-                .preference(request.preference())
-                .build();
-        resultRepository.save(result);
+        Result result;
+        if (accessToken == null) {
+            result = Result.builder()
+                    .stadium(stadium)
+                    .preference(request.preference())
+                    .build();
+            resultRepository.save(result);
+        }
+        else{
+            Long userId = jwtUtil.getUserIdFromToken(accessToken);
+            User user = userRepository.findById(userId)
+                    .orElseThrow(() -> new CustomException(UserErrorStatus._NOT_FOUND_USER));
+            log.info("유저 정보 조회 성공");
+
+            result = Result.builder()
+                    .stadium(stadium)
+                    .user(user)
+                    .preference(request.preference())
+                    .build();
+            resultRepository.save(result);
+        }
 
         Profile profile = Profile.builder()
                 .result(result)

@@ -25,9 +25,10 @@ public class ResultController {
      */
     @PostMapping("/zones/recommend")
     public ResponseEntity<ApiResponse<SaveTopRankedZoneResponseDto>> saveRecommendedZones(
+            @CookieValue(required = false) String accessToken,
             @Valid @RequestBody SaveTopRankedZoneRequestDto request
     ) {
-        return ApiResponse.onSuccess(ResultSuccessStatus._OK_SAVE_RECOMMEND_ZONES, resultService.saveRecommendedZones(request));
+        return ApiResponse.onSuccess(ResultSuccessStatus._OK_SAVE_RECOMMEND_ZONES, resultService.saveRecommendedZones(accessToken, request));
     }
 
     /**
