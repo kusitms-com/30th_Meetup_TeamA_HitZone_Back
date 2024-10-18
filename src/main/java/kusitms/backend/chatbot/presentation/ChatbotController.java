@@ -2,7 +2,7 @@ package kusitms.backend.chatbot.presentation;
 
 import jakarta.websocket.server.PathParam;
 import kusitms.backend.chatbot.application.ChatbotService;
-import kusitms.backend.chatbot.dto.GetGuideChatbotAnswerResponse;
+import kusitms.backend.chatbot.dto.response.GetGuideChatbotAnswerResponse;
 import kusitms.backend.chatbot.status.ChatbotSuccessStatus;
 import kusitms.backend.global.dto.ApiResponse;
 import lombok.RequiredArgsConstructor;

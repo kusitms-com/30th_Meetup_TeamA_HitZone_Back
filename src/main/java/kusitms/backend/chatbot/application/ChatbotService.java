@@ -1,7 +1,7 @@
 package kusitms.backend.chatbot.application;
 
 import kusitms.backend.chatbot.domain.enums.*;
-import kusitms.backend.chatbot.dto.GetGuideChatbotAnswerResponse;
+import kusitms.backend.chatbot.dto.response.GetGuideChatbotAnswerResponse;
 import kusitms.backend.chatbot.status.ChatbotErrorStatus;
 import kusitms.backend.global.exception.CustomException;
 import lombok.RequiredArgsConstructor;
