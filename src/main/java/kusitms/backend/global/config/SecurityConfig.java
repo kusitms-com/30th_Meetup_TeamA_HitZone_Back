@@ -44,6 +44,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers(
                                 "/", "/login", "/login/google", "/login/naver", "/login/kakao",
+                                "/onboarding", "/base",
                                 "/api/v1/health-check", "/api/v1/test-error",
                                 "/api/v1/signup", "/api/v1/send-code","/api/v1/verify-code",
                                 "/api/v1/token/re-issue",

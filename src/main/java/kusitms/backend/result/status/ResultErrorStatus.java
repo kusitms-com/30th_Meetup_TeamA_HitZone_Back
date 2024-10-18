@@ -1,4 +1,4 @@
-package kusitms.backend.stadium.status;
+package kusitms.backend.result.status;
 
 import kusitms.backend.global.code.BaseErrorCode;
 import kusitms.backend.global.dto.ErrorReasonDto;
@@ -8,8 +8,8 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @RequiredArgsConstructor
-public enum StadiumErrorStatus implements BaseErrorCode {
-    _NOT_FOUND_STADIUM(HttpStatus.NOT_FOUND, "STADIUM-001", "해당하는 스타디움이 존재하지 않습니다. 구장이름을 다시 한번 확인해주세요."),
+public enum ResultErrorStatus implements BaseErrorCode {
+    _NOT_FOUND_RESULT(HttpStatus.NOT_FOUND, "RESULT-001", "해당하는 추천 결과가 존재하지 않습니다."),
     ;
 
     private final HttpStatus httpStatus;
