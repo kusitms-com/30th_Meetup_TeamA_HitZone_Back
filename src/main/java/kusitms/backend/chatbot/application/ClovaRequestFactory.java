@@ -19,4 +19,4 @@ public class ClovaRequestFactory {
 
         return new ClovaRequest(messages, 0.8, 0.3, 256, 5.0);
     }
-},
+}
