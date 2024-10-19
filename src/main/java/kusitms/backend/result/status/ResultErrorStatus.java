@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum ResultErrorStatus implements BaseErrorCode {
     _NOT_FOUND_RESULT(HttpStatus.NOT_FOUND, "RESULT-001", "해당하는 추천 결과가 존재하지 않습니다."),
-    ;
+    _NOT_FOUND_PROFILE(HttpStatus.NOT_FOUND, "RESULT-002", "해당하는 결과에 대한 추천 프로필이 존재하지 않습니다.");
 
     private final HttpStatus httpStatus;
     private final String code;

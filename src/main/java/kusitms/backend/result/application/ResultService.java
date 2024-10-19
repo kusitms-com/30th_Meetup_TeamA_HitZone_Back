@@ -110,7 +110,8 @@ public class ResultService {
     public GetProfileResponseDto getRecommendedProfile(Long resultId) {
         Result result = resultRepository.findById(resultId)
                 .orElseThrow(() -> new CustomException(ResultErrorStatus._NOT_FOUND_RESULT));
-        Profile profile = profileRepository.findByResult(result);
+        Profile profile = profileRepository.findByResult(result)
+                .orElseThrow(() -> new CustomException(ResultErrorStatus._NOT_FOUND_PROFILE));
         return GetProfileResponseDto.from(profile);
     }
 
