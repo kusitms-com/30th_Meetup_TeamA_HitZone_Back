@@ -6,7 +6,6 @@ import kusitms.backend.auth.status.AuthErrorStatus;
 import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.global.redis.RedisManager;
 import kusitms.backend.user.domain.entity.User;
-import kusitms.backend.user.domain.enums.ProviderStatusType;
 import kusitms.backend.user.domain.repository.UserRepository;
 import kusitms.backend.user.dto.request.SendAuthCodeRequestDto;
 import kusitms.backend.user.dto.request.SignUpRequestDto;
@@ -37,24 +36,25 @@ public class UserService {
         String providerId = jwtUtil.getProviderIdFromRegisterToken(registerToken);
         String email = jwtUtil.getEmailFromRegisterToken(registerToken);
 
-        User existedUser = userRepository.findByPhoneNumber(request.phoneNumber());
-        if (existedUser != null && existedUser.getProvider() != ProviderStatusType.of(provider)) {
-            if (existedUser.getProvider() == ProviderStatusType.of("kakao")) {
-                throw new CustomException(UserErrorStatus._EXISTING_USER_ACCOUNT_KAKAO);
-            } else if (existedUser.getProvider() == ProviderStatusType.of("google")) {
-                throw new CustomException(UserErrorStatus._EXISTING_USER_ACCOUNT_GOOGLE);
-            } else if (existedUser.getProvider() == ProviderStatusType.of("naver")) {
-                throw new CustomException(UserErrorStatus._EXISTING_USER_ACCOUNT_NAVER);
-            }
-        }
+        // 1인 1계정 처리를 위한 이미 등록된 회원인지 확인하여 알려주기
+//        User existedUser = userRepository.findByPhoneNumber(request.phoneNumber());
+//        if (existedUser != null && existedUser.getProvider() != ProviderStatusType.of(provider)) {
+//            if (existedUser.getProvider() == ProviderStatusType.of("kakao")) {
+//                throw new CustomException(UserErrorStatus._EXISTING_USER_ACCOUNT_KAKAO);
+//            } else if (existedUser.getProvider() == ProviderStatusType.of("google")) {
+//                throw new CustomException(UserErrorStatus._EXISTING_USER_ACCOUNT_GOOGLE);
+//            } else if (existedUser.getProvider() == ProviderStatusType.of("naver")) {
+//                throw new CustomException(UserErrorStatus._EXISTING_USER_ACCOUNT_NAVER);
+//            }
+//        }
 
         userRepository.save(
                 SignUpRequestDto.toEntity(
                         provider,
                         providerId,
                         email,
-                        request.name(),
-                        request.phoneNumber())
+                        request.name()
+                )
         );
         log.info("유저 회원가입 성공");
     }
@@ -65,7 +65,7 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(UserErrorStatus._NOT_FOUND_USER));
         log.info("유저 정보 조회 성공");
-        return UserInfoResponseDto.of(user);
+        return UserInfoResponseDto.from(user);
     }
 
     @Transactional
@@ -75,7 +75,6 @@ public class UserService {
         smsService.sendSms(request.phoneNumber(),"히트존 인증 코드 번호 : " + authCode);
     }
 
-    // 랜덤 인증 코드 생성
     private String generateAuthCode() {
         return String.valueOf((int) (Math.random() * 900000) + 100000); // 6자리 인증 코드 생성
     }

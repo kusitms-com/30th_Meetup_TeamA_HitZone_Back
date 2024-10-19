@@ -31,16 +31,14 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, unique = true)
-    private String phoneNumber;
+//    @Column(nullable = false, unique = true)
+//    private String phoneNumber;
 
     @Builder
-    public User(ProviderStatusType provider, String providerId, String email, String name, String phoneNumber) {
+    public User(ProviderStatusType provider, String providerId, String email, String name) {
         this.provider = provider;
         this.providerId = providerId;
         this.email = email;
         this.name = name;
-        this.phoneNumber = phoneNumber;
     }
-
 }
