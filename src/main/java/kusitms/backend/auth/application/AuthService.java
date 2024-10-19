@@ -18,10 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthService {
 
     @Value("${spring.jwt.access-token.expiration-time}")
-    private long ACCESS_TOKEN_EXPIRATION_TIME; // 액세스 토큰 유효기간
+    private long ACCESS_TOKEN_EXPIRATION_TIME;
 
     @Value("${spring.jwt.refresh-token.expiration-time}")
-    private long REFRESH_TOKEN_EXPIRATION_TIME; // 리프레시 토큰 유효기간
+    private long REFRESH_TOKEN_EXPIRATION_TIME;
 
     private final JWTUtil jwtUtil;
     private final RedisManager redisManager;
@@ -37,15 +37,14 @@ public class AuthService {
             throw new CustomException(AuthErrorStatus._TOKEN_USER_MISMATCH);
         }
 
-        // 리프레시 토큰 검증
         jwtUtil.validateRefreshToken(storedRefreshToken);
-        // 새로운 액세스 토큰과 리프레시 토큰 발급
         String newAccessToken = jwtUtil.generateToken(userId, ACCESS_TOKEN_EXPIRATION_TIME);  // 1시간 유효기간
         String newRefreshToken = jwtUtil.generateToken(userId, REFRESH_TOKEN_EXPIRATION_TIME);  // 14일 유효기간
         redisManager.saveRefreshToken(userId.toString(), newRefreshToken);
 
-        CookieUtil.setCookie(response, "accessToken", newAccessToken, (int) (ACCESS_TOKEN_EXPIRATION_TIME * 1.5) / 1000);  // 1시간
-        CookieUtil.setCookie(response, "refreshToken", newRefreshToken, (int) REFRESH_TOKEN_EXPIRATION_TIME / 1000);  // 14일
+        CookieUtil.setCookie(response, "accessToken", newAccessToken, (int) (ACCESS_TOKEN_EXPIRATION_TIME * 1.5) / 1000);
+        CookieUtil.setCookie(response, "refreshToken", newRefreshToken, (int) REFRESH_TOKEN_EXPIRATION_TIME / 1000);
+        CookieUtil.setNotHttpOnlyCookie(response, "expirationTime", String.valueOf((int) ACCESS_TOKEN_EXPIRATION_TIME / 1000), (int) (ACCESS_TOKEN_EXPIRATION_TIME * 1.5) / 1000);
     }
 
 

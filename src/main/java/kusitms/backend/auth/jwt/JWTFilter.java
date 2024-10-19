@@ -43,15 +43,14 @@ public class JWTFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
-        return path.equals("/") || path.equals("/login") || path.equals("/login/kakao") || path.equals("/login/naver") || path.equals("/login/google")
-
-                || path.startsWith("/public") || path.equals("/api/v1/health-check") || path.equals("/api/v1/test-error") || path.equals("/api/v1/test/docs")
-                || path.startsWith("/docs/swagger-ui") || path.equals("/v3/api-docs/swagger-config") || path.equals("/docs/open-api-3.0.1.json")
+        return path.equals("/") || path.startsWith("/login") || path.startsWith("/public")
+                || path.equals("/api/v1/test-error") || path.equals("/api/v1/health-check")
+                || path.equals("/onboarding") || path.equals("/base")
                 || path.equals("/api/v1/signup") || path.equals("/api/v1/send-code") || path.equals("/api/v1/verify-code")
                 || path.equals("/api/v1/token/re-issue")
-                || path.equals("/api/v1/zones/recommend")
-                || path.startsWith("/api/v1/chatbot")
-                ;
+                || path.equals("/api/v1/test/docs") || path.startsWith("/docs/swagger-ui") || path.equals("/v3/api-docs/swagger-config") || path.equals("/docs/open-api-3.0.1.json")
+                || path.equals("/api/v1/zones/recommend") || path.equals("/api/v1/profiles")
+                || path.startsWith("/api/v1/chatbot");
     }
 
     // 사용자 인증 설정

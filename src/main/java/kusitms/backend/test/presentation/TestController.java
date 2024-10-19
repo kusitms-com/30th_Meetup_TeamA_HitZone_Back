@@ -19,19 +19,27 @@ public class TestController {
 
     private final TestService testService;
 
-    // 헬스체크용 API
+    /**
+     * 헬스체크용 API
+     * @return X
+     */
     @GetMapping("/health-check")
     public ResponseEntity<ApiResponse<Void>> healthCheck() {
         return ApiResponse.onSuccess(TestSuccessStatus._HEALTH_CHECK);
     }
 
-    // 테스트 에러용 API
+    /**
+     * 에러 테스트용 API
+     */
     @GetMapping("/test-error")
     public void getError() {
         throw new CustomException(TestErrorStatus._TEST_ERROR);
     }
 
-    // rest-docs 테스트용 API
+    /**
+     * 레스트 독스 테스트용 API
+     * @return name, keyword, request
+     */
     @PostMapping("/test/docs")
     public ResponseEntity<ApiResponse<TestDocsResponseDto>> testDocs(@RequestParam String name,
                                                       @RequestParam String keyword,

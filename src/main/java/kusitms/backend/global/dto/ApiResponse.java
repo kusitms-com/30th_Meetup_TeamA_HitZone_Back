@@ -1,7 +1,6 @@
 package kusitms.backend.global.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import kusitms.backend.global.code.BaseCode;
 import kusitms.backend.global.code.BaseErrorCode;
 import lombok.Getter;
