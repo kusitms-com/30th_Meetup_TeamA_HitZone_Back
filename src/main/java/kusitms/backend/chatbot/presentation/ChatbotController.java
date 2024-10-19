@@ -1,5 +1,6 @@
 package kusitms.backend.chatbot.presentation;
 
+import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
 import kusitms.backend.chatbot.application.ChatbotService;
 import kusitms.backend.chatbot.application.ClovaService;
@@ -34,7 +35,7 @@ public class ChatbotController {
     // Clova 챗봇 답변 조회 API
     @PostMapping("/clova")
     public ResponseEntity<ApiResponse<GetClovaChatbotAnswerResponse>> getClovaChatbotAnswer(
-            @RequestBody GetClovaChatbotAnswerRequest request) {
+            @Valid @RequestBody GetClovaChatbotAnswerRequest request) {
 
         GetClovaChatbotAnswerResponse response = clovaService.getClovaChatbotAnswer(request.message());
 
