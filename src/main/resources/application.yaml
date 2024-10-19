@@ -88,3 +88,10 @@ spring:
       host: ${REDIS_HOST}
       port: ${REDIS_PORT}
 
+clova:
+  api:
+    url: ${CLOVA_API_URL}
+    api-key: ${CLOVA_API_KEY}
+    api-gateway-key: ${CLOVA_API_GATEWAY_KEY}
+  prompt:
+    baseball: ${BASEBALL_PROMPT}
