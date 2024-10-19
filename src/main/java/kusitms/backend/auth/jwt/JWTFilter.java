@@ -48,6 +48,7 @@ public class JWTFilter extends OncePerRequestFilter {
                 || path.equals("/onboarding") || path.equals("/base")
                 || path.equals("/api/v1/signup") || path.equals("/api/v1/send-code") || path.equals("/api/v1/verify-code")
                 || path.equals("/api/v1/token/re-issue")
+                || path.equals("/api/v1/test/docs") || path.startsWith("/docs/swagger-ui") || path.equals("/v3/api-docs/swagger-config") || path.equals("/docs/open-api-3.0.1.json")
                 || path.equals("/api/v1/zones/recommend") || path.equals("/api/v1/profiles")
                 || path.startsWith("/api/v1/chatbot");
     }
@@ -69,7 +70,7 @@ public class JWTFilter extends OncePerRequestFilter {
         response.getWriter().write(jsonResponse);
     }
 
-    // 공통 예외 처리 메서드
+    // 토큰 예외 처리 메서드
     private void handleException(HttpServletResponse response, Exception e) throws IOException {
         log.error("서버 예외 발생: {}", e.getMessage());
         response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

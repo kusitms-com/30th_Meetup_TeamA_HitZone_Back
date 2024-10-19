@@ -1,9 +1,17 @@
 server:
-  port: ${SERVER_PORT}
+  port: 8080
 twilio:
   account_sid: ${TWILIO_ACCOUNT_SID}
   auth_token: ${TWILIO_AUTH_TOKEN}
   from_number: ${TWILIO_FROM_NUMBER}
+
+springdoc:
+  swagger-ui:
+    url: /docs/open-api-3.0.1.json  # OpenAPI JSON 파일 경로 지정
+    path: /docs/swagger-ui        # Swagger UI의 경로 지정
+  api-docs:
+    path: /v3/api-docs
+
 
 spring:
   jpa:
@@ -79,3 +87,11 @@ spring:
     redis:
       host: ${REDIS_HOST}
       port: ${REDIS_PORT}
+
+clova:
+  api:
+    url: ${CLOVA_API_URL}
+    api-key: ${CLOVA_API_KEY}
+    api-gateway-key: ${CLOVA_API_GATEWAY_KEY}
+  prompt:
+    baseball: ${BASEBALL_PROMPT}

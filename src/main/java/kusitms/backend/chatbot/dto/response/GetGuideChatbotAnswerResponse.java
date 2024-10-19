@@ -1,4 +1,4 @@
-package kusitms.backend.chatbot.dto;
+package kusitms.backend.chatbot.dto.response;
 
 public record GetGuideChatbotAnswerResponse(
         String[] answers,
