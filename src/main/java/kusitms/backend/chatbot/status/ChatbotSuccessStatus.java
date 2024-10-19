@@ -10,7 +10,8 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum ChatbotSuccessStatus implements BaseCode {
 
-    _GET_GUIDE_CHATBOT_ANSWER(HttpStatus.OK, "200", "가이드 챗봇 답변을 가져오는 데 성공했습니다.")
+    _GET_GUIDE_CHATBOT_ANSWER(HttpStatus.OK, "200", "가이드 챗봇 답변을 가져오는 데 성공했습니다."),
+    _GET_CLOVA_CHATBOT_ANSWER(HttpStatus.OK, "200", "네이버 클로바 챗봇 답변을 가져오는 데 성공했습니다.")
     ;
 
     private final HttpStatus httpStatus;

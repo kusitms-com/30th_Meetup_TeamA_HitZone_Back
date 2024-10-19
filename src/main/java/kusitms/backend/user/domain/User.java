@@ -2,18 +2,12 @@ package kusitms.backend.user.domain;
 
 import jakarta.persistence.*;
 import kusitms.backend.global.domain.BaseTimeEntity;
-import kusitms.backend.global.exception.CustomException;
-import kusitms.backend.user.status.UserErrorStatus;
 import lombok.*;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-@Entity(name="users")
+@Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
+@Table(name = "users")
 public class User extends BaseTimeEntity {
 
     @Id
@@ -37,5 +31,12 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false, unique = true)
     private String phoneNumber;
 
-
+    @Builder
+    public User(ProviderStatusType provider, String providerId, String email, String name, String phoneNumber){
+        this.provider = provider;
+        this.providerId = providerId;
+        this.email = email;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
 }
