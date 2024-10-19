@@ -102,7 +102,7 @@ public class ResultService {
            zoneRepository.save(zone);
        });
 
-       return SaveTopRankedZoneResponseDto.from(result.getId());
+       return SaveTopRankedZoneResponseDto.of(result.getId());
     }
 
     @Transactional(readOnly = true)
@@ -123,6 +123,6 @@ public class ResultService {
                 .limit(count)
                 .map(GetZonesResponseDto.ZoneResponseDto::from)
                 .toList();
-        return GetZonesResponseDto.from(zones);
+        return GetZonesResponseDto.of(zones);
     }
 }

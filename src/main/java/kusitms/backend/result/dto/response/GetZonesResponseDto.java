@@ -19,7 +19,7 @@ public record GetZonesResponseDto (List<ZoneResponseDto> zones) {
         }
     }
 
-    public static GetZonesResponseDto from(List<ZoneResponseDto> zones) {
+    public static GetZonesResponseDto of(List<ZoneResponseDto> zones) {
         return new GetZonesResponseDto(zones);
     }
 }
