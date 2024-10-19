@@ -3,7 +3,10 @@ package kusitms.backend.user.domain.entity;
 import jakarta.persistence.*;
 import kusitms.backend.global.domain.BaseTimeEntity;
 import kusitms.backend.user.domain.enums.ProviderStatusType;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity(name="users")
 @Getter

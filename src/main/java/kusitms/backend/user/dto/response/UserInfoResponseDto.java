@@ -6,7 +6,7 @@ public record UserInfoResponseDto (
         String name,
         String email,
         String phoneNumber
-){
+) {
     public static UserInfoResponseDto of(User user) {
         return new UserInfoResponseDto(user.getName(), user.getEmail(), user.getPhoneNumber());
     }

@@ -5,7 +5,10 @@ import kusitms.backend.global.domain.BaseTimeEntity;
 import kusitms.backend.result.common.ReferencesGroup;
 import kusitms.backend.result.domain.converter.ReferencesGroupConverter;
 import kusitms.backend.result.domain.converter.StringListConverter;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 

@@ -2,8 +2,8 @@ package kusitms.backend.user.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import kusitms.backend.global.exception.CustomException;
-import kusitms.backend.user.domain.enums.ProviderStatusType;
 import kusitms.backend.user.domain.entity.User;
+import kusitms.backend.user.domain.enums.ProviderStatusType;
 import kusitms.backend.user.status.UserErrorStatus;
 
 import java.util.regex.Matcher;

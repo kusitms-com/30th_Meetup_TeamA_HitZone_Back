@@ -4,9 +4,11 @@ import jakarta.persistence.*;
 import kusitms.backend.global.domain.BaseTimeEntity;
 import kusitms.backend.stadium.domain.entity.Stadium;
 import kusitms.backend.user.domain.entity.User;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity

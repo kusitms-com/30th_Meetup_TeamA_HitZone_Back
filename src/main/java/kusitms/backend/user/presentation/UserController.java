@@ -4,8 +4,6 @@ import jakarta.validation.Valid;
 import kusitms.backend.global.dto.ApiResponse;
 import kusitms.backend.user.application.UserService;
 import kusitms.backend.user.dto.request.SignUpRequestDto;
-import kusitms.backend.user.dto.request.SendAuthCodeRequestDto;
-import kusitms.backend.user.dto.request.VerifyAuthCodeRequestDto;
 import kusitms.backend.user.dto.response.UserInfoResponseDto;
 import kusitms.backend.user.status.UserSuccessStatus;
 import lombok.RequiredArgsConstructor;

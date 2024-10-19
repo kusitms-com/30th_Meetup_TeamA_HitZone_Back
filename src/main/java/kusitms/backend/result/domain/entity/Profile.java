@@ -2,7 +2,10 @@ package kusitms.backend.result.domain.entity;
 
 import jakarta.persistence.*;
 import kusitms.backend.result.domain.converter.StringListConverter;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 

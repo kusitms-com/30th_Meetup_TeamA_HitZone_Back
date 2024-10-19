@@ -30,7 +30,6 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
     @Value("${spring.jwt.redirect.onboarding}")
     private String REDIRECT_URI_ONBOARDING; // 신규 유저 리다이렉트할 URI
-
     @Value("${spring.jwt.redirect.base}")
     private String REDIRECT_URI_BASE; // 기존 유저 리다이렉트할 URI
 

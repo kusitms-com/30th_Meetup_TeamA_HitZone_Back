@@ -3,7 +3,10 @@ package kusitms.backend.result.common;
 import kusitms.backend.result.domain.enums.ProfileStatusType;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 public class RecommendUserProfile {
