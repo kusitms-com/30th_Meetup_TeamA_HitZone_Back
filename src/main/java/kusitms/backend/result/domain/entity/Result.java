@@ -12,8 +12,6 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
 public class Result extends BaseTimeEntity {
 
     @Id
@@ -33,7 +31,12 @@ public class Result extends BaseTimeEntity {
     private String preference;
 
     @OneToMany(mappedBy = "result", cascade = CascadeType.ALL)
-    @Builder.Default
-    private List<Zone> zones = new ArrayList<>();
+    private List<Zone> zones;
 
+    @Builder
+    public Result(Stadium stadium, User user, String preference) {
+        this.stadium = stadium;
+        this.user = user;
+        this.preference = preference;
+    }
 }

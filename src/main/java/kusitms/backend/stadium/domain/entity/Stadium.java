@@ -7,8 +7,6 @@ import lombok.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
 public class Stadium extends BaseTimeEntity {
 
     @Id
@@ -19,4 +17,8 @@ public class Stadium extends BaseTimeEntity {
     @Column(nullable = false)
     private String name;
 
+    @Builder
+    public Stadium(String name) {
+        this.name = name;
+    }
 }

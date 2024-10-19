@@ -12,8 +12,6 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
 @Table(name = "recommend_zone")
 public class Zone extends BaseTimeEntity {
 
@@ -40,4 +38,12 @@ public class Zone extends BaseTimeEntity {
     @Convert(converter = ReferencesGroupConverter.class)
     private List<ReferencesGroup> referencesGroup;
 
+    @Builder
+    public Zone(Result result, String name, List<String> explanations, String tip, List<ReferencesGroup> referencesGroup) {
+        this.result = result;
+        this.name = name;
+        this.explanations = explanations;
+        this.tip = tip;
+        this.referencesGroup = referencesGroup;
+    }
 }

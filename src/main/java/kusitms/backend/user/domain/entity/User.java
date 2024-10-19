@@ -8,8 +8,6 @@ import lombok.*;
 @Entity(name="users")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
 public class User extends BaseTimeEntity {
 
     @Id
@@ -32,5 +30,14 @@ public class User extends BaseTimeEntity {
 
     @Column(nullable = false, unique = true)
     private String phoneNumber;
+
+    @Builder
+    public User(ProviderStatusType provider, String providerId, String email, String name, String phoneNumber) {
+        this.provider = provider;
+        this.providerId = providerId;
+        this.email = email;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
 
 }

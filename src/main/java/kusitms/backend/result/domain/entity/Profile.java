@@ -9,8 +9,6 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
 @Table(name = "recommend_profile")
 public class Profile {
 
@@ -35,4 +33,13 @@ public class Profile {
     @Lob
     @Convert(converter = StringListConverter.class)
     private List<String> hashTags;
+
+    @Builder
+    public Profile(Result result, String nickname, String type, String explanation, List<String> hashTags) {
+        this.result = result;
+        this.nickname = nickname;
+        this.type = type;
+        this.explanation = explanation;
+        this.hashTags = hashTags;
+    }
 }
