@@ -23,7 +23,7 @@ public class StadiumController {
      * 해당 스타디움의 구역 이름들을 조회한다.
      * @return 구역 이름들 리스트
      */
-    @GetMapping("/zones/name")
+    @GetMapping("/stadium/zones")
     public ResponseEntity<ApiResponse<GetZonesNameResponseDto>> getZonesName(
             @RequestParam String stadiumName
     ) {
@@ -35,7 +35,7 @@ public class StadiumController {
      * 해당 스타디움 구역의 정보와 팁을 반환한다.
      * @return 구역 정보(한줄 설명, 출입구, 단차 간격, 좌석 간격, 팁, 참고사항)
      */
-    @GetMapping("/zones/guide")
+    @GetMapping("/stadium/zones/guide")
     public ResponseEntity<ApiResponse<GetZoneGuideResponseDto>> getZoneGuide(
             @RequestParam String stadiumName,
             @RequestParam String zoneName
