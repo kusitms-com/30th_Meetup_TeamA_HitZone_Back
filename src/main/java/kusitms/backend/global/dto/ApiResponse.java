@@ -1,7 +1,6 @@
 package kusitms.backend.global.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import kusitms.backend.global.code.BaseCode;
 import kusitms.backend.global.code.BaseErrorCode;
 import lombok.Getter;
@@ -29,6 +28,11 @@ public class ApiResponse<T> {
 
     public static <T> ResponseEntity<ApiResponse<T>> onFailure(BaseErrorCode code) {
         ApiResponse<T> response = new ApiResponse<>(false, code.getReasonHttpStatus().getCode(), code.getReasonHttpStatus().getMessage(), null);
+        return ResponseEntity.status(code.getReasonHttpStatus().getHttpStatus()).body(response);
+    }
+
+    public static <T> ResponseEntity<Object> onFailure(BaseErrorCode code, String message) {
+        ApiResponse<T> response = new ApiResponse<>(false, code.getReasonHttpStatus().getCode(), message, null);
         return ResponseEntity.status(code.getReasonHttpStatus().getHttpStatus()).body(response);
     }
 }
