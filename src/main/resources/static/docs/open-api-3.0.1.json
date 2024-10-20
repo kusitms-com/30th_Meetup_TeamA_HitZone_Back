@@ -10,6 +10,45 @@
   } ],
   "tags" : [ ],
   "paths" : {
+    "/api/v1/results/save" : {
+      "post" : {
+        "tags" : [ "Result" ],
+        "summary" : "구역 추천 결과를 저장한다. (accessToken 포함)",
+        "description" : "구역 추천 결과를 저장한다. (accessToken 포함)",
+        "operationId" : "results/save",
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=UTF-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/api-v1-results-save1997545486"
+              },
+              "examples" : {
+                "results/save" : {
+                  "value" : "{\n  \"stadium\" : \"잠실종합운동장\",\n  \"preference\" : \"3루석\",\n  \"clientKeywords\" : [ \"나 혼자\", \"선수들 가까이\", \"열정적인 응원\" ]\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "201",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SaveTopRankedZonesResponseDto"
+                },
+                "examples" : {
+                  "results/save" : {
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"code\" : \"201\",\n  \"message\" : \"추천 받은 유저성향과 구역을 저장하였습니다.\",\n  \"payload\" : {\n    \"resultId\" : 1\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/test/docs" : {
       "post" : {
         "tags" : [ "TEST" ],
@@ -69,6 +108,34 @@
   },
   "components" : {
     "schemas" : {
+      "SaveTopRankedZonesResponseDto" : {
+        "title" : "SaveTopRankedZonesResponseDto",
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "응답 코드"
+          },
+          "payload" : {
+            "type" : "object",
+            "properties" : {
+              "resultId" : {
+                "type" : "number",
+                "description" : "저장된 결과ID"
+              }
+            },
+            "description" : "응답 데이터"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "응답 메시지"
+          },
+          "isSuccess" : {
+            "type" : "boolean",
+            "description" : "성공 여부"
+          }
+        }
+      },
       "TestDocsResponseDto" : {
         "title" : "TestDocsResponseDto",
         "type" : "object",
@@ -107,6 +174,34 @@
           "tip" : {
             "type" : "string",
             "description" : "테스트 팁"
+          }
+        }
+      },
+      "api-v1-results-save1997545486" : {
+        "type" : "object",
+        "properties" : {
+          "preference" : {
+            "type" : "string",
+            "description" : "선호 구역 (1루석 또는 3루석)"
+          },
+          "clientKeywords" : {
+            "type" : "array",
+            "description" : "사용자 키워드 배열",
+            "items" : {
+              "oneOf" : [ {
+                "type" : "object"
+              }, {
+                "type" : "boolean"
+              }, {
+                "type" : "string"
+              }, {
+                "type" : "number"
+              } ]
+            }
+          },
+          "stadium" : {
+            "type" : "string",
+            "description" : "경기장 이름"
           }
         }
       }
