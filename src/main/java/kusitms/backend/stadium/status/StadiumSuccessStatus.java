@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 @AllArgsConstructor
 public enum StadiumSuccessStatus implements BaseCode {
+    _OK_GET_ZONES_NAME(HttpStatus.OK, "200", "해당 스타디움의 구역 이름들이 조회되었습니다."),
     _OK_GET_ZONE_GUIDE(HttpStatus.OK, "200", "해당 구역에 대한 가이드 정보가 조회되었습니다.");
 
     private final HttpStatus httpStatus;

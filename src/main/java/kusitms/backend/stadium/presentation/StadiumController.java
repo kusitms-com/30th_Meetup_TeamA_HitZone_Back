@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import kusitms.backend.global.dto.ApiResponse;
 import kusitms.backend.stadium.application.StadiumService;
 import kusitms.backend.stadium.dto.response.GetZoneGuideResponseDto;
+import kusitms.backend.stadium.dto.response.GetZonesNameResponseDto;
 import kusitms.backend.stadium.status.StadiumSuccessStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class StadiumController {
 
     private final StadiumService stadiumService;
+
+    public ResponseEntity<ApiResponse<GetZonesNameResponseDto>> getZonesName(
+            @RequestParam String stadiumName
+    ) {
+        return ApiResponse.onSuccess(StadiumSuccessStatus._OK_GET_ZONES_NAME, stadiumService.getZoneName(stadiumName));
+    }
+
 
     /**
      * 해당 스타디움 구역의 정보와 팁을 반환한다.
