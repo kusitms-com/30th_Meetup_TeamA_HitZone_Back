@@ -4,8 +4,6 @@ import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.result.domain.enums.JamsilStadiumStatusType;
 import kusitms.backend.result.domain.enums.KtWizStadiumStatusType;
 import kusitms.backend.result.domain.enums.StadiumStatusType;
-import kusitms.backend.stadium.domain.entity.Stadium;
-import kusitms.backend.stadium.domain.repository.StadiumRepository;
 import kusitms.backend.stadium.dto.response.GetZoneGuideResponseDto;
 import kusitms.backend.stadium.dto.response.GetZonesNameResponseDto;
 import kusitms.backend.stadium.status.StadiumErrorStatus;
@@ -20,8 +18,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StadiumService {
 
-    private final StadiumRepository stadiumRepository;
-
     @Transactional(readOnly = true)
     public GetZonesNameResponseDto getZoneName(String stadiumName) {
         List<String> zoneNames = switch (stadiumName) {
@@ -29,7 +25,6 @@ public class StadiumService {
             case "수원KT위즈파크" -> getZoneNamesFromStadium(KtWizStadiumStatusType.values());
             default -> throw new CustomException(StadiumErrorStatus._NOT_FOUND_STADIUM);
         };
-
         return GetZonesNameResponseDto.of(zoneNames);
     }
 
@@ -40,7 +35,6 @@ public class StadiumService {
             case "수원KT위즈파크" -> findZoneInStadium(KtWizStadiumStatusType.values(), zoneName);
             default -> throw new CustomException(StadiumErrorStatus._NOT_FOUND_STADIUM);
         };
-
         return GetZoneGuideResponseDto.from(zoneType);
     }
 
@@ -56,5 +50,4 @@ public class StadiumService {
                 .findFirst()
                 .orElseThrow(() -> new CustomException(StadiumErrorStatus._NOT_FOUND_ZONE));
     }
-
 }
