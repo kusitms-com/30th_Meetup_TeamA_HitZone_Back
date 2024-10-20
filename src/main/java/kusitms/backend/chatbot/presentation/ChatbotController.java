@@ -1,7 +1,8 @@
 package kusitms.backend.chatbot.presentation;
 
 import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import kusitms.backend.chatbot.application.ChatbotService;
 import kusitms.backend.chatbot.application.ClovaService;
 import kusitms.backend.chatbot.dto.request.GetClovaChatbotAnswerRequest;
@@ -11,11 +12,13 @@ import kusitms.backend.chatbot.status.ChatbotSuccessStatus;
 import kusitms.backend.global.dto.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/chatbot")
+@Validated
 public class ChatbotController {
     private final ChatbotService chatbotService;
     private final ClovaService clovaService;
@@ -23,9 +26,9 @@ public class ChatbotController {
     // 가이드 챗봇 답변 조회 API
     @GetMapping("/guide")
     public ResponseEntity<ApiResponse<GetGuideChatbotAnswerResponse>> getGuideChatbotAnswer(
-            @PathParam("stadiumName") String stadiumName,
-            @PathParam("categoryName") String categoryName,
-            @PathParam("orderNumber") int orderNumber){
+            @RequestParam("stadiumName") @NotBlank String stadiumName,
+            @RequestParam("categoryName") @NotBlank String categoryName,
+            @RequestParam("orderNumber") @Min(1) int orderNumber){
 
         GetGuideChatbotAnswerResponse response = chatbotService.getGuideChatbotAnswer(stadiumName, categoryName, orderNumber);
 
