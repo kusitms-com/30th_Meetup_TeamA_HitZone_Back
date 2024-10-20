@@ -3,6 +3,7 @@ package kusitms.backend.stadium.presentation;
 import jakarta.validation.Valid;
 import kusitms.backend.global.dto.ApiResponse;
 import kusitms.backend.stadium.application.StadiumService;
+import kusitms.backend.stadium.status.StadiumSuccessStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
