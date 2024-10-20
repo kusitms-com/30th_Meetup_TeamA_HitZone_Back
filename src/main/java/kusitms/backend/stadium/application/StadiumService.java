@@ -35,9 +35,6 @@ public class StadiumService {
 
     @Transactional(readOnly = true)
     public GetZoneGuideResponseDto getZoneGuide(String stadiumName, String zoneName) {
-        Stadium stadium = stadiumRepository.findByName(stadiumName)
-                .orElseThrow(() -> new CustomException(StadiumErrorStatus._NOT_FOUND_STADIUM));
-
         StadiumStatusType zoneType = switch (stadiumName) {
             case "잠실종합운동장" -> findZoneInStadium(JamsilStadiumStatusType.values(), zoneName);
             case "수원KT위즈파크" -> findZoneInStadium(KtWizStadiumStatusType.values(), zoneName);
