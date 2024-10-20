@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum StadiumErrorStatus implements BaseErrorCode {
     _NOT_FOUND_STADIUM(HttpStatus.NOT_FOUND, "STADIUM-001", "해당하는 스타디움이 존재하지 않습니다. 구장이름을 다시 한번 확인해주세요."),
-    ;
+    _NOT_FOUND_ZONE(HttpStatus.NOT_FOUND, "STADIUM-002", "해당 스타디움에 존재하지 않는 구역이름입니다. 다시 한번 확인해주세요.");
 
     private final HttpStatus httpStatus;
     private final String code;

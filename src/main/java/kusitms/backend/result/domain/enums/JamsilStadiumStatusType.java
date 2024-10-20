@@ -12,6 +12,7 @@ import java.util.List;
 public enum JamsilStadiumStatusType implements StadiumStatusType {
 
     RED("레드석",
+            "해당 구역은 다양한 것들을 모두 적절히 즐길 수 있는 구역이예요.",
             List.of("응원도 적당히 즐길 수 있지만, 야구나 함께 온 동행자와의 대화에도 집중할 수 있는 구역이에요!"),
             "해당 구역은 다양한 것들을 모두 적절히 즐길 수 있는 구역이예요.",
             List.of(
@@ -32,10 +33,16 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
             List.of("나 혼자", "같은 팀 팬과"),
             List.of(),
             List.of(),
-            List.of("선수들 가까이", "경기장 한눈에 보기")
-
+            List.of("선수들 가까이", "경기장 한눈에 보기"),
+            "[1루] 2-3 Gate [3루] 2-1 Gate",
+            """
+                    [1루] 약 24~30cm(10n열), 약 33~38cm(20n열)
+                    [3루]  약 24~30cm(1nn열), 약 33~38cm(22n열)""",
+            "[1루] 약 25cm [3루] 약 25cm",
+            ""
     ),
     BLUE("블루석",
+            "힘차게 응원도 가능하고, 야구에 집중도 할 수 있는 구역이에요!",
             List.of("힘차게 응원도 가능하고, 야구에 집중도 할 수 있는 구역이에요!"),
             "해당 구역은 비교적 조용히 경기 관람이 가능한 구역이예요.",
             List.of(
@@ -56,9 +63,14 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
             List.of("나 혼자", "같은 팀 팬과", "다른 팀 팬과"),
             List.of("빠른 퇴장 가능", "편리한 화장실 이용", "선수들 가까이"),
             List.of(),
-            List.of("열정적인 응원")
+            List.of("열정적인 응원"),
+            "[1루] 2-3 Gate [3루] 2-1 Gate [중앙문] 1-1 Gate",
+            "[1루 & 3루] 약 27~33cm",
+            "[1루 & 3루] 약 30~38cm",
+            ""
     ),
     NAVY("네이비석",
+            "높은 곳에서 야구를 전체적으로 볼 수 있는 구역이에요!",
             List.of("높은 곳에서 야구를 전체적으로 볼 수 있는 구역이에요!"),
             "해당 구역은 높은 층수에 위치해 있어요.",
             List.of(
@@ -85,9 +97,14 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
             List.of("나 혼자", "같은 팀 팬과", "다른 팀 팬과"),
             List.of("경기장 한눈에 보기"),
             List.of("햇빛 싫어요", "비 맞기 싫어요"),
-            List.of("열정적인 응원", "선수들 가까이")
+            List.of("열정적인 응원", "선수들 가까이"),
+            "[1루] 2-3 Gate [3루] 2-1 Gate [중앙문] 1-1 Gate",
+            "약 53cm(2~20열), 92cm(10열, 11열 일부)",
+            "약 24cm(2~20열), 123cm(10열, 11열 일부)",
+            ""
     ),
     ORANGE("오렌지석",
+            "야구장의 응원이 가장 열정적인 응원석 구역이에요!",
             List.of("야구장의 응원이 가장 열정적인 응원석 구역이에요!"),
             "해당 구역은 열정적인 응원이 이루어져요.",
             List.of(
@@ -110,10 +127,14 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
             List.of("나 혼자", "같은 팀 팬과"),
             List.of("열정적인 응원", "선수들 가까이"),
             List.of(),
-            List.of("다른 팀 팬과", "큰 소리 싫어요", "경기장 한눈에 보기")
-
+            List.of("다른 팀 팬과", "큰 소리 싫어요", "경기장 한눈에 보기"),
+            "[1루] 2-3 Gate [3루] 2-1 Gate",
+            "[1루 & 3루] 약 33~39cm",
+            "[1루 & 3루] 약 30cm",
+            ""
     ),
     EXITING("익사이팅석",
+            "",
             List.of("야구 필드 안에 들어와 있는 느낌을 받을 수 있는 구역이에요!"),
             "해당 구역은 연령제한이 있어요.",
             List.of(
@@ -139,9 +160,14 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
             List.of("나 혼자", "같은 팀 팬과"),
             List.of("선수들 가까이", "열정적인 응원"),
             List.of(),
-            List.of("다른 팀 팬과", "큰 소리 싫어요", "경기장 한눈에 보기")
+            List.of("다른 팀 팬과", "큰 소리 싫어요", "경기장 한눈에 보기"),
+            "",
+            "",
+            "",
+            ""
     ),
     GREEN("외야그린석",
+            "",
             List.of("사람들이 몰리지 않아 비교적 한적하게 경기를 즐길 수 있는 구역이에요!"),
             "해당 구역은 시야 제한석이 있어요.",
             List.of(
@@ -162,9 +188,14 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
             List.of("나 혼자", "같은 팀 팬과", "다른 팀 팬과"),
             List.of("경기장 한눈에 보기"),
             List.of(),
-            List.of("열정적인 응원", "선수들 가까이", "빠른 퇴장 가능", "편리한 화장실 이용", "햇빛 싫어요", "비 맞기 싫어요")
+            List.of("열정적인 응원", "선수들 가까이", "빠른 퇴장 가능", "편리한 화장실 이용", "햇빛 싫어요", "비 맞기 싫어요"),
+            "",
+            "",
+            "",
+            ""
     ),
     TABLE("테이블석",
+            "",
             List.of("다양한 음식을 골라 테이블에 펼쳐놓고 먹을 수 있는 구역이에요!"),
             "해당 구역은 예매 시 위치 확인이 필요해요.",
             List.of(
@@ -185,9 +216,14 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
             List.of("나 혼자", "같은 팀 팬과"),
             List.of("음식 먹기 편한", "빠른 퇴장 가능", "편리한 화장실 이용"),
             List.of(),
-            List.of("다른 팀 팬과", "경기장 한눈에 보기")
+            List.of("다른 팀 팬과", "경기장 한눈에 보기"),
+            "",
+            "",
+            "",
+            ""
     ),
     PREMIUM("프리미엄석",
+            "",
             List.of("테이블에서 맛있는 음식을 먹으면서 선수들을 가장 가까이서 볼 수 있는 구역이에요!"),
             "해당 구역은 티켓 확인을 2번 해요.",
             List.of(
@@ -212,12 +248,17 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
             List.of("나 혼자", "같은 팀 팬과"),
             List.of("음식 먹기 편한", "선수들 가까이", "열정적인 응원", "빠른 퇴장 가능", "편리한 화장실 이용"),
             List.of(),
-            List.of("다른 팀 팬과", "큰 소리 싫어요", "경기장 한눈에 보기")
+            List.of("다른 팀 팬과", "큰 소리 싫어요", "경기장 한눈에 보기"),
+            "",
+            "",
+            "",
+            ""
     ),
     ;
 
     private static final String DEFAULT_TITLE = "참고하세요";
     private final String zoneName;
+    private final String oneLineDescription;
     private final List<String> explanations;
     private final String tip;
     private final List<ReferencesGroup> referencesGroup;
@@ -225,4 +266,8 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
     private final List<String> page2Keywords;
     private final List<String> page3Keywords;
     private final List<String> forbiddenKeywords;
+    private final String entrance;
+    private final String stepSpacing;
+    private final String seatSpacing;
+    private final String usageInformation;
 }

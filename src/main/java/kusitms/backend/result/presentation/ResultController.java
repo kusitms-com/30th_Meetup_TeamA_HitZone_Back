@@ -23,7 +23,7 @@ public class ResultController {
      * 구역 추천받은 결과를 DB에 저장한다.
      * @return 저장결과id
      */
-    @PostMapping("/zones/recommend")
+    @PostMapping("/results/save")
     public ResponseEntity<ApiResponse<SaveTopRankedZoneResponseDto>> saveRecommendedZones(
             @CookieValue(required = false) String accessToken,
             @Valid @RequestBody SaveTopRankedZoneRequestDto request
@@ -35,14 +35,14 @@ public class ResultController {
      * 해당 결과의 프로필 정보를 조회한다.
      * @return 프로필id, 닉네임, 타입, 설명, 해시태그
      */
-    @GetMapping("/profiles")
+    @GetMapping("/results/profile")
     public ResponseEntity<ApiResponse<GetProfileResponseDto>> getRecommendedProfile(
             @RequestParam Long resultId
     ) {
         return ApiResponse.onSuccess(ResultSuccessStatus._OK_GET_RECOMMEND_PROFILE, resultService.getRecommendedProfile(resultId));
     }
 
-    @GetMapping("/zones/recommend")
+    @GetMapping("/results/zones")
     public ResponseEntity<ApiResponse<GetZonesResponseDto>> getRecommendedZones(
             @RequestParam Long resultId,
             @RequestParam Long count
