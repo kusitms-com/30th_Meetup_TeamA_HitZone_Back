@@ -17,7 +17,9 @@ public enum ErrorStatus implements BaseErrorCode {
     _METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, "405", "허용되지 않은 요청 메소드입니다."),
     _UNSUPPORTED_MEDIA_TYPE(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "415", "지원되지 않는 미디어 타입입니다."),
     _NOT_FOUND_HANDLER(HttpStatus.NOT_FOUND, "404", "해당 경로에 대한 핸들러를 찾을 수 없습니다."),
-    _FAILED_SAVE_REDIS(HttpStatus.INTERNAL_SERVER_ERROR, "500", "Redis 저장에 실패하였습니다."),
+    _FAILED_SAVE_REDIS(HttpStatus.INTERNAL_SERVER_ERROR, "COMMON-001", "Redis 저장에 실패하였습니다."),
+    _FAILED_SERIALIZING_JSON(HttpStatus.INTERNAL_SERVER_ERROR, "COMMON-002", "JSON으로의 직렬화에 실패했습니다."),
+    _FAILED_DESERIALIZING_JSON(HttpStatus.INTERNAL_SERVER_ERROR, "COMMON-003", "JSON에서 역직렬화에 실패했습니다.")
     ;
 
     private final HttpStatus httpStatus;

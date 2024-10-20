@@ -44,12 +44,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers(
                                 "/", "/login", "/login/google", "/login/naver", "/login/kakao",
+                                "/onboarding", "/base",
                                 "/api/v1/health-check", "/api/v1/test-error",
                                 "/api/v1/test/docs","/docs/swagger-ui/**", "/v3/api-docs/**", "/docs/open-api-3.0.1.json",
                                 "/api/v1/signup", "/api/v1/send-code","/api/v1/verify-code",
-                                "/api/v1/token/re-issue", "/api/v1/zones/recommend",
+                                "/api/v1/token/re-issue",
+                                "/api/v1/results/**", "/api/v1/stadium/**",
                                 "/api/v1/chatbot/**").permitAll()  // 인증이 필요 없는 경로 설정
-
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));

@@ -10,8 +10,8 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum ChatbotErrorStatus implements BaseErrorCode {
 
-    _NOT_FOUND_GUIDE_CHATBOT_ANSWER(HttpStatus.NOT_FOUND, "9001", "챗봇 답변을 찾을 수 없습니다."),
-    _IS_NOT_VALID_CATEGORY_NAME(HttpStatus.BAD_REQUEST, "9002", "올바른 카테고리명이 아닙니다.")
+    _NOT_FOUND_GUIDE_CHATBOT_ANSWER(HttpStatus.NOT_FOUND, "CHATBOT-001", "챗봇 답변을 찾을 수 없습니다."),
+    _IS_NOT_VALID_CATEGORY_NAME(HttpStatus.BAD_REQUEST, "CHATBOT-002", "올바른 카테고리명이 아닙니다.")
     ;
 
     private final HttpStatus httpStatus;

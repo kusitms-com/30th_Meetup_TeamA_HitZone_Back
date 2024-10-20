@@ -1,45 +1,53 @@
 package kusitms.backend.stadium.application;
 
 import kusitms.backend.global.exception.CustomException;
-import kusitms.backend.stadium.common.RecommendedUserProfile;
-import kusitms.backend.stadium.common.RecommendedTopRankedZones;
-import kusitms.backend.stadium.domain.enums.JamsilStadiumStatusType;
-import kusitms.backend.stadium.domain.enums.KtWizStadiumStatusType;
-import kusitms.backend.stadium.domain.enums.ProfileStatusType;
-import kusitms.backend.stadium.domain.enums.StadiumStatusType;
-import kusitms.backend.stadium.dto.request.TopRankedZoneRequestDto;
-import kusitms.backend.stadium.dto.response.TopRankedZoneResponseDto;
+import kusitms.backend.result.domain.enums.JamsilStadiumStatusType;
+import kusitms.backend.result.domain.enums.KtWizStadiumStatusType;
+import kusitms.backend.result.domain.enums.StadiumStatusType;
+import kusitms.backend.stadium.dto.response.GetZoneGuideResponseDto;
+import kusitms.backend.stadium.dto.response.GetZonesNameResponseDto;
 import kusitms.backend.stadium.status.StadiumErrorStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class StadiumService {
 
-    @Transactional
-    public <T extends Enum<T> & StadiumStatusType> TopRankedZoneResponseDto recommendZones(TopRankedZoneRequestDto request) {
-
-        T[] zones = switch (request.stadium()) {
-            case "잠실종합운동장" -> (T[]) JamsilStadiumStatusType.values();
-            case "수원KT위즈파크" -> (T[]) KtWizStadiumStatusType.values();
-            default -> throw new CustomException(StadiumErrorStatus._BAD_REQUEST_STADIUM);
+    @Transactional(readOnly = true)
+    public GetZonesNameResponseDto getZoneName(String stadiumName) {
+        List<String> zoneNames = switch (stadiumName) {
+            case "잠실종합운동장" -> getZoneNamesFromStadium(JamsilStadiumStatusType.values());
+            case "수원KT위즈파크" -> getZoneNamesFromStadium(KtWizStadiumStatusType.values());
+            default -> throw new CustomException(StadiumErrorStatus._NOT_FOUND_STADIUM);
         };
+        return GetZonesNameResponseDto.of(zoneNames);
+    }
 
-        Map<String, Object> recommendedProfile = RecommendedUserProfile.getRecommendedUserProfile(
-                ProfileStatusType.values(), List.of(request.clientKeywords()));
-        List<Map<String, Object>> recommendZones = RecommendedTopRankedZones.getTopRankedZones(
-                zones, List.of(request.clientKeywords()));
+    @Transactional(readOnly = true)
+    public GetZoneGuideResponseDto getZoneGuide(String stadiumName, String zoneName) {
+        StadiumStatusType zoneType = switch (stadiumName) {
+            case "잠실종합운동장" -> findZoneInStadium(JamsilStadiumStatusType.values(), zoneName);
+            case "수원KT위즈파크" -> findZoneInStadium(KtWizStadiumStatusType.values(), zoneName);
+            default -> throw new CustomException(StadiumErrorStatus._NOT_FOUND_STADIUM);
+        };
+        return GetZoneGuideResponseDto.from(zoneType);
+    }
 
-        return TopRankedZoneResponseDto.of(
-                request.stadium(),
-                request.preference(),
-                recommendedProfile,
-                recommendZones
-        );
+    private List<String> getZoneNamesFromStadium(StadiumStatusType[] statusTypes) {
+        return Arrays.stream(statusTypes)
+                .map(StadiumStatusType::getZoneName)
+                .toList();
+    }
+
+    private StadiumStatusType findZoneInStadium(StadiumStatusType[] statusTypes, String zoneName) {
+        return Arrays.stream(statusTypes)
+                .filter(status -> status.getZoneName().equals(zoneName))
+                .findFirst()
+                .orElseThrow(() -> new CustomException(StadiumErrorStatus._NOT_FOUND_ZONE));
     }
 }

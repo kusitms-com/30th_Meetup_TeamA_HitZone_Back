@@ -2,12 +2,15 @@ package kusitms.backend.auth.jwt;
 
 import kusitms.backend.auth.status.AuthErrorStatus;
 import kusitms.backend.global.exception.CustomException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Objects;
 
+@Slf4j
 public class SecurityContextProvider {
+
     public static Long getAuthenticatedUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();

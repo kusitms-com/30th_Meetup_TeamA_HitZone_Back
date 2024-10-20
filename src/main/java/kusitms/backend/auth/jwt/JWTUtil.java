@@ -97,5 +97,4 @@ public class JWTUtil {
     public void validateRefreshToken(String token) {
         refreshTokenParser(token);
     }
-
 }
