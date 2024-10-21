@@ -42,9 +42,8 @@ public class ResultControllerTest extends ControllerTestConfig {
 
     @Test
     @DisplayName("구역 추천 결과 DB 저장")
-    public void saveRecommendedZonesWithAccessToken() throws Exception {
+    public void saveRecommendedZones() throws Exception {
         // given
-        String accessToken = "abc";
         String saveTopRankedZonesJsonRequest = """
             {
                 "stadium" : "잠실종합운동장",
@@ -59,7 +58,7 @@ public class ResultControllerTest extends ControllerTestConfig {
 
         // when
         ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.post("/api/v1/results/save")
-                .cookie(new Cookie("accessToken", accessToken))
+                .cookie(new Cookie("accessToken", "test"))
                 .content(saveTopRankedZonesJsonRequest)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON));
@@ -116,7 +115,7 @@ public class ResultControllerTest extends ControllerTestConfig {
 
         // when
         ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/results/profile")
-                .queryParam("resultId","2")
+                .param("resultId","2")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON));
 
@@ -151,7 +150,7 @@ public class ResultControllerTest extends ControllerTestConfig {
                                                 fieldWithPath("payload.nickname").description("해당 결과의 프로필의 닉네임"),
                                                 fieldWithPath("payload.type").description("해당 결과의 프로필의 타입"),
                                                 fieldWithPath("payload.explanation").description("해당 결과의 프로필 설명"),
-                                                fieldWithPath("payload.hashTags").description("해당 결과의 프로필의 해시태그 목록")
+                                                fieldWithPath("payload.hashTags[]").description("해당 결과의 프로필의 해시태그")
                                         )
                                         .responseSchema(Schema.schema("GetProfileResponseDto"))
                                         .build()
@@ -231,7 +230,6 @@ public class ResultControllerTest extends ControllerTestConfig {
                                                 fieldWithPath("code").description("응답 코드"),
                                                 fieldWithPath("message").description("응답 메시지"),
                                                 fieldWithPath("payload").description("응답 데이터").optional(),
-                                                fieldWithPath("payload.zones").description("추천구역 리스트"),
                                                 fieldWithPath("payload.zones[].zoneId").description("구역 ID"),
                                                 fieldWithPath("payload.zones[].name").description("구역 이름"),
                                                 fieldWithPath("payload.zones[].explanations[]").description("구역 설명"),
