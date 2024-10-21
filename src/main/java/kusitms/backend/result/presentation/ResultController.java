@@ -42,6 +42,10 @@ public class ResultController {
         return ApiResponse.onSuccess(ResultSuccessStatus._OK_GET_RECOMMEND_PROFILE, resultService.getRecommendedProfile(resultId));
     }
 
+    /**
+     * 해당 결과의 추천구역 리스트를 조회한다.
+     * @return 추천구역 리스트
+     */
     @GetMapping("/results/zones")
     public ResponseEntity<ApiResponse<GetZonesResponseDto>> getRecommendedZones(
             @RequestParam Long resultId,

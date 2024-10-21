@@ -19,7 +19,8 @@ public enum ErrorStatus implements BaseErrorCode {
     _NOT_FOUND_HANDLER(HttpStatus.NOT_FOUND, "404", "해당 경로에 대한 핸들러를 찾을 수 없습니다."),
     _FAILED_SAVE_REDIS(HttpStatus.INTERNAL_SERVER_ERROR, "COMMON-001", "Redis 저장에 실패하였습니다."),
     _FAILED_SERIALIZING_JSON(HttpStatus.INTERNAL_SERVER_ERROR, "COMMON-002", "JSON으로의 직렬화에 실패했습니다."),
-    _FAILED_DESERIALIZING_JSON(HttpStatus.INTERNAL_SERVER_ERROR, "COMMON-003", "JSON에서 역직렬화에 실패했습니다.")
+    _FAILED_DESERIALIZING_JSON(HttpStatus.INTERNAL_SERVER_ERROR, "COMMON-003", "JSON에서 역직렬화에 실패했습니다."),
+    _FAILED_TRANSLATE_SWAGGER(HttpStatus.INTERNAL_SERVER_ERROR, "COMMON-004", "Rest Docs로 생성된 json파일을 통한 스웨거 변환에 실패하였습니다.")
     ;
 
     private final HttpStatus httpStatus;

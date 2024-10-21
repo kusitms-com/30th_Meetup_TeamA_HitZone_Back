@@ -7,10 +7,11 @@ twilio:
 
 springdoc:
   swagger-ui:
-    url: /docs/open-api-3.0.1.json  # OpenAPI JSON 파일 경로 지정
-    path: /docs/swagger-ui        # Swagger UI의 경로 지정
+    path: /swagger-ui.html
   api-docs:
     path: /v3/api-docs
+  show-actuator: true
+
 
 
 spring:
