@@ -83,6 +83,48 @@
         }
       }
     },
+    "/api/v1/results/zones" : {
+      "get" : {
+        "tags" : [ "Result" ],
+        "summary" : "해당 결과의 추천 구역 리스트를 조회한다.",
+        "description" : "해당 결과의 추천 구역 리스트를 조회한다.",
+        "operationId" : "results/zones",
+        "parameters" : [ {
+          "name" : "resultId",
+          "in" : "query",
+          "description" : "조회할 결과의 ID",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "조회할 결과에 대한 추천구역의 개수",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GetZonesResponseDto"
+                },
+                "examples" : {
+                  "results/zones" : {
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"code\" : \"200\",\n  \"message\" : \"해당 결과의 추천 구역 정보 리스트를 조회하였습니다.\",\n  \"payload\" : {\n    \"zones\" : [ {\n      \"zoneId\" : 1,\n      \"name\" : \"레드석\",\n      \"explanations\" : [ \"응원도 적당히 즐길 수 있지만, 야구나 함께 온 동행자와의 대화에도 집중할 수 있는 구역이에요!\" ],\n      \"tip\" : \"해당 구역은 다양한 것들을 모두 적절히 즐길 수 있는 구역이예요.\",\n      \"referencesGroup\" : [ {\n        \"groupTitle\" : \"레드석 참고하세요.\",\n        \"references\" : [ {\n          \"title\" : \"시야가 중요하신 분\",\n          \"content\" : \"외야와 가까운 쪽은 예매 시 시야 확인이 필요해요. 기둥이나 그물망으로 시야 방해를 받을 수 있어요!\"\n        }, {\n          \"title\" : \"시끄러운 것을 좋아하지 않는 분\",\n          \"content\" : \"오렌지석이 앞에 있어서 스피커 때문에 많이 시끄러워요. 조용한 관람을 원하시면 다른 구역을 추천해요!\"\n        } ]\n      } ]\n    }, {\n      \"zoneId\" : 2,\n      \"name\" : \"블루석\",\n      \"explanations\" : [ \"힘차게 응원도 가능하고, 야구에 집중도 할 수 있는 구역이에요!\" ],\n      \"tip\" : \"해당 구역은 비교적 조용히 경기 관람이 가능한 구역이예요.\",\n      \"referencesGroup\" : [ {\n        \"groupTitle\" : \"블루석 참고하세요.\",\n        \"references\" : [ {\n          \"title\" : \"시야가 중요하신 분\",\n          \"content\" : \"홈과 가까운 쪽은 예매 시 시야 확인이 필요해요. 그물망으로 인해 시야 방해를 받을 수 있어요!\"\n        }, {\n          \"title\" : \"적당한 응원을 하고 싶으신 분\",\n          \"content\" : \"비교적 조용히 경기를 관람하고 적당히 응원할 수 있는 곳이에요. 열정적인 응원을 하고 싶으신 분들은 다른 구역을 더 추천해요!\"\n        } ]\n      } ]\n    } ]\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/test/docs" : {
       "post" : {
         "tags" : [ "TEST" ],
@@ -242,6 +284,99 @@
           "tip" : {
             "type" : "string",
             "description" : "테스트 팁"
+          }
+        }
+      },
+      "GetZonesResponseDto" : {
+        "title" : "GetZonesResponseDto",
+        "required" : [ "code", "isSuccess", "message" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "응답 코드"
+          },
+          "payload" : {
+            "required" : [ "zones" ],
+            "type" : "object",
+            "properties" : {
+              "zones" : {
+                "type" : "array",
+                "description" : "추천구역 리스트",
+                "items" : {
+                  "required" : [ "explanations", "name", "tip", "zoneId" ],
+                  "type" : "object",
+                  "properties" : {
+                    "name" : {
+                      "type" : "string",
+                      "description" : "구역 이름"
+                    },
+                    "referencesGroup" : {
+                      "type" : "array",
+                      "items" : {
+                        "required" : [ "groupTitle" ],
+                        "type" : "object",
+                        "properties" : {
+                          "references" : {
+                            "type" : "array",
+                            "items" : {
+                              "required" : [ "content", "title" ],
+                              "type" : "object",
+                              "properties" : {
+                                "title" : {
+                                  "type" : "string",
+                                  "description" : "참고 항목 제목"
+                                },
+                                "content" : {
+                                  "type" : "string",
+                                  "description" : "참고 항목 내용"
+                                }
+                              }
+                            }
+                          },
+                          "groupTitle" : {
+                            "type" : "string",
+                            "description" : "참고 그룹 제목"
+                          }
+                        }
+                      }
+                    },
+                    "explanations" : {
+                      "type" : "array",
+                      "description" : "구역 설명",
+                      "items" : {
+                        "oneOf" : [ {
+                          "type" : "object"
+                        }, {
+                          "type" : "boolean"
+                        }, {
+                          "type" : "string"
+                        }, {
+                          "type" : "number"
+                        } ]
+                      }
+                    },
+                    "zoneId" : {
+                      "type" : "number",
+                      "description" : "구역 ID"
+                    },
+                    "tip" : {
+                      "type" : "string",
+                      "description" : "구역에 대한 팁"
+                    }
+                  }
+                }
+              }
+            },
+            "description" : "응답 데이터"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "응답 메시지"
+          },
+          "isSuccess" : {
+            "type" : "boolean",
+            "description" : "성공 여부"
           }
         }
       },

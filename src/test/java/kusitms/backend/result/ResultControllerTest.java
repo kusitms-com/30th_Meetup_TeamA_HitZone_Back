@@ -7,8 +7,12 @@ import jakarta.servlet.http.Cookie;
 import kusitms.backend.auth.jwt.JWTUtil;
 import kusitms.backend.configuration.ControllerTestConfig;
 import kusitms.backend.result.application.ResultService;
+import kusitms.backend.result.common.Reference;
+import kusitms.backend.result.common.ReferencesGroup;
 import kusitms.backend.result.domain.entity.Profile;
 import kusitms.backend.result.domain.entity.Result;
+import kusitms.backend.result.domain.entity.Zone;
+import kusitms.backend.result.domain.enums.JamsilStadiumStatusType;
 import kusitms.backend.result.dto.request.SaveTopRankedZoneRequestDto;
 import kusitms.backend.result.dto.response.GetProfileResponseDto;
 import kusitms.backend.result.dto.response.GetZonesResponseDto;
@@ -164,8 +168,90 @@ public class ResultControllerTest extends ControllerTestConfig {
                 ));
     }
 
+    @Test
+    @DisplayName("해당 결과의 추천구역 리스트 조회")
+    public void getRecommendedZones() throws Exception {
+        // given
+        GetZonesResponseDto.ZoneResponseDto redZone = new GetZonesResponseDto.ZoneResponseDto(
+                1L,
+                "레드석",
+                List.of("응원도 적당히 즐길 수 있지만, 야구나 함께 온 동행자와의 대화에도 집중할 수 있는 구역이에요!"),
+                "해당 구역은 다양한 것들을 모두 적절히 즐길 수 있는 구역이예요.",
+                List.of(
+                        new ReferencesGroup(
+                                "레드석 참고하세요.",
+                                List.of(
+                                        new Reference("시야가 중요하신 분", "외야와 가까운 쪽은 예매 시 시야 확인이 필요해요. 기둥이나 그물망으로 시야 방해를 받을 수 있어요!"),
+                                        new Reference("시끄러운 것을 좋아하지 않는 분", "오렌지석이 앞에 있어서 스피커 때문에 많이 시끄러워요. 조용한 관람을 원하시면 다른 구역을 추천해요!")
+                                )
+                        )
+                )
+        );
+        GetZonesResponseDto.ZoneResponseDto blueZone = new GetZonesResponseDto.ZoneResponseDto(
+                2L,
+                "블루석",
+                List.of("힘차게 응원도 가능하고, 야구에 집중도 할 수 있는 구역이에요!"),
+                "해당 구역은 비교적 조용히 경기 관람이 가능한 구역이예요.",
+                List.of(
+                        new ReferencesGroup(
+                                "블루석 참고하세요.",
+                                List.of(
+                                        new Reference("시야가 중요하신 분", "홈과 가까운 쪽은 예매 시 시야 확인이 필요해요. 그물망으로 인해 시야 방해를 받을 수 있어요!"),
+                                        new Reference("적당한 응원을 하고 싶으신 분", "비교적 조용히 경기를 관람하고 적당히 응원할 수 있는 곳이에요. 열정적인 응원을 하고 싶으신 분들은 다른 구역을 더 추천해요!")
+                                )
+                        )
+                )
+        );
+        GetZonesResponseDto getZonesResponseDto = GetZonesResponseDto.of(List.of(redZone, blueZone));
+        Mockito.when(resultService.getRecommendedZones(anyLong(), anyLong()))
+                .thenReturn(getZonesResponseDto);
 
+        // when
+        ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/results/zones")
+                .param("resultId","2")
+                .param("count", "2")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
 
-
-
+        // then
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.isSuccess").value(true))
+                .andExpect(jsonPath("$.code").value(200))
+                .andExpect(jsonPath("$.message").value("해당 결과의 추천 구역 정보 리스트를 조회하였습니다."))
+                .andExpect(jsonPath("$.payload.zones[0].zoneId").value(redZone.zoneId()))
+                .andExpect(jsonPath("$.payload.zones[0].name").value(redZone.name()))
+                .andExpect(jsonPath("$.payload.zones[0].tip").value(redZone.tip()))
+                .andExpect(jsonPath("$.payload.zones[0].explanations[0]").value(redZone.explanations().get(0)))
+                .andExpect(jsonPath("$.payload.zones[0].referencesGroup[0].groupTitle").value(redZone.referencesGroup().get(0).getGroupTitle()))
+                .andDo(MockMvcRestDocumentationWrapper.document("results/zones",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(
+                                ResourceSnippetParameters.builder()
+                                        .tag("Result")
+                                        .description("해당 결과의 추천 구역 리스트를 조회한다.")
+                                        .queryParameters(
+                                                parameterWithName("resultId").description("조회할 결과의 ID"),
+                                                parameterWithName("count").description("조회할 결과에 대한 추천구역의 개수")
+                                        )
+                                        .responseFields(
+                                                fieldWithPath("isSuccess").description("성공 여부"),
+                                                fieldWithPath("code").description("응답 코드"),
+                                                fieldWithPath("message").description("응답 메시지"),
+                                                fieldWithPath("payload").description("응답 데이터").optional(),
+                                                fieldWithPath("payload.zones").description("추천구역 리스트"),
+                                                fieldWithPath("payload.zones[].zoneId").description("구역 ID"),
+                                                fieldWithPath("payload.zones[].name").description("구역 이름"),
+                                                fieldWithPath("payload.zones[].explanations[]").description("구역 설명"),
+                                                fieldWithPath("payload.zones[].tip").description("구역에 대한 팁"),
+                                                fieldWithPath("payload.zones[].referencesGroup[].groupTitle").description("참고 그룹 제목"),
+                                                fieldWithPath("payload.zones[].referencesGroup[].references[].title").description("참고 항목 제목"),
+                                                fieldWithPath("payload.zones[].referencesGroup[].references[].content").description("참고 항목 내용")
+                                        )
+                                        .responseSchema(Schema.schema("GetZonesResponseDto"))
+                                        .build()
+                        )
+                ));
+    }
 }
