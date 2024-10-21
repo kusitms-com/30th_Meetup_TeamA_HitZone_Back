@@ -10,6 +10,40 @@
   } ],
   "tags" : [ ],
   "paths" : {
+    "/api/v1/results/profile" : {
+      "get" : {
+        "tags" : [ "Result" ],
+        "summary" : "해당 결과의 유저 프로필 정보를 조회한다.",
+        "description" : "해당 결과의 유저 프로필 정보를 조회한다.",
+        "operationId" : "results/profile",
+        "parameters" : [ {
+          "name" : "resultId",
+          "in" : "query",
+          "description" : "조회할 결과의 ID",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GetProfileResponseDto"
+                },
+                "examples" : {
+                  "results/profile" : {
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"code\" : \"200\",\n  \"message\" : \"해당 결과의 프로필 정보를 조회하였습니다.\",\n  \"payload\" : {\n    \"profileId\" : 1,\n    \"nickname\" : \"이러다 공까지 먹어버러\",\n    \"type\" : \"야구가 참 맛있고 음식이 재밌어요\",\n    \"explanation\" : \"야구장에서 먹는 재미까지 놓치지 않는 당신!\\n야구장을 두 배로 재밌게 즐기는군요?\",\n    \"hashTags\" : [ \"#먹으러왔는데야구도한다?\", \"#그래서여기구장맛있는거뭐라고?\" ]\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/results/save" : {
       "post" : {
         "tags" : [ "Result" ],
@@ -208,6 +242,63 @@
           "tip" : {
             "type" : "string",
             "description" : "테스트 팁"
+          }
+        }
+      },
+      "GetProfileResponseDto" : {
+        "title" : "GetProfileResponseDto",
+        "required" : [ "code", "isSuccess", "message" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "응답 코드"
+          },
+          "payload" : {
+            "required" : [ "explanation", "hashTags", "nickname", "profileId", "type" ],
+            "type" : "object",
+            "properties" : {
+              "hashTags" : {
+                "type" : "array",
+                "description" : "해당 결과의 프로필의 해시태그 목록",
+                "items" : {
+                  "oneOf" : [ {
+                    "type" : "object"
+                  }, {
+                    "type" : "boolean"
+                  }, {
+                    "type" : "string"
+                  }, {
+                    "type" : "number"
+                  } ]
+                }
+              },
+              "profileId" : {
+                "type" : "number",
+                "description" : "해당 결과의 프로필 ID"
+              },
+              "nickname" : {
+                "type" : "string",
+                "description" : "해당 결과의 프로필의 닉네임"
+              },
+              "explanation" : {
+                "type" : "string",
+                "description" : "해당 결과의 프로필 설명"
+              },
+              "type" : {
+                "type" : "string",
+                "description" : "해당 결과의 프로필의 타입"
+              }
+            },
+            "description" : "응답 데이터"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "응답 메시지"
+          },
+          "isSuccess" : {
+            "type" : "boolean",
+            "description" : "성공 여부"
           }
         }
       }

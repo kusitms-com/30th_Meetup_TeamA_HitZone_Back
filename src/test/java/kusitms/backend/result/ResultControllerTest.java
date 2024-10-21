@@ -4,11 +4,18 @@ import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import jakarta.servlet.http.Cookie;
+import kusitms.backend.auth.jwt.JWTUtil;
 import kusitms.backend.configuration.ControllerTestConfig;
 import kusitms.backend.result.application.ResultService;
+import kusitms.backend.result.domain.entity.Profile;
+import kusitms.backend.result.domain.entity.Result;
 import kusitms.backend.result.dto.request.SaveTopRankedZoneRequestDto;
+import kusitms.backend.result.dto.response.GetProfileResponseDto;
+import kusitms.backend.result.dto.response.GetZonesResponseDto;
 import kusitms.backend.result.dto.response.SaveTopRankedZoneResponseDto;
 import kusitms.backend.result.presentation.ResultController;
+import kusitms.backend.stadium.domain.entity.Stadium;
+import kusitms.backend.user.domain.entity.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -23,12 +30,12 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.util.List;
 
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
 import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -51,6 +58,7 @@ public class ResultControllerTest extends ControllerTestConfig {
             }
             """;
         SaveTopRankedZoneResponseDto saveTopRankedZoneResponseDto = SaveTopRankedZoneResponseDto.of(1L);
+
         Mockito.when(resultService.saveRecommendedZones(anyString(), any(SaveTopRankedZoneRequestDto.class)))
                 .thenReturn(saveTopRankedZoneResponseDto);
 
@@ -95,4 +103,69 @@ public class ResultControllerTest extends ControllerTestConfig {
                         )
                 ));
     }
+
+    @Test
+    @DisplayName("해당 결과의 프로필 조회")
+    public void getRecommendedProfile() throws Exception {
+        // given
+        GetProfileResponseDto getProfileResponseDto = new GetProfileResponseDto(
+                1L,
+                "이러다 공까지 먹어버러",
+                "야구가 참 맛있고 음식이 재밌어요",
+                "야구장에서 먹는 재미까지 놓치지 않는 당신!\n야구장을 두 배로 재밌게 즐기는군요?",
+                List.of("#먹으러왔는데야구도한다?", "#그래서여기구장맛있는거뭐라고?")
+                );
+
+        Mockito.when(resultService.getRecommendedProfile(anyLong()))
+                .thenReturn(getProfileResponseDto);
+
+        // when
+        ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/results/profile")
+                .queryParam("resultId","2")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
+
+        // then
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.isSuccess").value(true))
+                .andExpect(jsonPath("$.code").value(200))
+                .andExpect(jsonPath("$.message").value("해당 결과의 프로필 정보를 조회하였습니다."))
+                .andExpect(jsonPath("$.payload.profileId").value(1L))
+                .andExpect(jsonPath("$.payload.nickname").value("이러다 공까지 먹어버러"))
+                .andExpect(jsonPath("$.payload.type").value("야구가 참 맛있고 음식이 재밌어요"))
+                .andExpect(jsonPath("$.payload.explanation").value("야구장에서 먹는 재미까지 놓치지 않는 당신!\n야구장을 두 배로 재밌게 즐기는군요?"))
+                .andExpect(jsonPath("$.payload.hashTags[0]").value("#먹으러왔는데야구도한다?"))
+                .andExpect(jsonPath("$.payload.hashTags[1]").value("#그래서여기구장맛있는거뭐라고?"))
+                .andDo(MockMvcRestDocumentationWrapper.document("results/profile",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(
+                                ResourceSnippetParameters.builder()
+                                        .tag("Result")
+                                        .description("해당 결과의 유저 프로필 정보를 조회한다.")
+                                        .queryParameters(
+                                                parameterWithName("resultId").description("조회할 결과의 ID")
+                                        )
+                                        .responseFields(
+                                                fieldWithPath("isSuccess").description("성공 여부"),
+                                                fieldWithPath("code").description("응답 코드"),
+                                                fieldWithPath("message").description("응답 메시지"),
+                                                fieldWithPath("payload").description("응답 데이터").optional(),
+                                                fieldWithPath("payload.profileId").description("해당 결과의 프로필 ID"),
+                                                fieldWithPath("payload.nickname").description("해당 결과의 프로필의 닉네임"),
+                                                fieldWithPath("payload.type").description("해당 결과의 프로필의 타입"),
+                                                fieldWithPath("payload.explanation").description("해당 결과의 프로필 설명"),
+                                                fieldWithPath("payload.hashTags").description("해당 결과의 프로필의 해시태그 목록")
+                                        )
+                                        .responseSchema(Schema.schema("GetProfileResponseDto"))
+                                        .build()
+                        )
+                ));
+    }
+
+
+
+
+
 }
