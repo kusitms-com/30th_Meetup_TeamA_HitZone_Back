@@ -9,7 +9,7 @@ public record Result(
         String stopReason,     // 결과 중단 이유
         int inputLength,       // 입력 토큰 수
         int outputLength,      // 응답 토큰 수
-        int seed,              // 입력 seed 값
+        long seed,             // 입력 seed 값
         List<String> aiFilter  // AI 필터 결과 (여기선 단순히 리스트로 표현)
 ) {
 }
