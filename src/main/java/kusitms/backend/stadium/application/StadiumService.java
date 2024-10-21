@@ -19,7 +19,7 @@ import java.util.List;
 public class StadiumService {
 
     @Transactional(readOnly = true)
-    public GetZonesNameResponseDto getZoneName(String stadiumName) {
+    public GetZonesNameResponseDto getZonesName(String stadiumName) {
         List<String> zoneNames = switch (stadiumName) {
             case "잠실종합운동장" -> getZoneNamesFromStadium(JamsilStadiumStatusType.values());
             case "수원KT위즈파크" -> getZoneNamesFromStadium(KtWizStadiumStatusType.values());

@@ -3,9 +3,9 @@ plugins {
     id 'org.springframework.boot' version '3.3.4'
     id 'io.spring.dependency-management' version '1.1.6'
 
-    //rest docs
+    // REST Docs
     id "org.asciidoctor.jvm.convert" version "3.3.2"
-    id 'com.epages.restdocs-api-spec' version '0.17.1'
+    id 'com.epages.restdocs-api-spec' version '0.19.2'
     id 'org.hidetake.swagger.generator' version '2.18.2'
 }
 
@@ -18,25 +18,8 @@ java {
     }
 }
 
-//rest-docs
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-    asciidoctorExt
-}
-
 repositories {
     mavenCentral()
-}
-
-//twilio이 jjwt-jackson 0.11.2를 의존해서 0.12.3으로 강제 의존성 주입
-configurations.configureEach {
-    resolutionStrategy {
-        force 'io.jsonwebtoken:jjwt-api:0.12.3'
-        force 'io.jsonwebtoken:jjwt-impl:0.12.3'
-        force 'io.jsonwebtoken:jjwt-jackson:0.12.3'
-    }
 }
 
 dependencies {
@@ -44,36 +27,48 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
     // JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'com.mysql:mysql-connector-j'
+
     // OAuth 2.0
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-    // 시큐리티
+
+    // Security
     implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'org.springframework.security:spring-security-test'
-    // 롬복
+
+    // Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    //Redis
+
+    // Redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
     // Twilio SDK
     implementation 'com.twilio.sdk:twilio:8.24.0'
-    //restdocs-api-spec 의존성 추가
+
+    // REST Docs & Swagger 의존성 추가
     testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.19.2'
-    asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
-    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc:3.0.0'
     testImplementation 'com.squareup.okhttp3:mockwebserver'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+
     // WebClient
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
     // MacOS Silicon 라이브러리 누락 문제
     runtimeOnly 'io.netty:netty-resolver-dns-native-macos:4.1.104.Final:osx-aarch_64'
 }
 
-// 스니펫이 생성되는 디렉터리 경로를 설정
 ext {
     snippetsDir = file('build/generated-snippets')
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+    outputs.dir snippetsDir
 }
 
 sourceSets {
@@ -86,22 +81,19 @@ sourceSets {
 
 def serverUrl = "http://localhost:8080"
 
-// openapi3 설정
 openapi3 {
     server = serverUrl
     title = "히트존 API 문서"
-    description = "Spring REST Docs with SwaggerUI."
+    description = "Spring REST Docs with Swagger UI."
     version = "0.0.1"
     outputFileNamePrefix = 'open-api-3.0.1'
     format = 'json'
     outputDirectory = 'build/resources/main/static/docs'
 }
 
-// GenerateSwaggerUI 태스크가 openapi3 태스크에 의존하도록 설정
 tasks.withType(GenerateSwaggerUI).configureEach {
     dependsOn 'openapi3'
 
-    // 기존 파일 삭제 후 json 파일 복사
     delete file('src/main/resources/static/docs/')
     copy {
         from "build/resources/main/static/docs"
@@ -109,37 +101,9 @@ tasks.withType(GenerateSwaggerUI).configureEach {
     }
 }
 
-// 테스트를 통해 생성된 snippets 출력 위치 정의
-tasks.register("ext") {
-    snippetsDir = file('build/generated-snippets')
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
-    outputs.dir 'snippetsDir' // test 스니펫 디렉터리를 출력으로 추가하도록 작업을 구성
-
-    // 파일 생성 로직 추가
-    doFirst {
-        def docsDir = file('build/resources/main/static/docs')
-        if (!docsDir.exists()) {
-            docsDir.mkdirs()
-        }
-        def apiFile = file('build/resources/main/static/docs/open-api-3.0.1.json')
-        if (!apiFile.exists()) {
-            apiFile.createNewFile()
-        }
-    }
-}
-
-// 기존에 존재하던 docs 삭제
-asciidoctor.doFirst {
-    delete file('src/main/resources/static/docs')
-}
-
-// asciidoctor 작업을 구성
-tasks.named("asciidoctor") {
-    inputs.dir 'snippetsDir'
-    configurations 'asciidoctorExt'
+// Asciidoctor 설정
+tasks.named('asciidoctor') {
+    inputs.dir snippetsDir
     dependsOn test
 }
 
@@ -148,12 +112,11 @@ tasks.named("bootJar") {
     from("${asciidoctor.outputDir}") {
         into 'static/docs'
     }
-    dependsOn(':openapi3')
+    dependsOn ':openapi3'
 }
 
 tasks.register('copyDocument', Copy) {
     dependsOn asciidoctor
-//    from file("$buildDir/docs/asciidoc")
     from file(project.layout.buildDirectory.dir("docs/asciidoc").get().asFile.path)
     into file("src/main/resources/static/docs")
 }
@@ -161,4 +124,3 @@ tasks.register('copyDocument', Copy) {
 tasks.named("build") {
     dependsOn copyDocument
 }
-
