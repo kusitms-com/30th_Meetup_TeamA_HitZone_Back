@@ -47,8 +47,8 @@
     "/api/v1/results/save" : {
       "post" : {
         "tags" : [ "Result" ],
-        "summary" : "구역 추천 결과를 저장한다. (accessToken 포함)",
-        "description" : "구역 추천 결과를 저장한다. (accessToken 포함)",
+        "summary" : "구역 추천 결과를 저장한다. (어세스토큰은 기입/미기입 모두 가능)",
+        "description" : "구역 추천 결과를 저장한다. (어세스토큰은 기입/미기입 모두 가능)",
         "operationId" : "results/save",
         "requestBody" : {
           "content" : {
@@ -125,6 +125,40 @@
         }
       }
     },
+    "/api/v1/stadium/zones" : {
+      "get" : {
+        "tags" : [ "Stadium" ],
+        "summary" : "해당 스타디움의 구역 목록들을 조회한다.",
+        "description" : "해당 스타디움의 구역 목록들을 조회한다.",
+        "operationId" : "stadium/names",
+        "parameters" : [ {
+          "name" : "stadiumName",
+          "in" : "query",
+          "description" : "스타디움명",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GetZonesNameResponseDto"
+                },
+                "examples" : {
+                  "stadium/names" : {
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"code\" : \"200\",\n  \"message\" : \"해당 스타디움의 구역 이름들이 조회되었습니다.\",\n  \"payload\" : {\n    \"names\" : [ \"레드석\", \"블루석\", \"네이비석\", \"오렌지석\", \"익사이팅석\", \"외야그린석\", \"테이블석\", \"프리미엄석\" ]\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/test/docs" : {
       "post" : {
         "tags" : [ "TEST" ],
@@ -180,6 +214,48 @@
           }
         }
       }
+    },
+    "/api/v1/stadium/zones/guide" : {
+      "get" : {
+        "tags" : [ "Stadium" ],
+        "summary" : "해당 구역에 대한 구역 가이드 정보를 조회한다.",
+        "description" : "해당 구역에 대한 구역 가이드 정보를 조회한다.",
+        "operationId" : "stadium/guide",
+        "parameters" : [ {
+          "name" : "stadiumName",
+          "in" : "query",
+          "description" : "스타디움명",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "zoneName",
+          "in" : "query",
+          "description" : "구역명",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GetZoneGuideResponseDto"
+                },
+                "examples" : {
+                  "stadium/guide" : {
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"code\" : \"200\",\n  \"message\" : \"해당 구역에 대한 가이드 정보가 조회되었습니다.\",\n  \"payload\" : {\n    \"zoneName\" : \"레드석\",\n    \"explanation\" : \"해당 구역은 다양한 것들을 모두 적절히 즐길 수 있는 구역이에요.\",\n    \"entrance\" : \"[1루] 2-3 Gate [3루] 2-1 Gate\",\n    \"stepSpacing\" : \"[1루] 약 24~30cm(10n열), 약 33~38cm(20n열)\",\n    \"seatSpacing\" : \"[1루] 약 25cm [3루] 약 25cm\",\n    \"usageInformation\" : \"\",\n    \"tip\" : \"해당 구역은 비교적 조용히 경기 관람이 가능한 구역이에요.\",\n    \"referencesGroup\" : [ {\n      \"groupTitle\" : \"레드석 참고하세요.\",\n      \"references\" : [ {\n        \"title\" : \"시야가 중요하신 분\",\n        \"content\" : \"외야와 가까운 쪽은 예매 시 시야 확인이 필요해요.\"\n      }, {\n        \"title\" : \"시끄러운 것을 좋아하지 않는 분\",\n        \"content\" : \"오렌지석이 앞에 있어서 스피커 때문에 많이 시끄러워요.\"\n      } ]\n    } ]\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components" : {
@@ -204,6 +280,47 @@
               "keyword" : {
                 "type" : "string",
                 "description" : "키워드"
+              }
+            },
+            "description" : "응답 데이터"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "응답 메시지"
+          },
+          "isSuccess" : {
+            "type" : "boolean",
+            "description" : "성공 여부"
+          }
+        }
+      },
+      "GetZonesNameResponseDto" : {
+        "title" : "GetZonesNameResponseDto",
+        "required" : [ "code", "isSuccess", "message" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "응답 코드"
+          },
+          "payload" : {
+            "required" : [ "names" ],
+            "type" : "object",
+            "properties" : {
+              "names" : {
+                "type" : "array",
+                "description" : "해당 구역명",
+                "items" : {
+                  "oneOf" : [ {
+                    "type" : "object"
+                  }, {
+                    "type" : "boolean"
+                  }, {
+                    "type" : "string"
+                  }, {
+                    "type" : "number"
+                  } ]
+                }
               }
             },
             "description" : "응답 데이터"
@@ -247,6 +364,16 @@
           }
         }
       },
+      "api-v1-test-docs-231805054" : {
+        "required" : [ "tip" ],
+        "type" : "object",
+        "properties" : {
+          "tip" : {
+            "type" : "string",
+            "description" : "테스트 팁"
+          }
+        }
+      },
       "SaveTopRankedZonesResponseDto" : {
         "title" : "SaveTopRankedZonesResponseDto",
         "required" : [ "code", "isSuccess", "message" ],
@@ -262,7 +389,7 @@
             "properties" : {
               "resultId" : {
                 "type" : "number",
-                "description" : "저장된 결과ID"
+                "description" : "저장된 결과 ID"
               }
             },
             "description" : "응답 데이터"
@@ -277,13 +404,87 @@
           }
         }
       },
-      "api-v1-test-docs-231805054" : {
-        "required" : [ "tip" ],
+      "GetZoneGuideResponseDto" : {
+        "title" : "GetZoneGuideResponseDto",
+        "required" : [ "code", "isSuccess", "message" ],
         "type" : "object",
         "properties" : {
-          "tip" : {
+          "code" : {
             "type" : "string",
-            "description" : "테스트 팁"
+            "description" : "응답 코드"
+          },
+          "payload" : {
+            "required" : [ "entrance", "explanation", "seatSpacing", "stepSpacing", "tip", "usageInformation", "zoneName" ],
+            "type" : "object",
+            "properties" : {
+              "stepSpacing" : {
+                "type" : "string",
+                "description" : "구역 단차 간격"
+              },
+              "referencesGroup" : {
+                "type" : "array",
+                "items" : {
+                  "required" : [ "groupTitle" ],
+                  "type" : "object",
+                  "properties" : {
+                    "references" : {
+                      "type" : "array",
+                      "items" : {
+                        "required" : [ "content", "title" ],
+                        "type" : "object",
+                        "properties" : {
+                          "title" : {
+                            "type" : "string",
+                            "description" : "참고사항 제목"
+                          },
+                          "content" : {
+                            "type" : "string",
+                            "description" : "참고사항 내용"
+                          }
+                        }
+                      }
+                    },
+                    "groupTitle" : {
+                      "type" : "string",
+                      "description" : "구역 참고사항리스트의 제목"
+                    }
+                  }
+                }
+              },
+              "usageInformation" : {
+                "type" : "string",
+                "description" : "구역 유용 정보"
+              },
+              "tip" : {
+                "type" : "string",
+                "description" : "구역 팁"
+              },
+              "seatSpacing" : {
+                "type" : "string",
+                "description" : "구역 좌석간 간격"
+              },
+              "zoneName" : {
+                "type" : "string",
+                "description" : "구역명"
+              },
+              "entrance" : {
+                "type" : "string",
+                "description" : "구역 입구"
+              },
+              "explanation" : {
+                "type" : "string",
+                "description" : "구역 설명"
+              }
+            },
+            "description" : "응답 데이터"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "응답 메시지"
+          },
+          "isSuccess" : {
+            "type" : "boolean",
+            "description" : "성공 여부"
           }
         }
       },

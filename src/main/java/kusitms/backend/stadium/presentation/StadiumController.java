@@ -27,7 +27,7 @@ public class StadiumController {
     public ResponseEntity<ApiResponse<GetZonesNameResponseDto>> getZonesName(
             @RequestParam String stadiumName
     ) {
-        return ApiResponse.onSuccess(StadiumSuccessStatus._OK_GET_ZONES_NAME, stadiumService.getZoneName(stadiumName));
+        return ApiResponse.onSuccess(StadiumSuccessStatus._OK_GET_ZONES_NAME, stadiumService.getZonesName(stadiumName));
     }
 
 
