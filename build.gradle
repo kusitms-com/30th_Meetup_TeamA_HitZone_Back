@@ -22,6 +22,15 @@ repositories {
     mavenCentral()
 }
 
+//twilio이 jjwt-jackson 0.11.2를 의존해서 0.12.3으로 강제 의존성 주입
+configurations.configureEach {
+    resolutionStrategy {
+        force 'io.jsonwebtoken:jjwt-api:0.12.3'
+        force 'io.jsonwebtoken:jjwt-impl:0.12.3'
+        force 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+    }
+}
+
 dependencies {
     // WEB
     implementation 'org.springframework.boot:spring-boot-starter-web'
