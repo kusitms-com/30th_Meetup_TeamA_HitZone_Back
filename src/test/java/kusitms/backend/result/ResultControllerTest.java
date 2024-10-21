@@ -4,31 +4,22 @@ import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import jakarta.servlet.http.Cookie;
-import kusitms.backend.auth.jwt.JWTUtil;
 import kusitms.backend.configuration.ControllerTestConfig;
 import kusitms.backend.result.application.ResultService;
 import kusitms.backend.result.common.Reference;
 import kusitms.backend.result.common.ReferencesGroup;
-import kusitms.backend.result.domain.entity.Profile;
-import kusitms.backend.result.domain.entity.Result;
-import kusitms.backend.result.domain.entity.Zone;
-import kusitms.backend.result.domain.enums.JamsilStadiumStatusType;
 import kusitms.backend.result.dto.request.SaveTopRankedZoneRequestDto;
 import kusitms.backend.result.dto.response.GetProfileResponseDto;
 import kusitms.backend.result.dto.response.GetZonesResponseDto;
 import kusitms.backend.result.dto.response.SaveTopRankedZoneResponseDto;
 import kusitms.backend.result.presentation.ResultController;
-import kusitms.backend.stadium.domain.entity.Stadium;
-import kusitms.backend.user.domain.entity.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.cookies.CookieDocumentation;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
-import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
@@ -68,7 +59,7 @@ public class ResultControllerTest extends ControllerTestConfig {
 
         // when
         ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.post("/api/v1/results/save")
-                .cookie(new Cookie("accessToken", accessToken))  // 쿠키 추가
+                .cookie(new Cookie("accessToken", accessToken))
                 .content(saveTopRankedZonesJsonRequest)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON));
@@ -86,7 +77,7 @@ public class ResultControllerTest extends ControllerTestConfig {
                         resource(
                                 ResourceSnippetParameters.builder()
                                         .tag("Result")
-                                        .description("구역 추천 결과를 저장한다. (accessToken 포함)")
+                                        .description("구역 추천 결과를 저장한다. (어세스토큰은 기입/미기입 모두 가능)")
                                         .requestFields(
                                                 fieldWithPath("stadium").description("경기장 이름"),
                                                 fieldWithPath("preference").description("선호 구역 (1루석 또는 3루석)"),
@@ -97,7 +88,7 @@ public class ResultControllerTest extends ControllerTestConfig {
                                                 fieldWithPath("code").description("응답 코드"),
                                                 fieldWithPath("message").description("응답 메시지"),
                                                 fieldWithPath("payload").description("응답 데이터").optional(),
-                                                fieldWithPath("payload.resultId").description("저장된 결과ID")
+                                                fieldWithPath("payload.resultId").description("저장된 결과 ID")
                                         )
                                         .responseSchema(Schema.schema("SaveTopRankedZonesResponseDto"))
                                         .build()
