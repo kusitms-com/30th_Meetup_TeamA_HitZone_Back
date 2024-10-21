@@ -211,9 +211,11 @@ public class ResultControllerTest extends ControllerTestConfig {
                 .andExpect(jsonPath("$.message").value("해당 결과의 추천 구역 정보 리스트를 조회하였습니다."))
                 .andExpect(jsonPath("$.payload.zones[0].zoneId").value(redZone.zoneId()))
                 .andExpect(jsonPath("$.payload.zones[0].name").value(redZone.name()))
-                .andExpect(jsonPath("$.payload.zones[0].tip").value(redZone.tip()))
                 .andExpect(jsonPath("$.payload.zones[0].explanations[0]").value(redZone.explanations().get(0)))
+                .andExpect(jsonPath("$.payload.zones[0].tip").value(redZone.tip()))
                 .andExpect(jsonPath("$.payload.zones[0].referencesGroup[0].groupTitle").value(redZone.referencesGroup().get(0).getGroupTitle()))
+                .andExpect(jsonPath("$.payload.zones[0].referencesGroup[0].references[0].title").value(redZone.referencesGroup().get(0).getReferences().get(0).getTitle()))
+                .andExpect(jsonPath("$.payload.zones[0].referencesGroup[0].references[0].content").value(redZone.referencesGroup().get(0).getReferences().get(0).getContent()))
                 .andDo(MockMvcRestDocumentationWrapper.document("results/zones",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
