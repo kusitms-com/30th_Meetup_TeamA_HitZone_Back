@@ -10,6 +10,101 @@
   } ],
   "tags" : [ ],
   "paths" : {
+    "/api/v1/chatbot/clova" : {
+      "post" : {
+        "tags" : [ "Chatbot" ],
+        "summary" : "Clova 챗봇 답변을 조회한다.",
+        "description" : "Clova 챗봇 답변을 조회한다.",
+        "operationId" : "chatbot",
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=UTF-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/GetClovaChatbotAnswerRequest"
+              },
+              "examples" : {
+                "chatbot/clova" : {
+                  "value" : "{\n  \"message\" : \"너 누구야?\"\n}"
+                },
+                "chatbot-controller-test/get-clova-chatbot-answer" : {
+                  "value" : "{\n  \"message\" : \"너 누구야?\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GetClovaChatbotAnswerResponse"
+                },
+                "examples" : {
+                  "chatbot/clova" : {
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"code\" : \"200\",\n  \"message\" : \"네이버 클로바 챗봇 답변을 가져오는 데 성공했습니다.\",\n  \"payload\" : {\n    \"answer\" : \"안녕하세요! 저는 야구 가이드 챗봇 '루키'에요! 야구에 대한 궁금한 점이 있다면 언제든지 물어봐 주세요!\"\n  }\n}"
+                  },
+                  "chatbot-controller-test/get-clova-chatbot-answer" : {
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"code\" : \"200\",\n  \"message\" : \"네이버 클로바 챗봇 답변을 가져오는 데 성공했습니다.\",\n  \"payload\" : {\n    \"answer\" : \"안녕하세요! 저는 야구 가이드 챗봇 '루키'에요! 야구에 대한 궁금한 점이 있다면 언제든지 물어봐 주세요!\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/chatbot/guide" : {
+      "get" : {
+        "tags" : [ "Chatbot" ],
+        "summary" : "가이드 챗봇 답변을 조회한다.",
+        "description" : "가이드 챗봇 답변을 조회한다.",
+        "operationId" : "chatbot/guide",
+        "parameters" : [ {
+          "name" : "stadiumName",
+          "in" : "query",
+          "description" : "경기장 이름",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "categoryName",
+          "in" : "query",
+          "description" : "카테고리 이름",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "orderNumber",
+          "in" : "query",
+          "description" : "질문 번호",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GetGuideChatbotAnswerResponse"
+                },
+                "examples" : {
+                  "chatbot/guide" : {
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"code\" : \"200\",\n  \"message\" : \"가이드 챗봇 답변을 가져오는 데 성공했습니다.\",\n  \"payload\" : {\n    \"answers\" : [ \"각 구장에 위치한 굿즈샵에서 원하는 응원 도구를 구매할 수 있어요!\", \"잠실 야구장의 경우, 지하철 2호선 '종합운동장역' 6번 출구 앞에 위치한 야구 용품샵 '유니크 스포츠'를 이용할 수 있어요! 홈팀인 엘지 트윈스와 두산 베어스의 굿즈 뿐만 아니라, 원정팀들의 굿즈도 있으니 한 번 방문해보세요!\", \"종합운동장역을 나가기 전, 역사에 위치한 ‘라커디움파크 종합운동장역점’에서도 굿즈를 판매 중이에요!\" ],\n    \"imgUrl\" : null\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/results/profile" : {
       "get" : {
         "tags" : [ "Result" ],
@@ -260,6 +355,36 @@
   },
   "components" : {
     "schemas" : {
+      "GetClovaChatbotAnswerResponse" : {
+        "title" : "GetClovaChatbotAnswerResponse",
+        "required" : [ "code", "isSuccess", "message", "payload" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "응답 코드"
+          },
+          "payload" : {
+            "required" : [ "answer" ],
+            "type" : "object",
+            "properties" : {
+              "answer" : {
+                "type" : "string",
+                "description" : "Clova 챗봇의 답변"
+              }
+            },
+            "description" : "응답 데이터"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "응답 메시지"
+          },
+          "isSuccess" : {
+            "type" : "boolean",
+            "description" : "성공 여부"
+          }
+        }
+      },
       "TestDocsResponseDto" : {
         "title" : "TestDocsResponseDto",
         "required" : [ "code", "isSuccess", "message" ],
@@ -509,6 +634,63 @@
           "isSuccess" : {
             "type" : "boolean",
             "description" : "성공 여부"
+          }
+        }
+      },
+      "GetGuideChatbotAnswerResponse" : {
+        "title" : "GetGuideChatbotAnswerResponse",
+        "required" : [ "code", "isSuccess", "message", "payload" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "응답 코드"
+          },
+          "payload" : {
+            "required" : [ "answers" ],
+            "type" : "object",
+            "properties" : {
+              "imgUrl" : {
+                "type" : "string",
+                "description" : "이미지 URL",
+                "nullable" : true
+              },
+              "answers" : {
+                "type" : "array",
+                "description" : "답변 목록",
+                "items" : {
+                  "oneOf" : [ {
+                    "type" : "object"
+                  }, {
+                    "type" : "boolean"
+                  }, {
+                    "type" : "string"
+                  }, {
+                    "type" : "number"
+                  } ]
+                }
+              }
+            },
+            "description" : "응답 데이터"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "응답 메시지"
+          },
+          "isSuccess" : {
+            "type" : "boolean",
+            "description" : "성공 여부"
+          }
+        }
+      },
+      "GetClovaChatbotAnswerRequest" : {
+        "title" : "GetClovaChatbotAnswerRequest",
+        "required" : [ "message" ],
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "type" : "string",
+            "description" : "사용자가 보낸 메시지"
           }
         }
       },

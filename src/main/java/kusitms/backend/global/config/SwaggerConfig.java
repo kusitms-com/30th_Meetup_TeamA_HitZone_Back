@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Paths;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.servers.Server;
 import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.global.status.ErrorStatus;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.InputStream;
+import java.util.List;
 
 @Configuration
 public class SwaggerConfig {
@@ -18,7 +20,11 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         OpenAPI openAPI = new OpenAPI()
-                .info(new Info().title("히트존 API 문서").version("0.0.1").description("Spring REST Docs with Swagger UI."));
+                .info(new Info().title("히트존 API 문서").version("0.0.1").description("Spring REST Docs with Swagger UI."))
+                .servers(List.of(
+                        new Server().url("http://localhost:8080").description("로컬 서버"),
+                        new Server().url("https://git.hitzone.store").description("배포 서버")
+                ));
 
         // REST Docs에서 생성한 open-api-3.0.1.json 파일 읽어오기
         try {
