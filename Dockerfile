@@ -5,7 +5,7 @@ WORKDIR /app
 
 # Gradle 빌드 실행
 COPY . .
-RUN ./gradlew clean build -x test
+RUN ./gradlew build openapi3 asciidoctor
 
 # 최종 이미지 단계
 FROM openjdk:17-jdk-alpine as final
