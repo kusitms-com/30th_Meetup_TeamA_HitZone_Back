@@ -6,13 +6,16 @@ import kusitms.backend.global.dto.ErrorReasonDto;
 import kusitms.backend.global.status.ErrorStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -49,11 +52,51 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ApiResponse.onFailure(ErrorStatus._BAD_REQUEST, errorMessage);
     }
 
+    // NullPointerException 처리
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<Object> handleNullPointerException(NullPointerException e) {
+        String errorMessage = "서버에서 예기치 않은 오류가 발생했습니다. 요청을 처리하는 중에 Null 값이 참조되었습니다.";
+        logError("NullPointerException", e);
+        return ApiResponse.onFailure(ErrorStatus._INTERNAL_SERVER_ERROR, errorMessage);
+    }
+
+    // NumberFormatException 처리
+    @ExceptionHandler(NumberFormatException.class)
+    public ResponseEntity<Object> handleNumberFormatException(NumberFormatException e) {
+        String errorMessage = "숫자 형식이 잘못되었습니다: " + e.getMessage();
+        logError("NumberFormatException", e);
+        return ApiResponse.onFailure(ErrorStatus._BAD_REQUEST, errorMessage);
+    }
+
+    // IndexOutOfBoundsException 처리
+    @ExceptionHandler(IndexOutOfBoundsException.class)
+    public ResponseEntity<Object> handleIndexOutOfBoundsException(IndexOutOfBoundsException e) {
+        String errorMessage = "인덱스가 범위를 벗어났습니다: " + e.getMessage();
+        logError("IndexOutOfBoundsException", e);
+        return ApiResponse.onFailure(ErrorStatus._BAD_REQUEST, errorMessage);
+    }
+
     // ConstraintViolationException 처리 (쿼리 파라미터에 올바른 값이 들어오지 않은 경우)
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Object> handleValidationParameterError(ConstraintViolationException ex) {
         String errorMessage = ex.getMessage();
         logError("ConstraintViolationException", errorMessage);
+        return ApiResponse.onFailure(ErrorStatus._BAD_REQUEST, errorMessage);
+    }
+
+    // MissingRequestHeaderException 처리 (필수 헤더가 누락된 경우)
+    @ExceptionHandler(MissingRequestHeaderException.class)
+    public ResponseEntity<Object> handleMissingRequestHeaderException(MissingRequestHeaderException ex) {
+        String errorMessage = "필수 헤더 '" + ex.getHeaderName() + "'가 없습니다.";
+        logError("MissingRequestHeaderException", errorMessage);
+        return ApiResponse.onFailure(ErrorStatus._BAD_REQUEST, errorMessage);
+    }
+
+    // DataIntegrityViolationException 처리 (데이터베이스 제약 조건 위반)
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException e) {
+        String errorMessage = "데이터 무결성 제약 조건을 위반했습니다: " + e.getMessage();
+        logError("DataIntegrityViolationException", e);
         return ApiResponse.onFailure(ErrorStatus._BAD_REQUEST, errorMessage);
     }
 
@@ -112,10 +155,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ApiResponse.onFailure(ErrorStatus._UNSUPPORTED_MEDIA_TYPE, errorMessage);
     }
 
+    // HttpMessageNotReadableException 처리 (잘못된 JSON 형식)
+    @Override
+    public ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
+                                                               HttpHeaders headers,
+                                                               HttpStatusCode status,
+                                                               WebRequest request) {
+        String errorMessage = "요청 본문을 읽을 수 없습니다. 올바른 JSON 형식이어야 합니다.";
+        logError("HttpMessageNotReadableException", ex);
+        return ApiResponse.onFailure(ErrorStatus._BAD_REQUEST, errorMessage);
+    }
+
     // 내부 서버 에러 처리 (500)
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<ErrorReasonDto>> handleException(Exception e) {
-        // 서버 내부 에러 발생 시 로그에 예외 내용 기록
         logError(e.getMessage(), e);
         return ApiResponse.onFailure(ErrorStatus._INTERNAL_SERVER_ERROR);
     }
