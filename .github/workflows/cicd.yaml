@@ -35,7 +35,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: ⏱️gradle build 중입니다.
-        run: ./gradlew build -x test
+        run: ./gradlew clean build openapi3 asciidoctor
 
       - name: ⏱️NCP Container Registry에 로그인 후, docker image build 후 NCP Container Registry에 push합니다.
         run: |

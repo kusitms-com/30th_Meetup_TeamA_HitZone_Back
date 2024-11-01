@@ -79,7 +79,7 @@ sourceSets {
     }
 }
 
-def serverUrl = "http://localhost:8080"
+def serverUrl = "https://git.hitzone.store"
 
 openapi3 {
     server = serverUrl
