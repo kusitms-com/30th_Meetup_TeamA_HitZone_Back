@@ -3,6 +3,7 @@ package kusitms.backend.user.presentation;
 import jakarta.validation.Valid;
 import kusitms.backend.global.dto.ApiResponse;
 import kusitms.backend.user.application.UserService;
+import kusitms.backend.user.dto.request.CheckNicknameRequestDto;
 import kusitms.backend.user.dto.request.SignUpRequestDto;
 import kusitms.backend.user.dto.response.UserInfoResponseDto;
 import kusitms.backend.user.status.UserSuccessStatus;
@@ -31,7 +32,7 @@ public class UserController {
 
     /**
      * 유저 정보를 조회한다.
-     * @return 이름, 이메일
+     * @return 닉네임, 이메일
      */
     @GetMapping("/user-info")
     public ResponseEntity<ApiResponse<UserInfoResponseDto>> getUserInfo() {
@@ -39,6 +40,21 @@ public class UserController {
     }
 
     /**
+     * 회원가입시 닉네임 중복 확인을 한다.
+     * @return x
+     */
+    @PostMapping("/nickname/check")
+    public ResponseEntity<ApiResponse<Void>> checkNickname(
+            @Valid @RequestBody CheckNicknameRequestDto request
+    ) {
+        userService.checkNickname(request);
+        return ApiResponse.onSuccess(UserSuccessStatus._OK_NOT_DUPLICATED_NICKNAME);
+    }
+
+
+    /**
+     * [2024.11.03 현재 미사용하는 기능]
+     * [1인 1계정 처리 미사용과 과금부담으로 주석 처리]
      * 휴대폰에 6자리 인증코드를 보낸다.
      * @return X
      */
@@ -49,8 +65,6 @@ public class UserController {
 //        userService.sendAuthCode(request);
 //        return ApiResponse.onSuccess(UserSuccessStatus._OK_SEND_AUTH_CODE);
 //    }
-
-
     /**
      * 인증코드를 확인하여 휴대폰 인증을 진행한다.
      * @return X

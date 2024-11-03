@@ -7,6 +7,7 @@ import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.global.redis.RedisManager;
 import kusitms.backend.user.domain.entity.User;
 import kusitms.backend.user.domain.repository.UserRepository;
+import kusitms.backend.user.dto.request.CheckNicknameRequestDto;
 import kusitms.backend.user.dto.request.SendAuthCodeRequestDto;
 import kusitms.backend.user.dto.request.SignUpRequestDto;
 import kusitms.backend.user.dto.request.VerifyAuthCodeRequestDto;
@@ -53,7 +54,7 @@ public class UserService {
                         provider,
                         providerId,
                         email,
-                        request.name()
+                        request.nickname()
                 )
         );
         log.info("유저 회원가입 성공");
@@ -91,4 +92,11 @@ public class UserService {
         }
     }
 
+    @Transactional(readOnly = true)
+    public void checkNickname(CheckNicknameRequestDto request) {
+        User user = userRepository.findByNickname(request.nickname());
+        if (user != null) {
+            throw new CustomException(UserErrorStatus._DUPLICATED_NICKNAME);
+        }
+    }
 }

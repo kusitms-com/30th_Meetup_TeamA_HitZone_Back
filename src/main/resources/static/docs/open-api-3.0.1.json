@@ -6,7 +6,7 @@
     "version" : "0.0.1"
   },
   "servers" : [ {
-    "url" : "http://localhost:8080"
+    "url" : "https://git.hitzone.store"
   } ],
   "tags" : [ ],
   "paths" : {
@@ -806,7 +806,7 @@
             "type" : "string",
             "description" : "응답 메시지"
           },
-          "isSuccess" : {
+          "isSuccess" : {""
             "type" : "boolean",
             "description" : "성공 여부"
           }

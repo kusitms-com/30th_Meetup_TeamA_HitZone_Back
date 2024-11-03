@@ -17,7 +17,8 @@ public enum UserErrorStatus implements BaseErrorCode {
     _MISS_MATCH_AUTH_CODE(HttpStatus.BAD_REQUEST, "USER-005", "인증코드가 일치하지 않습니다."),
     _EXISTING_USER_ACCOUNT_KAKAO(HttpStatus.FORBIDDEN, "USER-006", "이미 회원가입된 카카오 계정이 존재합니다."),
     _EXISTING_USER_ACCOUNT_GOOGLE(HttpStatus.FORBIDDEN, "USER-007", "이미 회원가입된 구글 계정이 존재합니다."),
-    _EXISTING_USER_ACCOUNT_NAVER(HttpStatus.FORBIDDEN, "USER-008", "이미 회원가입된 네이버 계정이 존재합니다.");
+    _EXISTING_USER_ACCOUNT_NAVER(HttpStatus.FORBIDDEN, "USER-008", "이미 회원가입된 네이버 계정이 존재합니다."),
+    _DUPLICATED_NICKNAME(HttpStatus.FORBIDDEN, "USER-009", "중복된 닉네임이 존재합니다. 다른 닉네임을 입력해주세요.");
 
     private final HttpStatus httpStatus;
     private final String code;
