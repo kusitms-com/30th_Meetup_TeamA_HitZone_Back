@@ -134,7 +134,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
             ""
     ),
     EXITING("익사이팅석",
-            "",
+            "야구 필드 안에 들어와 있는 느낌을 받을 수 있는 구역이에요!",
             List.of("야구 필드 안에 들어와 있는 느낌을 받을 수 있는 구역이에요!"),
             "해당 구역은 연령제한이 있어요.",
             List.of(
@@ -161,13 +161,13 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
             List.of("선수들 가까이", "열정적인 응원"),
             List.of(),
             List.of("다른 팀 팬과", "큰 소리 싫어요", "경기장 한눈에 보기"),
-            "",
-            "",
-            "",
+            "내야게이트로 입장 후 헬멧 대여 필수(착용은 선택!)",
+            "약 40cm(1열), 19cm(2~3열)",
+            "약 72cm(1열), 63cm(2~3열)",
             ""
     ),
     GREEN("외야그린석",
-            "",
+            "사람들이 몰리지 않아 비교적 한적하게 경기를 즐길 수 있는 구역이에요!",
             List.of("사람들이 몰리지 않아 비교적 한적하게 경기를 즐길 수 있는 구역이에요!"),
             "해당 구역은 시야 제한석이 있어요.",
             List.of(
@@ -189,13 +189,18 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
             List.of("경기장 한눈에 보기"),
             List.of(),
             List.of("열정적인 응원", "선수들 가까이", "빠른 퇴장 가능", "편리한 화장실 이용", "햇빛 싫어요", "비 맞기 싫어요"),
+            """
+                    [외야 게이트 이용(내야 불가)]
+                    [1루] 1-4 Gate [3루] 1-3 Gate""",
             "",
             "",
-            "",
-            ""
+            """
+                    잠실야구장의 외야석은 굉장히 커서 높고 가팔라요!
+                    음식을 구매하셨거나, 짐이 많으시다면
+                    좌석에 앉기 위해 올라가실 때 꼭 유의하세요!"""
     ),
     TABLE("테이블석",
-            "",
+            "다양한 음식을 골라 테이블에 펼쳐놓고 먹을 수 있는 구역이에요!",
             List.of("다양한 음식을 골라 테이블에 펼쳐놓고 먹을 수 있는 구역이에요!"),
             "해당 구역은 예매 시 위치 확인이 필요해요.",
             List.of(
@@ -217,13 +222,13 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
             List.of("음식 먹기 편한", "빠른 퇴장 가능", "편리한 화장실 이용"),
             List.of(),
             List.of("다른 팀 팬과", "경기장 한눈에 보기"),
-            "",
-            "",
-            "",
+            "[1루] 2-3 Gate [3루] 2-1 Gate",
+            "약 95cm(1열), 56cm(2~4열)",
+            "약 56cm",
             ""
     ),
     PREMIUM("프리미엄석",
-            "",
+            "테이블에서 맛있는 음식을 먹으면서 선수들을 가장 가까이서 볼 수 있는 구역이에요!",
             List.of("테이블에서 맛있는 음식을 먹으면서 선수들을 가장 가까이서 볼 수 있는 구역이에요!"),
             "해당 구역은 티켓 확인을 2번 해요.",
             List.of(
@@ -249,9 +254,9 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
             List.of("음식 먹기 편한", "선수들 가까이", "열정적인 응원", "빠른 퇴장 가능", "편리한 화장실 이용"),
             List.of(),
             List.of("다른 팀 팬과", "큰 소리 싫어요", "경기장 한눈에 보기"),
-            "",
-            "",
-            "",
+            "[중앙게이트] 1-1 Gate",
+            "약 40cm(1열), 55cm(2~6열)",
+            "약 55cm",
             ""
     ),
     ;

@@ -15,7 +15,7 @@
         "tags" : [ "Chatbot" ],
         "summary" : "Clova 챗봇 답변을 조회한다.",
         "description" : "Clova 챗봇 답변을 조회한다.",
-        "operationId" : "chatbot",
+        "operationId" : "chatbot/clova",
         "requestBody" : {
           "content" : {
             "application/json;charset=UTF-8" : {
@@ -24,9 +24,6 @@
               },
               "examples" : {
                 "chatbot/clova" : {
-                  "value" : "{\n  \"message\" : \"너 누구야?\"\n}"
-                },
-                "chatbot-controller-test/get-clova-chatbot-answer" : {
                   "value" : "{\n  \"message\" : \"너 누구야?\"\n}"
                 }
               }
@@ -43,9 +40,6 @@
                 },
                 "examples" : {
                   "chatbot/clova" : {
-                    "value" : "{\n  \"isSuccess\" : true,\n  \"code\" : \"200\",\n  \"message\" : \"네이버 클로바 챗봇 답변을 가져오는 데 성공했습니다.\",\n  \"payload\" : {\n    \"answer\" : \"안녕하세요! 저는 야구 가이드 챗봇 '루키'에요! 야구에 대한 궁금한 점이 있다면 언제든지 물어봐 주세요!\"\n  }\n}"
-                  },
-                  "chatbot-controller-test/get-clova-chatbot-answer" : {
                     "value" : "{\n  \"isSuccess\" : true,\n  \"code\" : \"200\",\n  \"message\" : \"네이버 클로바 챗봇 답변을 가져오는 데 성공했습니다.\",\n  \"payload\" : {\n    \"answer\" : \"안녕하세요! 저는 야구 가이드 챗봇 '루키'에요! 야구에 대한 궁금한 점이 있다면 언제든지 물어봐 주세요!\"\n  }\n}"
                   }
                 }
