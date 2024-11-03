@@ -31,7 +31,7 @@ public class UserController {
 
     /**
      * 유저 정보를 조회한다.
-     * @return 이름, 이메일
+     * @return 닉네임, 이메일
      */
     @GetMapping("/user-info")
     public ResponseEntity<ApiResponse<UserInfoResponseDto>> getUserInfo() {

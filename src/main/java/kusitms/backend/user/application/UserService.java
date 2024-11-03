@@ -53,7 +53,7 @@ public class UserService {
                         provider,
                         providerId,
                         email,
-                        request.name()
+                        request.nickName()
                 )
         );
         log.info("유저 회원가입 성공");
