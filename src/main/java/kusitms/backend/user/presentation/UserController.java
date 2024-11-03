@@ -38,6 +38,14 @@ public class UserController {
         return ApiResponse.onSuccess(UserSuccessStatus._OK_GET_USER_INFO, userService.getUserInfo());
     }
 
+    @PostMapping("/nickname/check")
+    public ResponseEntity<ApiResponse<Void>> checkNickname(
+            @Valid CheckNicknameRequestDto request
+    ) {
+        userService.checkNickname(request);
+        return ApiResponse.onSuccess(UserSuccessStatus._OK_NOT_DUPLICATED_NICKNAME);
+    }
+
     /**
      * 휴대폰에 6자리 인증코드를 보낸다.
      * @return X

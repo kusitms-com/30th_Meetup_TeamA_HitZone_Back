@@ -14,7 +14,7 @@ public enum UserSuccessStatus implements BaseCode {
     _OK_GET_USER_INFO(HttpStatus.OK, "200", "유저 정보 조회가 완료되었습니다."),
     _OK_SEND_AUTH_CODE(HttpStatus.OK, "200", "휴대폰 인증 코드가 전송되었습니다."),
     _OK_VERIFY_AUTH_CODE(HttpStatus.OK, "200", "휴대폰 인증에 성공하였습니다."),
-    ;
+    _OK_NOT_DUPLICATED_NICKNAME(HttpStatus.OK, "200", "사용할 수 있는 닉네임입니다.");
 
     private final HttpStatus httpStatus;
     private final String code;
