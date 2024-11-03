@@ -51,6 +51,14 @@ public class UserController {
         return ApiResponse.onSuccess(UserSuccessStatus._OK_NOT_DUPLICATED_NICKNAME);
     }
 
+
+/**
+ * 이 아래 휴대폰 인증과 관련된 부분은 로그인 방법이 여러가지가 있기에
+ * 1인 1계정 처리를 위하여 휴대폰 인증을 추가하였습니다.
+ * 하지만, 실제 좌석 예매 및 결제 부분이 존재하지 않아 1인 1계정 처리를 하지 않아도 될 것이라고
+ * 판단하고 과금청구 위험도 윘기에 주석처리해두었습니다.
+ */
+
     /**
      * 휴대폰에 6자리 인증코드를 보낸다.
      * @return X
@@ -62,8 +70,6 @@ public class UserController {
 //        userService.sendAuthCode(request);
 //        return ApiResponse.onSuccess(UserSuccessStatus._OK_SEND_AUTH_CODE);
 //    }
-
-
     /**
      * 인증코드를 확인하여 휴대폰 인증을 진행한다.
      * @return X
