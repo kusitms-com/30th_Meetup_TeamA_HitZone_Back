@@ -30,16 +30,16 @@ public class User extends BaseTimeEntity {
     private String email;
 
     @Column(nullable = false)
-    private String nickName;
+    private String nickname;
 
 //    @Column(nullable = false, unique = true)
 //    private String phoneNumber;
 
     @Builder
-    public User(ProviderStatusType provider, String providerId, String email, String nickName) {
+    public User(ProviderStatusType provider, String providerId, String email, String nickname) {
         this.provider = provider;
         this.providerId = providerId;
         this.email = email;
-        this.nickName = nickName;
+        this.nickname = nickname;
     }
 }

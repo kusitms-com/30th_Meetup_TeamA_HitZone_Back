@@ -13,7 +13,6 @@ import kusitms.backend.user.dto.request.SignUpRequestDto;
 import kusitms.backend.user.dto.request.VerifyAuthCodeRequestDto;
 import kusitms.backend.user.dto.response.UserInfoResponseDto;
 import kusitms.backend.user.status.UserErrorStatus;
-import kusitms.backend.user.status.UserSuccessStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -55,7 +54,7 @@ public class UserService {
                         provider,
                         providerId,
                         email,
-                        request.nickName()
+                        request.nickname()
                 )
         );
         log.info("유저 회원가입 성공");
