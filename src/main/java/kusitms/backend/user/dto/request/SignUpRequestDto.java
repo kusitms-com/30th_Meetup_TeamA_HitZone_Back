@@ -5,7 +5,7 @@ import kusitms.backend.user.domain.entity.User;
 import kusitms.backend.user.domain.enums.ProviderStatusType;
 
 public record SignUpRequestDto(
-        @NotBlank(message = "이름은 공백이나 빈칸일 수 없습니다.") String nickname
+        @NotBlank(message = "닉네임은 공백이나 빈칸일 수 없습니다.") String nickname
 ) {
         public static User toEntity(String provider, String providerId, String email, String nickname) {
                 return User.builder()

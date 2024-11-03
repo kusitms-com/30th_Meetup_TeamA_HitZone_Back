@@ -45,7 +45,7 @@ public class UserController {
      */
     @PostMapping("/nickname/check")
     public ResponseEntity<ApiResponse<Void>> checkNickname(
-            @Valid CheckNicknameRequestDto request
+            @Valid @RequestBody CheckNicknameRequestDto request
     ) {
         userService.checkNickname(request);
         return ApiResponse.onSuccess(UserSuccessStatus._OK_NOT_DUPLICATED_NICKNAME);

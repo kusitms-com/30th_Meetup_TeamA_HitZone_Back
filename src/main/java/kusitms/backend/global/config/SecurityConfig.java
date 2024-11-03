@@ -47,7 +47,8 @@ public class SecurityConfig {
                                 "/onboarding", "/base",
                                 "/api/v1/health-check", "/api/v1/test-error",
                                 "/api/v1/test/docs","/swagger-ui/**", "/v3/api-docs/**",
-                                "/api/v1/signup", "/api/v1/send-code","/api/v1/verify-code",
+                                "/api/v1/signup", "/api/v1/nickname/check",
+                                "/api/v1/send-code","/api/v1/verify-code",
                                 "/api/v1/token/re-issue",
                                 "/api/v1/results/**", "/api/v1/stadium/**",
                                 "/api/v1/chatbot/**").permitAll()  // 인증이 필요 없는 경로 설정
