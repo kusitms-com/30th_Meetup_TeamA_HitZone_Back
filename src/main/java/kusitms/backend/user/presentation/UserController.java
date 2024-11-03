@@ -39,6 +39,10 @@ public class UserController {
         return ApiResponse.onSuccess(UserSuccessStatus._OK_GET_USER_INFO, userService.getUserInfo());
     }
 
+    /**
+     * 회원가입시 닉네임 중복 확인을 한다.
+     * @return x
+     */
     @PostMapping("/nickname/check")
     public ResponseEntity<ApiResponse<Void>> checkNickname(
             @Valid CheckNicknameRequestDto request
