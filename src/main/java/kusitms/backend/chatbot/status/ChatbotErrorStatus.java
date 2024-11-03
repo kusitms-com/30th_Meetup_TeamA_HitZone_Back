@@ -22,7 +22,7 @@ public enum ChatbotErrorStatus implements BaseErrorCode {
     public ErrorReasonDto getReason() {
         return ErrorReasonDto.builder()
                 .isSuccess(false)
-                .code(code)  // 코드 숫자를 문자열로 변환
+                .code(code)
                 .message(message)
                 .build();
     }
