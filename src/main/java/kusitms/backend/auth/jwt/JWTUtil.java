@@ -29,9 +29,9 @@ public class JWTUtil {
     public String generateToken(Long userId, long expirationMillis) {
         return Jwts.builder()
                 .claim("userId", userId)
-                .setIssuedAt(new Date(System.currentTimeMillis()))  // setIssuedAt 사용
+                .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expirationMillis))
-                .signWith(secretKey, SignatureAlgorithm.HS256)  // secretKey와 알고리즘을 함께 명시
+                .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -41,9 +41,9 @@ public class JWTUtil {
                 .claim("provider", provider)
                 .claim("providerId", providerId)
                 .claim("email", email)
-                .setIssuedAt(new Date(System.currentTimeMillis()))  // setIssuedAt 사용
+                .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expirationMillis))
-                .signWith(secretKey, SignatureAlgorithm.HS256)  // secretKey와 알고리즘을 함께 명시
+                .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -51,10 +51,10 @@ public class JWTUtil {
     private Claims tokenParser(String token) {
         try {
             return Jwts.parserBuilder()
-                    .setSigningKey(secretKey)  // setSigningKey 사용
+                    .setSigningKey(secretKey)
                     .build()
                     .parseClaimsJws(token)
-                    .getBody();  // getBody()로 Claims 가져옴
+                    .getBody();
         } catch (ExpiredJwtException e) {
             log.error("Expired JWT : {}", token);
             throw new CustomException(AuthErrorStatus._EXPIRED_TOKEN);
@@ -68,10 +68,10 @@ public class JWTUtil {
     private Claims refreshTokenParser(String token) {
         try {
             return Jwts.parserBuilder()
-                    .setSigningKey(secretKey)  // setSigningKey 사용
+                    .setSigningKey(secretKey)
                     .build()
                     .parseClaimsJws(token)
-                    .getBody();  // getBody()로 Claims 가져옴
+                    .getBody();
         } catch (ExpiredJwtException e) {
             log.error("Expired Refresh Token : {}", token);
             throw new CustomException(AuthErrorStatus._EXPIRED_REFRESH_TOKEN);
