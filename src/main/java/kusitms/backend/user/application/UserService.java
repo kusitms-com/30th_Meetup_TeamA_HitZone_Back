@@ -1,7 +1,6 @@
 package kusitms.backend.user.application;
 
 import kusitms.backend.auth.jwt.JWTUtil;
-import kusitms.backend.auth.jwt.SecurityContextProvider;
 import kusitms.backend.auth.status.AuthErrorStatus;
 import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.global.redis.RedisManager;
@@ -61,8 +60,8 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public UserInfoResponseDto getUserInfo() {
-        Long userId = SecurityContextProvider.getAuthenticatedUserId();
+    public UserInfoResponseDto getUserInfo(String accessToken) {
+        Long userId = jwtUtil.getUserIdFromToken(accessToken);
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(UserErrorStatus._NOT_FOUND_USER));
         log.info("유저 정보 조회 성공");

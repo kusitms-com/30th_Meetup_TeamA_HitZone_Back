@@ -50,7 +50,7 @@ public class TestControllerTest extends ControllerTestConfig {
         Mockito.when(testService.testDocs(anyString(), anyString(), any(TestDocsRequestDto.class))).thenReturn(testDocsResponseDto);
 
         //만약 Response가 없을 경우엔 아래와 같이 실행한다.
-        //Mockito.doNothing().when(testService).testDocs(anyString(), anyString(), any(TestDocsRequestDto.class));
+        //Mockito.doNothing().when(testService.testDocs(anyString(), anyString(), any(TestDocsRequestDto.class));
 
         // when
         ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.post("/api/v1/test/docs")
