@@ -407,6 +407,31 @@
         }
       }
     },
+    "/api/v1/token/re-issue" : {
+      "put" : {
+        "tags" : [ "Auth" ],
+        "summary" : "리프레시 토큰을 통해 액세스 토큰을 재발급합니다.",
+        "description" : "리프레시 토큰을 통해 액세스 토큰을 재발급합니다.",
+        "operationId" : "token/re-issue",
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/api-v1-nickname-check-145562816"
+                },
+                "examples" : {
+                  "token/re-issue" : {
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"code\" : \"200\",\n  \"message\" : \"토큰 재발급에 성공하였습니다.\"\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/stadium/zones/guide" : {
       "get" : {
         "tags" : [ "Stadium" ],
