@@ -35,8 +35,10 @@ public class UserController {
      * @return 닉네임, 이메일
      */
     @GetMapping("/user-info")
-    public ResponseEntity<ApiResponse<UserInfoResponseDto>> getUserInfo() {
-        return ApiResponse.onSuccess(UserSuccessStatus._OK_GET_USER_INFO, userService.getUserInfo());
+    public ResponseEntity<ApiResponse<UserInfoResponseDto>> getUserInfo(
+            @CookieValue String accessToken
+    ) {
+        return ApiResponse.onSuccess(UserSuccessStatus._OK_GET_USER_INFO, userService.getUserInfo(accessToken));
     }
 
     /**

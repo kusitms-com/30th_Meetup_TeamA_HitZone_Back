@@ -10,6 +10,70 @@
   } ],
   "tags" : [ ],
   "paths" : {
+    "/api/v1/signup" : {
+      "post" : {
+        "tags" : [ "User" ],
+        "summary" : "온보딩 정보를 토대로 회원가입을 진행한다.",
+        "description" : "온보딩 정보를 토대로 회원가입을 진행한다.",
+        "operationId" : "signup",
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=UTF-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/api-v1-signup-931151294"
+              },
+              "examples" : {
+                "signup" : {
+                  "value" : "{\n  \"nickname\" : \"유저 닉네임\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "201",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/api-v1-nickname-check-145562816"
+                },
+                "examples" : {
+                  "signup" : {
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"code\" : \"201\",\n  \"message\" : \"회원가입이 완료되었습니다.\"\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user-info" : {
+      "get" : {
+        "tags" : [ "User" ],
+        "summary" : "유저의 회원정보를 조회한다.",
+        "description" : "유저의 회원정보를 조회한다.",
+        "operationId" : "user-info",
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/api-v1-user-info1491427589"
+                },
+                "examples" : {
+                  "user-info" : {
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"code\" : \"200\",\n  \"message\" : \"유저 정보 조회가 완료되었습니다.\",\n  \"payload\" : {\n    \"nickname\" : \"유저 닉네임\",\n    \"email\" : \"유저 이메일\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/chatbot/clova" : {
       "post" : {
         "tags" : [ "Chatbot" ],
@@ -91,6 +155,45 @@
                 "examples" : {
                   "chatbot/guide" : {
                     "value" : "{\n  \"isSuccess\" : true,\n  \"code\" : \"200\",\n  \"message\" : \"가이드 챗봇 답변을 가져오는 데 성공했습니다.\",\n  \"payload\" : {\n    \"answers\" : [ \"각 구장에 위치한 굿즈샵에서 원하는 응원 도구를 구매할 수 있어요!\", \"잠실 야구장의 경우, 지하철 2호선 '종합운동장역' 6번 출구 앞에 위치한 야구 용품샵 '유니크 스포츠'를 이용할 수 있어요! 홈팀인 엘지 트윈스와 두산 베어스의 굿즈 뿐만 아니라, 원정팀들의 굿즈도 있으니 한 번 방문해보세요!\", \"종합운동장역을 나가기 전, 역사에 위치한 ‘라커디움파크 종합운동장역점’에서도 굿즈를 판매 중이에요!\" ],\n    \"imgUrl\" : null\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/nickname/check" : {
+      "post" : {
+        "tags" : [ "User" ],
+        "summary" : "닉네임 중복 유무를 확인한다.",
+        "description" : "닉네임 중복 유무를 확인한다.",
+        "operationId" : "nickname/check",
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=UTF-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/api-v1-nickname-check486549215"
+              },
+              "examples" : {
+                "nickname/check" : {
+                  "value" : "{\n  \"nickname\" : \"유저 닉네임\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/api-v1-nickname-check-145562816"
+                },
+                "examples" : {
+                  "nickname/check" : {
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"code\" : \"200\",\n  \"message\" : \"사용할 수 있는 닉네임입니다.\"\n}"
                   }
                 }
               }
@@ -304,6 +407,31 @@
         }
       }
     },
+    "/api/v1/token/re-issue" : {
+      "put" : {
+        "tags" : [ "Auth" ],
+        "summary" : "리프레시 토큰을 통해 액세스 토큰을 재발급합니다.",
+        "description" : "리프레시 토큰을 통해 액세스 토큰을 재발급합니다.",
+        "operationId" : "token/re-issue",
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/api-v1-nickname-check-145562816"
+                },
+                "examples" : {
+                  "token/re-issue" : {
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"code\" : \"200\",\n  \"message\" : \"토큰 재발급에 성공하였습니다.\"\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/stadium/zones/guide" : {
       "get" : {
         "tags" : [ "Stadium" ],
@@ -349,8 +477,7 @@
   },
   "components" : {
     "schemas" : {
-      "GetClovaChatbotAnswerResponse" : {
-        "title" : "GetClovaChatbotAnswerResponse",
+      "api-v1-user-info1491427589" : {
         "required" : [ "code", "isSuccess", "message", "payload" ],
         "type" : "object",
         "properties" : {
@@ -359,12 +486,16 @@
             "description" : "응답 코드"
           },
           "payload" : {
-            "required" : [ "answer" ],
+            "required" : [ "email", "nickname" ],
             "type" : "object",
             "properties" : {
-              "answer" : {
+              "nickname" : {
                 "type" : "string",
-                "description" : "Clova 챗봇의 답변"
+                "description" : "유저의 닉네임"
+              },
+              "email" : {
+                "type" : "string",
+                "description" : "유저의 이메일"
               }
             },
             "description" : "응답 데이터"
@@ -451,35 +582,6 @@
           "isSuccess" : {
             "type" : "boolean",
             "description" : "성공 여부"
-          }
-        }
-      },
-      "api-v1-results-save152467652" : {
-        "required" : [ "clientKeywords", "preference", "stadium" ],
-        "type" : "object",
-        "properties" : {
-          "preference" : {
-            "type" : "string",
-            "description" : "선호 구역 (1루석 또는 3루석)"
-          },
-          "clientKeywords" : {
-            "type" : "array",
-            "description" : "사용자 키워드 배열",
-            "items" : {
-              "oneOf" : [ {
-                "type" : "object"
-              }, {
-                "type" : "boolean"
-              }, {
-                "type" : "string"
-              }, {
-                "type" : "number"
-              } ]
-            }
-          },
-          "stadium" : {
-            "type" : "string",
-            "description" : "경기장 이름"
           }
         }
       },
@@ -631,52 +733,6 @@
           }
         }
       },
-      "GetGuideChatbotAnswerResponse" : {
-        "title" : "GetGuideChatbotAnswerResponse",
-        "required" : [ "code", "isSuccess", "message", "payload" ],
-        "type" : "object",
-        "properties" : {
-          "code" : {
-            "type" : "string",
-            "description" : "응답 코드"
-          },
-          "payload" : {
-            "required" : [ "answers" ],
-            "type" : "object",
-            "properties" : {
-              "imgUrl" : {
-                "type" : "string",
-                "description" : "이미지 URL",
-                "nullable" : true
-              },
-              "answers" : {
-                "type" : "array",
-                "description" : "답변 목록",
-                "items" : {
-                  "oneOf" : [ {
-                    "type" : "object"
-                  }, {
-                    "type" : "boolean"
-                  }, {
-                    "type" : "string"
-                  }, {
-                    "type" : "number"
-                  } ]
-                }
-              }
-            },
-            "description" : "응답 데이터"
-          },
-          "message" : {
-            "type" : "string",
-            "description" : "응답 메시지"
-          },
-          "isSuccess" : {
-            "type" : "boolean",
-            "description" : "성공 여부"
-          }
-        }
-      },
       "GetClovaChatbotAnswerRequest" : {
         "title" : "GetClovaChatbotAnswerRequest",
         "required" : [ "message" ],
@@ -725,6 +781,139 @@
           "isSuccess" : {
             "type" : "boolean",
             "description" : "성공 여부"
+          }
+        }
+      },
+      "GetClovaChatbotAnswerResponse" : {
+        "title" : "GetClovaChatbotAnswerResponse",
+        "required" : [ "code", "isSuccess", "message", "payload" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "응답 코드"
+          },
+          "payload" : {
+            "required" : [ "answer" ],
+            "type" : "object",
+            "properties" : {
+              "answer" : {
+                "type" : "string",
+                "description" : "Clova 챗봇의 답변"
+              }
+            },
+            "description" : "응답 데이터"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "응답 메시지"
+          },
+          "isSuccess" : {
+            "type" : "boolean",
+            "description" : "성공 여부"
+          }
+        }
+      },
+      "api-v1-nickname-check-145562816" : {
+        "required" : [ "code", "isSuccess", "message" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "응답 코드"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "응답 메시지"
+          },
+          "isSuccess" : {
+            "type" : "boolean",
+            "description" : "성공 여부"
+          }
+        }
+      },
+      "api-v1-results-save152467652" : {
+        "required" : [ "clientKeywords", "preference", "stadium" ],
+        "type" : "object",
+        "properties" : {
+          "preference" : {
+            "type" : "string",
+            "description" : "선호 구역 (1루석 또는 3루석)"
+          },
+          "clientKeywords" : {
+            "type" : "array",
+            "description" : "사용자 키워드 배열",
+            "items" : {
+              "oneOf" : [ {
+                "type" : "object"
+              }, {
+                "type" : "boolean"
+              }, {
+                "type" : "string"
+              }, {
+                "type" : "number"
+              } ]
+            }
+          },
+          "stadium" : {
+            "type" : "string",
+            "description" : "경기장 이름"
+          }
+        }
+      },
+      "GetGuideChatbotAnswerResponse" : {
+        "title" : "GetGuideChatbotAnswerResponse",
+        "required" : [ "code", "isSuccess", "message", "payload" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "응답 코드"
+          },
+          "payload" : {
+            "required" : [ "answers" ],
+            "type" : "object",
+            "properties" : {
+              "imgUrl" : {
+                "type" : "string",
+                "description" : "이미지 URL",
+                "nullable" : true
+              },
+              "answers" : {
+                "type" : "array",
+                "description" : "답변 목록",
+                "items" : {
+                  "oneOf" : [ {
+                    "type" : "object"
+                  }, {
+                    "type" : "boolean"
+                  }, {
+                    "type" : "string"
+                  }, {
+                    "type" : "number"
+                  } ]
+                }
+              }
+            },
+            "description" : "응답 데이터"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "응답 메시지"
+          },
+          "isSuccess" : {
+            "type" : "boolean",
+            "description" : "성공 여부"
+          }
+        }
+      },
+      "api-v1-signup-931151294" : {
+        "required" : [ "nickname" ],
+        "type" : "object",
+        "properties" : {
+          "nickname" : {
+            "type" : "string",
+            "description" : "유저 닉네임"
           }
         }
       },
@@ -806,11 +995,14 @@
             "type" : "string",
             "description" : "응답 메시지"
           },
-          "isSuccess" : {""
+          "isSuccess" : {
             "type" : "boolean",
             "description" : "성공 여부"
           }
         }
+      },
+      "api-v1-nickname-check486549215" : {
+        "type" : "object"
       }
     }
   }
