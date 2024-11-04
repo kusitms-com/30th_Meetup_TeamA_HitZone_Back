@@ -23,7 +23,7 @@ public class UserController {
      */
     @PostMapping("/signup")
     public ResponseEntity<ApiResponse<Void>> signupUser(
-            @CookieValue String registerToken,
+            @CookieValue(required = false) String registerToken,
             @Valid @RequestBody SignUpRequestDto request
     ) {
         userService.signupUser(registerToken, request);
