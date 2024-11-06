@@ -1,10 +1,9 @@
-package kusitms.backend.food.application;
+package kusitms.backend.culture.application;
 
-import kusitms.backend.food.domain.entity.Food;
-import kusitms.backend.food.domain.enums.Boundary;
-import kusitms.backend.food.domain.enums.Course;
-import kusitms.backend.food.domain.repository.FoodRepository;
-import kusitms.backend.food.dto.response.GetFoodsResponseDto;
+import kusitms.backend.culture.domain.enums.Boundary;
+import kusitms.backend.culture.domain.enums.Course;
+import kusitms.backend.culture.domain.repository.FoodRepository;
+import kusitms.backend.culture.dto.response.GetFoodsResponseDto;
 import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.stadium.domain.entity.Stadium;
 import kusitms.backend.stadium.domain.repository.StadiumRepository;

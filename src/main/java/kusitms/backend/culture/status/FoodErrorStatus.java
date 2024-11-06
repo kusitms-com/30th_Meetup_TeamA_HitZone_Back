@@ -1,4 +1,4 @@
-package kusitms.backend.food.status;
+package kusitms.backend.culture.status;
 
 import kusitms.backend.global.code.BaseErrorCode;
 import kusitms.backend.global.dto.ErrorReasonDto;

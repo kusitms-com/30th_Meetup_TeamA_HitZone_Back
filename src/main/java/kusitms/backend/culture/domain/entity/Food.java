@@ -1,8 +1,8 @@
-package kusitms.backend.food.domain.entity;
+package kusitms.backend.culture.domain.entity;
 
 import jakarta.persistence.*;
-import kusitms.backend.food.domain.enums.Boundary;
-import kusitms.backend.food.domain.enums.Course;
+import kusitms.backend.culture.domain.enums.Boundary;
+import kusitms.backend.culture.domain.enums.Course;
 import kusitms.backend.global.domain.BaseTimeEntity;
 import kusitms.backend.result.domain.converter.StringListConverter;
 import kusitms.backend.stadium.domain.entity.Stadium;

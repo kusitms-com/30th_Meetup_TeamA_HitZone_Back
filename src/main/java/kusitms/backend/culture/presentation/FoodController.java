@@ -1,8 +1,8 @@
-package kusitms.backend.food.presentation;
+package kusitms.backend.culture.presentation;
 
-import kusitms.backend.food.application.FoodService;
-import kusitms.backend.food.dto.response.GetFoodsResponseDto;
-import kusitms.backend.food.status.FoodSuccessStatus;
+import kusitms.backend.culture.application.FoodService;
+import kusitms.backend.culture.dto.response.GetFoodsResponseDto;
+import kusitms.backend.culture.status.FoodSuccessStatus;
 import kusitms.backend.global.dto.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

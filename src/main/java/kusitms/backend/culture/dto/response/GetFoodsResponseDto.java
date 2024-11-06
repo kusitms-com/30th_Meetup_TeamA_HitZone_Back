@@ -1,8 +1,8 @@
-package kusitms.backend.food.dto.response;
+package kusitms.backend.culture.dto.response;
 
-import kusitms.backend.food.domain.entity.Food;
-import kusitms.backend.food.domain.enums.Boundary;
-import kusitms.backend.food.domain.enums.Course;
+import kusitms.backend.culture.domain.entity.Food;
+import kusitms.backend.culture.domain.enums.Boundary;
+import kusitms.backend.culture.domain.enums.Course;
 
 import java.util.List;
 

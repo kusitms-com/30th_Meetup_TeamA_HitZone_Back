@@ -1,9 +1,8 @@
-package kusitms.backend.food.domain.repository;
+package kusitms.backend.culture.domain.repository;
 
-import kusitms.backend.food.domain.entity.Food;
-import kusitms.backend.food.domain.enums.Boundary;
-import kusitms.backend.food.domain.enums.Course;
-import kusitms.backend.food.dto.response.GetFoodsResponseDto;
+import kusitms.backend.culture.domain.entity.Food;
+import kusitms.backend.culture.domain.enums.Boundary;
+import kusitms.backend.culture.domain.enums.Course;
 import kusitms.backend.stadium.domain.entity.Stadium;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

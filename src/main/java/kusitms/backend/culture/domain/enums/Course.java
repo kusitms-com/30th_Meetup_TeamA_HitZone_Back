@@ -1,6 +1,6 @@
-package kusitms.backend.food.domain.enums;
+package kusitms.backend.culture.domain.enums;
 
-import kusitms.backend.food.status.FoodErrorStatus;
+import kusitms.backend.culture.status.FoodErrorStatus;
 import kusitms.backend.global.exception.CustomException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
