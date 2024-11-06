@@ -26,7 +26,10 @@ public class FoodService {
         Stadium stadium = stadiumRepository.findByName(stadiumName)
                 .orElseThrow(() -> new CustomException(StadiumErrorStatus._NOT_FOUND_STADIUM));
         Boundary existBoundary = Boundary.of(boundary);
-        Course existCourse = Course.of(course);
+        Course existCourse = null;
+        if (boundary.equals("내부")) {
+            existCourse = Course.of(course);
+        }
 
         List<GetFoodsResponseDto.FoodDto> foods = foodRepository.findFoodsByConditions(stadium, existBoundary, existCourse)
                 .stream()
