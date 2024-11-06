@@ -24,7 +24,7 @@ public class FoodController {
      * @param course
      * @return
      */
-    @GetMapping("/foods")
+    @GetMapping("/culture/foods")
     public ResponseEntity<ApiResponse<GetFoodsResponseDto>> getSuitableFoods(
             @RequestParam String stadiumName,
             @RequestParam String boundary,
