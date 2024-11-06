@@ -3,6 +3,7 @@ package kusitms.backend.food.domain.entity;
 import jakarta.persistence.*;
 import kusitms.backend.food.domain.enums.Boundary;
 import kusitms.backend.food.domain.enums.Course;
+import kusitms.backend.global.domain.BaseTimeEntity;
 import kusitms.backend.result.domain.converter.StringListConverter;
 import kusitms.backend.stadium.domain.entity.Stadium;
 import lombok.AccessLevel;
@@ -15,7 +16,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Food {
+public class Food extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
