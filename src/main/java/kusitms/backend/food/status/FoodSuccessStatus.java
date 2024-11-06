@@ -9,10 +9,9 @@ import org.springframework.http.HttpStatus;
 @Getter
 @AllArgsConstructor
 public enum FoodSuccessStatus implements BaseCode {
-    _OK_GET_INTERIOR_FOODS(HttpStatus.OK, "200", "구장내부 식사류 매장 조회가 완료되었습니다."),
-    _OK_GET_EXTERIOR_FOODS(HttpStatus.OK, "200", "구장외부 식사류 매장 조회가 완료되었습니다."),
+    _OK_GET_INTERIOR_MEALS(HttpStatus.OK, "200", "구장내부 식사류 매장 조회가 완료되었습니다."),
     _OK_GET_INTERIOR_DESSERTS(HttpStatus.OK, "200", "구장내부 디저트류 매장 조회가 완료되었습니다."),
-    _OK_GET_EXTERIOR_DESSERTS(HttpStatus.OK, "200", "구장외부 디저트류 매장 조회가 완료되었습니다.");
+    _OK_GET_EXTERIOR_TOTAL(HttpStatus.OK, "200", "구장외부 전체 매장 조회가 완료되었습니다.");
 
     private final HttpStatus httpStatus;
     private final String code;
