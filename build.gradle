@@ -68,6 +68,8 @@ dependencies {
     annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 }
 
+def querydslDir = "src/main/generated"
+
 ext {
     snippetsDir = file('build/generated-snippets')
 }

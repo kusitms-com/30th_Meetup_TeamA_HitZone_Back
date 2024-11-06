@@ -28,7 +28,7 @@ public class FoodService {
         Boundary existBoundary = Boundary.of(boundary);
         Course existCourse = Course.of(course);
 
-        List<GetFoodsResponseDto.FoodDto> foods = foodRepository.findAllByStadiumAndBoundaryAndCourse(stadium, existBoundary, existCourse)
+        List<GetFoodsResponseDto.FoodDto> foods = foodRepository.findFoodsByConditions(stadium, existBoundary, existCourse)
                 .stream()
                 .map(GetFoodsResponseDto.FoodDto::from)
                 .toList();
