@@ -9,7 +9,8 @@ import org.springframework.http.HttpStatus;
 @Getter
 @RequiredArgsConstructor
 public enum FoodErrorStatus implements BaseErrorCode {
-    _BAD_REQUEST_BOUNDARY(HttpStatus.BAD_REQUEST, "FOOD-001", "잘못된 영역입니다. 내부 또는 외부로 입력해주세요.");
+    _BAD_REQUEST_BOUNDARY(HttpStatus.BAD_REQUEST, "FOOD-001", "잘못된 영역입니다. 내부 또는 외부로 입력해주세요."),
+    _BAD_REQUEST_COURSE(HttpStatus.BAD_REQUEST, "FOOD-002", "잘못된 값입니다. 식사 또는 후식으로 입력해주세요.");
 
     private final HttpStatus httpStatus;
     private final String code;

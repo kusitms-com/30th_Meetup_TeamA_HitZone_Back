@@ -1,5 +1,7 @@
 package kusitms.backend.food.domain.enums;
 
+import kusitms.backend.food.status.FoodErrorStatus;
+import kusitms.backend.global.exception.CustomException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +20,6 @@ public enum Boundary {
                 return boundary;
             }
         }
-        return null;
+        throw new CustomException(FoodErrorStatus._BAD_REQUEST_BOUNDARY);
     }
 }
