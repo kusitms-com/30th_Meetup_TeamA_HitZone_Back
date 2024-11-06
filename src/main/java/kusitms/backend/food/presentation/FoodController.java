@@ -1,6 +1,7 @@
 package kusitms.backend.food.presentation;
 
 import kusitms.backend.food.application.FoodService;
+import kusitms.backend.food.dto.response.GetFoodsResponseDto;
 import kusitms.backend.food.status.FoodSuccessStatus;
 import kusitms.backend.global.dto.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class FoodController {
      * @return
      */
     @GetMapping("/foods")
-    public ResponseEntity<ApiResponse<Object>> getSuitableFoods(
+    public ResponseEntity<ApiResponse<GetFoodsResponseDto>> getSuitableFoods(
             @RequestParam String stadiumName,
             @RequestParam String boundary,
             @RequestParam String course

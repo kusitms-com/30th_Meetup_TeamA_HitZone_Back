@@ -1,6 +1,7 @@
 package kusitms.backend.food.application;
 
 import kusitms.backend.food.domain.repository.FoodRepository;
+import kusitms.backend.food.dto.response.GetFoodsResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +13,7 @@ public class FoodService {
     private final FoodRepository foodRepository;
 
     @Transactional(readOnly = true)
-    public Object getSuitableFoods(String stadiumName, String boundary, String course) {
+    public GetFoodsResponseDto getSuitableFoods(String stadiumName, String boundary, String course) {
 
     }
 }
