@@ -1,6 +1,7 @@
 package kusitms.backend.result.domain.entity;
 
 import jakarta.persistence.*;
+import kusitms.backend.global.domain.BaseTimeEntity;
 import kusitms.backend.result.domain.converter.StringListConverter;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -13,7 +14,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "recommend_profile")
-public class Profile {
+public class Profile extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
