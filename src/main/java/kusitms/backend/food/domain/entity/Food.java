@@ -2,6 +2,7 @@ package kusitms.backend.food.domain.entity;
 
 import jakarta.persistence.*;
 import kusitms.backend.food.domain.enums.Boundary;
+import kusitms.backend.food.domain.enums.Course;
 import kusitms.backend.stadium.domain.entity.Stadium;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -23,5 +24,10 @@ public class Food {
 
     @Enumerated(EnumType.STRING)
     private Boundary boundary;
+
+    @Enumerated(EnumType.STRING)
+    private Course course;
+
+
 
 }
