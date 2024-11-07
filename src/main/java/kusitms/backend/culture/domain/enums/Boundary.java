@@ -1,9 +1,9 @@
 package kusitms.backend.culture.domain.enums;
 
-import kusitms.backend.culture.status.FoodErrorStatus;
-import kusitms.backend.global.exception.CustomException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Arrays;
 
 @Getter
 @RequiredArgsConstructor
@@ -14,12 +14,17 @@ public enum Boundary {
 
     private final String name;
 
+    public static boolean isExists(String name) {
+        return Arrays.stream(Boundary.values())
+                .anyMatch(boundary -> boundary.getName().equals(name));
+    }
+
     public static Boundary of(String name) {
         for (Boundary boundary : Boundary.values()) {
             if (boundary.getName().equals(name)) {
                 return boundary;
             }
         }
-        throw new CustomException(FoodErrorStatus._BAD_REQUEST_BOUNDARY);
+        return null;
     }
 }
