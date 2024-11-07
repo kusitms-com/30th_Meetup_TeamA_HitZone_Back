@@ -84,6 +84,7 @@ public class ResultService {
 
         Profile profile = Profile.builder()
                 .result(result)
+                .imgUrl(recommendedProfile.getImgUrl())
                 .nickname(recommendedProfile.getNickName())
                 .type(recommendedProfile.getType())
                 .explanation(recommendedProfile.getExplanation())
