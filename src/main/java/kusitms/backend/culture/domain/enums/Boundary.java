@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 @Getter
 @RequiredArgsConstructor
@@ -14,17 +15,10 @@ public enum Boundary {
 
     private final String name;
 
-    public static boolean isExists(String name) {
+    public static Optional<Boundary> findByName(String name) {
         return Arrays.stream(Boundary.values())
-                .anyMatch(boundary -> boundary.getName().equals(name));
+                .filter(boundary -> boundary.getName().equals(name))
+                .findFirst();
     }
 
-    public static Boundary of(String name) {
-        for (Boundary boundary : Boundary.values()) {
-            if (boundary.getName().equals(name)) {
-                return boundary;
-            }
-        }
-        return null;
-    }
 }

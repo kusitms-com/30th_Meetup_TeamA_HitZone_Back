@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 @Getter
 @RequiredArgsConstructor
@@ -15,17 +16,9 @@ public enum Course {
 
     private final String name;
 
-    public static boolean isExists(String name) {
+    public static Optional<Course> findByName(String name) {
         return Arrays.stream(Course.values())
-                .anyMatch(course -> course.getName().equals(name));
-    }
-
-    public static Course of(String name) {
-        for (Course course : Course.values()) {
-            if (course.getName().equals(name)) {
-                return course;
-            }
-        }
-        return null;
+                .filter(course -> course.getName().equals(name))
+                .findFirst();
     }
 }

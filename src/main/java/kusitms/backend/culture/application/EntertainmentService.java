@@ -26,11 +26,8 @@ public class EntertainmentService {
         Stadium stadium = stadiumRepository.findByName(stadiumName)
                 .orElseThrow(() -> new CustomException(StadiumErrorStatus._NOT_FOUND_STADIUM));
 
-        if (!Boundary.isExists(boundary)) {
-            throw new CustomException(FoodErrorStatus._BAD_REQUEST_BOUNDARY);
-        }
-
-        Boundary existBoundary = Boundary.of(boundary);
+        Boundary existBoundary = Boundary.findByName(boundary)
+                .orElseThrow(() -> new CustomException(FoodErrorStatus._BAD_REQUEST_BOUNDARY));
 
         List<GetEntertainmentsResponseDto.EntertainmentDto> entertainments = entertainmentRepository.findAllByStadiumAndBoundary(stadium, existBoundary)
                 .stream()
