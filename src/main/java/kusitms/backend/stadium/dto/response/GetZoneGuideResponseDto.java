@@ -7,6 +7,7 @@ import kusitms.backend.result.domain.enums.StadiumStatusType;
 import java.util.List;
 
 public record GetZoneGuideResponseDto(
+        String imgUrl,
         String zoneName,
         String explanation,
         String entrance,
@@ -18,6 +19,7 @@ public record GetZoneGuideResponseDto(
 ) {
     public static GetZoneGuideResponseDto from(StadiumStatusType zone) {
         return new GetZoneGuideResponseDto(
+                zone.getImgUrl(),
                 zone.getZoneName(),
                 zone.getOneLineDescription(),
                 zone.getEntrance(),
