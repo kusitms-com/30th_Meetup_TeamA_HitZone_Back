@@ -5,7 +5,7 @@ import kusitms.backend.culture.domain.enums.Boundary;
 
 import java.util.List;
 
-public record GetEntertainmentsResponseDto(List<EntertainmentDto> foods) {
+public record GetEntertainmentsResponseDto(List<EntertainmentDto> entertainments) {
 
     public record EntertainmentDto(String imgUrl, Boundary boundary, String name, String explanation, String tip) {
         public static EntertainmentDto from(Entertainment entertainment) {
