@@ -1,11 +1,13 @@
 package kusitms.backend.culture.presentation;
 
+import jakarta.validation.constraints.NotBlank;
 import kusitms.backend.culture.application.FoodService;
 import kusitms.backend.culture.dto.response.GetFoodsResponseDto;
 import kusitms.backend.culture.status.FoodSuccessStatus;
 import kusitms.backend.global.dto.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
+@Validated
 public class FoodController {
 
     private final FoodService foodService;
@@ -26,8 +29,8 @@ public class FoodController {
      */
     @GetMapping("/culture/foods")
     public ResponseEntity<ApiResponse<GetFoodsResponseDto>> getSuitableFoods(
-            @RequestParam String stadiumName,
-            @RequestParam String boundary,
+            @RequestParam @NotBlank String stadiumName,
+            @RequestParam @NotBlank String boundary,
             @RequestParam(required = false) String course
     ) {
         FoodSuccessStatus status;

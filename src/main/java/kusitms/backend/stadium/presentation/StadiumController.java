@@ -1,5 +1,6 @@
 package kusitms.backend.stadium.presentation;
 
+import jakarta.validation.constraints.NotBlank;
 import kusitms.backend.global.dto.ApiResponse;
 import kusitms.backend.stadium.application.StadiumService;
 import kusitms.backend.stadium.dto.response.GetZoneGuideResponseDto;
@@ -7,6 +8,7 @@ import kusitms.backend.stadium.dto.response.GetZonesNameResponseDto;
 import kusitms.backend.stadium.status.StadiumSuccessStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
+@Validated
 public class StadiumController {
 
     private final StadiumService stadiumService;
@@ -25,7 +28,7 @@ public class StadiumController {
      */
     @GetMapping("/stadium/zones")
     public ResponseEntity<ApiResponse<GetZonesNameResponseDto>> getZonesName(
-            @RequestParam String stadiumName
+            @RequestParam @NotBlank String stadiumName
     ) {
         return ApiResponse.onSuccess(StadiumSuccessStatus._OK_GET_ZONES_NAME, stadiumService.getZonesName(stadiumName));
     }
@@ -37,8 +40,8 @@ public class StadiumController {
      */
     @GetMapping("/stadium/zones/guide")
     public ResponseEntity<ApiResponse<GetZoneGuideResponseDto>> getZoneGuide(
-            @RequestParam String stadiumName,
-            @RequestParam String zoneName
+            @RequestParam @NotBlank String stadiumName,
+            @RequestParam @NotBlank String zoneName
     ) {
         return ApiResponse.onSuccess(StadiumSuccessStatus._OK_GET_ZONE_GUIDE, stadiumService.getZoneGuide(stadiumName, zoneName));
     }
