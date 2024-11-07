@@ -10,8 +10,7 @@ import lombok.RequiredArgsConstructor;
 public enum Course {
 
     MEAL("식사"),
-    DESSERT("후식"),
-    TOTAL("전체");
+    DESSERT("후식");
 
     private final String name;
 
