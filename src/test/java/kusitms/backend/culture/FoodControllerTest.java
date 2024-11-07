@@ -64,7 +64,7 @@ public class FoodControllerTest extends ControllerTestConfig {
                 .andExpect(jsonPath("$.payload.foods[0].location").value("2층 B06 / 2.5층 C05 (1,3루 내야지정석)"))
                 .andExpect(jsonPath("$.payload.foods[0].menu[0]").value("김치말이국수"))
                 .andExpect(jsonPath("$.payload.foods[0].price").value("국수 7,000원 (삼겹살+국수 세트 26,000원)"))
-                .andExpect(jsonPath("$.payload.foods[0].explanation").value("잠실야구장의 최고 인기 메뉴, 김치말이국수! 전석 매진일 기준 경기 1시간 전 주문 필요해요."))
+                .andExpect(jsonPath("$.payload.foods[0].tip").value("잠실야구장의 최고 인기 메뉴, 김치말이국수! 전석 매진일 기준 경기 1시간 전 주문 필요해요."))
 
                 .andDo(MockMvcRestDocumentationWrapper.document("culture/foods",
                         preprocessRequest(prettyPrint()),
@@ -90,7 +90,7 @@ public class FoodControllerTest extends ControllerTestConfig {
                                                 fieldWithPath("payload.foods[].location").description("해당 매장의 위치"),
                                                 fieldWithPath("payload.foods[].menu[]").description("해당 매장의 대표메뉴"),
                                                 fieldWithPath("payload.foods[].price").description("해당 매장의 음식들 가격"),
-                                                fieldWithPath("payload.foods[].explanation").description("해당 매장 설명")
+                                                fieldWithPath("payload.foods[].tip").description("해당 매장과 관련된 팁")
                                         )
                                         .responseSchema(Schema.schema("GetFoodsResponseDto"))
                                         .build()
