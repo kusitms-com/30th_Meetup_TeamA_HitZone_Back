@@ -1,6 +1,7 @@
 package kusitms.backend.result.presentation;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import kusitms.backend.global.dto.ApiResponse;
 import kusitms.backend.result.application.ResultService;
 import kusitms.backend.result.dto.request.SaveTopRankedZoneRequestDto;
@@ -10,11 +11,13 @@ import kusitms.backend.result.dto.response.SaveTopRankedZoneResponseDto;
 import kusitms.backend.result.status.ResultSuccessStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
+@Validated
 public class ResultController {
 
     private final ResultService resultService;
@@ -37,7 +40,7 @@ public class ResultController {
      */
     @GetMapping("/results/profile")
     public ResponseEntity<ApiResponse<GetProfileResponseDto>> getRecommendedProfile(
-            @RequestParam Long resultId
+            @RequestParam @Min(1L) Long resultId
     ) {
         return ApiResponse.onSuccess(ResultSuccessStatus._OK_GET_RECOMMEND_PROFILE, resultService.getRecommendedProfile(resultId));
     }
@@ -48,8 +51,8 @@ public class ResultController {
      */
     @GetMapping("/results/zones")
     public ResponseEntity<ApiResponse<GetZonesResponseDto>> getRecommendedZones(
-            @RequestParam Long resultId,
-            @RequestParam Long count
+            @RequestParam @Min(1L) Long resultId,
+            @RequestParam @Min(1L) Long count
     ) {
         return ApiResponse.onSuccess(ResultSuccessStatus._OK_GET_RECOMMEND_ZONES, resultService.getRecommendedZones(resultId, count));
     }
