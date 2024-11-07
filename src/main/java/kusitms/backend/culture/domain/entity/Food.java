@@ -27,6 +27,9 @@ public class Food extends BaseTimeEntity {
     @JoinColumn(name = "stadium_id", nullable = false)
     private Stadium stadium;
 
+    @Column(nullable = false)
+    private String imgUrl;
+
     @Enumerated(EnumType.STRING)
     private Boundary boundary;
 

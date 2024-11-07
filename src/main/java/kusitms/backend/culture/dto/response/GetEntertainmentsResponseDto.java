@@ -7,9 +7,9 @@ import java.util.List;
 
 public record GetEntertainmentsResponseDto(List<EntertainmentDto> foods) {
 
-    public record EntertainmentDto(Boundary boundary, String name, String explanation, String tip) {
+    public record EntertainmentDto(String imgUrl, Boundary boundary, String name, String explanation, String tip) {
         public static EntertainmentDto from(Entertainment entertainment) {
-            return new EntertainmentDto(entertainment.getBoundary(), entertainment.getName(), entertainment.getExplanation(), entertainment.getTip());
+            return new EntertainmentDto(entertainment.getImgUrl(), entertainment.getBoundary(), entertainment.getName(), entertainment.getExplanation(), entertainment.getTip());
         }
     }
 
