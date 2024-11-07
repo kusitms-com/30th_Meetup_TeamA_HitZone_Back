@@ -18,7 +18,7 @@ public class EntertainmentController {
 
     private final EntertainmentService entertainmentService;
 
-    @GetMapping("/culture/entertainment")
+    @GetMapping("/culture/entertainments")
     public ResponseEntity<ApiResponse<GetEntertainmentsResponseDto>> getSuitableEntertainments(
             @RequestParam String stadiumName,
             @RequestParam String boundary
