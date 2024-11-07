@@ -38,7 +38,7 @@ public class FoodControllerTest extends ControllerTestConfig {
     @DisplayName("해당 구장의 먹거리 목록을 조회한다.")
     public void getSuitableFoods() throws Exception {
 
-        GetFoodsResponseDto.FoodDto foodDto = new GetFoodsResponseDto.FoodDto("imgUrl", Boundary.INTERIOR, Course.DESSERT, "테스트이름", "테스트위치", List.of("테스트메뉴"), "테스트가격", "테스트설명");
+        GetFoodsResponseDto.FoodDto foodDto = new GetFoodsResponseDto.FoodDto("테스트이미지", Boundary.INTERIOR, Course.DESSERT, "통밥", "2층 B06 / 2.5층 C05 (1,3루 내야지정석)", List.of("김치말이국수"), "국수 7,000원 (삼겹살+국수 세트 26,000원)", "잠실야구장의 최고 인기 메뉴, 김치말이국수! 전석 매진일 기준 경기 1시간 전 주문 필요해요.");
         GetFoodsResponseDto getFoodsResponseDto = GetFoodsResponseDto.of(List.of(foodDto));
 
         Mockito.when(foodService.getSuitableFoods(anyString(), anyString(), anyString())).thenReturn(getFoodsResponseDto);

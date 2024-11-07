@@ -37,7 +37,7 @@ public class EntertainmentControllerTest extends ControllerTestConfig {
     @DisplayName("해당 구장의 즐길거리 목록을 조회한다.")
     public void getSuitableEntertainments() throws Exception {
 
-        GetEntertainmentsResponseDto.EntertainmentDto entertainmentDto = new GetEntertainmentsResponseDto.EntertainmentDto("imgUrl", Boundary.INTERIOR, "테스트이름", "테스트설명","테스트팁");
+        GetEntertainmentsResponseDto.EntertainmentDto entertainmentDto = new GetEntertainmentsResponseDto.EntertainmentDto("테스트이미지", Boundary.INTERIOR, "포토카드", "선수들의 사진을 뽑을 수 있는 포토카드! 경기 시작 전에 포토카드 기계로 가서 포토카드를 뽑을 수 있어요.","기계의 QR을 통해 원하는 선수나, 자신의 사진으로 커스텀 포토카드를 뽑을 수 있으니 참고하세요!");
         GetEntertainmentsResponseDto getEntertainmentsResponseDto = GetEntertainmentsResponseDto.of(List.of(entertainmentDto));
 
         Mockito.when(entertainmentService.getSuitableEntertainments(anyString(), anyString())).thenReturn(getEntertainmentsResponseDto);

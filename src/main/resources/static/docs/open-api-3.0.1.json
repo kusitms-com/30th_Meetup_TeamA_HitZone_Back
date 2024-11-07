@@ -163,6 +163,98 @@
         }
       }
     },
+    "/api/v1/culture/entertainments" : {
+      "get" : {
+        "tags" : [ "Culture" ],
+        "summary" : "해당 구장의 즐길거리 목록을 조회한다.",
+        "description" : "해당 구장의 즐길거리 목록을 조회한다.",
+        "operationId" : "culture/entertainments",
+        "parameters" : [ {
+          "name" : "stadiumName",
+          "in" : "query",
+          "description" : "구장명",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "boundary",
+          "in" : "query",
+          "description" : "구장 영역(내부 or 외부)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GetEntertainmentsResponseDto"
+                },
+                "examples" : {
+                  "culture/entertainments" : {
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"code\" : \"200\",\n  \"message\" : \"구장내부 즐길거리 조회가 완료되었습니다.\",\n  \"payload\" : {\n    \"entertainments\" : [ {\n      \"imgUrl\" : \"imgUrl\",\n      \"boundary\" : \"INTERIOR\",\n      \"name\" : \"테스트이름\",\n      \"explanation\" : \"테스트설명\",\n      \"tip\" : \"테스트팁\"\n    } ]\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/culture/foods" : {
+      "get" : {
+        "tags" : [ "Culture" ],
+        "summary" : "해당 구장의 음식 목록을 조회한다.",
+        "description" : "해당 구장의 음식 목록을 조회한다.",
+        "operationId" : "culture/foods",
+        "parameters" : [ {
+          "name" : "stadiumName",
+          "in" : "query",
+          "description" : "구장명",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "boundary",
+          "in" : "query",
+          "description" : "구장 영역(내부 or 외부)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "course",
+          "in" : "query",
+          "description" : "구장 코스(식사 or 후식)",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GetFoodsResponseDto"
+                },
+                "examples" : {
+                  "culture/foods" : {
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"code\" : \"200\",\n  \"message\" : \"구장내부 디저트류 매장 조회가 완료되었습니다.\",\n  \"payload\" : {\n    \"foods\" : [ {\n      \"imgUrl\" : \"imgUrl\",\n      \"boundary\" : \"INTERIOR\",\n      \"course\" : \"DESSERT\",\n      \"name\" : \"테스트이름\",\n      \"location\" : \"테스트위치\",\n      \"menu\" : [ \"테스트메뉴\" ],\n      \"price\" : \"테스트가격\",\n      \"explanation\" : \"테스트설명\"\n    } ]\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/nickname/check" : {
       "post" : {
         "tags" : [ "User" ],
@@ -510,40 +602,6 @@
           }
         }
       },
-      "TestDocsResponseDto" : {
-        "title" : "TestDocsResponseDto",
-        "required" : [ "code", "isSuccess", "message" ],
-        "type" : "object",
-        "properties" : {
-          "code" : {
-            "type" : "string",
-            "description" : "응답 코드"
-          },
-          "payload" : {
-            "required" : [ "keyword", "tip" ],
-            "type" : "object",
-            "properties" : {
-              "tip" : {
-                "type" : "string",
-                "description" : "팁"
-              },
-              "keyword" : {
-                "type" : "string",
-                "description" : "키워드"
-              }
-            },
-            "description" : "응답 데이터"
-          },
-          "message" : {
-            "type" : "string",
-            "description" : "응답 메시지"
-          },
-          "isSuccess" : {
-            "type" : "boolean",
-            "description" : "성공 여부"
-          }
-        }
-      },
       "GetZonesNameResponseDto" : {
         "title" : "GetZonesNameResponseDto",
         "required" : [ "code", "isSuccess", "message" ],
@@ -571,6 +629,40 @@
                     "type" : "number"
                   } ]
                 }
+              }
+            },
+            "description" : "응답 데이터"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "응답 메시지"
+          },
+          "isSuccess" : {
+            "type" : "boolean",
+            "description" : "성공 여부"
+          }
+        }
+      },
+      "TestDocsResponseDto" : {
+        "title" : "TestDocsResponseDto",
+        "required" : [ "code", "isSuccess", "message" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "응답 코드"
+          },
+          "payload" : {
+            "required" : [ "keyword", "tip" ],
+            "type" : "object",
+            "properties" : {
+              "tip" : {
+                "type" : "string",
+                "description" : "팁"
+              },
+              "keyword" : {
+                "type" : "string",
+                "description" : "키워드"
               }
             },
             "description" : "응답 데이터"
@@ -659,6 +751,83 @@
                     "tip" : {
                       "type" : "string",
                       "description" : "구역에 대한 팁"
+                    }
+                  }
+                }
+              }
+            },
+            "description" : "응답 데이터"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "응답 메시지"
+          },
+          "isSuccess" : {
+            "type" : "boolean",
+            "description" : "성공 여부"
+          }
+        }
+      },
+      "GetFoodsResponseDto" : {
+        "title" : "GetFoodsResponseDto",
+        "required" : [ "code", "isSuccess", "message" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "응답 코드"
+          },
+          "payload" : {
+            "type" : "object",
+            "properties" : {
+              "foods" : {
+                "type" : "array",
+                "items" : {
+                  "required" : [ "boundary", "course", "explanation", "imgUrl", "location", "menu", "name", "price" ],
+                  "type" : "object",
+                  "properties" : {
+                    "boundary" : {
+                      "type" : "string",
+                      "description" : "해당 매장의 영역(내부 or 외부)"
+                    },
+                    "imgUrl" : {
+                      "type" : "string",
+                      "description" : "해당 매장의 이미지 Url"
+                    },
+                    "price" : {
+                      "type" : "string",
+                      "description" : "해당 매장의 음식들 가격"
+                    },
+                    "name" : {
+                      "type" : "string",
+                      "description" : "해당 매장의 이름"
+                    },
+                    "course" : {
+                      "type" : "string",
+                      "description" : "해당 매장의 코스(식사 or 후식 or 전체)"
+                    },
+                    "location" : {
+                      "type" : "string",
+                      "description" : "해당 매장의 위치"
+                    },
+                    "explanation" : {
+                      "type" : "string",
+                      "description" : "해당 매장 설명"
+                    },
+                    "menu" : {
+                      "type" : "array",
+                      "description" : "해당 매장의 대표메뉴",
+                      "items" : {
+                        "oneOf" : [ {
+                          "type" : "object"
+                        }, {
+                          "type" : "boolean"
+                        }, {
+                          "type" : "string"
+                        }, {
+                          "type" : "number"
+                        } ]
+                      }
                     }
                   }
                 }
@@ -770,6 +939,60 @@
               "resultId" : {
                 "type" : "number",
                 "description" : "저장된 결과 ID"
+              }
+            },
+            "description" : "응답 데이터"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "응답 메시지"
+          },
+          "isSuccess" : {
+            "type" : "boolean",
+            "description" : "성공 여부"
+          }
+        }
+      },
+      "GetEntertainmentsResponseDto" : {
+        "title" : "GetEntertainmentsResponseDto",
+        "required" : [ "code", "isSuccess", "message" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "응답 코드"
+          },
+          "payload" : {
+            "type" : "object",
+            "properties" : {
+              "entertainments" : {
+                "type" : "array",
+                "items" : {
+                  "required" : [ "boundary", "explanation", "imgUrl", "name", "tip" ],
+                  "type" : "object",
+                  "properties" : {
+                    "boundary" : {
+                      "type" : "string",
+                      "description" : "해당 즐길거리의 영역(내부 or 외부)"
+                    },
+                    "imgUrl" : {
+                      "type" : "string",
+                      "description" : "해당 즐길거리의 이미지 Url"
+                    },
+                    "name" : {
+                      "type" : "string",
+                      "description" : "해당 즐길거리의 이름"
+                    },
+                    "tip" : {
+                      "type" : "string",
+                      "description" : "해당 즐길거리의 팁"
+                    },
+                    "explanation" : {
+                      "type" : "string",
+                      "description" : "해당 즐길거리의 설명"
+                    }
+                  }
+                }
               }
             },
             "description" : "응답 데이터"
