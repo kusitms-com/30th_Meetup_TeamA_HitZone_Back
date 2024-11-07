@@ -5,7 +5,9 @@ import kusitms.backend.result.domain.entity.Zone;
 
 import java.util.List;
 
-public record GetZonesResponseDto (List<ZoneResponseDto> zones) {
+public record GetZonesResponseDto (
+        List<ZoneResponseDto> zones
+) {
 
     public record ZoneResponseDto (
             Long zoneId,
@@ -15,7 +17,13 @@ public record GetZonesResponseDto (List<ZoneResponseDto> zones) {
             List<ReferencesGroup> referencesGroup
     ) {
         public static ZoneResponseDto from(Zone zone) {
-            return new ZoneResponseDto(zone.getId(), zone.getName(), zone.getExplanations(), zone.getTip(), zone.getReferencesGroup());
+            return new ZoneResponseDto(
+                    zone.getId(),
+                    zone.getName(),
+                    zone.getExplanations(),
+                    zone.getTip(),
+                    zone.getReferencesGroup()
+            );
         }
     }
 

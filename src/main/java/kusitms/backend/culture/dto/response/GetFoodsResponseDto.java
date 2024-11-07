@@ -6,11 +6,30 @@ import kusitms.backend.culture.domain.enums.Course;
 
 import java.util.List;
 
-public record GetFoodsResponseDto(List<FoodDto> foods) {
+public record GetFoodsResponseDto(
+        List<FoodDto> foods
+) {
 
-    public record FoodDto(String imgUrl, Boundary boundary, Course course, String name, String location, List<String> menu, String price, String tip) {
+    public record FoodDto(
+            String imgUrl,
+            Boundary boundary,
+            Course course,
+            String name,
+            String location,
+            List<String> menu,
+            String price,
+            String tip
+    ) {
         public static FoodDto from(Food food) {
-            return new FoodDto(food. getImgUrl(), food.getBoundary(), food.getCourse(), food.getName(), food.getLocation(), food.getMenu(), food.getPrice(), food.getTip());
+            return new FoodDto(
+                    food.getImgUrl(),
+                    food.getBoundary(),
+                    food.getCourse(),
+                    food.getName(),
+                    food.getLocation(),
+                    food.getMenu(),
+                    food.getPrice(),
+                    food.getTip());
         }
     }
 

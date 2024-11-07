@@ -5,11 +5,24 @@ import kusitms.backend.culture.domain.enums.Boundary;
 
 import java.util.List;
 
-public record GetEntertainmentsResponseDto(List<EntertainmentDto> entertainments) {
-
-    public record EntertainmentDto(String imgUrl, Boundary boundary, String name, List<String> explanations, List<String> tips) {
+public record GetEntertainmentsResponseDto(
+        List<EntertainmentDto> entertainments
+) {
+    public record EntertainmentDto(
+            String imgUrl,
+            Boundary boundary,
+            String name,
+            List<String> explanations,
+            List<String> tips
+    ) {
         public static EntertainmentDto from(Entertainment entertainment) {
-            return new EntertainmentDto(entertainment.getImgUrl(), entertainment.getBoundary(), entertainment.getName(), entertainment.getExplanations(), entertainment.getTips());
+            return new EntertainmentDto(
+                    entertainment.getImgUrl(),
+                    entertainment.getBoundary(),
+                    entertainment.getName(),
+                    entertainment.getExplanations(),
+                    entertainment.getTips()
+            );
         }
     }
 

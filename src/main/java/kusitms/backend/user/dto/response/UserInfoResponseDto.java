@@ -7,6 +7,9 @@ public record UserInfoResponseDto (
         String email
 ) {
     public static UserInfoResponseDto from(User user) {
-        return new UserInfoResponseDto(user.getNickname(), user.getEmail());
+        return new UserInfoResponseDto(
+                user.getNickname(),
+                user.getEmail()
+        );
     }
 }
