@@ -1,5 +1,6 @@
 package kusitms.backend.culture.presentation;
 
+import jakarta.validation.constraints.NotBlank;
 import kusitms.backend.culture.application.EntertainmentService;
 import kusitms.backend.culture.dto.response.GetEntertainmentsResponseDto;
 import kusitms.backend.culture.status.EntertainmentSuccessStatus;
