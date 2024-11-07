@@ -27,7 +27,7 @@ public class FoodService {
                 .orElseThrow(() -> new CustomException(StadiumErrorStatus._NOT_FOUND_STADIUM));
         Boundary existBoundary = Boundary.of(boundary);
         Course existCourse = null;
-        if (boundary.equals("내부")) {
+        if ("내부".equals(boundary)) {
             existCourse = Course.of(course);
         }
 

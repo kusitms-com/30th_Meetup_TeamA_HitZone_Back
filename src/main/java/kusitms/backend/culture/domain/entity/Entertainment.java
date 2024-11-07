@@ -36,9 +36,9 @@ public class Entertainment extends BaseTimeEntity {
 
     @Lob
     @Convert(converter = StringListConverter.class)
-    private List<String> explanation;
+    private List<String> explanations;
 
     @Lob
     @Convert(converter = StringListConverter.class)
-    private List<String> tip;
+    private List<String> tips;
 }
