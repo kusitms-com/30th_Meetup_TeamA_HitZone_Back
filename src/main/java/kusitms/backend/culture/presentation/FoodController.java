@@ -31,7 +31,7 @@ public class FoodController {
     public ResponseEntity<ApiResponse<GetFoodsResponseDto>> getSuitableFoods(
             @RequestParam @NotBlank String stadiumName,
             @RequestParam @NotBlank String boundary,
-            @RequestParam(required = false) @NotBlank String course
+            @RequestParam(required = false) String course
     ) {
         FoodSuccessStatus status;
         if ("내부".equals(boundary) && "식사".equals(course)) {
