@@ -31,7 +31,7 @@ public class EntertainmentController {
             @RequestParam String boundary
     ) {
         EntertainmentSuccessStatus status;
-        if (boundary.equals("내부")) {
+        if ("내부".equals(boundary)) {
             status = EntertainmentSuccessStatus._OK_GET_INTERIOR_ENTERTAINMENTS;
         } else {
             status = EntertainmentSuccessStatus._OK_GET_EXTERIOR_ENTERTAINMENTS;

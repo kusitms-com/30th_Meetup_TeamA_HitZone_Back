@@ -31,9 +31,9 @@ public class FoodController {
             @RequestParam(required = false) String course
     ) {
         FoodSuccessStatus status;
-        if (boundary.equals("내부") && course.equals("식사")) {
+        if ("내부".equals(boundary) && "식사".equals(course)) {
             status = FoodSuccessStatus._OK_GET_INTERIOR_MEALS;
-        } else if (boundary.equals("내부") && course.equals("후식")) {
+        } else if ("내부".equals(boundary) && "후식".equals(course)) {
             status = FoodSuccessStatus._OK_GET_INTERIOR_DESSERTS;
         } else {
             status = FoodSuccessStatus._OK_GET_EXTERIOR_TOTAL;
