@@ -1,5 +1,6 @@
 package kusitms.backend.culture.presentation;
 
+import jakarta.validation.constraints.NotBlank;
 import kusitms.backend.culture.application.FoodService;
 import kusitms.backend.culture.dto.response.GetFoodsResponseDto;
 import kusitms.backend.culture.status.FoodSuccessStatus;
@@ -26,9 +27,9 @@ public class FoodController {
      */
     @GetMapping("/culture/foods")
     public ResponseEntity<ApiResponse<GetFoodsResponseDto>> getSuitableFoods(
-            @RequestParam String stadiumName,
-            @RequestParam String boundary,
-            @RequestParam(required = false) String course
+            @RequestParam @NotBlank String stadiumName,
+            @RequestParam @NotBlank String boundary,
+            @RequestParam(required = false) @NotBlank String course
     ) {
         FoodSuccessStatus status;
         if ("내부".equals(boundary) && "식사".equals(course)) {

@@ -1,5 +1,6 @@
 package kusitms.backend.stadium.presentation;
 
+import jakarta.validation.constraints.NotBlank;
 import kusitms.backend.global.dto.ApiResponse;
 import kusitms.backend.stadium.application.StadiumService;
 import kusitms.backend.stadium.dto.response.GetZoneGuideResponseDto;
@@ -25,7 +26,7 @@ public class StadiumController {
      */
     @GetMapping("/stadium/zones")
     public ResponseEntity<ApiResponse<GetZonesNameResponseDto>> getZonesName(
-            @RequestParam String stadiumName
+            @RequestParam @NotBlank String stadiumName
     ) {
         return ApiResponse.onSuccess(StadiumSuccessStatus._OK_GET_ZONES_NAME, stadiumService.getZonesName(stadiumName));
     }

@@ -28,8 +28,8 @@ public class EntertainmentController {
      */
     @GetMapping("/culture/entertainments")
     public ResponseEntity<ApiResponse<GetEntertainmentsResponseDto>> getSuitableEntertainments(
-            @RequestParam String stadiumName,
-            @RequestParam String boundary
+            @RequestParam @NotBlank String stadiumName,
+            @RequestParam @NotBlank String boundary
     ) {
         EntertainmentSuccessStatus status;
         if ("내부".equals(boundary)) {
