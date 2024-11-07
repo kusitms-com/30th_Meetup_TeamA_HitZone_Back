@@ -1,9 +1,7 @@
 package kusitms.backend.culture.dto.response;
 
 import kusitms.backend.culture.domain.entity.Entertainment;
-import kusitms.backend.culture.domain.entity.Food;
 import kusitms.backend.culture.domain.enums.Boundary;
-import kusitms.backend.culture.domain.enums.Course;
 
 import java.util.List;
 

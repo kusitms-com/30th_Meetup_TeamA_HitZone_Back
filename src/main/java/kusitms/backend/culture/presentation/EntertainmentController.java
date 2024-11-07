@@ -2,9 +2,7 @@ package kusitms.backend.culture.presentation;
 
 import kusitms.backend.culture.application.EntertainmentService;
 import kusitms.backend.culture.dto.response.GetEntertainmentsResponseDto;
-import kusitms.backend.culture.dto.response.GetFoodsResponseDto;
 import kusitms.backend.culture.status.EntertainmentSuccessStatus;
-import kusitms.backend.culture.status.FoodSuccessStatus;
 import kusitms.backend.global.dto.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
