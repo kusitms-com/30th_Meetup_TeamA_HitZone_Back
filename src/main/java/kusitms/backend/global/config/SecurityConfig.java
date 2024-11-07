@@ -51,6 +51,7 @@ public class SecurityConfig {
                                 "/api/v1/send-code","/api/v1/verify-code",
                                 "/api/v1/token/re-issue",
                                 "/api/v1/results/**", "/api/v1/stadium/**",
+                                "/api/v1/culture/**",
                                 "/api/v1/chatbot/**").permitAll()  // 인증이 필요 없는 경로 설정
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
