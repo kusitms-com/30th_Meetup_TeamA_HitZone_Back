@@ -57,14 +57,14 @@ public class FoodControllerTest extends ControllerTestConfig {
                 .andExpect(jsonPath("$.isSuccess").value(true))
                 .andExpect(jsonPath("$.code").value(200))
                 .andExpect(jsonPath("$.message").value("구장내부 디저트류 매장 조회가 완료되었습니다."))
-                .andExpect(jsonPath("$.payload.foods[0].imgUrl").value("imgUrl"))
+                .andExpect(jsonPath("$.payload.foods[0].imgUrl").value("테스트이미지"))
                 .andExpect(jsonPath("$.payload.foods[0].boundary").value("INTERIOR"))
                 .andExpect(jsonPath("$.payload.foods[0].course").value("DESSERT"))
-                .andExpect(jsonPath("$.payload.foods[0].name").value("테스트이름"))
-                .andExpect(jsonPath("$.payload.foods[0].location").value("테스트위치"))
-                .andExpect(jsonPath("$.payload.foods[0].menu[0]").value("테스트메뉴"))
-                .andExpect(jsonPath("$.payload.foods[0].price").value("테스트가격"))
-                .andExpect(jsonPath("$.payload.foods[0].explanation").value("테스트설명"))
+                .andExpect(jsonPath("$.payload.foods[0].name").value("통밥"))
+                .andExpect(jsonPath("$.payload.foods[0].location").value("2층 B06 / 2.5층 C05 (1,3루 내야지정석)"))
+                .andExpect(jsonPath("$.payload.foods[0].menu[0]").value("김치말이국수"))
+                .andExpect(jsonPath("$.payload.foods[0].price").value("국수 7,000원 (삼겹살+국수 세트 26,000원)"))
+                .andExpect(jsonPath("$.payload.foods[0].explanation").value("잠실야구장의 최고 인기 메뉴, 김치말이국수! 전석 매진일 기준 경기 1시간 전 주문 필요해요."))
 
                 .andDo(MockMvcRestDocumentationWrapper.document("culture/foods",
                         preprocessRequest(prettyPrint()),
@@ -76,7 +76,7 @@ public class FoodControllerTest extends ControllerTestConfig {
                                         .queryParameters(
                                                 parameterWithName("stadiumName").description("구장명"),
                                                 parameterWithName("boundary").description("구장 영역(내부 or 외부)"),
-                                                parameterWithName("course").description("구장 코스(식사 or 후식)")
+                                                parameterWithName("course").description("구장 코스(식사 or 후식) - 내부일때는 꼭 입력해주세요.").optional()
                                         )
                                         .responseFields(
                                                 fieldWithPath("isSuccess").description("성공 여부"),

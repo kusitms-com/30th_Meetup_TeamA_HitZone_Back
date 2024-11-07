@@ -196,7 +196,7 @@
                 },
                 "examples" : {
                   "culture/entertainments" : {
-                    "value" : "{\n  \"isSuccess\" : true,\n  \"code\" : \"200\",\n  \"message\" : \"구장내부 즐길거리 조회가 완료되었습니다.\",\n  \"payload\" : {\n    \"entertainments\" : [ {\n      \"imgUrl\" : \"imgUrl\",\n      \"boundary\" : \"INTERIOR\",\n      \"name\" : \"테스트이름\",\n      \"explanation\" : \"테스트설명\",\n      \"tip\" : \"테스트팁\"\n    } ]\n  }\n}"
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"code\" : \"200\",\n  \"message\" : \"구장내부 즐길거리 조회가 완료되었습니다.\",\n  \"payload\" : {\n    \"entertainments\" : [ {\n      \"imgUrl\" : \"테스트이미지\",\n      \"boundary\" : \"INTERIOR\",\n      \"name\" : \"포토카드\",\n      \"explanation\" : \"선수들의 사진을 뽑을 수 있는 포토카드! 경기 시작 전에 포토카드 기계로 가서 포토카드를 뽑을 수 있어요.\",\n      \"tip\" : \"기계의 QR을 통해 원하는 선수나, 자신의 사진으로 커스텀 포토카드를 뽑을 수 있으니 참고하세요!\"\n    } ]\n  }\n}"
                   }
                 }
               }
@@ -231,7 +231,7 @@
           "name" : "course",
           "in" : "query",
           "description" : "구장 코스(식사 or 후식)",
-          "required" : true,
+          "required" : false,
           "schema" : {
             "type" : "string"
           }
@@ -246,7 +246,7 @@
                 },
                 "examples" : {
                   "culture/foods" : {
-                    "value" : "{\n  \"isSuccess\" : true,\n  \"code\" : \"200\",\n  \"message\" : \"구장내부 디저트류 매장 조회가 완료되었습니다.\",\n  \"payload\" : {\n    \"foods\" : [ {\n      \"imgUrl\" : \"imgUrl\",\n      \"boundary\" : \"INTERIOR\",\n      \"course\" : \"DESSERT\",\n      \"name\" : \"테스트이름\",\n      \"location\" : \"테스트위치\",\n      \"menu\" : [ \"테스트메뉴\" ],\n      \"price\" : \"테스트가격\",\n      \"explanation\" : \"테스트설명\"\n    } ]\n  }\n}"
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"code\" : \"200\",\n  \"message\" : \"구장내부 디저트류 매장 조회가 완료되었습니다.\",\n  \"payload\" : {\n    \"foods\" : [ {\n      \"imgUrl\" : \"테스트이미지\",\n      \"boundary\" : \"INTERIOR\",\n      \"course\" : \"DESSERT\",\n      \"name\" : \"통밥\",\n      \"location\" : \"2층 B06 / 2.5층 C05 (1,3루 내야지정석)\",\n      \"menu\" : [ \"김치말이국수\" ],\n      \"price\" : \"국수 7,000원 (삼겹살+국수 세트 26,000원)\",\n      \"explanation\" : \"잠실야구장의 최고 인기 메뉴, 김치말이국수! 전석 매진일 기준 경기 1시간 전 주문 필요해요.\"\n    } ]\n  }\n}"
                   }
                 }
               }
@@ -768,6 +768,63 @@
           }
         }
       },
+      "GetProfileResponseDto" : {
+        "title" : "GetProfileResponseDto",
+        "required" : [ "code", "isSuccess", "message" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "응답 코드"
+          },
+          "payload" : {
+            "required" : [ "explanation", "hashTags", "nickname", "profileId", "type" ],
+            "type" : "object",
+            "properties" : {
+              "hashTags" : {
+                "type" : "array",
+                "description" : "해당 결과의 프로필의 해시태그",
+                "items" : {
+                  "oneOf" : [ {
+                    "type" : "object"
+                  }, {
+                    "type" : "boolean"
+                  }, {
+                    "type" : "string"
+                  }, {
+                    "type" : "number"
+                  } ]
+                }
+              },
+              "profileId" : {
+                "type" : "number",
+                "description" : "해당 결과의 프로필 ID"
+              },
+              "nickname" : {
+                "type" : "string",
+                "description" : "해당 결과의 프로필의 닉네임"
+              },
+              "explanation" : {
+                "type" : "string",
+                "description" : "해당 결과의 프로필 설명"
+              },
+              "type" : {
+                "type" : "string",
+                "description" : "해당 결과의 프로필의 타입"
+              }
+            },
+            "description" : "응답 데이터"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "응답 메시지"
+          },
+          "isSuccess" : {
+            "type" : "boolean",
+            "description" : "성공 여부"
+          }
+        }
+      },
       "GetFoodsResponseDto" : {
         "title" : "GetFoodsResponseDto",
         "required" : [ "code", "isSuccess", "message" ],
@@ -831,63 +888,6 @@
                     }
                   }
                 }
-              }
-            },
-            "description" : "응답 데이터"
-          },
-          "message" : {
-            "type" : "string",
-            "description" : "응답 메시지"
-          },
-          "isSuccess" : {
-            "type" : "boolean",
-            "description" : "성공 여부"
-          }
-        }
-      },
-      "GetProfileResponseDto" : {
-        "title" : "GetProfileResponseDto",
-        "required" : [ "code", "isSuccess", "message" ],
-        "type" : "object",
-        "properties" : {
-          "code" : {
-            "type" : "string",
-            "description" : "응답 코드"
-          },
-          "payload" : {
-            "required" : [ "explanation", "hashTags", "nickname", "profileId", "type" ],
-            "type" : "object",
-            "properties" : {
-              "hashTags" : {
-                "type" : "array",
-                "description" : "해당 결과의 프로필의 해시태그",
-                "items" : {
-                  "oneOf" : [ {
-                    "type" : "object"
-                  }, {
-                    "type" : "boolean"
-                  }, {
-                    "type" : "string"
-                  }, {
-                    "type" : "number"
-                  } ]
-                }
-              },
-              "profileId" : {
-                "type" : "number",
-                "description" : "해당 결과의 프로필 ID"
-              },
-              "nickname" : {
-                "type" : "string",
-                "description" : "해당 결과의 프로필의 닉네임"
-              },
-              "explanation" : {
-                "type" : "string",
-                "description" : "해당 결과의 프로필 설명"
-              },
-              "type" : {
-                "type" : "string",
-                "description" : "해당 결과의 프로필의 타입"
               }
             },
             "description" : "응답 데이터"

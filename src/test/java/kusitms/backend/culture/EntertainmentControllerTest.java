@@ -55,11 +55,11 @@ public class EntertainmentControllerTest extends ControllerTestConfig {
                 .andExpect(jsonPath("$.isSuccess").value(true))
                 .andExpect(jsonPath("$.code").value(200))
                 .andExpect(jsonPath("$.message").value("구장내부 즐길거리 조회가 완료되었습니다."))
-                .andExpect(jsonPath("$.payload.entertainments[0].imgUrl").value("imgUrl"))
+                .andExpect(jsonPath("$.payload.entertainments[0].imgUrl").value("테스트이미지"))
                 .andExpect(jsonPath("$.payload.entertainments[0].boundary").value("INTERIOR"))
-                .andExpect(jsonPath("$.payload.entertainments[0].name").value("테스트이름"))
-                .andExpect(jsonPath("$.payload.entertainments[0].explanation").value("테스트설명"))
-                .andExpect(jsonPath("$.payload.entertainments[0].tip").value("테스트팁"))
+                .andExpect(jsonPath("$.payload.entertainments[0].name").value("포토카드"))
+                .andExpect(jsonPath("$.payload.entertainments[0].explanation").value("선수들의 사진을 뽑을 수 있는 포토카드! 경기 시작 전에 포토카드 기계로 가서 포토카드를 뽑을 수 있어요."))
+                .andExpect(jsonPath("$.payload.entertainments[0].tip").value("기계의 QR을 통해 원하는 선수나, 자신의 사진으로 커스텀 포토카드를 뽑을 수 있으니 참고하세요!"))
 
                 .andDo(MockMvcRestDocumentationWrapper.document("culture/entertainments",
                         preprocessRequest(prettyPrint()),
