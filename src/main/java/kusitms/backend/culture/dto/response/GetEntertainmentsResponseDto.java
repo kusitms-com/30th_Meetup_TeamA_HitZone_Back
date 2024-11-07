@@ -7,7 +7,7 @@ import java.util.List;
 
 public record GetEntertainmentsResponseDto(List<EntertainmentDto> entertainments) {
 
-    public record EntertainmentDto(String imgUrl, Boundary boundary, String name, String explanation, String tip) {
+    public record EntertainmentDto(String imgUrl, Boundary boundary, String name, List<String> explanation, List<String> tip) {
         public static EntertainmentDto from(Entertainment entertainment) {
             return new EntertainmentDto(entertainment.getImgUrl(), entertainment.getBoundary(), entertainment.getName(), entertainment.getExplanation(), entertainment.getTip());
         }

@@ -230,7 +230,7 @@
         }, {
           "name" : "course",
           "in" : "query",
-          "description" : "구장 코스(식사 or 후식)",
+          "description" : "구장 코스(식사 or 후식) - 내부일때는 꼭 입력해주세요.",
           "required" : false,
           "schema" : {
             "type" : "string"

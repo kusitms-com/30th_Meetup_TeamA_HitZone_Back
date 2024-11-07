@@ -3,10 +3,13 @@ package kusitms.backend.culture.domain.entity;
 import jakarta.persistence.*;
 import kusitms.backend.culture.domain.enums.Boundary;
 import kusitms.backend.global.domain.BaseTimeEntity;
+import kusitms.backend.result.domain.converter.StringListConverter;
 import kusitms.backend.stadium.domain.entity.Stadium;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -31,9 +34,11 @@ public class Entertainment extends BaseTimeEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String explanation;
+    @Lob
+    @Convert(converter = StringListConverter.class)
+    private List<String> explanation;
 
-    @Column(nullable = false)
-    private String tip;
+    @Lob
+    @Convert(converter = StringListConverter.class)
+    private List<String> tip;
 }
