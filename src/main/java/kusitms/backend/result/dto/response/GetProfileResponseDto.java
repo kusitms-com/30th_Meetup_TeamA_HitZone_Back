@@ -6,6 +6,7 @@ import java.util.List;
 
 public record GetProfileResponseDto(
         Long profileId,
+        String imgUrl,
         String nickname,
         String type,
         String explanation,
@@ -14,6 +15,7 @@ public record GetProfileResponseDto(
     public static GetProfileResponseDto from(Profile profile) {
         return new GetProfileResponseDto(
                 profile.getId(),
+                profile.getImgUrl(),
                 profile.getNickname(),
                 profile.getType(),
                 profile.getExplanation(),
