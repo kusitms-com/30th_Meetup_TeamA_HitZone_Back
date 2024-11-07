@@ -94,6 +94,7 @@ public class StadiumControllerTest extends ControllerTestConfig {
                 )
         );
         GetZoneGuideResponseDto getZoneGuideResponseDto = new GetZoneGuideResponseDto(
+                "https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/lg/red.svg",
                 "레드석",
                 "해당 구역은 다양한 것들을 모두 적절히 즐길 수 있는 구역이에요.",
                 "[1루] 2-3 Gate [3루] 2-1 Gate",
@@ -120,6 +121,7 @@ public class StadiumControllerTest extends ControllerTestConfig {
                 .andExpect(jsonPath("$.isSuccess").value(true))
                 .andExpect(jsonPath("$.code").value(200))
                 .andExpect(jsonPath("$.message").value("해당 구역에 대한 가이드 정보가 조회되었습니다."))
+                .andExpect(jsonPath("$.payload.imgUrl").value("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/lg/red.svg"))
                 .andExpect(jsonPath("$.payload.zoneName").value("레드석"))
                 .andExpect(jsonPath("$.payload.explanation").value("해당 구역은 다양한 것들을 모두 적절히 즐길 수 있는 구역이에요."))
                 .andExpect(jsonPath("$.payload.entrance").value("[1루] 2-3 Gate [3루] 2-1 Gate"))
@@ -146,6 +148,7 @@ public class StadiumControllerTest extends ControllerTestConfig {
                                                 fieldWithPath("code").description("응답 코드"),
                                                 fieldWithPath("message").description("응답 메시지"),
                                                 fieldWithPath("payload").description("응답 데이터").optional(),
+                                                fieldWithPath("payload.imgUrl").description("이미지 URL"),
                                                 fieldWithPath("payload.zoneName").description("구역명"),
                                                 fieldWithPath("payload.explanation").description("구역 설명"),
                                                 fieldWithPath("payload.entrance").description("구역 입구"),
