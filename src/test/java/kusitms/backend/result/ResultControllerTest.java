@@ -170,6 +170,7 @@ public class ResultControllerTest extends ControllerTestConfig {
         GetZonesResponseDto.ZoneResponseDto redZone = new GetZonesResponseDto.ZoneResponseDto(
                 1L,
                 "레드석",
+                "#DC032A",
                 List.of("응원도 적당히 즐길 수 있지만, 야구나 함께 온 동행자와의 대화에도 집중할 수 있는 구역이에요!"),
                 "해당 구역은 다양한 것들을 모두 적절히 즐길 수 있는 구역이예요.",
                 List.of(
@@ -186,6 +187,7 @@ public class ResultControllerTest extends ControllerTestConfig {
         GetZonesResponseDto.ZoneResponseDto blueZone = new GetZonesResponseDto.ZoneResponseDto(
                 2L,
                 "블루석",
+                "#4699F2",
                 List.of("힘차게 응원도 가능하고, 야구에 집중도 할 수 있는 구역이에요!"),
                 "해당 구역은 비교적 조용히 경기 관람이 가능한 구역이에요.",
                 List.of(
@@ -219,6 +221,7 @@ public class ResultControllerTest extends ControllerTestConfig {
                 .andExpect(jsonPath("$.message").value("해당 결과의 추천 구역 정보 리스트를 조회하였습니다."))
                 .andExpect(jsonPath("$.payload.zones[0].zoneId").value(redZone.zoneId()))
                 .andExpect(jsonPath("$.payload.zones[0].name").value(redZone.name()))
+                .andExpect(jsonPath("$.payload.zones[0].color").value(redZone.color()))
                 .andExpect(jsonPath("$.payload.zones[0].explanations[0]").value(redZone.explanations().get(0)))
                 .andExpect(jsonPath("$.payload.zones[0].tip").value(redZone.tip()))
                 .andExpect(jsonPath("$.payload.zones[0].referencesGroup[0].groupTitle").value(redZone.referencesGroup().get(0).getGroupTitle()))
@@ -227,6 +230,7 @@ public class ResultControllerTest extends ControllerTestConfig {
 
                 .andExpect(jsonPath("$.payload.zones[1].zoneId").value(blueZone.zoneId()))
                 .andExpect(jsonPath("$.payload.zones[1].name").value(blueZone.name()))
+                .andExpect(jsonPath("$.payload.zones[1].color").value(blueZone.color()))
                 .andExpect(jsonPath("$.payload.zones[1].explanations[0]").value(blueZone.explanations().get(0)))
                 .andExpect(jsonPath("$.payload.zones[1].tip").value(blueZone.tip()))
                 .andExpect(jsonPath("$.payload.zones[1].referencesGroup[0].groupTitle").value(blueZone.referencesGroup().get(0).getGroupTitle()))
@@ -251,6 +255,7 @@ public class ResultControllerTest extends ControllerTestConfig {
                                                 fieldWithPath("payload").type(JsonFieldType.OBJECT).description("응답 데이터").optional(),
                                                 fieldWithPath("payload.zones[].zoneId").type(JsonFieldType.NUMBER).description("구역 ID"),
                                                 fieldWithPath("payload.zones[].name").type(JsonFieldType.STRING).description("구역 이름"),
+                                                fieldWithPath("payload.zones[].color").type(JsonFieldType.STRING).description("구역 색상"),
                                                 fieldWithPath("payload.zones[].explanations[]").type(JsonFieldType.ARRAY).description("구역 설명 리스트"),
                                                 fieldWithPath("payload.zones[].tip").type(JsonFieldType.STRING).description("구역에 대한 팁"),
                                                 fieldWithPath("payload.zones[].referencesGroup[].groupTitle").type(JsonFieldType.STRING).description("참고 그룹 제목"),

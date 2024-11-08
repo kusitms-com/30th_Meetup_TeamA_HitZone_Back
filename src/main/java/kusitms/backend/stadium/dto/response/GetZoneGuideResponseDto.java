@@ -9,6 +9,7 @@ import java.util.List;
 public record GetZoneGuideResponseDto(
         String imgUrl,
         String zoneName,
+        String zoneColor,
         String explanation,
         String entrance,
         String stepSpacing,
@@ -21,6 +22,7 @@ public record GetZoneGuideResponseDto(
         return new GetZoneGuideResponseDto(
                 zone.getImgUrl(),
                 zone.getZoneName(),
+                zone.getZoneColor(),
                 zone.getOneLineDescription(),
                 zone.getEntrance(),
                 zone.getStepSpacing(),

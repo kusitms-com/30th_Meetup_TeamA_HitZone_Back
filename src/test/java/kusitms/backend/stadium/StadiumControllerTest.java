@@ -97,6 +97,7 @@ public class StadiumControllerTest extends ControllerTestConfig {
         GetZoneGuideResponseDto getZoneGuideResponseDto = new GetZoneGuideResponseDto(
                 "https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/lg/red.svg",
                 "레드석",
+                "#DC032A",
                 "해당 구역은 다양한 것들을 모두 적절히 즐길 수 있는 구역이에요.",
                 "[1루] 2-3 Gate [3루] 2-1 Gate",
                 "[1루] 약 24~30cm(10n열), 약 33~38cm(20n열)",
@@ -124,6 +125,7 @@ public class StadiumControllerTest extends ControllerTestConfig {
                 .andExpect(jsonPath("$.message").value("해당 구역에 대한 가이드 정보가 조회되었습니다."))
                 .andExpect(jsonPath("$.payload.imgUrl").value("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/lg/red.svg"))
                 .andExpect(jsonPath("$.payload.zoneName").value("레드석"))
+                .andExpect(jsonPath("$.payload.zoneColor").value("#DC032A"))
                 .andExpect(jsonPath("$.payload.explanation").value("해당 구역은 다양한 것들을 모두 적절히 즐길 수 있는 구역이에요."))
                 .andExpect(jsonPath("$.payload.entrance").value("[1루] 2-3 Gate [3루] 2-1 Gate"))
                 .andExpect(jsonPath("$.payload.stepSpacing").value("[1루] 약 24~30cm(10n열), 약 33~38cm(20n열)"))
@@ -151,6 +153,7 @@ public class StadiumControllerTest extends ControllerTestConfig {
                                                 fieldWithPath("payload").type(JsonFieldType.OBJECT).description("응답 데이터").optional(),
                                                 fieldWithPath("payload.imgUrl").type(JsonFieldType.STRING).description("이미지 URL"),
                                                 fieldWithPath("payload.zoneName").type(JsonFieldType.STRING).description("구역명"),
+                                                fieldWithPath("payload.zoneColor").type(JsonFieldType.STRING).description("구역 색상"),
                                                 fieldWithPath("payload.explanation").type(JsonFieldType.STRING).description("구역 설명"),
                                                 fieldWithPath("payload.entrance").type(JsonFieldType.STRING).description("구역 입구"),
                                                 fieldWithPath("payload.stepSpacing").type(JsonFieldType.STRING).description("구역 단차 간격"),
