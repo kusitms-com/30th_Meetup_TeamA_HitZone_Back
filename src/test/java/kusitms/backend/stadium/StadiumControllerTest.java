@@ -17,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
@@ -56,7 +57,7 @@ public class StadiumControllerTest extends ControllerTestConfig {
         resultActions
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.isSuccess").value(true))
-                .andExpect(jsonPath("$.code").value(200))
+                .andExpect(jsonPath("$.code").value("200"))
                 .andExpect(jsonPath("$.message").value("해당 스타디움의 구역 이름들이 조회되었습니다."))
                 .andExpect(jsonPath("$.payload.names[0]").value("레드석"))
                 .andDo(MockMvcRestDocumentationWrapper.document("stadium/names",
@@ -67,14 +68,14 @@ public class StadiumControllerTest extends ControllerTestConfig {
                                         .tag("Stadium")
                                         .description("해당 스타디움의 구역 목록들을 조회한다.")
                                         .queryParameters(
-                                                parameterWithName("stadiumName").description("스타디움명")
+                                                parameterWithName("stadiumName").description("스타디움명 [예시 : 수원KT위즈파크]")
                                         )
                                         .responseFields(
-                                                fieldWithPath("isSuccess").description("성공 여부"),
-                                                fieldWithPath("code").description("응답 코드"),
-                                                fieldWithPath("message").description("응답 메시지"),
-                                                fieldWithPath("payload").description("응답 데이터").optional(),
-                                                fieldWithPath("payload.names[]").description("해당 구역명")
+                                                fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("성공 여부"),
+                                                fieldWithPath("code").type(JsonFieldType.STRING).description("응답 코드"),
+                                                fieldWithPath("message").type(JsonFieldType.STRING).description("응답 메시지"),
+                                                fieldWithPath("payload").type(JsonFieldType.OBJECT).description("응답 데이터").optional(),
+                                                fieldWithPath("payload.names[]").type(JsonFieldType.ARRAY).description("해당 구역명 리스트")
                                         )
                                         .responseSchema(Schema.schema("GetZonesNameResponseDto"))
                                         .build()
@@ -119,7 +120,7 @@ public class StadiumControllerTest extends ControllerTestConfig {
         resultActions
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.isSuccess").value(true))
-                .andExpect(jsonPath("$.code").value(200))
+                .andExpect(jsonPath("$.code").value("200"))
                 .andExpect(jsonPath("$.message").value("해당 구역에 대한 가이드 정보가 조회되었습니다."))
                 .andExpect(jsonPath("$.payload.imgUrl").value("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/lg/red.svg"))
                 .andExpect(jsonPath("$.payload.zoneName").value("레드석"))
@@ -140,25 +141,25 @@ public class StadiumControllerTest extends ControllerTestConfig {
                                         .tag("Stadium")
                                         .description("해당 구역에 대한 구역 가이드 정보를 조회한다.")
                                         .queryParameters(
-                                                parameterWithName("stadiumName").description("스타디움명"),
-                                                parameterWithName("zoneName").description("구역명")
+                                                parameterWithName("stadiumName").description("스타디움명 [예시 : 잠실종합운동장]"),
+                                                parameterWithName("zoneName").description("구역명 [예시 : 레드석]")
                                         )
                                         .responseFields(
-                                                fieldWithPath("isSuccess").description("성공 여부"),
-                                                fieldWithPath("code").description("응답 코드"),
-                                                fieldWithPath("message").description("응답 메시지"),
-                                                fieldWithPath("payload").description("응답 데이터").optional(),
-                                                fieldWithPath("payload.imgUrl").description("이미지 URL"),
-                                                fieldWithPath("payload.zoneName").description("구역명"),
-                                                fieldWithPath("payload.explanation").description("구역 설명"),
-                                                fieldWithPath("payload.entrance").description("구역 입구"),
-                                                fieldWithPath("payload.stepSpacing").description("구역 단차 간격"),
-                                                fieldWithPath("payload.seatSpacing").description("구역 좌석간 간격"),
-                                                fieldWithPath("payload.usageInformation").description("구역 유용 정보"),
-                                                fieldWithPath("payload.tip").description("구역 팁"),
-                                                fieldWithPath("payload.referencesGroup[].groupTitle").description("구역 참고사항리스트의 제목"),
-                                                fieldWithPath("payload.referencesGroup[].references[0].title").description("참고사항 제목"),
-                                                fieldWithPath("payload.referencesGroup[].references[0].content").description("참고사항 내용")
+                                                fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("성공 여부"),
+                                                fieldWithPath("code").type(JsonFieldType.STRING).description("응답 코드"),
+                                                fieldWithPath("message").type(JsonFieldType.STRING).description("응답 메시지"),
+                                                fieldWithPath("payload").type(JsonFieldType.OBJECT).description("응답 데이터").optional(),
+                                                fieldWithPath("payload.imgUrl").type(JsonFieldType.STRING).description("이미지 URL"),
+                                                fieldWithPath("payload.zoneName").type(JsonFieldType.STRING).description("구역명"),
+                                                fieldWithPath("payload.explanation").type(JsonFieldType.STRING).description("구역 설명"),
+                                                fieldWithPath("payload.entrance").type(JsonFieldType.STRING).description("구역 입구"),
+                                                fieldWithPath("payload.stepSpacing").type(JsonFieldType.STRING).description("구역 단차 간격"),
+                                                fieldWithPath("payload.seatSpacing").type(JsonFieldType.STRING).description("구역 좌석간 간격"),
+                                                fieldWithPath("payload.usageInformation").type(JsonFieldType.STRING).description("구역 유용 정보"),
+                                                fieldWithPath("payload.tip").type(JsonFieldType.STRING).description("구역 팁"),
+                                                fieldWithPath("payload.referencesGroup[].groupTitle").type(JsonFieldType.STRING).description("구역 참고사항리스트의 제목"),
+                                                fieldWithPath("payload.referencesGroup[].references[].title").type(JsonFieldType.STRING).description("참고사항 제목"),
+                                                fieldWithPath("payload.referencesGroup[].references[].content").type(JsonFieldType.STRING).description("참고사항 내용")
                                         )
                                         .responseSchema(Schema.schema("GetZoneGuideResponseDto"))
                                         .build()

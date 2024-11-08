@@ -20,6 +20,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
@@ -67,7 +68,7 @@ public class ResultControllerTest extends ControllerTestConfig {
         resultActions
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.isSuccess").value(true))
-                .andExpect(jsonPath("$.code").value(201))
+                .andExpect(jsonPath("$.code").value("201"))
                 .andExpect(jsonPath("$.message").value("추천 받은 유저성향과 구역을 저장하였습니다."))
                 .andExpect(jsonPath("$.payload.resultId").value(1L))
                 .andDo(MockMvcRestDocumentationWrapper.document("results/save",
@@ -76,20 +77,21 @@ public class ResultControllerTest extends ControllerTestConfig {
                         resource(
                                 ResourceSnippetParameters.builder()
                                         .tag("Result")
-                                        .description("구역 추천 결과를 저장한다. (어세스토큰은 기입/미기입 모두 가능)")
+                                        .description("구역 추천 결과를 저장한다. (accessToken은 기입/미기입 모두 가능)")
                                         .requestFields(
-                                                fieldWithPath("stadium").description("경기장 이름"),
-                                                fieldWithPath("preference").description("선호 구역 (1루석 또는 3루석)"),
-                                                fieldWithPath("clientKeywords").description("사용자 키워드 배열")
+                                                fieldWithPath("stadium").type(JsonFieldType.STRING).description("경기장 이름 [예시 : 잠실종합운동장]"),
+                                                fieldWithPath("preference").type(JsonFieldType.STRING).description("선호 구역 [예시 : 1루석 또는 3루석]"),
+                                                fieldWithPath("clientKeywords[]").type(JsonFieldType.ARRAY).description("사용자 키워드 배열")
                                         )
                                         .responseFields(
-                                                fieldWithPath("isSuccess").description("성공 여부"),
-                                                fieldWithPath("code").description("응답 코드"),
-                                                fieldWithPath("message").description("응답 메시지"),
-                                                fieldWithPath("payload").description("응답 데이터").optional(),
-                                                fieldWithPath("payload.resultId").description("저장된 결과 ID")
+                                                fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("성공 여부"),
+                                                fieldWithPath("code").type(JsonFieldType.STRING).description("응답 코드"),
+                                                fieldWithPath("message").type(JsonFieldType.STRING).description("응답 메시지"),
+                                                fieldWithPath("payload").type(JsonFieldType.OBJECT).description("응답 데이터").optional(),
+                                                fieldWithPath("payload.resultId").type(JsonFieldType.NUMBER).description("저장된 결과 ID")
                                         )
-                                        .responseSchema(Schema.schema("SaveTopRankedZonesResponseDto"))
+                                        .requestSchema(Schema.schema("SaveTopRankedZoneRequestDto"))
+                                        .responseSchema(Schema.schema("SaveTopRankedZoneResponseDto"))
                                         .build()
                         ),
                         requestCookies(
@@ -109,14 +111,14 @@ public class ResultControllerTest extends ControllerTestConfig {
                 "야구가 참 맛있고 음식이 재밌어요",
                 "야구장에서 먹는 재미까지 놓치지 않는 당신!\n야구장을 두 배로 재밌게 즐기는군요?",
                 List.of("#먹으러왔는데야구도한다?", "#그래서여기구장맛있는거뭐라고?")
-                );
+        );
 
         Mockito.when(resultService.getRecommendedProfile(anyLong()))
                 .thenReturn(getProfileResponseDto);
 
         // when
         ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/results/profile")
-                .param("resultId","2")
+                .param("resultId", "2")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON));
 
@@ -124,7 +126,7 @@ public class ResultControllerTest extends ControllerTestConfig {
         resultActions
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.isSuccess").value(true))
-                .andExpect(jsonPath("$.code").value(200))
+                .andExpect(jsonPath("$.code").value("200"))
                 .andExpect(jsonPath("$.message").value("해당 결과의 프로필 정보를 조회하였습니다."))
                 .andExpect(jsonPath("$.payload.profileId").value(1L))
                 .andExpect(jsonPath("$.payload.imgUrl").value("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/recommendation/eating.png"))
@@ -141,19 +143,19 @@ public class ResultControllerTest extends ControllerTestConfig {
                                         .tag("Result")
                                         .description("해당 결과의 유저 프로필 정보를 조회한다.")
                                         .queryParameters(
-                                                parameterWithName("resultId").description("조회할 결과의 ID")
+                                                parameterWithName("resultId").description("조회할 결과의 ID [예시 : 1 (NUMBER type)]")
                                         )
                                         .responseFields(
-                                                fieldWithPath("isSuccess").description("성공 여부"),
-                                                fieldWithPath("code").description("응답 코드"),
-                                                fieldWithPath("message").description("응답 메시지"),
-                                                fieldWithPath("payload").description("응답 데이터").optional(),
-                                                fieldWithPath("payload.profileId").description("해당 결과의 프로필 ID"),
-                                                fieldWithPath("payload.imgUrl").description("해당 결과의 이미지 URL"),
-                                                fieldWithPath("payload.nickname").description("해당 결과의 프로필의 닉네임"),
-                                                fieldWithPath("payload.type").description("해당 결과의 프로필의 타입"),
-                                                fieldWithPath("payload.explanation").description("해당 결과의 프로필 설명"),
-                                                fieldWithPath("payload.hashTags[]").description("해당 결과의 프로필의 해시태그")
+                                                fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("성공 여부"),
+                                                fieldWithPath("code").type(JsonFieldType.STRING).description("응답 코드"),
+                                                fieldWithPath("message").type(JsonFieldType.STRING).description("응답 메시지"),
+                                                fieldWithPath("payload").type(JsonFieldType.OBJECT).description("응답 데이터").optional(),
+                                                fieldWithPath("payload.profileId").type(JsonFieldType.NUMBER).description("해당 결과의 프로필 ID"),
+                                                fieldWithPath("payload.imgUrl").type(JsonFieldType.STRING).description("해당 결과의 이미지 URL"),
+                                                fieldWithPath("payload.nickname").type(JsonFieldType.STRING).description("해당 결과의 프로필 닉네임"),
+                                                fieldWithPath("payload.type").type(JsonFieldType.STRING).description("해당 결과의 프로필 타입"),
+                                                fieldWithPath("payload.explanation").type(JsonFieldType.STRING).description("해당 결과의 프로필 설명"),
+                                                fieldWithPath("payload.hashTags[]").type(JsonFieldType.ARRAY).description("해당 결과의 프로필 해시태그 리스트")
                                         )
                                         .responseSchema(Schema.schema("GetProfileResponseDto"))
                                         .build()
@@ -162,7 +164,7 @@ public class ResultControllerTest extends ControllerTestConfig {
     }
 
     @Test
-    @DisplayName("해당 결과의 추천구역 리스트 조회")
+    @DisplayName("해당 결과의 추천 구역 리스트 조회")
     public void getRecommendedZones() throws Exception {
         // given
         GetZonesResponseDto.ZoneResponseDto redZone = new GetZonesResponseDto.ZoneResponseDto(
@@ -174,17 +176,18 @@ public class ResultControllerTest extends ControllerTestConfig {
                         new ReferencesGroup(
                                 "레드석 참고하세요.",
                                 List.of(
-                                        new Reference("시야가 중요하신 분", "외야와 가까운 쪽은 예매 시 시야 확인이 필요해요. 기둥이나 그물망으로 시야 방해를 받을 수 있어요!"),
-                                        new Reference("시끄러운 것을 좋아하지 않는 분", "오렌지석이 앞에 있어서 스피커 때문에 많이 시끄러워요. 조용한 관람을 원하시면 다른 구역을 추천해요!")
+                                        new Reference("시야가 중요하신 분", "외야와 가까운 쪽은 예매 시 시야 확인이 필요해요."),
+                                        new Reference("시끄러운 것을 좋아하지 않는 분", "오렌지석이 앞에 있어서 스피커 때문에 많이 시끄러워요.")
                                 )
                         )
                 )
         );
+
         GetZonesResponseDto.ZoneResponseDto blueZone = new GetZonesResponseDto.ZoneResponseDto(
                 2L,
                 "블루석",
                 List.of("힘차게 응원도 가능하고, 야구에 집중도 할 수 있는 구역이에요!"),
-                "해당 구역은 비교적 조용히 경기 관람이 가능한 구역이예요.",
+                "해당 구역은 비교적 조용히 경기 관람이 가능한 구역이에요.",
                 List.of(
                         new ReferencesGroup(
                                 "블루석 참고하세요.",
@@ -195,13 +198,15 @@ public class ResultControllerTest extends ControllerTestConfig {
                         )
                 )
         );
+
         GetZonesResponseDto getZonesResponseDto = GetZonesResponseDto.of(List.of(redZone, blueZone));
+
         Mockito.when(resultService.getRecommendedZones(anyLong(), anyLong()))
                 .thenReturn(getZonesResponseDto);
 
         // when
         ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/results/zones")
-                .param("resultId","2")
+                .param("resultId", "2")
                 .param("count", "2")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON));
@@ -210,7 +215,7 @@ public class ResultControllerTest extends ControllerTestConfig {
         resultActions
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.isSuccess").value(true))
-                .andExpect(jsonPath("$.code").value(200))
+                .andExpect(jsonPath("$.code").value("200"))
                 .andExpect(jsonPath("$.message").value("해당 결과의 추천 구역 정보 리스트를 조회하였습니다."))
                 .andExpect(jsonPath("$.payload.zones[0].zoneId").value(redZone.zoneId()))
                 .andExpect(jsonPath("$.payload.zones[0].name").value(redZone.name()))
@@ -219,6 +224,15 @@ public class ResultControllerTest extends ControllerTestConfig {
                 .andExpect(jsonPath("$.payload.zones[0].referencesGroup[0].groupTitle").value(redZone.referencesGroup().get(0).getGroupTitle()))
                 .andExpect(jsonPath("$.payload.zones[0].referencesGroup[0].references[0].title").value(redZone.referencesGroup().get(0).getReferences().get(0).getTitle()))
                 .andExpect(jsonPath("$.payload.zones[0].referencesGroup[0].references[0].content").value(redZone.referencesGroup().get(0).getReferences().get(0).getContent()))
+
+                .andExpect(jsonPath("$.payload.zones[1].zoneId").value(blueZone.zoneId()))
+                .andExpect(jsonPath("$.payload.zones[1].name").value(blueZone.name()))
+                .andExpect(jsonPath("$.payload.zones[1].explanations[0]").value(blueZone.explanations().get(0)))
+                .andExpect(jsonPath("$.payload.zones[1].tip").value(blueZone.tip()))
+                .andExpect(jsonPath("$.payload.zones[1].referencesGroup[0].groupTitle").value(blueZone.referencesGroup().get(0).getGroupTitle()))
+                .andExpect(jsonPath("$.payload.zones[1].referencesGroup[0].references[0].title").value(blueZone.referencesGroup().get(0).getReferences().get(0).getTitle()))
+                .andExpect(jsonPath("$.payload.zones[1].referencesGroup[0].references[0].content").value(blueZone.referencesGroup().get(0).getReferences().get(0).getContent()))
+
                 .andDo(MockMvcRestDocumentationWrapper.document("results/zones",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
@@ -227,21 +241,21 @@ public class ResultControllerTest extends ControllerTestConfig {
                                         .tag("Result")
                                         .description("해당 결과의 추천 구역 리스트를 조회한다.")
                                         .queryParameters(
-                                                parameterWithName("resultId").description("조회할 결과의 ID"),
-                                                parameterWithName("count").description("조회할 결과에 대한 추천구역의 개수")
+                                                parameterWithName("resultId").description("조회할 결과의 ID [예시 : 2 (NUMBER type)]"),
+                                                parameterWithName("count").description("조회할 추천 구역의 개수 [예시 : 2 (NUMBER type)]")
                                         )
                                         .responseFields(
-                                                fieldWithPath("isSuccess").description("성공 여부"),
-                                                fieldWithPath("code").description("응답 코드"),
-                                                fieldWithPath("message").description("응답 메시지"),
-                                                fieldWithPath("payload").description("응답 데이터").optional(),
-                                                fieldWithPath("payload.zones[].zoneId").description("구역 ID"),
-                                                fieldWithPath("payload.zones[].name").description("구역 이름"),
-                                                fieldWithPath("payload.zones[].explanations[]").description("구역 설명"),
-                                                fieldWithPath("payload.zones[].tip").description("구역에 대한 팁"),
-                                                fieldWithPath("payload.zones[].referencesGroup[].groupTitle").description("참고 그룹 제목"),
-                                                fieldWithPath("payload.zones[].referencesGroup[].references[].title").description("참고 항목 제목"),
-                                                fieldWithPath("payload.zones[].referencesGroup[].references[].content").description("참고 항목 내용")
+                                                fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("성공 여부"),
+                                                fieldWithPath("code").type(JsonFieldType.STRING).description("응답 코드"),
+                                                fieldWithPath("message").type(JsonFieldType.STRING).description("응답 메시지"),
+                                                fieldWithPath("payload").type(JsonFieldType.OBJECT).description("응답 데이터").optional(),
+                                                fieldWithPath("payload.zones[].zoneId").type(JsonFieldType.NUMBER).description("구역 ID"),
+                                                fieldWithPath("payload.zones[].name").type(JsonFieldType.STRING).description("구역 이름"),
+                                                fieldWithPath("payload.zones[].explanations[]").type(JsonFieldType.ARRAY).description("구역 설명 리스트"),
+                                                fieldWithPath("payload.zones[].tip").type(JsonFieldType.STRING).description("구역에 대한 팁"),
+                                                fieldWithPath("payload.zones[].referencesGroup[].groupTitle").type(JsonFieldType.STRING).description("참고 그룹 제목"),
+                                                fieldWithPath("payload.zones[].referencesGroup[].references[].title").type(JsonFieldType.STRING).description("참고 항목 제목"),
+                                                fieldWithPath("payload.zones[].referencesGroup[].references[].content").type(JsonFieldType.STRING).description("참고 항목 내용")
                                         )
                                         .responseSchema(Schema.schema("GetZonesResponseDto"))
                                         .build()
