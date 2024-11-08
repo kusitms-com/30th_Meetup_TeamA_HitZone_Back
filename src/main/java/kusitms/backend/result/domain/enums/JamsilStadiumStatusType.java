@@ -13,6 +13,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
 
     RED("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/lg/red.svg",
             "레드석",
+            "#DC032A",
             "해당 구역은 다양한 것들을 모두 적절히 즐길 수 있는 구역이예요.",
             List.of("응원도 적당히 즐길 수 있지만, 야구나 함께 온 동행자와의 대화에도 집중할 수 있는 구역이에요!"),
             "해당 구역은 다양한 것들을 모두 적절히 즐길 수 있는 구역이예요.",
@@ -44,6 +45,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
     ),
     BLUE("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/lg/blue.svg",
             "블루석",
+            "#4699F2",
             "힘차게 응원도 가능하고, 야구에 집중도 할 수 있는 구역이에요!",
             List.of("힘차게 응원도 가능하고, 야구에 집중도 할 수 있는 구역이에요!"),
             "해당 구역은 비교적 조용히 경기 관람이 가능한 구역이예요.",
@@ -73,6 +75,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
     ),
     NAVY("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/lg/navy.svg",
             "네이비석",
+            "#242953",
             "높은 곳에서 야구를 전체적으로 볼 수 있는 구역이에요!",
             List.of("높은 곳에서 야구를 전체적으로 볼 수 있는 구역이에요!"),
             "해당 구역은 높은 층수에 위치해 있어요.",
@@ -108,6 +111,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
     ),
     ORANGE("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/lg/orange.svg",
             "오렌지석",
+            "#E16900",
             "야구장의 응원이 가장 열정적인 응원석 구역이에요!",
             List.of("야구장의 응원이 가장 열정적인 응원석 구역이에요!"),
             "해당 구역은 열정적인 응원이 이루어져요.",
@@ -139,6 +143,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
     ),
     EXITING("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/lg/exciting.svg",
             "익사이팅석",
+            "#6D6D6D",
             "야구 필드 안에 들어와 있는 느낌을 받을 수 있는 구역이에요!",
             List.of("야구 필드 안에 들어와 있는 느낌을 받을 수 있는 구역이에요!"),
             "해당 구역은 연령제한이 있어요.",
@@ -173,6 +178,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
     ),
     GREEN("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/lg/green.svg",
             "외야그린석",
+            "#339600",
             "사람들이 몰리지 않아 비교적 한적하게 경기를 즐길 수 있는 구역이에요!",
             List.of("사람들이 몰리지 않아 비교적 한적하게 경기를 즐길 수 있는 구역이에요!"),
             "해당 구역은 시야 제한석이 있어요.",
@@ -207,6 +213,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
     ),
     TABLE("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/lg/table.svg",
             "테이블석",
+            "#7C0065",
             "다양한 음식을 골라 테이블에 펼쳐놓고 먹을 수 있는 구역이에요!",
             List.of("다양한 음식을 골라 테이블에 펼쳐놓고 먹을 수 있는 구역이에요!"),
             "해당 구역은 예매 시 위치 확인이 필요해요.",
@@ -236,6 +243,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
     ),
     PREMIUM("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/lg/premium.svg",
             "프리미엄석",
+            "#185DDD",
             "테이블에서 맛있는 음식을 먹으면서 선수들을 가장 가까이서 볼 수 있는 구역이에요!",
             List.of("테이블에서 맛있는 음식을 먹으면서 선수들을 가장 가까이서 볼 수 있는 구역이에요!"),
             "해당 구역은 티켓 확인을 2번 해요.",
@@ -272,6 +280,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
     private static final String DEFAULT_TITLE = "참고하세요";
     private final String imgUrl;
     private final String zoneName;
+    private final String zoneColor;
     private final String oneLineDescription;
     private final List<String> explanations;
     private final String tip;

@@ -13,6 +13,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
 
     CHEERING("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/kt/cheering.svg",
             "응원지정석",
+            "#B23039",
             "응원 단상과 가까워, 야구를 열정적으로 응원할 수 있는 분위기의 구역이에요!",
             List.of("응원 단상과 가까워, 야구를 열정적으로 응원할 수 있는 분위기의 구역이에요!"),
             "해당 구역은 예매 시 응원단상 위치 확인이 필요해요.",
@@ -44,6 +45,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
     ),
     GENIETV("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/kt/genietv.svg",
             "지니TV석",
+            "#599741",
             "테이블석이라 음식 취식이 편리한 구역이에요!",
             List.of("테이블석이라 음식 취식이 편리한 구역이에요!"),
             "해당 구역은 3루 테이블석이라 편하게 관람을 할 수 있어요.",
@@ -76,6 +78,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
     //특징 확인 필요
     CENTER("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/kt/center.svg",
             "중앙지정석",
+            "#5E346E",
             "특정 팀에 구애받지 않고 응원하는 구역!",
             List.of(
                     "특정 팀에 구애받지 않고 응원하는 분위기의 구역이에요!",
@@ -110,6 +113,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
     ),
     YBOX("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/kt/ybox.svg",
             "Y박스석",
+            "#F5A545",
             "선수들을 가까이서 볼 수 있는 구역이에요!",
             List.of("선수들을 가까이서 볼 수 있는 구역이에요!"),
             "해당 구역은 1루 테이블석이라 편리하게 음식을 먹을 수 있어요.",
@@ -141,6 +145,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
     ),
     SKYBOX("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/kt/skybox.svg",
             "스카이박스(4층)",
+            "#65C5DE",
             "회의실같은 내부에서 쾌적하게 야구를 볼 수 있는 구역!",
             List.of(
                     "회의실처럼 생긴 내부에서 쾌적하게 야구를 볼 수 있는 구역이에요!",
@@ -181,6 +186,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
     ),
     SKYZONE("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/kt/skyzone.svg",
             "스카이존(5층)",
+            "#292F46",
             "높은 곳에서 경기를 한 눈에 볼 수 있는 구역!",
             List.of("높은 곳에서 경기를 한 눈에 볼 수 있는 구역이에요!"),
             "해당 구역은 높은 곳에 위치해있어요!",
@@ -218,6 +224,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
     ),
     EXCITING("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/kt/exciting.svg",
             "하이파이브존/익사이팅석",
+            "#3EA6A5",
             "경기 승리 시, 선수들과 하이파이브 할 수 있는 구역!",
             List.of(
                     "(1루 하이파이브존) KT가 경기 승리 시, 선수들과 하이파이브 할 수 있는 구역이에요! 전반적으로 앉아서 응원하는 분위기며, 선수들을 굉장히 가까이에서 볼 수 있는 구역이에요.",
@@ -279,6 +286,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
     ),
     SHOPPING("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/kt/shopping.svg",
             "KT알파쇼핑석",
+            "#E95560",
             "중앙테이블석이라, 음식 섭취하기 편한 구역이에요!",
             List.of("중앙테이블석이라, 음식 섭취하기 편한 구역이에요!"),
             "해당 구역은 중앙 테이블석이고, 빨리 예매하는 것이 좋아요.",
@@ -317,6 +325,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
     ),
     GENIE("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/kt/genie.svg",
             "지니존",
+            "#35659E",
             "포수 바로 뒤에서 관람할 수 있는 구역이에요!",
             List.of("포수 바로 뒤에서 관람할 수 있는 구역이에요!"),
             "해당 구역은 경기를 생동감있게 볼 수 있어요.",
@@ -347,6 +356,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
     ),
     TVING("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/kt/tving.svg",
             "티빙 테이블석",
+            "#E3A3B1",
             "외야 테이블석이며, 2인 테이블 3개로 구성되어있는 구역이에요!",
             List.of("외야 테이블석이며, 2인 테이블 3개로 구성되어있는 구역이에요!"),
             "해당 구역은 외야 테이블석이에요.",
@@ -374,6 +384,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
     ),
     GRASS("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/kt/grass.svg",
             "외야 잔디 자유석",
+            "#CEDA82",
             "넓은 외야에 잔디가 깔려 있어 앉아서 관람할 수 있는 구역이에요! 계단처럼 층이 나뉘어져 있어요.",
             List.of(
                     "넓은 외야에 잔디가 깔려 있어 앉아서 관람할 수 있는 구역이에요!",
@@ -414,6 +425,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
     ),
     CAMPING("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/kt/camping.svg",
             "키즈랜드 캠핑존",
+            "#008FD7",
             """
                     텐트에서 야구를 볼 수 있는 구역이에요!
                     고기를 구워 먹는 것이 가능해요.""",
@@ -458,6 +470,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
     private static final String DEFAULT_TITLE = "참고하세요";
     private final String imgUrl;
     private final String zoneName;
+    private final String zoneColor;
     private final String oneLineDescription;
     private final List<String> explanations;
     private final String tip;
