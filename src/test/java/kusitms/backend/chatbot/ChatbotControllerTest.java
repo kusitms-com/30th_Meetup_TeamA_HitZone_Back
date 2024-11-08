@@ -78,9 +78,9 @@ public class ChatbotControllerTest extends ControllerTestConfig {
                                         .tag("Chatbot")
                                         .description("가이드 챗봇 답변을 조회한다.")
                                         .queryParameters(
-                                                parameterWithName("stadiumName").description("경기장 이름"),
-                                                parameterWithName("categoryName").description("카테고리 이름"),
-                                                parameterWithName("orderNumber").description("질문 번호")
+                                                parameterWithName("stadiumName").description("경기장 이름 [예시: lg]"),
+                                                parameterWithName("categoryName").description("카테고리 이름 [예시: stadium]"),
+                                                parameterWithName("orderNumber").description("질문 번호 [예시: 3 (NUMBER type)]")
                                         )
                                         .responseFields(
                                                 fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("성공 여부"),
