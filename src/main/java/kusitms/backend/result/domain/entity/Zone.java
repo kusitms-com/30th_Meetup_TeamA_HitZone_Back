@@ -30,6 +30,9 @@ public class Zone extends BaseTimeEntity {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
+    private String color;
+
     @Lob
     @Convert(converter = StringListConverter.class)
     private List<String> explanations;
@@ -42,9 +45,10 @@ public class Zone extends BaseTimeEntity {
     private List<ReferencesGroup> referencesGroup;
 
     @Builder
-    public Zone(Result result, String name, List<String> explanations, String tip, List<ReferencesGroup> referencesGroup) {
+    public Zone(Result result, String name, String color, List<String> explanations, String tip, List<ReferencesGroup> referencesGroup) {
         this.result = result;
         this.name = name;
+        this.color = color;
         this.explanations = explanations;
         this.tip = tip;
         this.referencesGroup = referencesGroup;
