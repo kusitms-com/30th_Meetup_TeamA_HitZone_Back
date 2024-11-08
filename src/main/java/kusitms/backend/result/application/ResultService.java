@@ -96,6 +96,7 @@ public class ResultService {
            Zone zone = Zone.builder()
                    .result(result)
                    .name(zoneEnum.getZoneName())
+                   .color(zoneEnum.getZoneColor())
                    .explanations(zoneEnum.getExplanations())
                    .tip(zoneEnum.getTip())
                    .referencesGroup(zoneEnum.getReferencesGroup())

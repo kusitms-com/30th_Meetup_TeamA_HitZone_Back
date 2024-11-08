@@ -7,6 +7,7 @@ import java.util.List;
 public interface StadiumStatusType {
     String getImgUrl();
     String getZoneName();
+    String getZoneColor();
     String getOneLineDescription();
     List<String> getExplanations();
     String getTip();
