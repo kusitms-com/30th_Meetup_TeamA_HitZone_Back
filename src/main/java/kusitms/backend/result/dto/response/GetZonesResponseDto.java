@@ -12,6 +12,7 @@ public record GetZonesResponseDto (
     public record ZoneResponseDto (
             Long zoneId,
             String name,
+            String color,
             List<String> explanations,
             String tip,
             List<ReferencesGroup> referencesGroup
@@ -20,6 +21,7 @@ public record GetZonesResponseDto (
             return new ZoneResponseDto(
                     zone.getId(),
                     zone.getName(),
+                    zone.getColor(),
                     zone.getExplanations(),
                     zone.getTip(),
                     zone.getReferencesGroup()
