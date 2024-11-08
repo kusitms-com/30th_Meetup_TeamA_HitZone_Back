@@ -2,6 +2,7 @@ package kusitms.backend.user;
 
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
+import com.epages.restdocs.apispec.Schema;
 import jakarta.servlet.http.Cookie;
 import kusitms.backend.configuration.ControllerTestConfig;
 import kusitms.backend.user.application.UserService;
@@ -16,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
@@ -35,7 +37,7 @@ public class UserControllerTest extends ControllerTestConfig {
     private UserService userService;
 
     @Test
-    @DisplayName("유저정보를 조회한다.")
+    @DisplayName("닉네임 중복 유무를 확인한다.")
     public void checkNickname() throws Exception {
 
         //given
@@ -58,7 +60,7 @@ public class UserControllerTest extends ControllerTestConfig {
         resultActions
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.isSuccess").value(true))
-                .andExpect(jsonPath("$.code").value(200))
+                .andExpect(jsonPath("$.code").value("200"))
                 .andExpect(jsonPath("$.message").value("사용할 수 있는 닉네임입니다."))
 
                 .andDo(MockMvcRestDocumentationWrapper.document("nickname/check",
@@ -68,11 +70,16 @@ public class UserControllerTest extends ControllerTestConfig {
                                 ResourceSnippetParameters.builder()
                                         .tag("User")
                                         .description("닉네임 중복 유무를 확인한다.")
-                                        .responseFields(
-                                                fieldWithPath("isSuccess").description("성공 여부"),
-                                                fieldWithPath("code").description("응답 코드"),
-                                                fieldWithPath("message").description("응답 메시지")
+                                        .requestFields(
+                                                fieldWithPath("nickname").type(JsonFieldType.STRING).description("사용자가 입력한 닉네임")
                                         )
+                                        .responseFields(
+                                                fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("성공 여부"),
+                                                fieldWithPath("code").type(JsonFieldType.STRING).description("응답 코드"),
+                                                fieldWithPath("message").type(JsonFieldType.STRING).description("응답 메시지")
+                                        )
+                                        .requestSchema(Schema.schema("CheckNicknameRequest"))
+                                        .responseSchema(Schema.schema("CheckNicknameResponse"))
                                         .build()
                         )
                 ));
@@ -84,11 +91,12 @@ public class UserControllerTest extends ControllerTestConfig {
 
         //given
         String signUpRequestDto = """
-                {
-                    "nickname" : "유저 닉네임"
-                }
-                """;
+            {
+                "nickname" : "유저 닉네임"
+            }
+            """;
         Mockito.doNothing().when(userService).signupUser(anyString(), any(SignUpRequestDto.class));
+
         // when
         ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.post("/api/v1/signup")
                 .cookie(new Cookie("registerToken", "test"))
@@ -100,7 +108,7 @@ public class UserControllerTest extends ControllerTestConfig {
         resultActions
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.isSuccess").value(true))
-                .andExpect(jsonPath("$.code").value(201))
+                .andExpect(jsonPath("$.code").value("201"))
                 .andExpect(jsonPath("$.message").value("회원가입이 완료되었습니다."))
                 .andDo(MockMvcRestDocumentationWrapper.document("signup",
                         preprocessRequest(prettyPrint()),
@@ -110,17 +118,19 @@ public class UserControllerTest extends ControllerTestConfig {
                                         .tag("User")
                                         .description("온보딩 정보를 토대로 회원가입을 진행한다.")
                                         .requestFields(
-                                                fieldWithPath("nickname").description("유저 닉네임")
+                                                fieldWithPath("nickname").type(JsonFieldType.STRING).description("사용자가 입력한 닉네임")
                                         )
                                         .responseFields(
-                                                fieldWithPath("isSuccess").description("성공 여부"),
-                                                fieldWithPath("code").description("응답 코드"),
-                                                fieldWithPath("message").description("응답 메시지")
+                                                fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("성공 여부"),
+                                                fieldWithPath("code").type(JsonFieldType.STRING).description("응답 코드"),
+                                                fieldWithPath("message").type(JsonFieldType.STRING).description("응답 메시지")
                                         )
+                                        .requestSchema(Schema.schema("SignUpRequest"))
+                                        .responseSchema(Schema.schema("SignUpResponse"))
                                         .build()
                         ),
                         requestCookies(
-                                cookieWithName("registerToken").description("온보딩을 위한 레지스터토큰")
+                                cookieWithName("registerToken").description("온보딩을 위한 레지스터 토큰")
                         )
                 ));
     }
@@ -144,7 +154,7 @@ public class UserControllerTest extends ControllerTestConfig {
         resultActions
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.isSuccess").value(true))
-                .andExpect(jsonPath("$.code").value(200))
+                .andExpect(jsonPath("$.code").value("200"))
                 .andExpect(jsonPath("$.message").value("유저 정보 조회가 완료되었습니다."))
                 .andExpect(jsonPath("$.payload.nickname").value("유저 닉네임"))
                 .andExpect(jsonPath("$.payload.email").value("유저 이메일"))
@@ -157,13 +167,14 @@ public class UserControllerTest extends ControllerTestConfig {
                                         .tag("User")
                                         .description("유저의 회원정보를 조회한다.")
                                         .responseFields(
-                                                fieldWithPath("isSuccess").description("성공 여부"),
-                                                fieldWithPath("code").description("응답 코드"),
-                                                fieldWithPath("message").description("응답 메시지"),
-                                                fieldWithPath("payload").description("응답 데이터"),
-                                                fieldWithPath("payload.nickname").description("유저의 닉네임"),
-                                                fieldWithPath("payload.email").description("유저의 이메일")
+                                                fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("성공 여부"),
+                                                fieldWithPath("code").type(JsonFieldType.STRING).description("응답 코드"),
+                                                fieldWithPath("message").type(JsonFieldType.STRING).description("응답 메시지"),
+                                                fieldWithPath("payload").type(JsonFieldType.OBJECT).description("응답 데이터"),
+                                                fieldWithPath("payload.nickname").type(JsonFieldType.STRING).description("유저의 닉네임"),
+                                                fieldWithPath("payload.email").type(JsonFieldType.STRING).description("유저의 이메일")
                                         )
+                                        .responseSchema(Schema.schema("GetUserInfoResponse"))
                                         .build()
                         ),
                         requestCookies(
