@@ -38,7 +38,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
             List.of("선수들 가까이", "경기장 한눈에 보기"),
             "[1루] 2-3 Gate [3루] 2-1 Gate",
             """
-                    [1루] 약 24~30cm(10n열), 약 33~38cm(20n열)<br>
+                    [1루] 약 24~30cm(10n열), 약 33~38cm(20n열)<br/>
                     [3루]  약 24~30cm(1nn열), 약 33~38cm(22n열)""",
             "[1루] 약 25cm [3루] 약 25cm",
             ""
@@ -86,15 +86,15 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
                                     new Reference(
                                             "높은 곳을 안 좋아하시는 분",
                                                     """
-                                                    높은 시야에서 야구를 관람할 수 있기 때문에,<br>
-                                                    홈과 가까운 시야에서 관람을 원하시면<br>
+                                                    높은 시야에서 야구를 관람할 수 있기 때문에,<br/>
+                                                    홈과 가까운 시야에서 관람을 원하시면<br/>
                                                     다른 구역을 추천해요!"""
                                     ),
                                     new Reference(
                                             "높은 곳까지 걸어 오르기 힘드신 분",
                                             """
-                                                    높은 층수에 위치해 있기 때문에<br>
-                                                    좌석을 찾아가기까지 걸어오르는 과정이 필요해요.<br>
+                                                    높은 층수에 위치해 있기 때문에<br/>
+                                                    좌석을 찾아가기까지 걸어오르는 과정이 필요해요.<br/>
                                                     무릎이나 체력이 안 좋으시면 비추천해요!"""
                                     )
                             )
@@ -122,10 +122,10 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
                                     new Reference(
                                             "시끄러운 것을 좋아하지 않는 분",
                                             """
-                                                    응원단상이 앞에 위치해 있어요.<br>
-                                                    치어리더 공연도 이루어지며,<br>
-                                                    관중들도 열정적인 응원을 합니다!<br>
-                                                    해당 구역 앞에 응원을 위한 앰프가 설치되어 있어요.<br>
+                                                    응원단상이 앞에 위치해 있어요.<br/>
+                                                    치어리더 공연도 이루어지며,<br/>
+                                                    관중들도 열정적인 응원을 합니다!<br/>
+                                                    해당 구역 앞에 응원을 위한 앰프가 설치되어 있어요.<br/>
                                                     조용한 관람을 원하시면 다른 구역을 추천해요!"""
                                     )
                             )
@@ -154,14 +154,14 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
                                     new Reference(
                                             "연령제한에 적용되는 분",
                                             """
-                                                    파울볼이 튀어 들어올 수 있는<br>
+                                                    파울볼이 튀어 들어올 수 있는<br/>
                                                     위험 때문에 13세 이상만 입장할 수 있어요."""
                                     ),
                                     new Reference(
                                             "야구 관람에서 시야가 중요하신 분",
                                             """
-                                                    경기장과 매우 가까운 곳에<br>
-                                                    위치하고 있기 때문에<br>
+                                                    경기장과 매우 가까운 곳에<br/>
+                                                    위치하고 있기 때문에<br/>
                                                     오히려 시야가 좋지 않을 수 있어요."""
                                     )
                             )
@@ -207,8 +207,8 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
             "",
             "",
             """
-                    잠실야구장의 외야석은 굉장히 커서 높고 가팔라요!<br>
-                    음식을 구매하셨거나, 짐이 많으시다면<br>
+                    잠실야구장의 외야석은 굉장히 커서 높고 가팔라요!<br/>
+                    음식을 구매하셨거나, 짐이 많으시다면<br/>
                     좌석에 앉기 위해 올라가실 때 꼭 유의하세요!"""
     ),
     TABLE("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/lg/table.svg",
@@ -224,9 +224,9 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
                                     new Reference(
                                             "3루 테이블석",
                                             """
-                                                    응원단상과는 다소 거리가 있어,<br>
-                                                    응원을 원하시는 분들께는 다소 아쉬울 수 있어요.<br>
-                                                    또한 햇빛이 뜨거울 수 있으니 참고하세요!<br>
+                                                    응원단상과는 다소 거리가 있어,<br/>
+                                                    응원을 원하시는 분들께는 다소 아쉬울 수 있어요.<br/>
+                                                    또한 햇빛이 뜨거울 수 있으니 참고하세요!<br/>
                                                     특히 3루 테이블석 112블록은 앞에는 공을 막는 그물, 옆에는 기둥이 있어서 시야 방해를 받을 수 있어요!"""
                                     )
                             )
@@ -254,13 +254,13 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
                                     new Reference(
                                             "두 번의 티켓 확인",
                                             """
-                                                    입구에서 티켓 보여주면 1차 통과,<br>
+                                                    입구에서 티켓 보여주면 1차 통과,<br/>
                                                     입장 후 직원이 2차로 티켓을 검사하고 자리 안내를 해줄 거예요!"""
                                     ),
                                     new Reference("입장 후 팔찌",
                                             """
-                                                    프리미엄석은 입장 후 팔찌를 받아요.<br>
-                                                    내야 쪽에서 이동하는 경우에는<br>
+                                                    프리미엄석은 입장 후 팔찌를 받아요.<br/>
+                                                    내야 쪽에서 이동하는 경우에는<br/>
                                                     이 팔찌만 보여주면 자유롭게 재출입할 수 있어요!"""
                                     )
                             )
