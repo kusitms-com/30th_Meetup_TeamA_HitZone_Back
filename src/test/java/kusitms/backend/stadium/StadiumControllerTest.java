@@ -43,6 +43,8 @@ public class StadiumControllerTest extends ControllerTestConfig {
         GetStadiumInfosResponseDto getStadiumInfosResponseDto = GetStadiumInfosResponseDto.of(
                 "https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/lg/guide_home_lg.png",
                 "서울의 자존심, LG 트윈스 / 미라클 두산, 두산 베어스",
+                "두산베어스, LG 트윈스",
+                "상대팀",
                 List.of(
                         new GetStadiumInfosResponseDto.ZoneInfo("레드석", "#DC032A"),
                         new GetStadiumInfosResponseDto.ZoneInfo("블루석", "#4699F2"),
@@ -72,6 +74,8 @@ public class StadiumControllerTest extends ControllerTestConfig {
                 .andExpect(jsonPath("$.message").value("해당 스타디움의 정보가 조회되었습니다."))
                 .andExpect(jsonPath("$.payload.imgUrl").value("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/lg/guide_home_lg.png"))
                 .andExpect(jsonPath("$.payload.introduction").value("서울의 자존심, LG 트윈스 / 미라클 두산, 두산 베어스"))
+                .andExpect(jsonPath("$.payload.firstBaseSide").value("두산베어스, LG 트윈스"))
+                .andExpect(jsonPath("$.payload.thirdBaseSide").value("상대팀"))
                 .andExpect(jsonPath("$.payload.zones[0].zoneName").value("레드석"))
                 .andExpect(jsonPath("$.payload.zones[0].zoneColor").value("#DC032A"))
                 .andDo(MockMvcRestDocumentationWrapper.document("stadium/names",
@@ -91,6 +95,8 @@ public class StadiumControllerTest extends ControllerTestConfig {
                                                 fieldWithPath("payload").type(JsonFieldType.OBJECT).description("응답 데이터").optional(),
                                                 fieldWithPath("payload.imgUrl").type(JsonFieldType.STRING).description("이미지 URL"),
                                                 fieldWithPath("payload.introduction").type(JsonFieldType.STRING).description("스타디움 소개"),
+                                                fieldWithPath("payload.firstBaseSide").type(JsonFieldType.STRING).description("1루석 설명"),
+                                                fieldWithPath("payload.thirdBaseSide").type(JsonFieldType.STRING).description("3루석 설명"),
                                                 fieldWithPath("payload.zones[]").type(JsonFieldType.ARRAY).description("구역 정보 리스트"),
                                                 fieldWithPath("payload.zones[].zoneName").type(JsonFieldType.STRING).description("구역 이름"),
                                                 fieldWithPath("payload.zones[].zoneColor").type(JsonFieldType.STRING).description("구역 색상 코드")
@@ -119,6 +125,8 @@ public class StadiumControllerTest extends ControllerTestConfig {
                 "레드석",
                 "#DC032A",
                 "해당 구역은 다양한 것들을 모두 적절히 즐길 수 있는 구역이에요.",
+                "두산베어스, LG 트윈스",
+                "상대팀",
                 new String[]{"[1루] 2-3 Gate [3루] 2-1 Gate"},
                 new String[]{"[1루] 약 24~30cm(10n열), 약 33~38cm(20n열)"},
                 new String[]{"[1루] 약 25cm [3루] 약 25cm"},
@@ -147,6 +155,8 @@ public class StadiumControllerTest extends ControllerTestConfig {
                 .andExpect(jsonPath("$.payload.zoneName").value("레드석"))
                 .andExpect(jsonPath("$.payload.zoneColor").value("#DC032A"))
                 .andExpect(jsonPath("$.payload.explanation").value("해당 구역은 다양한 것들을 모두 적절히 즐길 수 있는 구역이에요."))
+                .andExpect(jsonPath("$.payload.firstBaseSide").value("두산베어스, LG 트윈스"))
+                .andExpect(jsonPath("$.payload.thirdBaseSide").value("상대팀"))
                 .andExpect(jsonPath("$.payload.entrance").isArray())
                 .andExpect(jsonPath("$.payload.entrance[0]").value("[1루] 2-3 Gate [3루] 2-1 Gate"))
                 .andExpect(jsonPath("$.payload.stepSpacing").isArray())
@@ -179,6 +189,8 @@ public class StadiumControllerTest extends ControllerTestConfig {
                                                 fieldWithPath("payload.zoneName").type(JsonFieldType.STRING).description("구역명"),
                                                 fieldWithPath("payload.zoneColor").type(JsonFieldType.STRING).description("구역 색상"),
                                                 fieldWithPath("payload.explanation").type(JsonFieldType.STRING).description("구역 설명"),
+                                                fieldWithPath("payload.firstBaseSide").type(JsonFieldType.STRING).description("1루석 설명"),
+                                                fieldWithPath("payload.thirdBaseSide").type(JsonFieldType.STRING).description("3루석 설명"),
                                                 fieldWithPath("payload.entrance").type(JsonFieldType.ARRAY).description("구역 입구"),
                                                 fieldWithPath("payload.stepSpacing").type(JsonFieldType.ARRAY).description("구역 단차 간격"),
                                                 fieldWithPath("payload.seatSpacing").type(JsonFieldType.ARRAY).description("구역 좌석간 간격"),
