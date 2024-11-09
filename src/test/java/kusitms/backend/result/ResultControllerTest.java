@@ -47,7 +47,7 @@ public class ResultControllerTest extends ControllerTestConfig {
         // given
         String saveTopRankedZonesJsonRequest = """
             {
-                "stadium" : "잠실종합운동장",
+                "stadium" : "잠실종합운동장 (잠실)",
                 "preference" : "3루석",
                 "clientKeywords" : ["나 혼자", "선수들 가까이", "열정적인 응원"]
             }
@@ -79,7 +79,7 @@ public class ResultControllerTest extends ControllerTestConfig {
                                         .tag("Result")
                                         .description("구역 추천 결과를 저장한다. (accessToken은 기입/미기입 모두 가능)")
                                         .requestFields(
-                                                fieldWithPath("stadium").type(JsonFieldType.STRING).description("경기장 이름 [예시 : 잠실종합운동장]"),
+                                                fieldWithPath("stadium").type(JsonFieldType.STRING).description("경기장 이름 [예시 : 잠실종합운동장 (잠실)]"),
                                                 fieldWithPath("preference").type(JsonFieldType.STRING).description("선호 구역 [예시 : 1루석 또는 3루석]"),
                                                 fieldWithPath("clientKeywords[]").type(JsonFieldType.ARRAY).description("사용자 키워드 배열")
                                         )

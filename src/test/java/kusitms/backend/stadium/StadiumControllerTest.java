@@ -49,7 +49,7 @@ public class StadiumControllerTest extends ControllerTestConfig {
 
         // when
         ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/stadium/zones")
-                .param("stadiumName", "잠실종합운동장")
+                .param("stadiumName", "잠실종합운동장 (잠실)")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON));
 
@@ -68,7 +68,7 @@ public class StadiumControllerTest extends ControllerTestConfig {
                                         .tag("Stadium")
                                         .description("해당 스타디움의 구역 목록들을 조회한다.")
                                         .queryParameters(
-                                                parameterWithName("stadiumName").description("스타디움명 [예시 : 수원KT위즈파크]")
+                                                parameterWithName("stadiumName").description("스타디움명 [예시 : 잠실종합운동장 (잠실)]")
                                         )
                                         .responseFields(
                                                 fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("성공 여부"),
@@ -112,7 +112,7 @@ public class StadiumControllerTest extends ControllerTestConfig {
 
         // when
         ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/stadium/zones/guide")
-                .param("stadiumName", "잠실종합운동장")
+                .param("stadiumName", "잠실종합운동장 (잠실)")
                 .param("zoneName", "레드석")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON));
@@ -143,7 +143,7 @@ public class StadiumControllerTest extends ControllerTestConfig {
                                         .tag("Stadium")
                                         .description("해당 구역에 대한 구역 가이드 정보를 조회한다.")
                                         .queryParameters(
-                                                parameterWithName("stadiumName").description("스타디움명 [예시 : 잠실종합운동장]"),
+                                                parameterWithName("stadiumName").description("스타디움명 [예시 : 잠실종합운동장 (잠실)]"),
                                                 parameterWithName("zoneName").description("구역명 [예시 : 레드석]")
                                         )
                                         .responseFields(

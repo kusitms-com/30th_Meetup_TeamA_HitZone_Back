@@ -47,14 +47,11 @@ public class ResultService {
     @Transactional
     public <T extends Enum<T> & StadiumStatusType> SaveTopRankedZoneResponseDto saveRecommendedZones(String accessToken, SaveTopRankedZoneRequestDto request) {
 
-        T[] zones;
-        if (request.stadium().equalsIgnoreCase("잠실종합운동장 (잠실)")) {
-            zones = (T[]) JamsilStadiumStatusType.values();
-        } else if (request.stadium().equalsIgnoreCase("수원KT위즈파크")) {
-            zones = (T[]) KtWizStadiumStatusType.values();
-        } else {
-            throw new CustomException(StadiumErrorStatus._NOT_FOUND_STADIUM);
-        }
+        T[] zones = switch (request.stadium()) {
+            case "잠실종합운동장 (잠실)" -> (T[]) JamsilStadiumStatusType.values();
+            case "수원KT위즈파크" -> (T[]) KtWizStadiumStatusType.values();
+            default -> throw new CustomException(StadiumErrorStatus._NOT_FOUND_STADIUM);
+        };
 
         ProfileStatusType recommendedProfile = RecommendUserProfile.getRecommendedUserProfile(
                 ProfileStatusType.values(), List.of(request.clientKeywords()));
