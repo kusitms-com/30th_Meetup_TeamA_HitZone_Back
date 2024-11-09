@@ -168,7 +168,7 @@ public class StadiumControllerTest extends ControllerTestConfig {
                 .andExpect(jsonPath("$.payload.tip").value("해당 구역은 비교적 조용히 경기 관람이 가능한 구역이에요."))
                 .andExpect(jsonPath("$.payload.referencesGroup[0].groupTitle").value("레드석 참고하세요."))
                 .andExpect(jsonPath("$.payload.referencesGroup[0].references[0].title").value("시야가 중요하신 분"))
-                .andExpect(jsonPath("$.payload.referencesGroup[0].references[0].content[0]").value("외야와 가까운 쪽은 예매 시 시야 확인이 필요해요."))
+                .andExpect(jsonPath("$.payload.referencesGroup[0].references[0].contents[0]").value("외야와 가까운 쪽은 예매 시 시야 확인이 필요해요."))
                 .andDo(MockMvcRestDocumentationWrapper.document("stadium/guide",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
@@ -198,7 +198,7 @@ public class StadiumControllerTest extends ControllerTestConfig {
                                                 fieldWithPath("payload.tip").type(JsonFieldType.STRING).description("구역 팁"),
                                                 fieldWithPath("payload.referencesGroup[].groupTitle").type(JsonFieldType.STRING).description("구역 참고사항리스트의 제목"),
                                                 fieldWithPath("payload.referencesGroup[].references[].title").type(JsonFieldType.STRING).description("참고사항 제목"),
-                                                fieldWithPath("payload.referencesGroup[].references[].content").type(JsonFieldType.ARRAY).description("참고사항 내용")
+                                                fieldWithPath("payload.referencesGroup[].references[].contents").type(JsonFieldType.ARRAY).description("참고사항 내용")
                                         )
                                         .responseSchema(Schema.schema("GetZoneGuideResponseDto"))
                                         .build()

@@ -227,7 +227,7 @@ public class ResultControllerTest extends ControllerTestConfig {
                 .andExpect(jsonPath("$.payload.zones[0].tip").value(redZone.tip()))
                 .andExpect(jsonPath("$.payload.zones[0].referencesGroup[0].groupTitle").value(redZone.referencesGroup().get(0).getGroupTitle()))
                 .andExpect(jsonPath("$.payload.zones[0].referencesGroup[0].references[0].title").value(redZone.referencesGroup().get(0).getReferences().get(0).getTitle()))
-                .andExpect(jsonPath("$.payload.zones[0].referencesGroup[0].references[0].content[0]").value(redZone.referencesGroup().get(0).getReferences().get(0).getContent()[0]))
+                .andExpect(jsonPath("$.payload.zones[0].referencesGroup[0].references[0].contents[0]").value(redZone.referencesGroup().get(0).getReferences().get(0).getContents()[0]))
 
                 .andExpect(jsonPath("$.payload.zones[1].zoneId").value(blueZone.zoneId()))
                 .andExpect(jsonPath("$.payload.zones[1].name").value(blueZone.name()))
@@ -236,7 +236,7 @@ public class ResultControllerTest extends ControllerTestConfig {
                 .andExpect(jsonPath("$.payload.zones[1].tip").value(blueZone.tip()))
                 .andExpect(jsonPath("$.payload.zones[1].referencesGroup[0].groupTitle").value(blueZone.referencesGroup().get(0).getGroupTitle()))
                 .andExpect(jsonPath("$.payload.zones[1].referencesGroup[0].references[0].title").value(blueZone.referencesGroup().get(0).getReferences().get(0).getTitle()))
-                .andExpect(jsonPath("$.payload.zones[1].referencesGroup[0].references[0].content[0]").value(blueZone.referencesGroup().get(0).getReferences().get(0).getContent()[0]))
+                .andExpect(jsonPath("$.payload.zones[1].referencesGroup[0].references[0].contents[0]").value(blueZone.referencesGroup().get(0).getReferences().get(0).getContents()[0]))
 
                 .andDo(MockMvcRestDocumentationWrapper.document("results/zones",
                         preprocessRequest(prettyPrint()),
@@ -261,7 +261,7 @@ public class ResultControllerTest extends ControllerTestConfig {
                                                 fieldWithPath("payload.zones[].tip").type(JsonFieldType.STRING).description("구역에 대한 팁"),
                                                 fieldWithPath("payload.zones[].referencesGroup[].groupTitle").type(JsonFieldType.STRING).description("참고 그룹 제목"),
                                                 fieldWithPath("payload.zones[].referencesGroup[].references[].title").type(JsonFieldType.STRING).description("참고 항목 제목"),
-                                                fieldWithPath("payload.zones[].referencesGroup[].references[].content").type(JsonFieldType.ARRAY).description("참고 항목 내용")
+                                                fieldWithPath("payload.zones[].referencesGroup[].references[].contents").type(JsonFieldType.ARRAY).description("참고 항목 내용")
                                         )
                                         .responseSchema(Schema.schema("GetZonesResponseDto"))
                                         .build()

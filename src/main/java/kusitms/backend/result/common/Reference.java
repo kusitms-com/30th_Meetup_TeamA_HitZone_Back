@@ -8,14 +8,14 @@ import lombok.Getter;
 public class Reference {
 
     private final String title;
-    private final String[] content;
+    private final String[] contents;
 
     @JsonCreator
     public Reference(
             @JsonProperty("title") String title,
-            @JsonProperty("content") String[] content
+            @JsonProperty("contents") String[] contents
     ) {
         this.title = title;
-        this.content = content;
+        this.contents = contents;
     }
 }
