@@ -87,7 +87,6 @@ public class ResultService {
                 .imgUrl(recommendedProfile.getImgUrl())
                 .nickname(recommendedProfile.getNickName())
                 .type(recommendedProfile.getType())
-                .explanation(recommendedProfile.getExplanation())
                 .hashTags(recommendedProfile.getHashTags())
                 .build();
         profileRepository.save(profile);
