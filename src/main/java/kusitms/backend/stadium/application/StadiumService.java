@@ -21,7 +21,7 @@ public class StadiumService {
     @Transactional(readOnly = true)
     public GetZonesNameResponseDto getZonesName(String stadiumName) {
         List<String> zoneNames = switch (stadiumName) {
-            case "잠실종합운동장" -> getZoneNamesFromStadium(JamsilStadiumStatusType.values());
+            case "잠실종합운동장 (잠실)" -> getZoneNamesFromStadium(JamsilStadiumStatusType.values());
             case "수원KT위즈파크" -> getZoneNamesFromStadium(KtWizStadiumStatusType.values());
             default -> throw new CustomException(StadiumErrorStatus._NOT_FOUND_STADIUM);
         };
@@ -31,7 +31,7 @@ public class StadiumService {
     @Transactional(readOnly = true)
     public GetZoneGuideResponseDto getZoneGuide(String stadiumName, String zoneName) {
         StadiumStatusType zoneType = switch (stadiumName) {
-            case "잠실종합운동장" -> findZoneInStadium(JamsilStadiumStatusType.values(), zoneName);
+            case "잠실종합운동장 (잠실)" -> findZoneInStadium(JamsilStadiumStatusType.values(), zoneName);
             case "수원KT위즈파크" -> findZoneInStadium(KtWizStadiumStatusType.values(), zoneName);
             default -> throw new CustomException(StadiumErrorStatus._NOT_FOUND_STADIUM);
         };
