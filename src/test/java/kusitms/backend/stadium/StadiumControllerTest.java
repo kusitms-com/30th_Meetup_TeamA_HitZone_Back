@@ -69,7 +69,7 @@ public class StadiumControllerTest extends ControllerTestConfig {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.isSuccess").value(true))
                 .andExpect(jsonPath("$.code").value("200"))
-                .andExpect(jsonPath("$.message").value("해당 스타디움의 구역 이름들이 조회되었습니다."))
+                .andExpect(jsonPath("$.message").value("해당 스타디움의 정보가 조회되었습니다."))
                 .andExpect(jsonPath("$.payload.imgUrl").value("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/lg/guide_home_lg.png"))
                 .andExpect(jsonPath("$.payload.introduction").value("서울의 자존심, LG 트윈스 / 미라클 두산, 두산 베어스"))
                 .andExpect(jsonPath("$.payload.zones[0].zoneName").value("레드석"))
