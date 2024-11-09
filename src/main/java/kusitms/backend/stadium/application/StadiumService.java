@@ -4,8 +4,9 @@ import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.result.domain.enums.JamsilStadiumStatusType;
 import kusitms.backend.result.domain.enums.KtWizStadiumStatusType;
 import kusitms.backend.result.domain.enums.StadiumStatusType;
+import kusitms.backend.stadium.domain.enums.StadiumInfo;
+import kusitms.backend.stadium.dto.response.GetStadiumInfosResponseDto;
 import kusitms.backend.stadium.dto.response.GetZoneGuideResponseDto;
-import kusitms.backend.stadium.dto.response.GetZonesNameResponseDto;
 import kusitms.backend.stadium.status.StadiumErrorStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,13 +20,27 @@ import java.util.List;
 public class StadiumService {
 
     @Transactional(readOnly = true)
-    public GetZonesNameResponseDto getZonesName(String stadiumName) {
-        List<String> zoneNames = switch (stadiumName) {
-            case "잠실종합운동장 (잠실)" -> getZoneNamesFromStadium(JamsilStadiumStatusType.values());
-            case "수원KT위즈파크" -> getZoneNamesFromStadium(KtWizStadiumStatusType.values());
+    public GetStadiumInfosResponseDto getStadiumInfos(String stadiumName) {
+        StadiumInfo stadiumInfo = getStadiumInfoByName(stadiumName);
+        List<GetStadiumInfosResponseDto.ZoneInfo> zoneInfos = getZonesNameAndColorFromStadium(getStatusTypesByName(stadiumName));
+
+        return GetStadiumInfosResponseDto.of(stadiumInfo.getImgUrl(), stadiumInfo.getIntroduction(), zoneInfos);
+    }
+
+    private StadiumInfo getStadiumInfoByName(String stadiumName) {
+        return switch (stadiumName) {
+            case "잠실종합운동장 (잠실)" -> StadiumInfo.LG_HOME;
+            case "수원KT위즈파크" -> StadiumInfo.KT_HOME;
             default -> throw new CustomException(StadiumErrorStatus._NOT_FOUND_STADIUM);
         };
-        return GetZonesNameResponseDto.of(zoneNames);
+    }
+
+    private StadiumStatusType[] getStatusTypesByName(String stadiumName) {
+        return switch (stadiumName) {
+            case "잠실종합운동장 (잠실)" -> JamsilStadiumStatusType.values();
+            case "수원KT위즈파크" -> KtWizStadiumStatusType.values();
+            default -> throw new CustomException(StadiumErrorStatus._NOT_FOUND_STADIUM);
+        };
     }
 
     @Transactional(readOnly = true)
@@ -38,9 +53,9 @@ public class StadiumService {
         return GetZoneGuideResponseDto.from(zoneType);
     }
 
-    private List<String> getZoneNamesFromStadium(StadiumStatusType[] statusTypes) {
+    private List<GetStadiumInfosResponseDto.ZoneInfo> getZonesNameAndColorFromStadium(StadiumStatusType[] statusTypes) {
         return Arrays.stream(statusTypes)
-                .map(StadiumStatusType::getZoneName)
+                .map(status -> GetStadiumInfosResponseDto.ZoneInfo.of(status.getZoneName(), status.getZoneColor()))
                 .toList();
     }
 

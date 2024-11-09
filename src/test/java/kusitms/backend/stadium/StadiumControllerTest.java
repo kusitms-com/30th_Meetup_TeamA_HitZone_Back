@@ -7,8 +7,8 @@ import kusitms.backend.configuration.ControllerTestConfig;
 import kusitms.backend.result.common.Reference;
 import kusitms.backend.result.common.ReferencesGroup;
 import kusitms.backend.stadium.application.StadiumService;
+import kusitms.backend.stadium.dto.response.GetStadiumInfosResponseDto;
 import kusitms.backend.stadium.dto.response.GetZoneGuideResponseDto;
-import kusitms.backend.stadium.dto.response.GetZonesNameResponseDto;
 import kusitms.backend.stadium.presentation.StadiumController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,15 +37,26 @@ public class StadiumControllerTest extends ControllerTestConfig {
     private StadiumService stadiumService;
 
     @Test
-    @DisplayName("해당 스타디움의 구역들 이름 목록을 조회한다.")
+    @DisplayName("해당 스타디움의 정보를 조회한다.")
     public void getZonesName() throws Exception {
         // given
-        GetZonesNameResponseDto getZonesNameResponseDto = GetZonesNameResponseDto.of(
-                List.of("레드석", "블루석", "네이비석", "오렌지석", "익사이팅석", "외야그린석", "테이블석", "프리미엄석")
+        GetStadiumInfosResponseDto getStadiumInfosResponseDto = GetStadiumInfosResponseDto.of(
+                "https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/lg/guide_home_lg.png",
+                "서울의 자존심, LG 트윈스 / 미라클 두산, 두산 베어스",
+                List.of(
+                        new GetStadiumInfosResponseDto.ZoneInfo("레드석", "#DC032A"),
+                        new GetStadiumInfosResponseDto.ZoneInfo("블루석", "#4699F2"),
+                        new GetStadiumInfosResponseDto.ZoneInfo("네이비석", "#242953"),
+                        new GetStadiumInfosResponseDto.ZoneInfo("오렌지석", "#E16900"),
+                        new GetStadiumInfosResponseDto.ZoneInfo("익사이팅석", "#6D6D6D"),
+                        new GetStadiumInfosResponseDto.ZoneInfo("외야그린석", "#339600"),
+                        new GetStadiumInfosResponseDto.ZoneInfo("테이블석", "#7C0065"),
+                        new GetStadiumInfosResponseDto.ZoneInfo("프리미엄석", "#185DDD")
+                )
         );
 
-        Mockito.when(stadiumService.getZonesName(anyString()))
-                .thenReturn(getZonesNameResponseDto);
+        Mockito.when(stadiumService.getStadiumInfos(anyString()))
+                .thenReturn(getStadiumInfosResponseDto);
 
         // when
         ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/stadium/zones")
@@ -59,14 +70,17 @@ public class StadiumControllerTest extends ControllerTestConfig {
                 .andExpect(jsonPath("$.isSuccess").value(true))
                 .andExpect(jsonPath("$.code").value("200"))
                 .andExpect(jsonPath("$.message").value("해당 스타디움의 구역 이름들이 조회되었습니다."))
-                .andExpect(jsonPath("$.payload.names[0]").value("레드석"))
+                .andExpect(jsonPath("$.payload.imgUrl").value("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/lg/guide_home_lg.png"))
+                .andExpect(jsonPath("$.payload.introduction").value("서울의 자존심, LG 트윈스 / 미라클 두산, 두산 베어스"))
+                .andExpect(jsonPath("$.payload.zones[0].zoneName").value("레드석"))
+                .andExpect(jsonPath("$.payload.zones[0].zoneColor").value("#DC032A"))
                 .andDo(MockMvcRestDocumentationWrapper.document("stadium/names",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         resource(
                                 ResourceSnippetParameters.builder()
                                         .tag("Stadium")
-                                        .description("해당 스타디움의 구역 목록들을 조회한다.")
+                                        .description("해당 스타디움의 정보를 조회한다.")
                                         .queryParameters(
                                                 parameterWithName("stadiumName").description("스타디움명 [예시 : 잠실종합운동장 (잠실)]")
                                         )
@@ -75,9 +89,13 @@ public class StadiumControllerTest extends ControllerTestConfig {
                                                 fieldWithPath("code").type(JsonFieldType.STRING).description("응답 코드"),
                                                 fieldWithPath("message").type(JsonFieldType.STRING).description("응답 메시지"),
                                                 fieldWithPath("payload").type(JsonFieldType.OBJECT).description("응답 데이터").optional(),
-                                                fieldWithPath("payload.names[]").type(JsonFieldType.ARRAY).description("해당 구역명 리스트")
+                                                fieldWithPath("payload.imgUrl").type(JsonFieldType.STRING).description("이미지 URL"),
+                                                fieldWithPath("payload.introduction").type(JsonFieldType.STRING).description("스타디움 소개"),
+                                                fieldWithPath("payload.zones[]").type(JsonFieldType.ARRAY).description("구역 정보 리스트"),
+                                                fieldWithPath("payload.zones[].zoneName").type(JsonFieldType.STRING).description("구역 이름"),
+                                                fieldWithPath("payload.zones[].zoneColor").type(JsonFieldType.STRING).description("구역 색상 코드")
                                         )
-                                        .responseSchema(Schema.schema("GetZonesNameResponseDto"))
+                                        .responseSchema(Schema.schema("GetStadiumInfosResponseDto"))
                                         .build()
                         )
                 ));

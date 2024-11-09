@@ -3,8 +3,8 @@ package kusitms.backend.stadium.presentation;
 import jakarta.validation.constraints.NotBlank;
 import kusitms.backend.global.dto.ApiResponse;
 import kusitms.backend.stadium.application.StadiumService;
+import kusitms.backend.stadium.dto.response.GetStadiumInfosResponseDto;
 import kusitms.backend.stadium.dto.response.GetZoneGuideResponseDto;
-import kusitms.backend.stadium.dto.response.GetZonesNameResponseDto;
 import kusitms.backend.stadium.status.StadiumSuccessStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,14 +23,14 @@ public class StadiumController {
     private final StadiumService stadiumService;
 
     /**
-     * 해당 스타디움의 구역 이름들을 조회한다.
-     * @return 구역 이름들 리스트
+     * 해당 스타디움의 홈 이미지, 소개 문구, 구역 이름 & 색상 리스트를 조회한다.
+     * @return 홈 이미지, 소개 문구, 구역 이름 & 색상 리스트
      */
     @GetMapping("/stadium/zones")
-    public ResponseEntity<ApiResponse<GetZonesNameResponseDto>> getZonesName(
+    public ResponseEntity<ApiResponse<GetStadiumInfosResponseDto>> getStadiumInfos(
             @RequestParam @NotBlank String stadiumName
     ) {
-        return ApiResponse.onSuccess(StadiumSuccessStatus._OK_GET_ZONES_NAME, stadiumService.getZonesName(stadiumName));
+        return ApiResponse.onSuccess(StadiumSuccessStatus._OK_GET_ZONES_NAME, stadiumService.getStadiumInfos(stadiumName));
     }
 
 
