@@ -7,13 +7,13 @@ import lombok.Getter;
 @Getter
 public class Reference {
 
-    private String title;
-    private String content;
+    private final String title;
+    private final String[] content;
 
     @JsonCreator
     public Reference(
             @JsonProperty("title") String title,
-            @JsonProperty("content") String content
+            @JsonProperty("content") String[] content
     ) {
         this.title = title;
         this.content = content;
