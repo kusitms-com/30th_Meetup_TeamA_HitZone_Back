@@ -11,10 +11,10 @@ public record GetZoneGuideResponseDto(
         String zoneName,
         String zoneColor,
         String explanation,
-        String entrance,
-        String stepSpacing,
-        String seatSpacing,
-        String usageInformation,
+        String[] entrance,
+        String[] stepSpacing,
+        String[] seatSpacing,
+        String[] usageInformation,
         String tip,
         List<ReferencesGroup> referencesGroup
 ) {

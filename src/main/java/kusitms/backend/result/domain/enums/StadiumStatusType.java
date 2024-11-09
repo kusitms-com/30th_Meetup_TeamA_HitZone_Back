@@ -16,8 +16,8 @@ public interface StadiumStatusType {
     List<String> getPage2Keywords();
     List<String> getPage3Keywords();
     List<String> getForbiddenKeywords();
-    String getEntrance();
-    String getStepSpacing();
-    String getSeatSpacing();
-    String getUsageInformation();
+    String[] getEntrance();
+    String[] getStepSpacing();
+    String[] getSeatSpacing();
+    String[] getUsageInformation();
 }
