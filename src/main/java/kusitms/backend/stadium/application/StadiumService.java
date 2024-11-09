@@ -24,7 +24,7 @@ public class StadiumService {
         StadiumInfo stadiumInfo = getStadiumInfoByName(stadiumName);
         List<GetStadiumInfosResponseDto.ZoneInfo> zoneInfos = getZonesNameAndColorFromStadium(getStatusTypesByName(stadiumName));
 
-        return GetStadiumInfosResponseDto.of(stadiumInfo.getImgUrl(), stadiumInfo.getIntroduction(), zoneInfos);
+        return GetStadiumInfosResponseDto.of(stadiumInfo.getImgUrl(), stadiumInfo.getIntroduction(), stadiumInfo.getFirstBaseSide(), stadiumInfo.getThirdBaseSide(), zoneInfos);
     }
 
     private StadiumInfo getStadiumInfoByName(String stadiumName) {

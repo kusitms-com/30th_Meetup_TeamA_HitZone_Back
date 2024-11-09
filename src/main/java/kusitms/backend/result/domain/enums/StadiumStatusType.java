@@ -10,6 +10,8 @@ public interface StadiumStatusType {
     String getZoneColor();
     String getOneLineDescription();
     List<String> getExplanations();
+    String getFirstBaseSide();
+    String getThirdBaseSide();
     String getTip();
     List<ReferencesGroup> getReferencesGroup();
     List<String> getPage1Keywords();

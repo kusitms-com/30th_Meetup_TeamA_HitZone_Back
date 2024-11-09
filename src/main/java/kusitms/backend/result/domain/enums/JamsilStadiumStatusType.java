@@ -16,6 +16,8 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
             "#DC032A",
             "해당 구역은 다양한 것들을 모두 적절히 즐길 수 있는 구역이예요.",
             List.of("응원도 적당히 즐길 수 있지만, 야구나 함께 온 동행자와의 대화에도 집중할 수 있는 구역이에요!"),
+            "두산베어스, LG 트윈스",
+            "상대팀",
             "해당 구역은 다양한 것들을 모두 적절히 즐길 수 있는 구역이예요.",
             List.of(
                     new ReferencesGroup(
@@ -49,6 +51,8 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
             "#4699F2",
             "힘차게 응원도 가능하고, 야구에 집중도 할 수 있는 구역이에요!",
             List.of("힘차게 응원도 가능하고, 야구에 집중도 할 수 있는 구역이에요!"),
+            "두산베어스, LG 트윈스",
+            "상대팀",
             "해당 구역은 비교적 조용히 경기 관람이 가능한 구역이예요.",
             List.of(
                     new ReferencesGroup(
@@ -79,6 +83,8 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
             "#242953",
             "높은 곳에서 야구를 전체적으로 볼 수 있는 구역이에요!",
             List.of("높은 곳에서 야구를 전체적으로 볼 수 있는 구역이에요!"),
+            "두산베어스, LG 트윈스",
+            "상대팀",
             "해당 구역은 높은 층수에 위치해 있어요.",
             List.of(
                     new ReferencesGroup(
@@ -115,6 +121,8 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
             "#E16900",
             "야구장의 응원이 가장 열정적인 응원석 구역이에요!",
             List.of("야구장의 응원이 가장 열정적인 응원석 구역이에요!"),
+            "두산베어스, LG 트윈스",
+            "상대팀",
             "해당 구역은 열정적인 응원이 이루어져요.",
             List.of(
                     new ReferencesGroup(
@@ -146,6 +154,8 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
             "#6D6D6D",
             "야구 필드 안에 들어와 있는 느낌을 받을 수 있는 구역이에요!",
             List.of("야구 필드 안에 들어와 있는 느낌을 받을 수 있는 구역이에요!"),
+            "두산베어스, LG 트윈스",
+            "상대팀",
             "해당 구역은 연령제한이 있어요.",
             List.of(
                     new ReferencesGroup(
@@ -181,6 +191,8 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
             "#339600",
             "사람들이 몰리지 않아 비교적 한적하게 경기를 즐길 수 있는 구역이에요!",
             List.of("사람들이 몰리지 않아 비교적 한적하게 경기를 즐길 수 있는 구역이에요!"),
+            "두산베어스, LG 트윈스",
+            "상대팀",
             "해당 구역은 시야 제한석이 있어요.",
             List.of(
                     new ReferencesGroup(
@@ -218,6 +230,8 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
             "#7C0065",
             "다양한 음식을 골라 테이블에 펼쳐놓고 먹을 수 있는 구역이에요!",
             List.of("다양한 음식을 골라 테이블에 펼쳐놓고 먹을 수 있는 구역이에요!"),
+            "두산베어스, LG 트윈스",
+            "상대팀",
             "해당 구역은 예매 시 위치 확인이 필요해요.",
             List.of(
                     new ReferencesGroup(
@@ -249,6 +263,8 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
             "#185DDD",
             "테이블에서 맛있는 음식을 먹으면서 선수들을 가장 가까이서 볼 수 있는 구역이에요!",
             List.of("테이블에서 맛있는 음식을 먹으면서 선수들을 가장 가까이서 볼 수 있는 구역이에요!"),
+            "두산베어스, LG 트윈스",
+            "상대팀",
             "해당 구역은 티켓 확인을 2번 해요.",
             List.of(
                     new ReferencesGroup(
@@ -288,6 +304,8 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
     private final String zoneColor;
     private final String oneLineDescription;
     private final List<String> explanations;
+    private final String firstBaseSide;
+    private final String thirdBaseSide;
     private final String tip;
     private final List<ReferencesGroup> referencesGroup;
     private final List<String> page1Keywords;

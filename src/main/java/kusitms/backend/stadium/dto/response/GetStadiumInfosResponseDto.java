@@ -5,10 +5,12 @@ import java.util.List;
 public record GetStadiumInfosResponseDto(
         String imgUrl,
         String introduction,
+        String firstBaseSide,
+        String thirdBaseSide,
         List<ZoneInfo> zones
 ) {
-    public static GetStadiumInfosResponseDto of(String imgUrl, String introduction, List<ZoneInfo> zoneInfos) {
-        return new GetStadiumInfosResponseDto(imgUrl, introduction, zoneInfos);
+    public static GetStadiumInfosResponseDto of(String imgUrl, String introduction, String firstBaseSide, String thirdBaseSideList, List<ZoneInfo> zoneInfos) {
+        return new GetStadiumInfosResponseDto(imgUrl, introduction, firstBaseSide, thirdBaseSideList, zoneInfos);
     }
 
     public record ZoneInfo(

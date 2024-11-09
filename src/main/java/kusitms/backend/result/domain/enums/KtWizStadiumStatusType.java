@@ -16,6 +16,8 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
             "#B23039",
             "응원 단상과 가까워, 야구를 열정적으로 응원할 수 있는 분위기의 구역이에요!",
             List.of("응원 단상과 가까워, 야구를 열정적으로 응원할 수 있는 분위기의 구역이에요!"),
+            "KT WIZ",
+            "상대팀",
             "해당 구역은 예매 시 응원단상 위치 확인이 필요해요.",
             List.of(
                     new ReferencesGroup(
@@ -49,6 +51,8 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
             "#599741",
             "테이블석이라 음식 취식이 편리한 구역이에요!",
             List.of("테이블석이라 음식 취식이 편리한 구역이에요!"),
+            "KT WIZ",
+            "상대팀",
             "해당 구역은 3루 테이블석이라 편하게 관람을 할 수 있어요.",
             List.of(
                     new ReferencesGroup(
@@ -86,6 +90,8 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
                     "특정 팀에 구애받지 않고 응원하는 분위기의 구역이에요!",
                     "스카이존보다 훨씬 가깝게 볼 수 있어요."
             ),
+            "KT WIZ",
+            "상대팀",
             "해당 구역은 특정 팀과 무관하게 응원할 수 있는 분위기예요.",
             List.of(
                     new ReferencesGroup(
@@ -121,6 +127,8 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
             "#F5A545",
             "선수들을 가까이서 볼 수 있는 구역이에요!",
             List.of("선수들을 가까이서 볼 수 있는 구역이에요!"),
+            "KT WIZ",
+            "상대팀",
             "해당 구역은 1루 테이블석이라 편리하게 음식을 먹을 수 있어요.",
             List.of(
                     new ReferencesGroup(
@@ -159,6 +167,8 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
                     "회의실처럼 생긴 내부에서 쾌적하게 야구를 볼 수 있는 구역이에요!",
                     "(빔프로젝터, 에어컨까지 구비되어 있어요)"
             ),
+            "KT WIZ",
+            "상대팀",
             "해당 구역은 별도의 룸에서 편리하게 관람할 수 있어요.",
             List.of(
                     new ReferencesGroup(
@@ -200,6 +210,8 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
             "#292F46",
             "높은 곳에서 경기를 한 눈에 볼 수 있는 구역!",
             List.of("높은 곳에서 경기를 한 눈에 볼 수 있는 구역이에요!"),
+            "KT WIZ",
+            "상대팀",
             "해당 구역은 높은 곳에 위치해있어요!",
             List.of(
                     new ReferencesGroup(
@@ -244,6 +256,8 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
                     "(1루 하이파이브존) KT가 경기 승리 시, 선수들과 하이파이브 할 수 있는 구역이에요! 전반적으로 앉아서 응원하는 분위기며, 선수들을 굉장히 가까이에서 볼 수 있는 구역이에요.",
                     "(3루 익사이팅석) 선수들을 굉장히 가까이에서 볼 수 있는 구역이에요."
                     ),
+            "KT WIZ",
+            "상대팀",
             "",
             List.of(
                     new ReferencesGroup(
@@ -310,6 +324,8 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
             "#E95560",
             "중앙테이블석이라, 음식 섭취하기 편한 구역이에요!",
             List.of("중앙테이블석이라, 음식 섭취하기 편한 구역이에요!"),
+            "KT WIZ",
+            "상대팀",
             "해당 구역은 중앙 테이블석이고, 빨리 예매하는 것이 좋아요.",
             List.of(
                     new ReferencesGroup(
@@ -351,6 +367,8 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
             "#35659E",
             "포수 바로 뒤에서 관람할 수 있는 구역이에요!",
             List.of("포수 바로 뒤에서 관람할 수 있는 구역이에요!"),
+            "KT WIZ",
+            "상대팀",
             "해당 구역은 경기를 생동감있게 볼 수 있어요.",
             List.of(
                     new ReferencesGroup(
@@ -384,6 +402,8 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
             "#E3A3B1",
             "외야 테이블석이며, 2인 테이블 3개로 구성되어있는 구역이에요!",
             List.of("외야 테이블석이며, 2인 테이블 3개로 구성되어있는 구역이에요!"),
+            "KT WIZ",
+            "상대팀",
             "해당 구역은 외야 테이블석이에요.",
             List.of(
                     new ReferencesGroup(
@@ -416,6 +436,8 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
                     "넓은 외야에 잔디가 깔려 있어 앉아서 관람할 수 있는 구역이에요!",
                     "계단처럼 층이 나뉘어져 있어요."
                     ),
+            "KT WIZ",
+            "상대팀",
             "해당 구역은 외야의 잔디로 이뤄진 구역으로 피크닉 기분을 낼 수 있어요.",
             List.of(
                     new ReferencesGroup(
@@ -459,6 +481,8 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
                     텐트에서 야구를 볼 수 있는 구역이에요!
                     고기를 구워 먹는 것이 가능해요.""",
             List.of("텐트에서 야구를 볼 수 있는 구역이에요! 고기를 구워 먹는 것이 가능해요."),
+            "KT WIZ",
+            "상대팀",
             "해당 구역은 텐트로 구성되어 있으며 고기와 함께 즐길 수 있어요.",
             List.of(
                     new ReferencesGroup(
@@ -504,6 +528,8 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
     private final String zoneColor;
     private final String oneLineDescription;
     private final List<String> explanations;
+    private final String firstBaseSide;
+    private final String thirdBaseSide;
     private final String tip;
     private final List<ReferencesGroup> referencesGroup;
     private final List<String> page1Keywords;
