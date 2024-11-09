@@ -30,7 +30,7 @@ public class StadiumController {
     public ResponseEntity<ApiResponse<GetStadiumInfosResponseDto>> getStadiumInfos(
             @RequestParam @NotBlank String stadiumName
     ) {
-        return ApiResponse.onSuccess(StadiumSuccessStatus._OK_GET_ZONES_NAME, stadiumService.getStadiumInfos(stadiumName));
+        return ApiResponse.onSuccess(StadiumSuccessStatus._OK_GET_ZONE_INFOS, stadiumService.getStadiumInfos(stadiumName));
     }
 
 
