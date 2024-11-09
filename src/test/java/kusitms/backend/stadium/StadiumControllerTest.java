@@ -108,8 +108,10 @@ public class StadiumControllerTest extends ControllerTestConfig {
         ReferencesGroup referencesGroup = new ReferencesGroup(
                 "레드석 참고하세요.",
                 List.of(
-                        new Reference("시야가 중요하신 분", "외야와 가까운 쪽은 예매 시 시야 확인이 필요해요."),
-                        new Reference("시끄러운 것을 좋아하지 않는 분", "오렌지석이 앞에 있어서 스피커 때문에 많이 시끄러워요.")
+                        new Reference("시야가 중요하신 분",
+                                new String[]{"외야와 가까운 쪽은 예매 시 시야 확인이 필요해요."}),
+                        new Reference("시끄러운 것을 좋아하지 않는 분",
+                                new String[]{"오렌지석이 앞에 있어서 스피커 때문에 많이 시끄러워요."})
                 )
         );
         GetZoneGuideResponseDto getZoneGuideResponseDto = new GetZoneGuideResponseDto(
@@ -117,10 +119,10 @@ public class StadiumControllerTest extends ControllerTestConfig {
                 "레드석",
                 "#DC032A",
                 "해당 구역은 다양한 것들을 모두 적절히 즐길 수 있는 구역이에요.",
-                "[1루] 2-3 Gate [3루] 2-1 Gate",
-                "[1루] 약 24~30cm(10n열), 약 33~38cm(20n열)",
-                "[1루] 약 25cm [3루] 약 25cm",
-                "",
+                new String[]{"[1루] 2-3 Gate [3루] 2-1 Gate"},
+                new String[]{"[1루] 약 24~30cm(10n열), 약 33~38cm(20n열)"},
+                new String[]{"[1루] 약 25cm [3루] 약 25cm"},
+                new String[]{""},
                 "해당 구역은 비교적 조용히 경기 관람이 가능한 구역이에요.",
                 List.of(referencesGroup)
         );
@@ -145,14 +147,18 @@ public class StadiumControllerTest extends ControllerTestConfig {
                 .andExpect(jsonPath("$.payload.zoneName").value("레드석"))
                 .andExpect(jsonPath("$.payload.zoneColor").value("#DC032A"))
                 .andExpect(jsonPath("$.payload.explanation").value("해당 구역은 다양한 것들을 모두 적절히 즐길 수 있는 구역이에요."))
-                .andExpect(jsonPath("$.payload.entrance").value("[1루] 2-3 Gate [3루] 2-1 Gate"))
-                .andExpect(jsonPath("$.payload.stepSpacing").value("[1루] 약 24~30cm(10n열), 약 33~38cm(20n열)"))
-                .andExpect(jsonPath("$.payload.seatSpacing").value("[1루] 약 25cm [3루] 약 25cm"))
-                .andExpect(jsonPath("$.payload.usageInformation").value(""))
+                .andExpect(jsonPath("$.payload.entrance").isArray())
+                .andExpect(jsonPath("$.payload.entrance[0]").value("[1루] 2-3 Gate [3루] 2-1 Gate"))
+                .andExpect(jsonPath("$.payload.stepSpacing").isArray())
+                .andExpect(jsonPath("$.payload.stepSpacing[0]").value("[1루] 약 24~30cm(10n열), 약 33~38cm(20n열)"))
+                .andExpect(jsonPath("$.payload.seatSpacing").isArray())
+                .andExpect(jsonPath("$.payload.seatSpacing[0]").value("[1루] 약 25cm [3루] 약 25cm"))
+                .andExpect(jsonPath("$.payload.usageInformation").isArray())
+                .andExpect(jsonPath("$.payload.usageInformation[0]").value(""))
                 .andExpect(jsonPath("$.payload.tip").value("해당 구역은 비교적 조용히 경기 관람이 가능한 구역이에요."))
                 .andExpect(jsonPath("$.payload.referencesGroup[0].groupTitle").value("레드석 참고하세요."))
                 .andExpect(jsonPath("$.payload.referencesGroup[0].references[0].title").value("시야가 중요하신 분"))
-                .andExpect(jsonPath("$.payload.referencesGroup[0].references[0].content").value("외야와 가까운 쪽은 예매 시 시야 확인이 필요해요."))
+                .andExpect(jsonPath("$.payload.referencesGroup[0].references[0].content[0]").value("외야와 가까운 쪽은 예매 시 시야 확인이 필요해요."))
                 .andDo(MockMvcRestDocumentationWrapper.document("stadium/guide",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
@@ -173,14 +179,14 @@ public class StadiumControllerTest extends ControllerTestConfig {
                                                 fieldWithPath("payload.zoneName").type(JsonFieldType.STRING).description("구역명"),
                                                 fieldWithPath("payload.zoneColor").type(JsonFieldType.STRING).description("구역 색상"),
                                                 fieldWithPath("payload.explanation").type(JsonFieldType.STRING).description("구역 설명"),
-                                                fieldWithPath("payload.entrance").type(JsonFieldType.STRING).description("구역 입구"),
-                                                fieldWithPath("payload.stepSpacing").type(JsonFieldType.STRING).description("구역 단차 간격"),
-                                                fieldWithPath("payload.seatSpacing").type(JsonFieldType.STRING).description("구역 좌석간 간격"),
-                                                fieldWithPath("payload.usageInformation").type(JsonFieldType.STRING).description("구역 유용 정보"),
+                                                fieldWithPath("payload.entrance").type(JsonFieldType.ARRAY).description("구역 입구"),
+                                                fieldWithPath("payload.stepSpacing").type(JsonFieldType.ARRAY).description("구역 단차 간격"),
+                                                fieldWithPath("payload.seatSpacing").type(JsonFieldType.ARRAY).description("구역 좌석간 간격"),
+                                                fieldWithPath("payload.usageInformation").type(JsonFieldType.ARRAY).description("구역 유용 정보"),
                                                 fieldWithPath("payload.tip").type(JsonFieldType.STRING).description("구역 팁"),
                                                 fieldWithPath("payload.referencesGroup[].groupTitle").type(JsonFieldType.STRING).description("구역 참고사항리스트의 제목"),
                                                 fieldWithPath("payload.referencesGroup[].references[].title").type(JsonFieldType.STRING).description("참고사항 제목"),
-                                                fieldWithPath("payload.referencesGroup[].references[].content").type(JsonFieldType.STRING).description("참고사항 내용")
+                                                fieldWithPath("payload.referencesGroup[].references[].content").type(JsonFieldType.ARRAY).description("참고사항 내용")
                                         )
                                         .responseSchema(Schema.schema("GetZoneGuideResponseDto"))
                                         .build()
