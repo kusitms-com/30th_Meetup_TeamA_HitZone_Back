@@ -106,7 +106,7 @@ public class ResultControllerTest extends ControllerTestConfig {
         // given
         GetProfileResponseDto getProfileResponseDto = new GetProfileResponseDto(
                 1L,
-                "https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/recommendation/eating.png",
+                "https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/recommendation/eating.svg",
                 "이러다 공까지 먹어버러",
                 "야구가 참 맛있고 음식이 재밌어요",
                 "야구장에서 먹는 재미까지 놓치지 않는 당신!\n야구장을 두 배로 재밌게 즐기는군요?",
@@ -129,7 +129,7 @@ public class ResultControllerTest extends ControllerTestConfig {
                 .andExpect(jsonPath("$.code").value("200"))
                 .andExpect(jsonPath("$.message").value("해당 결과의 프로필 정보를 조회하였습니다."))
                 .andExpect(jsonPath("$.payload.profileId").value(1L))
-                .andExpect(jsonPath("$.payload.imgUrl").value("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/recommendation/eating.png"))
+                .andExpect(jsonPath("$.payload.imgUrl").value("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/recommendation/eating.svg"))
                 .andExpect(jsonPath("$.payload.nickname").value("이러다 공까지 먹어버러"))
                 .andExpect(jsonPath("$.payload.type").value("야구가 참 맛있고 음식이 재밌어요"))
                 .andExpect(jsonPath("$.payload.explanation").value("야구장에서 먹는 재미까지 놓치지 않는 당신!\n야구장을 두 배로 재밌게 즐기는군요?"))
