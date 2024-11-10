@@ -9,7 +9,6 @@ public record GetProfileResponseDto(
         String imgUrl,
         String nickname,
         String type,
-        String explanation,
         List<String> hashTags
 ) {
     public static GetProfileResponseDto from(Profile profile) {
@@ -18,7 +17,6 @@ public record GetProfileResponseDto(
                 profile.getImgUrl(),
                 profile.getNickname(),
                 profile.getType(),
-                profile.getExplanation(),
                 profile.getHashTags()
         );
     }

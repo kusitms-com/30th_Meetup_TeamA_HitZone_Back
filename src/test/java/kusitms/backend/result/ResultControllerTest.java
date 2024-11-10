@@ -109,8 +109,7 @@ public class ResultControllerTest extends ControllerTestConfig {
                 "https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/recommendation/eating.svg",
                 "이러다 공까지 먹어버러",
                 "야구가 참 맛있고 음식이 재밌어요",
-                "야구장에서 먹는 재미까지 놓치지 않는 당신!\n야구장을 두 배로 재밌게 즐기는군요?",
-                List.of("#먹으러왔는데야구도한다?", "#그래서여기구장맛있는거뭐라고?")
+                List.of( "#야구장미식가", "#먹으러왔는데야구도한다?")
         );
 
         Mockito.when(resultService.getRecommendedProfile(anyLong()))
@@ -132,9 +131,8 @@ public class ResultControllerTest extends ControllerTestConfig {
                 .andExpect(jsonPath("$.payload.imgUrl").value("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/recommendation/eating.svg"))
                 .andExpect(jsonPath("$.payload.nickname").value("이러다 공까지 먹어버러"))
                 .andExpect(jsonPath("$.payload.type").value("야구가 참 맛있고 음식이 재밌어요"))
-                .andExpect(jsonPath("$.payload.explanation").value("야구장에서 먹는 재미까지 놓치지 않는 당신!\n야구장을 두 배로 재밌게 즐기는군요?"))
-                .andExpect(jsonPath("$.payload.hashTags[0]").value("#먹으러왔는데야구도한다?"))
-                .andExpect(jsonPath("$.payload.hashTags[1]").value("#그래서여기구장맛있는거뭐라고?"))
+                .andExpect(jsonPath("$.payload.hashTags[0]").value("#야구장미식가"))
+                .andExpect(jsonPath("$.payload.hashTags[1]").value("#먹으러왔는데야구도한다?"))
                 .andDo(MockMvcRestDocumentationWrapper.document("results/profile",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
@@ -154,7 +152,6 @@ public class ResultControllerTest extends ControllerTestConfig {
                                                 fieldWithPath("payload.imgUrl").type(JsonFieldType.STRING).description("해당 결과의 이미지 URL"),
                                                 fieldWithPath("payload.nickname").type(JsonFieldType.STRING).description("해당 결과의 프로필 닉네임"),
                                                 fieldWithPath("payload.type").type(JsonFieldType.STRING).description("해당 결과의 프로필 타입"),
-                                                fieldWithPath("payload.explanation").type(JsonFieldType.STRING).description("해당 결과의 프로필 설명"),
                                                 fieldWithPath("payload.hashTags[]").type(JsonFieldType.ARRAY).description("해당 결과의 프로필 해시태그 리스트")
                                         )
                                         .responseSchema(Schema.schema("GetProfileResponseDto"))
@@ -177,8 +174,10 @@ public class ResultControllerTest extends ControllerTestConfig {
                         new ReferencesGroup(
                                 "레드석 참고하세요.",
                                 List.of(
-                                        new Reference("시야가 중요하신 분", "외야와 가까운 쪽은 예매 시 시야 확인이 필요해요."),
-                                        new Reference("시끄러운 것을 좋아하지 않는 분", "오렌지석이 앞에 있어서 스피커 때문에 많이 시끄러워요.")
+                                        new Reference("시야가 중요하신 분",
+                                                new String[]{"외야와 가까운 쪽은 예매 시 시야 확인이 필요해요."}),
+                                        new Reference("시끄러운 것을 좋아하지 않는 분",
+                                                new String[]{"오렌지석이 앞에 있어서 스피커 때문에 많이 시끄러워요."})
                                 )
                         )
                 )
@@ -194,8 +193,10 @@ public class ResultControllerTest extends ControllerTestConfig {
                         new ReferencesGroup(
                                 "블루석 참고하세요.",
                                 List.of(
-                                        new Reference("시야가 중요하신 분", "홈과 가까운 쪽은 예매 시 시야 확인이 필요해요. 그물망으로 인해 시야 방해를 받을 수 있어요!"),
-                                        new Reference("적당한 응원을 하고 싶으신 분", "비교적 조용히 경기를 관람하고 적당히 응원할 수 있는 곳이에요. 열정적인 응원을 하고 싶으신 분들은 다른 구역을 더 추천해요!")
+                                        new Reference("시야가 중요하신 분",
+                                                new String[]{"홈과 가까운 쪽은 예매 시 시야 확인이 필요해요. 그물망으로 인해 시야 방해를 받을 수 있어요!"}),
+                                        new Reference("적당한 응원을 하고 싶으신 분",
+                                                new String[]{"비교적 조용히 경기를 관람하고 적당히 응원할 수 있는 곳이에요. 열정적인 응원을 하고 싶으신 분들은 다른 구역을 더 추천해요!"})
                                 )
                         )
                 )
@@ -226,7 +227,7 @@ public class ResultControllerTest extends ControllerTestConfig {
                 .andExpect(jsonPath("$.payload.zones[0].tip").value(redZone.tip()))
                 .andExpect(jsonPath("$.payload.zones[0].referencesGroup[0].groupTitle").value(redZone.referencesGroup().get(0).getGroupTitle()))
                 .andExpect(jsonPath("$.payload.zones[0].referencesGroup[0].references[0].title").value(redZone.referencesGroup().get(0).getReferences().get(0).getTitle()))
-                .andExpect(jsonPath("$.payload.zones[0].referencesGroup[0].references[0].content").value(redZone.referencesGroup().get(0).getReferences().get(0).getContent()))
+                .andExpect(jsonPath("$.payload.zones[0].referencesGroup[0].references[0].contents[0]").value(redZone.referencesGroup().get(0).getReferences().get(0).getContents()[0]))
 
                 .andExpect(jsonPath("$.payload.zones[1].zoneId").value(blueZone.zoneId()))
                 .andExpect(jsonPath("$.payload.zones[1].name").value(blueZone.name()))
@@ -235,7 +236,7 @@ public class ResultControllerTest extends ControllerTestConfig {
                 .andExpect(jsonPath("$.payload.zones[1].tip").value(blueZone.tip()))
                 .andExpect(jsonPath("$.payload.zones[1].referencesGroup[0].groupTitle").value(blueZone.referencesGroup().get(0).getGroupTitle()))
                 .andExpect(jsonPath("$.payload.zones[1].referencesGroup[0].references[0].title").value(blueZone.referencesGroup().get(0).getReferences().get(0).getTitle()))
-                .andExpect(jsonPath("$.payload.zones[1].referencesGroup[0].references[0].content").value(blueZone.referencesGroup().get(0).getReferences().get(0).getContent()))
+                .andExpect(jsonPath("$.payload.zones[1].referencesGroup[0].references[0].contents[0]").value(blueZone.referencesGroup().get(0).getReferences().get(0).getContents()[0]))
 
                 .andDo(MockMvcRestDocumentationWrapper.document("results/zones",
                         preprocessRequest(prettyPrint()),
@@ -260,7 +261,7 @@ public class ResultControllerTest extends ControllerTestConfig {
                                                 fieldWithPath("payload.zones[].tip").type(JsonFieldType.STRING).description("구역에 대한 팁"),
                                                 fieldWithPath("payload.zones[].referencesGroup[].groupTitle").type(JsonFieldType.STRING).description("참고 그룹 제목"),
                                                 fieldWithPath("payload.zones[].referencesGroup[].references[].title").type(JsonFieldType.STRING).description("참고 항목 제목"),
-                                                fieldWithPath("payload.zones[].referencesGroup[].references[].content").type(JsonFieldType.STRING).description("참고 항목 내용")
+                                                fieldWithPath("payload.zones[].referencesGroup[].references[].contents").type(JsonFieldType.ARRAY).description("참고 항목 내용")
                                         )
                                         .responseSchema(Schema.schema("GetZonesResponseDto"))
                                         .build()

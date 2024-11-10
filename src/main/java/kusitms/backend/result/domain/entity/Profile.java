@@ -34,9 +34,6 @@ public class Profile extends BaseTimeEntity {
     @Column(nullable = false)
     private String type;
 
-    @Column(nullable = false)
-    private String explanation;
-
     @Lob
     @Convert(converter = StringListConverter.class)
     private List<String> hashTags;
@@ -47,7 +44,6 @@ public class Profile extends BaseTimeEntity {
         this.imgUrl = imgUrl;
         this.nickname = nickname;
         this.type = type;
-        this.explanation = explanation;
         this.hashTags = hashTags;
     }
 }

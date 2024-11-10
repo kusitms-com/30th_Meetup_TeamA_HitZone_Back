@@ -10,14 +10,16 @@ public interface StadiumStatusType {
     String getZoneColor();
     String getOneLineDescription();
     List<String> getExplanations();
+    String getFirstBaseSide();
+    String getThirdBaseSide();
     String getTip();
     List<ReferencesGroup> getReferencesGroup();
     List<String> getPage1Keywords();
     List<String> getPage2Keywords();
     List<String> getPage3Keywords();
     List<String> getForbiddenKeywords();
-    String getEntrance();
-    String getStepSpacing();
-    String getSeatSpacing();
-    String getUsageInformation();
+    String[] getEntrance();
+    String[] getStepSpacing();
+    String[] getSeatSpacing();
+    String[] getUsageInformation();
 }
