@@ -66,7 +66,10 @@ public class SecurityConfig {
                 "http://localhost:5173",
                 "http://localhost:3000",
                 "https://git.hitzone.store",
-                "https://frontenddev-t5wq.vercel.app"));
+                "https://frontenddev-t5wq.vercel.app",
+                "https://hitzone.site",
+                "https://www.hitzone.site"
+        ));
         configuration.setAllowedMethods(Collections.singletonList("*"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Collections.singletonList("*"));
