@@ -41,8 +41,7 @@ public class StadiumControllerTest extends ControllerTestConfig {
     public void getZonesName() throws Exception {
         // given
         GetStadiumInfosResponseDto getStadiumInfosResponseDto = GetStadiumInfosResponseDto.of(
-                "https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/lg/guide_home_lg.png",
-                "서울의 자존심, LG 트윈스 / 미라클 두산, 두산 베어스",
+                "https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/lg/guide_home_lg.svg",
                 "두산베어스, LG 트윈스",
                 "상대팀",
                 List.of(
@@ -72,8 +71,7 @@ public class StadiumControllerTest extends ControllerTestConfig {
                 .andExpect(jsonPath("$.isSuccess").value(true))
                 .andExpect(jsonPath("$.code").value("200"))
                 .andExpect(jsonPath("$.message").value("해당 스타디움의 정보가 조회되었습니다."))
-                .andExpect(jsonPath("$.payload.imgUrl").value("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/lg/guide_home_lg.png"))
-                .andExpect(jsonPath("$.payload.introduction").value("서울의 자존심, LG 트윈스 / 미라클 두산, 두산 베어스"))
+                .andExpect(jsonPath("$.payload.imgUrl").value("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/lg/guide_home_lg.svg"))
                 .andExpect(jsonPath("$.payload.firstBaseSide").value("두산베어스, LG 트윈스"))
                 .andExpect(jsonPath("$.payload.thirdBaseSide").value("상대팀"))
                 .andExpect(jsonPath("$.payload.zones[0].zoneName").value("레드석"))
@@ -94,7 +92,6 @@ public class StadiumControllerTest extends ControllerTestConfig {
                                                 fieldWithPath("message").type(JsonFieldType.STRING).description("응답 메시지"),
                                                 fieldWithPath("payload").type(JsonFieldType.OBJECT).description("응답 데이터").optional(),
                                                 fieldWithPath("payload.imgUrl").type(JsonFieldType.STRING).description("이미지 URL"),
-                                                fieldWithPath("payload.introduction").type(JsonFieldType.STRING).description("스타디움 소개"),
                                                 fieldWithPath("payload.firstBaseSide").type(JsonFieldType.STRING).description("1루석 설명"),
                                                 fieldWithPath("payload.thirdBaseSide").type(JsonFieldType.STRING).description("3루석 설명"),
                                                 fieldWithPath("payload.zones[]").type(JsonFieldType.ARRAY).description("구역 정보 리스트"),

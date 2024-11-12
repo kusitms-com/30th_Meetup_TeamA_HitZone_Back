@@ -23,8 +23,8 @@ public class StadiumController {
     private final StadiumService stadiumService;
 
     /**
-     * 해당 스타디움의 홈 이미지, 소개 문구, 구역 이름 & 색상 리스트를 조회한다.
-     * @return 홈 이미지, 소개 문구, 구역 이름 & 색상 리스트
+     * 해당 스타디움의 홈 이미지, 구역 이름 & 색상 리스트를 조회한다.
+     * @return 홈 이미지, 구역 이름 & 색상 리스트
      */
     @GetMapping("/stadium/zones")
     public ResponseEntity<ApiResponse<GetStadiumInfosResponseDto>> getStadiumInfos(
