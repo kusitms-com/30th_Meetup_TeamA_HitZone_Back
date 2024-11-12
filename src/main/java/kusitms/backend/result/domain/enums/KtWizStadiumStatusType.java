@@ -249,7 +249,7 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
             new String[]{""}
     ),
     EXCITING("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/kt/exciting.svg",
-            "하이파이브존/익사이팅석",
+            "하이파이브/익사이팅석",
             "#3EA6A5",
             "경기 승리 시, 선수들과 하이파이브 할 수 있는 구역!",
             List.of(
