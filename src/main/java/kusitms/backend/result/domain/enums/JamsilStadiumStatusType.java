@@ -151,7 +151,7 @@ public enum JamsilStadiumStatusType implements StadiumStatusType {
     ),
     EXITING("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/lg/exciting.svg",
             "익사이팅석",
-            "#6D6D6D",
+            "#FFE23E",
             "야구 필드 안에 들어와 있는 느낌을 받을 수 있는 구역이에요!",
             List.of("야구 필드 안에 들어와 있는 느낌을 받을 수 있는 구역이에요!"),
             "두산베어스, LG 트윈스",
