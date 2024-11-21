@@ -25,9 +25,19 @@ public class RedisManager {
         }
     }
 
-    // 휴대폰 인증 코드 조회
-    public String getAuthCode(String phoneNumber) {
-        return redisTemplate.opsForValue().get(phoneNumber);
+    /**
+     * 휴대폰 인증 코드 조회.
+     *
+     * @param phoneNumber 휴대폰 번호
+     * @return 인증 코드
+     */
+    public String getPhoneVerificationCode(String phoneNumber) {
+        String authCode = redisTemplate.opsForValue().get(phoneNumber);
+        if (authCode == null) {
+            log.warn("Auth code not found for phone number: {}", phoneNumber);
+            throw new CustomException(ErrorStatus._DATA_NOT_FOUND);
+        }
+        return authCode;
     }
 
     // 리프레시 토큰 저장 (2주간 유효)
