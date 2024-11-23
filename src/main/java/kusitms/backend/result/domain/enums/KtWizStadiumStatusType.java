@@ -11,6 +11,130 @@ import java.util.List;
 @RequiredArgsConstructor
 public enum KtWizStadiumStatusType implements StadiumStatusType{
 
+    //특징 확인 필요
+    CENTER("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/kt/center.svg",
+            "중앙지정석",
+            "#5E346E",
+            "특정 팀에 구애받지 않고 응원하는 구역!",
+            List.of(
+                    "특정 팀에 구애받지 않고 응원하는 분위기의 구역이에요!",
+                    "스카이존보다 훨씬 가깝게 볼 수 있어요."
+            ),
+            "KT WIZ",
+            "상대팀",
+            "해당 구역은 특정 팀과 무관하게 응원할 수 있는 분위기예요.",
+            List.of(
+                    new ReferencesGroup(
+                            KtWizStadiumStatusType.DEFAULT_TITLE,
+                            List.of(
+                                    new Reference(
+                                            "타 팀 팬들과 함께",
+                                            new String[]{
+                                                    "동행자가 타 팀일 때 가기 좋아요.",
+                                                    "어느 한 팀에 치우쳐져서 응원하는 분위기가 아니예요!"
+                                            }
+                                    )
+                            )
+                    )
+            ),
+            List.of("나 혼자", "같은 팀 팬과", "다른 팀 팬과"),
+            List.of("열정적인 응원"),
+            List.of(),
+            List.of("삼겹살 구워먹기 가능", "큰 소리 싫어요"),
+            new String[]{"1루에 가까운 중앙지정석은 1루 게이트로, 3루에 가까운 중앙지정석은 3루 게이트로 가시는 것을 추천드려요!"},
+            new String[]{
+                    "[1루쪽] 약 26~33cm [중앙] 약 26~33cm",
+                    "[3루쪽] 약 26~33cm"
+            },
+            new String[]{
+                    "[1루쪽] 약 25~30cm [중앙] 약 25~30cm",
+                    "[3루쪽] 약 25~30cm"
+            },
+            new String[]{""}
+    ),
+    SKYZONE("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/kt/skyzone.svg",
+            "스카이존(5층)",
+            "#292F46",
+            "높은 곳에서 경기를 한 눈에 볼 수 있는 구역!",
+            List.of("높은 곳에서 경기를 한 눈에 볼 수 있는 구역이에요!"),
+            "KT WIZ",
+            "상대팀",
+            "해당 구역은 높은 곳에 위치해있어요!",
+            List.of(
+                    new ReferencesGroup(
+                            KtWizStadiumStatusType.DEFAULT_TITLE,
+                            List.of(
+                                    new Reference(
+                                            "높은 곳을 안 좋아하시는 분",
+                                            new String[]{
+                                                    "높은 시야에서 야구를 관람할 수 있기 때문에,",
+                                                    "홈과 가까운 시야에서 관람을 원하시면",
+                                                    "다른 구역을 추천해요!"
+                                            }
+                                    ),
+                                    new Reference(
+                                            "높은 곳까지 걸어 오르기 힘드신 분",
+                                            new String[]{
+                                                    "높은 층수에 위치해 있기 때문에",
+                                                    "좌석을 찾아가기까지 걸어오르는 과정이 필요해요.",
+                                                    "무릎이나 체력이 안 좋으시면 비추천해요!"
+                                            }
+                                    )
+                            )
+                    )
+            ),
+            List.of("나 혼자", "같은 팀 팬과", "다른 팀 팬과"),
+            List.of("경기장 한 눈에 보기"),
+            List.of(),
+            List.of("선수들 가까이", "높은 곳 싫어요", "삼겹살 구워먹기 가능"),
+            new String[]{
+                    "1루에 가까운 중앙지정석은 1루 게이트로,",
+                    "3루에 가까운 중앙지정석은 3루 게이트로 가시는 것을 추천드려요!"
+            },
+            new String[]{"약 41cm(2열), 약 54cm(이외 열)"},
+            new String[]{"약 28cm(2열), 약 26cm(이외 열)"},
+            new String[]{""}
+    ),
+    CHEERING_DUMMY("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/kt/cheering.svg",
+            "응원지정석",
+            "#B23039",
+            "열정적인 응원뿐만 아니라, 적절히 응원하며 관람도 할 수 있는 구역이에요!",
+            List.of("응원 단상과 가까워, 야구를 열정적으로 응원할 수 있는 분위기의 구역이에요!"),
+            "KT WIZ",
+            "상대팀",
+            "해당 구역에서 적절한 응원과 관람을 원하시는 분들은 응원단상에서 먼 구역을 예매하는 것이 좋아요!",
+            List.of(
+                    new ReferencesGroup(
+                            KtWizStadiumStatusType.DEFAULT_TITLE,
+                            List.of(
+                                    new Reference(
+                                            "앰프 소리를 좋아하지 않는 분",
+                                            new String[]{
+                                                    "응원단상 근처에는 응원을 위한 앰프가 설치되어 있어요.",
+                                                    "적절한 응원과 관람을 원하시면 응원단상이 있는 구역과 거리가 있는 구역을 예매하시는 것을 추천해요!"
+                                            }
+                                    ),
+                                    new Reference(
+                                            "응원단상 위치 고려",
+                                            new String[]{
+                                                    "1루 ‘홈팀’ KT 위즈의 응원단상은",
+                                                    "109, 110 구역에 위치해요.",
+                                                    "3루 ‘원정팀’ 원정 응원단상은",
+                                                    "121, 122 구역에 위치해요."
+                                            }
+                                    )
+                            )
+                    )
+            ),
+            List.of("나 혼자", "같은 팀 팬과"),
+            List.of("열정적인 응원"),
+            List.of(),
+            List.of("다른 팀 팬과", "큰 소리 싫어요", "음식 먹기 편한", "삼겹살 구워먹기 가능"),
+            new String[]{"데이터 추가 입력 예정"},
+            new String[]{"[1루] 약 27~32cm [3루] 약 27~32cm"},
+            new String[]{"[1루] 약 28cm [3루] 약 26~33cm"},
+            new String[]{""}
+    ),
     CHEERING("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/kt/cheering.svg",
             "응원지정석",
             "#B23039",
@@ -24,8 +148,13 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
                             KtWizStadiumStatusType.DEFAULT_TITLE,
                             List.of(
                                     new Reference(
-                                            "1루 ‘홈팀’ KT 위즈의 응원단상은 109, 110 구역에 위치하고 3루 '원정팀' 원정 응원단상은 121, 122 구역에 위치해요.",
-                                            new String[]{""}
+                                            "응원단상 위치 고려",
+                                            new String[]{
+                                                    "1루 ‘홈팀’ KT 위즈의 응원단상은",
+                                                    "109, 110 구역에 위치해요.",
+                                                    "3루 ‘원정팀’ 원정 응원단상은",
+                                                    "121, 122 구역에 위치해요."
+                                            }
                                     ),
                                     new Reference(
                                             "시끄러운 것을 좋아하지 않는 분",
@@ -79,47 +208,6 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
             new String[]{"3루-1 게이트 9번 출입구 (지니TV석 전용게이트 이용)"},
             new String[]{"약 61~66cm"},
             new String[]{"약 41cm"},
-            new String[]{""}
-    ),
-    //특징 확인 필요
-    CENTER("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/kt/center.svg",
-            "중앙지정석",
-            "#5E346E",
-            "특정 팀에 구애받지 않고 응원하는 구역!",
-            List.of(
-                    "특정 팀에 구애받지 않고 응원하는 분위기의 구역이에요!",
-                    "스카이존보다 훨씬 가깝게 볼 수 있어요."
-            ),
-            "KT WIZ",
-            "상대팀",
-            "해당 구역은 특정 팀과 무관하게 응원할 수 있는 분위기예요.",
-            List.of(
-                    new ReferencesGroup(
-                            KtWizStadiumStatusType.DEFAULT_TITLE,
-                            List.of(
-                                    new Reference(
-                                            "타 팀 팬들과 함께",
-                                            new String[]{
-                                                    "동행자가 타 팀일 때 가기 좋아요.",
-                                                    "어느 한 팀에 치우쳐져서 응원하는 분위기가 아니예요!"
-                                            }
-                                    )
-                            )
-                    )
-            ),
-            List.of("나 혼자", "같은 팀 팬과", "다른 팀 팬과"),
-            List.of("열정적인 응원"),
-            List.of(),
-            List.of("삼겹살 구워먹기 가능", "큰 소리 싫어요"),
-            new String[]{"1루에 가까운 중앙지정석은 1루 게이트로, 3루에 가까운 중앙지정석은 3루 게이트로 가시는 것을 추천드려요!"},
-            new String[]{
-                    "[1루쪽] 약 26~33cm [중앙] 약 26~33cm",
-                    "[3루쪽] 약 26~33cm"
-            },
-            new String[]{
-                    "[1루쪽] 약 25~30cm [중앙] 약 25~30cm",
-                    "[3루쪽] 약 25~30cm"
-            },
             new String[]{""}
     ),
     YBOX("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/kt/ybox.svg",
@@ -204,49 +292,6 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
                     "1루와 가까운 스카이박스와 3루와 가까운 스카이박스가 있어요!",
                     "미리 위치를 확인해보시고 참고하시는 걸 추천드려요."
             }
-    ),
-    SKYZONE("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/kt/skyzone.svg",
-            "스카이존(5층)",
-            "#292F46",
-            "높은 곳에서 경기를 한 눈에 볼 수 있는 구역!",
-            List.of("높은 곳에서 경기를 한 눈에 볼 수 있는 구역이에요!"),
-            "KT WIZ",
-            "상대팀",
-            "해당 구역은 높은 곳에 위치해있어요!",
-            List.of(
-                    new ReferencesGroup(
-                            KtWizStadiumStatusType.DEFAULT_TITLE,
-                            List.of(
-                                    new Reference(
-                                            "높은 곳을 안 좋아하시는 분",
-                                            new String[]{
-                                                    "높은 시야에서 야구를 관람할 수 있기 때문에,",
-                                                    "홈과 가까운 시야에서 관람을 원하시면",
-                                                    "다른 구역을 추천해요!"
-                                            }
-                                    ),
-                                    new Reference(
-                                            "높은 곳까지 걸어 오르기 힘드신 분",
-                                            new String[]{
-                                                    "높은 층수에 위치해 있기 때문에",
-                                                    "좌석을 찾아가기까지 걸어오르는 과정이 필요해요.",
-                                                    "무릎이나 체력이 안 좋으시면 비추천해요!"
-                                            }
-                                    )
-                            )
-                    )
-            ),
-            List.of("나 혼자", "같은 팀 팬과", "다른 팀 팬과"),
-            List.of("경기장 한 눈에 보기"),
-            List.of(),
-            List.of("선수들 가까이", "높은 곳 싫어요", "삼겹살 구워먹기 가능"),
-            new String[]{
-                    "1루에 가까운 중앙지정석은 1루 게이트로,",
-                    "3루에 가까운 중앙지정석은 3루 게이트로 가시는 것을 추천드려요!"
-            },
-            new String[]{"약 41cm(2열), 약 54cm(이외 열)"},
-            new String[]{"약 28cm(2열), 약 26cm(이외 열)"},
-            new String[]{""}
     ),
     EXCITING("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/kt/exciting.svg",
             "하이파이브/익사이팅석",
