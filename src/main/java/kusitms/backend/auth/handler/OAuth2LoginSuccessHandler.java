@@ -2,10 +2,10 @@ package kusitms.backend.auth.handler;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import kusitms.backend.auth.jwt.JWTUtil;
 import kusitms.backend.user.application.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -18,12 +18,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-    @Value("${spring.jwt.redirect.onboarding}")
-    private String REDIRECT_URI_ONBOARDING;
-
-    @Value("${spring.jwt.redirect.base}")
-    private String REDIRECT_URI_BASE;
-
+    private final JWTUtil jwtUtil;
     private final UserService userService;
 
     /**
@@ -41,12 +36,12 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         // 신규 사용자 처리
         if (userService.isNewUser(token)) {
             userService.handleNewUser(token, response);
-            getRedirectStrategy().sendRedirect(request, response, REDIRECT_URI_ONBOARDING);
+            getRedirectStrategy().sendRedirect(request, response, jwtUtil.getRedirectOnboardingUrl());
         }
         // 기존 사용자 처리
         else {
             userService.handleExistingUser(token, response);
-            getRedirectStrategy().sendRedirect(request, response, REDIRECT_URI_BASE);
+            getRedirectStrategy().sendRedirect(request, response, jwtUtil.getRedirectBaseUrl());
         }
     }
 }

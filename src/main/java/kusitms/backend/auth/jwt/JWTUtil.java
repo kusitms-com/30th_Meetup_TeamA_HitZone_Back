@@ -176,4 +176,22 @@ public class JWTUtil {
     public long getRegisterTokenExpirationTime() {
         return jwtProperties.getRegisterTokenExpirationTime();
     }
+
+    /**
+     * 온보딩 리다이렉트 URL 반환.
+     *
+     * @return 온보딩 리다이렉트 URL
+     */
+    public String getRedirectOnboardingUrl() {
+        return jwtProperties.getRedirectOnboarding();
+    }
+
+    /**
+     * 로그인 성공 후 리다이렉트 URL 반환.
+     *
+     * @return 로그인 성공 후 리다이렉트 URL
+     */
+    public String getRedirectBaseUrl() {
+        return jwtProperties.getRedirectBase();
+    }
 }
