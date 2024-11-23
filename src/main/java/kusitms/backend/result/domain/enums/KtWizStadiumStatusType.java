@@ -98,24 +98,29 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
     CHEERING_DUMMY("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/kt/cheering.svg",
             "응원지정석",
             "#B23039",
-            "응원 단상과 가까워, 야구를 열정적으로 응원할 수 있는 분위기의 구역이에요!",
+            "열정적인 응원뿐만 아니라, 적절히 응원하며 관람도 할 수 있는 구역이에요!",
             List.of("응원 단상과 가까워, 야구를 열정적으로 응원할 수 있는 분위기의 구역이에요!"),
             "KT WIZ",
             "상대팀",
-            "해당 구역은 예매 시 응원단상 위치 확인이 필요해요.",
+            "해당 구역에서 적절한 응원과 관람을 원하시는 분들은 응원단상에서 먼 구역을 예매하는 것이 좋아요!",
             List.of(
                     new ReferencesGroup(
                             KtWizStadiumStatusType.DEFAULT_TITLE,
                             List.of(
                                     new Reference(
-                                            "1루 ‘홈팀’ KT 위즈의 응원단상은 109, 110 구역에 위치하고 3루 '원정팀' 원정 응원단상은 121, 122 구역에 위치해요.",
-                                            new String[]{""}
+                                            "앰프 소리를 좋아하지 않는 분",
+                                            new String[]{
+                                                    "응원단상 근처에는 응원을 위한 앰프가 설치되어 있어요.",
+                                                    "적절한 응원과 관람을 원하시면 응원단상이 있는 구역과 거리가 있는 구역을 예매하시는 것을 추천해요!"
+                                            }
                                     ),
                                     new Reference(
-                                            "시끄러운 것을 좋아하지 않는 분",
+                                            "응원단상 위치 고려",
                                             new String[]{
-                                                    "해당 구역 앞에는 응원을 위한 앰프가 설치되어 있어요.",
-                                                    "조용한 관람을 원하시면 다른 구역을 추천해요!"
+                                                    "1루 ‘홈팀’ KT 위즈의 응원단상은",
+                                                    "109, 110 구역에 위치해요.",
+                                                    "3루 ‘원정팀’ 원정 응원단상은",
+                                                    "121, 122 구역에 위치해요."
                                             }
                                     )
                             )
@@ -143,8 +148,13 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
                             KtWizStadiumStatusType.DEFAULT_TITLE,
                             List.of(
                                     new Reference(
-                                            "1루 ‘홈팀’ KT 위즈의 응원단상은 109, 110 구역에 위치하고 3루 '원정팀' 원정 응원단상은 121, 122 구역에 위치해요.",
-                                            new String[]{""}
+                                            "응원단상 위치 고려",
+                                            new String[]{
+                                                    "1루 ‘홈팀’ KT 위즈의 응원단상은",
+                                                    "109, 110 구역에 위치해요.",
+                                                    "3루 ‘원정팀’ 원정 응원단상은",
+                                                    "121, 122 구역에 위치해요."
+                                            }
                                     ),
                                     new Reference(
                                             "시끄러운 것을 좋아하지 않는 분",
