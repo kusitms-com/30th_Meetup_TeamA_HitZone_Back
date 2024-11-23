@@ -11,7 +11,9 @@ import org.springframework.http.HttpStatus;
 public enum ChatbotErrorStatus implements BaseErrorCode {
 
     _NOT_FOUND_GUIDE_CHATBOT_ANSWER(HttpStatus.NOT_FOUND, "CHATBOT-001", "챗봇 답변을 찾을 수 없습니다."),
-    _IS_NOT_VALID_CATEGORY_NAME(HttpStatus.BAD_REQUEST, "CHATBOT-002", "올바른 카테고리명이 아닙니다.")
+    _IS_NOT_VALID_CATEGORY_NAME(HttpStatus.BAD_REQUEST, "CHATBOT-002", "올바른 카테고리명이 아닙니다."),
+    _INVALID_CHATBOT_REQUEST(HttpStatus.BAD_REQUEST, "CHATBOT-003", "유효하지 않은 요청 타입입니다."),
+    _CHATBOT_API_COMMUNICATION_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "CHATBOT-004", "외부 챗봇 API와의 통신 중 오류가 발생했습니다.")
     ;
 
     private final HttpStatus httpStatus;
