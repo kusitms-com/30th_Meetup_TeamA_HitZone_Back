@@ -1,8 +1,8 @@
 package kusitms.backend.chatbot.application;
 
-import kusitms.backend.chatbot.dto.request.ChatbotRequest;
-import kusitms.backend.chatbot.dto.request.ClovaRequest;
-import kusitms.backend.chatbot.dto.request.Message;
+import kusitms.backend.chatbot.dto.request.ChatbotRequestDto;
+import kusitms.backend.chatbot.dto.request.ClovaRequestDto;
+import kusitms.backend.chatbot.dto.request.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -14,10 +14,10 @@ public class ClovaRequestFactory {
 
     private final MessageFactory messageFactory;
 
-    public ChatbotRequest createClovaRequest() {
-        ArrayList<Message> messages = new ArrayList<>();
+    public ChatbotRequestDto createClovaRequest() {
+        ArrayList<MessageDto> messages = new ArrayList<>();
         messages.add(messageFactory.createSystemMessage());
 
-        return new ClovaRequest(messages, 0.8, 0.3, 256, 5.0);
+        return new ClovaRequestDto(messages, 0.8, 0.3, 256, 5.0);
     }
 }

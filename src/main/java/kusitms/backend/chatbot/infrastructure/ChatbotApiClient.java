@@ -1,6 +1,6 @@
 package kusitms.backend.chatbot.infrastructure;
 
-import kusitms.backend.chatbot.dto.request.ChatbotRequest;
+import kusitms.backend.chatbot.dto.request.ChatbotRequestDto;
 import reactor.core.publisher.Mono;
 
 public interface ChatbotApiClient {
@@ -10,5 +10,5 @@ public interface ChatbotApiClient {
      * @param request 추상 챗봇 요청 객체
      * @return 챗봇의 응답 메시지
      */
-    Mono<String> requestChatbot(ChatbotRequest request);
+    Mono<String> requestChatbot(ChatbotRequestDto request);
 }

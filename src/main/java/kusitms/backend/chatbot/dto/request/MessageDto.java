@@ -1,6 +1,6 @@
 package kusitms.backend.chatbot.dto.request;
 
-public record Message(
+public record MessageDto(
         String role,
         String content
 ) {

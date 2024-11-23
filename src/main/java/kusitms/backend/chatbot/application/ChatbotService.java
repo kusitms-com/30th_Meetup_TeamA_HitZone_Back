@@ -1,7 +1,7 @@
 package kusitms.backend.chatbot.application;
 
 import kusitms.backend.chatbot.domain.enums.*;
-import kusitms.backend.chatbot.dto.response.GetGuideChatbotAnswerResponse;
+import kusitms.backend.chatbot.dto.response.GetGuideChatbotAnswerResponseDto;
 import kusitms.backend.chatbot.status.ChatbotErrorStatus;
 import kusitms.backend.global.exception.CustomException;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class ChatbotService {
 
     // 가이드 챗봇 답변을 조회하는 메서드
-    public GetGuideChatbotAnswerResponse getGuideChatbotAnswer(String stadiumName, String categoryName, int orderNumber) {
+    public GetGuideChatbotAnswerResponseDto getGuideChatbotAnswer(String stadiumName, String categoryName, int orderNumber) {
         switch (categoryName) {
             case "stadium":
                 return getAnswersByOrderAndStadium(orderNumber, stadiumName, StadiumGuideAnswer.values());
@@ -35,7 +35,7 @@ public class ChatbotService {
     }
 
     // orderNumber와 stadiumName에 따라 답변을 찾는 공통 메서드
-    private <T extends Enum<T> & GuideAnswer> GetGuideChatbotAnswerResponse getAnswersByOrderAndStadium(
+    private <T extends Enum<T> & GuideAnswer> GetGuideChatbotAnswerResponseDto getAnswersByOrderAndStadium(
             int orderNumber, String stadiumName, T[] guideAnswers) {
 
         // 1. orderNumber와 stadiumName이 모두 일치하는 답변을 찾기
@@ -50,7 +50,7 @@ public class ChatbotService {
                                 .filter(answer -> answer.getStadiumName() == null)
                                 .findFirst()
                 )
-                .map(answer -> GetGuideChatbotAnswerResponse.of(answer.getAnswers(), answer.getImgUrl()))
+                .map(answer -> GetGuideChatbotAnswerResponseDto.of(answer.getAnswers(), answer.getImgUrl()))
                 // 3. 아무 답변도 없으면 예외 처리
                 .orElseThrow(() -> new CustomException(ChatbotErrorStatus._NOT_FOUND_GUIDE_CHATBOT_ANSWER));
     }

@@ -5,8 +5,8 @@ import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import kusitms.backend.chatbot.application.ChatbotService;
 import kusitms.backend.chatbot.application.ClovaService;
-import kusitms.backend.chatbot.dto.response.GetClovaChatbotAnswerResponse;
-import kusitms.backend.chatbot.dto.response.GetGuideChatbotAnswerResponse;
+import kusitms.backend.chatbot.dto.response.GetClovaChatbotAnswerResponseDto;
+import kusitms.backend.chatbot.dto.response.GetGuideChatbotAnswerResponseDto;
 import kusitms.backend.chatbot.presentation.ChatbotController;
 import kusitms.backend.configuration.ControllerTestConfig;
 import org.junit.jupiter.api.DisplayName;
@@ -43,7 +43,7 @@ public class ChatbotControllerTest extends ControllerTestConfig {
     @DisplayName("가이드 챗봇 답변 조회")
     public void getGuideChatbotAnswer() throws Exception {
         // given
-        GetGuideChatbotAnswerResponse response = new GetGuideChatbotAnswerResponse(new String[]{
+        GetGuideChatbotAnswerResponseDto response = new GetGuideChatbotAnswerResponseDto(new String[]{
                 "각 구장에 위치한 굿즈샵에서 원하는 응원 도구를 구매할 수 있어요!",
 
                 "잠실 야구장의 경우, 지하철 2호선 '종합운동장역' 6번 출구 앞에 위치한 야구 용품샵 '유니크 스포츠'를 이용할 수 있어요! 홈팀인 엘지 트윈스와 두산 베어스의 굿즈 뿐만 아니라, 원정팀들의 굿즈도 있으니 한 번 방문해보세요!",
@@ -102,7 +102,7 @@ public class ChatbotControllerTest extends ControllerTestConfig {
     @DisplayName("Clova 챗봇 답변 조회")
     public void getClovaChatbotAnswer() throws Exception {
         // given
-        GetClovaChatbotAnswerResponse response = new GetClovaChatbotAnswerResponse(
+        GetClovaChatbotAnswerResponseDto response = new GetClovaChatbotAnswerResponseDto(
                 "안녕하세요! 저는 야구 가이드 챗봇 '루키'에요! 야구에 대한 궁금한 점이 있다면 언제든지 물어봐 주세요!");
 
         Mockito.when(clovaService.getClovaChatbotAnswer(anyString()))

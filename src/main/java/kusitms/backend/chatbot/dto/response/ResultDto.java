@@ -1,11 +1,11 @@
 package kusitms.backend.chatbot.dto.response;
 
-import kusitms.backend.chatbot.dto.request.Message;
+import kusitms.backend.chatbot.dto.request.MessageDto;
 
 import java.util.List;
 
-public record Result(
-        Message message,       // 대화 메시지
+public record ResultDto(
+        MessageDto message,       // 대화 메시지
         String stopReason,     // 결과 중단 이유
         int inputLength,       // 입력 토큰 수
         int outputLength,      // 응답 토큰 수

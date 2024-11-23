@@ -5,9 +5,9 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import kusitms.backend.chatbot.application.ChatbotService;
 import kusitms.backend.chatbot.application.ClovaService;
-import kusitms.backend.chatbot.dto.request.GetClovaChatbotAnswerRequest;
-import kusitms.backend.chatbot.dto.response.GetClovaChatbotAnswerResponse;
-import kusitms.backend.chatbot.dto.response.GetGuideChatbotAnswerResponse;
+import kusitms.backend.chatbot.dto.request.GetClovaChatbotAnswerRequestDto;
+import kusitms.backend.chatbot.dto.response.GetClovaChatbotAnswerResponseDto;
+import kusitms.backend.chatbot.dto.response.GetGuideChatbotAnswerResponseDto;
 import kusitms.backend.chatbot.status.ChatbotSuccessStatus;
 import kusitms.backend.global.dto.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -37,12 +37,12 @@ public class ChatbotController {
      * @return 요청한 경기장과 카테고리에 맞는 가이드 답변 및 관련 이미지 URL
      */
     @GetMapping("/guide")
-    public ResponseEntity<ApiResponse<GetGuideChatbotAnswerResponse>> getGuideChatbotAnswer(
+    public ResponseEntity<ApiResponse<GetGuideChatbotAnswerResponseDto>> getGuideChatbotAnswer(
             @RequestParam("stadiumName") @NotBlank String stadiumName,
             @RequestParam("categoryName") @NotBlank String categoryName,
             @RequestParam("orderNumber") @Min(1) int orderNumber){
 
-        GetGuideChatbotAnswerResponse response = chatbotService.getGuideChatbotAnswer(stadiumName, categoryName, orderNumber);
+        GetGuideChatbotAnswerResponseDto response = chatbotService.getGuideChatbotAnswer(stadiumName, categoryName, orderNumber);
 
         return ApiResponse.onSuccess(ChatbotSuccessStatus._GET_GUIDE_CHATBOT_ANSWER, response);
     }
@@ -57,8 +57,8 @@ public class ChatbotController {
      * @return Clova 챗봇으로부터 생성된 답변
      */
     @PostMapping("/clova")
-    public Mono<ResponseEntity<ApiResponse<GetClovaChatbotAnswerResponse>>> getClovaChatbotAnswer(
-            @Valid @RequestBody GetClovaChatbotAnswerRequest request) {
+    public Mono<ResponseEntity<ApiResponse<GetClovaChatbotAnswerResponseDto>>> getClovaChatbotAnswer(
+            @Valid @RequestBody GetClovaChatbotAnswerRequestDto request) {
 
         return clovaService.getClovaChatbotAnswer(request.message())
                 .map(response -> ApiResponse.onSuccess(ChatbotSuccessStatus._GET_CLOVA_CHATBOT_ANSWER, response));
