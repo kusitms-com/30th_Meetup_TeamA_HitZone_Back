@@ -46,4 +46,8 @@ public class Profile extends BaseTimeEntity {
         this.type = type;
         this.hashTags = hashTags;
     }
+
+    public void assignToResult(Result result) {
+        this.result = result;
+    }
 }

@@ -53,4 +53,8 @@ public class Zone extends BaseTimeEntity {
         this.tip = tip;
         this.referencesGroup = referencesGroup;
     }
+
+    public void assignToResult(Result result) {
+        this.result = result;
+    }
 }

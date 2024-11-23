@@ -46,12 +46,11 @@ public class Result extends BaseTimeEntity {
 
     public void addProfile(Profile profile) {
         this.profile = profile;
-        profile.setResult(this);
+        profile.assignToResult(this);
     }
 
     public void addZone(Zone zone){
         this.zones.add(zone);
-        zone.setResult(this);
+        zone.assignToResult(this);
     }
-
 }

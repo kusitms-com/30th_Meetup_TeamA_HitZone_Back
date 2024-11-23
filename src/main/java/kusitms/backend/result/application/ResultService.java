@@ -63,7 +63,7 @@ public class ResultService {
         Result result;
         if (accessToken == null) {
             result = Result.builder()
-                    .stadium(stadium)
+                    .stadiumId(stadium.getId())
                     .preference(request.preference())
                     .build();
             resultRepository.save(result);
@@ -75,8 +75,8 @@ public class ResultService {
             log.info("유저 정보 조회 성공");
 
             result = Result.builder()
-                    .stadium(stadium)
-                    .user(user)
+                    .userId(userId)
+                    .stadiumId(stadium.getId())
                     .preference(request.preference())
                     .build();
             resultRepository.save(result);
