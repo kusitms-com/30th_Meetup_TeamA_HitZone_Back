@@ -1,4 +1,4 @@
-package kusitms.backend.result.dto.response;
+package kusitms.backend.result.application.dto.response;
 
 import kusitms.backend.result.domain.entity.Profile;
 
