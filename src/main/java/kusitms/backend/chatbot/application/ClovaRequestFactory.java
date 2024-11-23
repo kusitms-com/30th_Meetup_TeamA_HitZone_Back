@@ -14,6 +14,11 @@ public class ClovaRequestFactory {
 
     private final MessageFactory messageFactory;
 
+    /**
+     * Clova 챗봇 요청 객체를 생성합니다.
+     *
+     * @return 생성된 Clova 요청 객체
+     */
     public ChatbotRequestDto createClovaRequest() {
         ArrayList<MessageDto> messages = new ArrayList<>();
         messages.add(messageFactory.createSystemMessage());

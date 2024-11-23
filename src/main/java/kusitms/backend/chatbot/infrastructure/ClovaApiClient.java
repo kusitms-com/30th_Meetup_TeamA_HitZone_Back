@@ -16,6 +16,13 @@ import reactor.core.publisher.Mono;
 public class ClovaApiClient implements ChatbotApiClient {
     private final WebClient webClient;
 
+    /**
+     * 클로바 챗봇 API에 요청을 보내고 응답을 처리합니다.
+     *
+     * @param request 챗봇 요청 데이터
+     * @return 클로바 챗봇 응답 메시지 내용 (문자열)
+     * @throws CustomException 유효하지 않은 요청이거나 API 통신 에러 발생 시
+     */
     @Override
     public Mono<String> requestChatbot(ChatbotRequestDto request) {
         if (!(request instanceof ClovaRequestDto clovaRequest)) {
