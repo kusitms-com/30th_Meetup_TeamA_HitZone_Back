@@ -1,25 +1,28 @@
-package kusitms.backend.result.common;
+package kusitms.backend.result.domain.service;
 
 import kusitms.backend.result.domain.enums.StadiumStatusType;
+import kusitms.backend.result.domain.util.KeywordUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class RecommendTopRankedZones {
+@Service
+public class RecommendTopRankedZonesService {
 
-    public static <T extends Enum<T> & StadiumStatusType> List<T> getTopRankedZones(
+    public <T extends Enum<T> & StadiumStatusType> List<T> getTopRankedZones(
             T[] zones,
             List<String> clientKeywords
     ) {
 
         List<T> filteredZones = Arrays.stream(zones)
-                .filter(zone -> !KeywordManager.hasForbiddenKeywords(zone.getForbiddenKeywords(), clientKeywords))
+                .filter(zone -> !KeywordUtil.hasForbiddenKeywords(zone.getForbiddenKeywords(), clientKeywords))
                 .map(zone -> {
-                    int page1Count = KeywordManager.getMatchingKeywordCount(zone.getPage1Keywords(), clientKeywords);
-                    int page2Count = KeywordManager.getMatchingKeywordCount(zone.getPage2Keywords(), clientKeywords);
-                    int page3Count = KeywordManager.getMatchingKeywordCount(zone.getPage3Keywords(), clientKeywords);
+                    int page1Count = KeywordUtil.getMatchingKeywordCount(zone.getPage1Keywords(), clientKeywords);
+                    int page2Count = KeywordUtil.getMatchingKeywordCount(zone.getPage2Keywords(), clientKeywords);
+                    int page3Count = KeywordUtil.getMatchingKeywordCount(zone.getPage3Keywords(), clientKeywords);
                     int totalMatchCount = page1Count + page2Count + page3Count;
 
                     Map<String, Object> result = new HashMap<>();

@@ -1,7 +1,7 @@
 package kusitms.backend.stadium.dto.response;
 
 
-import kusitms.backend.result.common.ReferencesGroup;
+import kusitms.backend.result.domain.value.ReferencesGroup;
 import kusitms.backend.result.domain.enums.StadiumStatusType;
 
 import java.util.List;

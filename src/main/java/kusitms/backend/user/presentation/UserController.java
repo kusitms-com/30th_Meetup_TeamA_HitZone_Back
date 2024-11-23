@@ -2,7 +2,7 @@ package kusitms.backend.user.presentation;
 
 import jakarta.validation.Valid;
 import kusitms.backend.global.dto.ApiResponse;
-import kusitms.backend.user.application.UserService;
+import kusitms.backend.user.application.UserApplicationService;
 import kusitms.backend.user.dto.request.CheckNicknameRequestDto;
 import kusitms.backend.user.dto.request.SignUpRequestDto;
 import kusitms.backend.user.dto.response.UserInfoResponseDto;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
 public class UserController {
-    private final UserService userService;
+    private final UserApplicationService userApplicationService;
 
     /**
      * 유저 회원가입을 진행한다.
@@ -26,7 +26,7 @@ public class UserController {
             @CookieValue(required = false) String registerToken,
             @Valid @RequestBody SignUpRequestDto request
     ) {
-        userService.signupUser(registerToken, request);
+        userApplicationService.signupUser(registerToken, request);
         return ApiResponse.onSuccess(UserSuccessStatus._CREATED_USER);
     }
 
@@ -38,7 +38,7 @@ public class UserController {
     public ResponseEntity<ApiResponse<UserInfoResponseDto>> getUserInfo(
             @CookieValue String accessToken
     ) {
-        return ApiResponse.onSuccess(UserSuccessStatus._OK_GET_USER_INFO, userService.getUserInfo(accessToken));
+        return ApiResponse.onSuccess(UserSuccessStatus._OK_GET_USER_INFO, userApplicationService.getUserInfo(accessToken));
     }
 
     /**
@@ -49,7 +49,7 @@ public class UserController {
     public ResponseEntity<ApiResponse<Void>> checkNickname(
             @Valid @RequestBody CheckNicknameRequestDto request
     ) {
-        userService.checkNickname(request);
+        userApplicationService.checkNickname(request);
         return ApiResponse.onSuccess(UserSuccessStatus._OK_NOT_DUPLICATED_NICKNAME);
     }
 

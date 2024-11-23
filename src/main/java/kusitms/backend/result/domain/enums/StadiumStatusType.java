@@ -1,6 +1,6 @@
 package kusitms.backend.result.domain.enums;
 
-import kusitms.backend.result.common.ReferencesGroup;
+import kusitms.backend.result.domain.value.ReferencesGroup;
 
 import java.util.List;
 

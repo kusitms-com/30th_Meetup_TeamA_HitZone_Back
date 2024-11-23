@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserApplicationService {
     private final UserRepository userRepository;
     private final JWTUtil jwtUtil;
     private final SmsService smsService;

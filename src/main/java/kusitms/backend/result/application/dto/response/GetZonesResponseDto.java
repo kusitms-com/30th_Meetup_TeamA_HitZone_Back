@@ -1,14 +1,13 @@
 package kusitms.backend.result.application.dto.response;
 
-import kusitms.backend.result.common.ReferencesGroup;
-import kusitms.backend.result.domain.entity.Zone;
+import kusitms.backend.result.domain.value.ReferencesGroup;
+import kusitms.backend.result.domain.model.Zone;
 
 import java.util.List;
 
 public record GetZonesResponseDto (
         List<ZoneResponseDto> zones
 ) {
-
     public record ZoneResponseDto (
             Long zoneId,
             String name,

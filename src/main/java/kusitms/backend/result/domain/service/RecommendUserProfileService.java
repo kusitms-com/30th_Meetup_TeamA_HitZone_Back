@@ -1,7 +1,9 @@
-package kusitms.backend.result.common;
+package kusitms.backend.result.domain.service;
 
 import kusitms.backend.result.domain.enums.ProfileStatusType;
+import kusitms.backend.result.domain.util.KeywordUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -9,19 +11,20 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
-public class RecommendUserProfile {
+@Service
+public class RecommendUserProfileService {
 
-    public static ProfileStatusType getRecommendedUserProfile(
+    public ProfileStatusType getRecommendedUserProfile(
             ProfileStatusType[] profiles,
             List<String> clientKeywords
     ) {
 
         ProfileStatusType filteredProfile = Arrays.stream(profiles)
-                .filter(profile -> !KeywordManager.hasForbiddenKeywords(profile.getForbiddenKeywords(), clientKeywords))
+                .filter(profile -> !KeywordUtil.hasForbiddenKeywords(profile.getForbiddenKeywords(), clientKeywords))
                 .map(profile -> {
-                    int page1Count = KeywordManager.getMatchingKeywordCount(profile.getPage1Keywords(), clientKeywords);
-                    int page2Count = KeywordManager.getMatchingKeywordCount(profile.getPage2Keywords(), clientKeywords);
-                    int page3Count = KeywordManager.getMatchingKeywordCount(profile.getPage3Keywords(), clientKeywords);
+                    int page1Count = KeywordUtil.getMatchingKeywordCount(profile.getPage1Keywords(), clientKeywords);
+                    int page2Count = KeywordUtil.getMatchingKeywordCount(profile.getPage2Keywords(), clientKeywords);
+                    int page3Count = KeywordUtil.getMatchingKeywordCount(profile.getPage3Keywords(), clientKeywords);
                     int totalMatchCount = page1Count + page2Count + page3Count;
 
                     Map<String, Object> result = new HashMap<>();

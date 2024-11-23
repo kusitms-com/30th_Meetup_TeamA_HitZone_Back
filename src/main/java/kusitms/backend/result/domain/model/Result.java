@@ -1,4 +1,4 @@
-package kusitms.backend.result.domain.entity;
+package kusitms.backend.result.domain.model;
 
 import jakarta.persistence.*;
 import kusitms.backend.global.domain.BaseTimeEntity;

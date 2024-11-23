@@ -3,7 +3,7 @@ package kusitms.backend.culture.domain.entity;
 import jakarta.persistence.*;
 import kusitms.backend.culture.domain.enums.Boundary;
 import kusitms.backend.global.domain.BaseTimeEntity;
-import kusitms.backend.result.domain.converter.StringListConverter;
+import kusitms.backend.result.infra.converter.StringListConverter;
 import kusitms.backend.stadium.domain.entity.Stadium;
 import lombok.AccessLevel;
 import lombok.Getter;

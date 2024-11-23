@@ -1,4 +1,4 @@
-package kusitms.backend.result.common;
+package kusitms.backend.result.domain.value;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

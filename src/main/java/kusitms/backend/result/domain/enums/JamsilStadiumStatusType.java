@@ -1,7 +1,7 @@
 package kusitms.backend.result.domain.enums;
 
-import kusitms.backend.result.common.Reference;
-import kusitms.backend.result.common.ReferencesGroup;
+import kusitms.backend.result.domain.value.Reference;
+import kusitms.backend.result.domain.value.ReferencesGroup;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

@@ -2,7 +2,7 @@ package kusitms.backend.stadium.presentation;
 
 import jakarta.validation.constraints.NotBlank;
 import kusitms.backend.global.dto.ApiResponse;
-import kusitms.backend.stadium.application.StadiumService;
+import kusitms.backend.stadium.application.StadiumApplicationService;
 import kusitms.backend.stadium.dto.response.GetStadiumInfosResponseDto;
 import kusitms.backend.stadium.dto.response.GetZoneGuideResponseDto;
 import kusitms.backend.stadium.status.StadiumSuccessStatus;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 public class StadiumController {
 
-    private final StadiumService stadiumService;
+    private final StadiumApplicationService stadiumApplicationService;
 
     /**
      * 해당 스타디움의 홈 이미지, 구역 이름 & 색상 리스트를 조회한다.
@@ -30,7 +30,7 @@ public class StadiumController {
     public ResponseEntity<ApiResponse<GetStadiumInfosResponseDto>> getStadiumInfos(
             @RequestParam @NotBlank String stadiumName
     ) {
-        return ApiResponse.onSuccess(StadiumSuccessStatus._OK_GET_ZONE_INFOS, stadiumService.getStadiumInfos(stadiumName));
+        return ApiResponse.onSuccess(StadiumSuccessStatus._OK_GET_ZONE_INFOS, stadiumApplicationService.getStadiumInfos(stadiumName));
     }
 
 
@@ -43,7 +43,7 @@ public class StadiumController {
             @RequestParam @NotBlank String stadiumName,
             @RequestParam @NotBlank String zoneName
     ) {
-        return ApiResponse.onSuccess(StadiumSuccessStatus._OK_GET_ZONE_GUIDE, stadiumService.getZoneGuide(stadiumName, zoneName));
+        return ApiResponse.onSuccess(StadiumSuccessStatus._OK_GET_ZONE_GUIDE, stadiumApplicationService.getZoneGuide(stadiumName, zoneName));
     }
 
 }

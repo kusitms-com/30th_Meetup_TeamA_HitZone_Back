@@ -5,7 +5,7 @@ import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import jakarta.servlet.http.Cookie;
 import kusitms.backend.configuration.ControllerTestConfig;
-import kusitms.backend.user.application.UserService;
+import kusitms.backend.user.application.UserApplicationService;
 import kusitms.backend.user.dto.request.CheckNicknameRequestDto;
 import kusitms.backend.user.dto.request.SignUpRequestDto;
 import kusitms.backend.user.dto.response.UserInfoResponseDto;
@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class UserControllerTest extends ControllerTestConfig {
 
     @MockBean
-    private UserService userService;
+    private UserApplicationService userApplicationService;
 
     @Test
     @DisplayName("닉네임 중복 유무를 확인한다.")
@@ -47,7 +47,7 @@ public class UserControllerTest extends ControllerTestConfig {
                 }
                 """;
 
-        Mockito.doNothing().when(userService).checkNickname(any(CheckNicknameRequestDto.class));
+        Mockito.doNothing().when(userApplicationService).checkNickname(any(CheckNicknameRequestDto.class));
 
         // when
         ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.post("/api/v1/nickname/check")
@@ -95,7 +95,7 @@ public class UserControllerTest extends ControllerTestConfig {
                 "nickname" : "유저 닉네임"
             }
             """;
-        Mockito.doNothing().when(userService).signupUser(anyString(), any(SignUpRequestDto.class));
+        Mockito.doNothing().when(userApplicationService).signupUser(anyString(), any(SignUpRequestDto.class));
 
         // when
         ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.post("/api/v1/signup")
@@ -141,7 +141,7 @@ public class UserControllerTest extends ControllerTestConfig {
 
         UserInfoResponseDto userInfoResponseDto = new UserInfoResponseDto("유저 닉네임", "유저 이메일");
 
-        Mockito.when(userService.getUserInfo(anyString()))
+        Mockito.when(userApplicationService.getUserInfo(anyString()))
                 .thenReturn(userInfoResponseDto);
 
         // when

@@ -19,7 +19,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class StadiumService {
+public class StadiumApplicationService {
 
     private final StadiumRepository stadiumRepository;
 

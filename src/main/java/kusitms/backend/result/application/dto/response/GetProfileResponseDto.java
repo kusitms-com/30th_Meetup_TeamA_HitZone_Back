@@ -1,6 +1,6 @@
 package kusitms.backend.result.application.dto.response;
 
-import kusitms.backend.result.domain.entity.Profile;
+import kusitms.backend.result.domain.model.Profile;
 
 import java.util.List;
 

@@ -2,13 +2,12 @@ package kusitms.backend.result.application;
 
 import kusitms.backend.auth.jwt.JWTUtil;
 import kusitms.backend.global.exception.CustomException;
-import kusitms.backend.result.common.RecommendTopRankedZones;
-import kusitms.backend.result.common.RecommendUserProfile;
-import kusitms.backend.result.domain.entity.Profile;
-import kusitms.backend.result.domain.entity.Result;
-import kusitms.backend.result.domain.entity.Zone;
-import kusitms.backend.result.domain.enums.JamsilStadiumStatusType;
-import kusitms.backend.result.domain.enums.KtWizStadiumStatusType;
+import kusitms.backend.result.domain.service.RecommendTopRankedZonesService;
+import kusitms.backend.result.domain.service.RecommendUserProfileService;
+import kusitms.backend.result.domain.service.ResultDomainService;
+import kusitms.backend.result.domain.model.Profile;
+import kusitms.backend.result.domain.model.Result;
+import kusitms.backend.result.domain.model.Zone;
 import kusitms.backend.result.domain.enums.ProfileStatusType;
 import kusitms.backend.result.domain.enums.StadiumStatusType;
 import kusitms.backend.result.domain.repository.ResultRepository;
@@ -17,9 +16,8 @@ import kusitms.backend.result.application.dto.response.GetProfileResponseDto;
 import kusitms.backend.result.application.dto.response.GetZonesResponseDto;
 import kusitms.backend.result.application.dto.response.SaveTopRankedZoneResponseDto;
 import kusitms.backend.result.status.ResultErrorStatus;
-import kusitms.backend.stadium.application.StadiumService;
-import kusitms.backend.stadium.status.StadiumErrorStatus;
-import kusitms.backend.user.application.UserService;
+import kusitms.backend.stadium.application.StadiumApplicationService;
+import kusitms.backend.user.application.UserApplicationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -32,26 +30,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ResultApplicationService {
 
-    private final UserService userService;
-    private final StadiumService stadiumService;
+    private final UserApplicationService userApplicationService;
+    private final StadiumApplicationService stadiumApplicationService;
+    private final ResultDomainService resultDomainService;
+    private final RecommendUserProfileService recommendUserProfileService;
+    private final RecommendTopRankedZonesService recommendTopRankedZonesService;
     private final ResultRepository resultRepository;
     private final JWTUtil jwtUtil;
 
     @Transactional
     public <T extends Enum<T> & StadiumStatusType> SaveTopRankedZoneResponseDto saveRecommendedResult(String accessToken, SaveTopRankedZoneRequestDto request) {
 
-        T[] zones = switch (request.stadium()) {
-            case "잠실종합운동장 (잠실)" -> (T[]) JamsilStadiumStatusType.values();
-            case "수원KT위즈파크" -> (T[]) KtWizStadiumStatusType.values();
-            default -> throw new CustomException(StadiumErrorStatus._NOT_FOUND_STADIUM);
-        };
-
-        ProfileStatusType recommendedProfile = RecommendUserProfile.getRecommendedUserProfile(
+        T[] zones = resultDomainService.extractZonesByStadiumName(request.stadium());
+        ProfileStatusType recommendedProfile = recommendUserProfileService.getRecommendedUserProfile(
                 ProfileStatusType.values(), List.of(request.clientKeywords()));
-        List<T> recommendedZones = RecommendTopRankedZones.getTopRankedZones(
+        List<T> recommendedZones = recommendTopRankedZonesService.getTopRankedZones(
                 zones, List.of(request.clientKeywords()));
 
-        Long stadiumId = stadiumService.getIdByStadiumName(request.stadium());
+        Long stadiumId = stadiumApplicationService.getIdByStadiumName(request.stadium());
+
         Result result;
         if (accessToken == null) {
             result = Result.builder()
@@ -62,7 +59,7 @@ public class ResultApplicationService {
         }
         else{
             Long userId = jwtUtil.getUserIdFromToken(accessToken);
-            userService.isExistUserById(userId);
+            userApplicationService.isExistUserById(userId);
 
             result = Result.builder()
                     .userId(userId)

@@ -1,8 +1,8 @@
-package kusitms.backend.result.common;
+package kusitms.backend.result.domain.util;
 
 import java.util.List;
 
-public class KeywordManager {
+public class KeywordUtil {
 
     public static int getMatchingKeywordCount(List<String> keywords, List<String> clientKeywords){
         return (int) keywords.stream()
