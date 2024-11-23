@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "re commend_zone")
+@Table(name = "recommend_zone")
 public class Zone extends BaseTimeEntity {
 
     @Id
