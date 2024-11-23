@@ -32,7 +32,11 @@ public enum ErrorStatus implements BaseErrorCode {
     // Common Errors
     _DATA_NOT_FOUND(HttpStatus.NOT_FOUND, "COMMON-001", "데이터를 찾을 수 없습니다."),
     _INVALID_PARAMETER(HttpStatus.BAD_REQUEST, "COMMON-002", "잘못된 입력 값입니다."),
-    _RESOURCE_NOT_FOUND(HttpStatus.NOT_FOUND, "COMMON-003", "요청한 리소스를 찾을 수 없습니다.");
+    _RESOURCE_NOT_FOUND(HttpStatus.NOT_FOUND, "COMMON-003", "요청한 리소스를 찾을 수 없습니다."),
+
+    // Cookie Errors
+    _MISSING_TOKEN_IN_COOKIE(HttpStatus.UNAUTHORIZED, "COOKIE-001", "쿠키에 토큰이 존재하지 않습니다.")
+    ;
 
     private final HttpStatus httpStatus;
     private final String code;
