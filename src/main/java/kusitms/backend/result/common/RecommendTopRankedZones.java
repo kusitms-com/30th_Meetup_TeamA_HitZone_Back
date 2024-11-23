@@ -4,6 +4,7 @@ import kusitms.backend.result.domain.enums.StadiumStatusType;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class RecommendTopRankedZones {
@@ -50,15 +51,24 @@ public class RecommendTopRankedZones {
                     log.info("zone: {}, totalMatchCount: {}, page1Count: {}, page2Count: {}, page3Count: {}", result.get("zone"), result.get("totalMatchCount"), result.get("page1Count"), result.get("page2Count"), result.get("page3Count"));
                     return (T) result.get("zone");
                 })
+                .collect(Collectors.toCollection(ArrayList::new)); // 수정 가능한 리스트 생성
+
+        List<T> priorityDummyZones = Arrays.stream(zones)
+                .filter(zone -> {
+                    int ordinal = zone.ordinal();
+                    return ordinal == 0 || ordinal == 1 || ordinal == 2;
+                })
                 .toList();
 
-        // 필터링된 결과가 없을 경우 첫 번째 구역을 반환
-        if (filteredZones.isEmpty()) {
-            return Arrays.stream(zones)
-                    .findFirst()
-                    .map(List::of)
-                    .orElse(Collections.emptyList());
+        for (T priorityDummyZone : priorityDummyZones) {
+            if (filteredZones.size() >= 3) {
+                break;
+            }
+            if (!filteredZones.contains(priorityDummyZone)) {
+                filteredZones.add(priorityDummyZone);
+            }
         }
+
         return filteredZones;
     }
 }
