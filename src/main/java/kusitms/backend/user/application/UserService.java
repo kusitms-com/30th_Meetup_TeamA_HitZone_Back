@@ -8,6 +8,7 @@ import kusitms.backend.auth.dto.response.OAuth2UserInfo;
 import kusitms.backend.auth.jwt.JWTUtil;
 import kusitms.backend.auth.status.AuthErrorStatus;
 import kusitms.backend.global.exception.CustomException;
+import kusitms.backend.global.redis.DistributedLockManager;
 import kusitms.backend.global.redis.RedisManager;
 import kusitms.backend.global.util.CookieUtil;
 import kusitms.backend.user.domain.entity.User;
@@ -34,6 +35,9 @@ public class UserService {
     private final JWTUtil jwtUtil;
     private final SmsService smsService;
     private final RedisManager redisManager;
+    private final DistributedLockManager distributedLockManager;
+
+    private static final long LOCK_TIMEOUT = 5000; // 5초
 
     /**
      * OAuth2 사용자 정보 추출 및 신규 여부 확인.
@@ -198,12 +202,27 @@ public class UserService {
      *
      * @param request 닉네임 중복 확인 요청 정보
      */
-    @Transactional(readOnly = true)
+    @Transactional
     public void checkNickname(CheckNicknameRequestDto request) {
-        User user = userRepository.findByNickname(request.nickname());
-        if (user != null) {
+        String nickname = request.nickname();
+        String lockKey = "lock:nickname:" + nickname;
+
+        // 1. 락 획득 시도
+        if (!distributedLockManager.acquireLock(lockKey, LOCK_TIMEOUT)) {
             throw new CustomException(UserErrorStatus._DUPLICATED_NICKNAME);
         }
-        log.info("닉네임 사용 가능: {}", request.nickname());
+
+        try {
+            // 2. 닉네임 중복 확인
+            User user = userRepository.findByNickname(nickname);
+            if (user != null) {
+                throw new CustomException(UserErrorStatus._DUPLICATED_NICKNAME);
+            }
+
+            log.info("닉네임 사용 가능: {}", nickname);
+        } finally {
+            // 3. 락 해제
+            distributedLockManager.releaseLock(lockKey);
+        }
     }
 }
