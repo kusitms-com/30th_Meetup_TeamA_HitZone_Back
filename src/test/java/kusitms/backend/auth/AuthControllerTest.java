@@ -3,8 +3,8 @@ package kusitms.backend.auth;
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
 import kusitms.backend.auth.application.AuthService;
+import kusitms.backend.auth.dto.response.TokenResponseDto;
 import kusitms.backend.auth.presentation.AuthController;
 import kusitms.backend.configuration.ControllerTestConfig;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +17,6 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
 import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
@@ -36,7 +35,8 @@ public class AuthControllerTest extends ControllerTestConfig {
     @DisplayName("토큰 재발급을 한다.")
     public void reIssueToken() throws Exception {
 
-        Mockito.doNothing().when(authService).reIssueToken(anyString(), any(HttpServletResponse.class));
+        Mockito.when(authService.reIssueToken(anyString()))
+                .thenReturn(new TokenResponseDto("newAccessToken", "newRefreshToken", 3600L, 7200L));
 
         // when
         ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.put("/api/v1/token/re-issue")
