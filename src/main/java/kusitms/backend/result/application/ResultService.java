@@ -19,9 +19,11 @@ import kusitms.backend.result.dto.response.GetProfileResponseDto;
 import kusitms.backend.result.dto.response.GetZonesResponseDto;
 import kusitms.backend.result.dto.response.SaveTopRankedZoneResponseDto;
 import kusitms.backend.result.status.ResultErrorStatus;
+import kusitms.backend.stadium.application.StadiumService;
 import kusitms.backend.stadium.domain.entity.Stadium;
 import kusitms.backend.stadium.domain.repository.StadiumRepository;
 import kusitms.backend.stadium.status.StadiumErrorStatus;
+import kusitms.backend.user.application.UserService;
 import kusitms.backend.user.domain.entity.User;
 import kusitms.backend.user.domain.repository.UserRepository;
 import kusitms.backend.user.status.UserErrorStatus;
@@ -37,8 +39,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ResultService {
 
-    private final UserRepository userRepository;
-    private final StadiumRepository stadiumRepository;
+    private final UserService userService;
+    private final StadiumService stadiumService;
     private final ResultRepository resultRepository;
     private final ZoneRepository zoneRepository;
     private final ProfileRepository profileRepository;
@@ -58,25 +60,22 @@ public class ResultService {
         List<T> recommendedZones = RecommendTopRankedZones.getTopRankedZones(
                 zones, List.of(request.clientKeywords()));
 
-        Stadium stadium = stadiumRepository.findByName(request.stadium())
-                .orElseThrow(() -> new CustomException(StadiumErrorStatus._NOT_FOUND_STADIUM));
+        Long stadiumId = stadiumService.getIdByStadiumName(request.stadium());
         Result result;
         if (accessToken == null) {
             result = Result.builder()
-                    .stadiumId(stadium.getId())
+                    .stadiumId(stadiumId)
                     .preference(request.preference())
                     .build();
             resultRepository.save(result);
         }
         else{
             Long userId = jwtUtil.getUserIdFromToken(accessToken);
-            User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new CustomException(UserErrorStatus._NOT_FOUND_USER));
-            log.info("유저 정보 조회 성공");
+            userService.isExistUserById(userId);
 
             result = Result.builder()
                     .userId(userId)
-                    .stadiumId(stadium.getId())
+                    .stadiumId(stadiumId)
                     .preference(request.preference())
                     .build();
             resultRepository.save(result);
