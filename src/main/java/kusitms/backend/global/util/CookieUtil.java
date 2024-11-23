@@ -3,8 +3,8 @@ package kusitms.backend.global.util;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kusitms.backend.auth.status.AuthErrorStatus;
 import kusitms.backend.global.exception.CustomException;
+import kusitms.backend.global.status.ErrorStatus;
 
 public class CookieUtil {
 
@@ -75,6 +75,6 @@ public class CookieUtil {
                 }
             }
         }
-        throw new CustomException(AuthErrorStatus._MISSING_TOKEN);
+        throw new CustomException(ErrorStatus._MISSING_TOKEN_IN_COOKIE);
     }
 }
