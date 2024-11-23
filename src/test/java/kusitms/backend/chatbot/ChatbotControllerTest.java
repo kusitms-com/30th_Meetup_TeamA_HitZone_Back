@@ -17,7 +17,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
+import reactor.core.publisher.Mono;
 
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -25,8 +27,8 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.asyncDispatch;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ChatbotController.class)
 public class ChatbotControllerTest extends ControllerTestConfig {
@@ -100,30 +102,36 @@ public class ChatbotControllerTest extends ControllerTestConfig {
     @DisplayName("Clova 챗봇 답변 조회")
     public void getClovaChatbotAnswer() throws Exception {
         // given
-        GetClovaChatbotAnswerResponse response = new GetClovaChatbotAnswerResponse("안녕하세요! 저는 야구 가이드 챗봇 '루키'에요! 야구에 대한 궁금한 점이 있다면 언제든지 물어봐 주세요!");
+        GetClovaChatbotAnswerResponse response = new GetClovaChatbotAnswerResponse(
+                "안녕하세요! 저는 야구 가이드 챗봇 '루키'에요! 야구에 대한 궁금한 점이 있다면 언제든지 물어봐 주세요!");
 
         Mockito.when(clovaService.getClovaChatbotAnswer(anyString()))
-                .thenReturn(response);
+                .thenReturn(Mono.just(response));
 
         String clovaChatbotAnswerJsonRequest = """
-            {
-                "message": "너 누구야?"
-            }
-            """;
+    {
+        "message": "너 누구야?"
+    }
+    """;
 
         // when
-        ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.post("/api/v1/chatbot/clova")
-                .content(clovaChatbotAnswerJsonRequest)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON));
+        MvcResult mvcResult = this.mockMvc.perform(
+                        RestDocumentationRequestBuilders.post("/api/v1/chatbot/clova")
+                                .content(clovaChatbotAnswerJsonRequest)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(request().asyncStarted()) // 비동기 처리 시작 확인
+                .andReturn();
 
-        // then
-        resultActions
+        this.mockMvc.perform(asyncDispatch(mvcResult))
                 .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.isSuccess").value(true))
                 .andExpect(jsonPath("$.code").value("200"))
                 .andExpect(jsonPath("$.message").value("네이버 클로바 챗봇 답변을 가져오는 데 성공했습니다."))
-                .andExpect(jsonPath("$.payload.answer").value("안녕하세요! 저는 야구 가이드 챗봇 '루키'에요! 야구에 대한 궁금한 점이 있다면 언제든지 물어봐 주세요!"))
+                .andExpect(jsonPath("$.payload.answer").value(
+                        "안녕하세요! 저는 야구 가이드 챗봇 '루키'에요! 야구에 대한 궁금한 점이 있다면 언제든지 물어봐 주세요!"
+                ))
 
                 // docs
                 .andDo(MockMvcRestDocumentationWrapper.document("chatbot/clova",
