@@ -4,7 +4,9 @@ import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.result.domain.enums.JamsilStadiumStatusType;
 import kusitms.backend.result.domain.enums.KtWizStadiumStatusType;
 import kusitms.backend.result.domain.enums.StadiumStatusType;
+import kusitms.backend.stadium.domain.entity.Stadium;
 import kusitms.backend.stadium.domain.enums.StadiumInfo;
+import kusitms.backend.stadium.domain.repository.StadiumRepository;
 import kusitms.backend.stadium.dto.response.GetStadiumInfosResponseDto;
 import kusitms.backend.stadium.dto.response.GetZoneGuideResponseDto;
 import kusitms.backend.stadium.status.StadiumErrorStatus;
@@ -18,6 +20,15 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class StadiumService {
+
+    private final StadiumRepository stadiumRepository;
+
+    @Transactional(readOnly = true)
+    public Long getIdByStadiumName(String staiumName) {
+        Stadium stadium = stadiumRepository.findByName(staiumName)
+                .orElseThrow(() -> new CustomException(StadiumErrorStatus._NOT_FOUND_STADIUM));
+        return stadium.getId();
+    }
 
     @Transactional(readOnly = true)
     public GetStadiumInfosResponseDto getStadiumInfos(String stadiumName) {

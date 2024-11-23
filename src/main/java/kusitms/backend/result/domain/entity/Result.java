@@ -2,8 +2,6 @@ package kusitms.backend.result.domain.entity;
 
 import jakarta.persistence.*;
 import kusitms.backend.global.domain.BaseTimeEntity;
-import kusitms.backend.stadium.domain.entity.Stadium;
-import kusitms.backend.user.domain.entity.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
