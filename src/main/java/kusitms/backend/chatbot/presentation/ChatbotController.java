@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequiredArgsConstructor
@@ -56,11 +57,10 @@ public class ChatbotController {
      * @return Clova 챗봇으로부터 생성된 답변
      */
     @PostMapping("/clova")
-    public ResponseEntity<ApiResponse<GetClovaChatbotAnswerResponse>> getClovaChatbotAnswer(
+    public Mono<ResponseEntity<ApiResponse<GetClovaChatbotAnswerResponse>>> getClovaChatbotAnswer(
             @Valid @RequestBody GetClovaChatbotAnswerRequest request) {
 
-        GetClovaChatbotAnswerResponse response = clovaService.getClovaChatbotAnswer(request.message());
-
-        return ApiResponse.onSuccess(ChatbotSuccessStatus._GET_CLOVA_CHATBOT_ANSWER, response);
+        return clovaService.getClovaChatbotAnswer(request.message())
+                .map(response -> ApiResponse.onSuccess(ChatbotSuccessStatus._GET_CLOVA_CHATBOT_ANSWER, response));
     }
 }
