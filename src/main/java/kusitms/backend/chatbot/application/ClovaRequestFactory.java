@@ -1,5 +1,6 @@
 package kusitms.backend.chatbot.application;
 
+import kusitms.backend.chatbot.dto.request.ChatbotRequest;
 import kusitms.backend.chatbot.dto.request.ClovaRequest;
 import kusitms.backend.chatbot.dto.request.Message;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,7 @@ public class ClovaRequestFactory {
 
     private final MessageFactory messageFactory;
 
-    public ClovaRequest createClovaRequest() {
+    public ChatbotRequest createClovaRequest() {
         ArrayList<Message> messages = new ArrayList<>();
         messages.add(messageFactory.createSystemMessage());
 
