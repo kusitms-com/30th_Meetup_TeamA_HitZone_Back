@@ -4,7 +4,7 @@ import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import jakarta.servlet.http.Cookie;
 import kusitms.backend.auth.application.AuthService;
-import kusitms.backend.auth.dto.response.TokenResponse;
+import kusitms.backend.auth.dto.response.TokenResponseDto;
 import kusitms.backend.auth.presentation.AuthController;
 import kusitms.backend.configuration.ControllerTestConfig;
 import org.junit.jupiter.api.DisplayName;
@@ -36,7 +36,7 @@ public class AuthControllerTest extends ControllerTestConfig {
     public void reIssueToken() throws Exception {
 
         Mockito.when(authService.reIssueToken(anyString()))
-                .thenReturn(new TokenResponse("newAccessToken", "newRefreshToken", 3600L, 7200L));
+                .thenReturn(new TokenResponseDto("newAccessToken", "newRefreshToken", 3600L, 7200L));
 
         // when
         ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.put("/api/v1/token/re-issue")

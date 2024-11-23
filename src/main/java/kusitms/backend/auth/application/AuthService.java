@@ -1,6 +1,6 @@
 package kusitms.backend.auth.application;
 
-import kusitms.backend.auth.dto.response.TokenResponse;
+import kusitms.backend.auth.dto.response.TokenResponseDto;
 import kusitms.backend.auth.jwt.JWTUtil;
 import kusitms.backend.auth.status.AuthErrorStatus;
 import kusitms.backend.global.exception.CustomException;
@@ -23,7 +23,7 @@ public class AuthService {
      * @param refreshToken 클라이언트로부터 받은 리프레시 토큰
      * @return 새로 생성된 Access Token과 Refresh Token
      */
-    public TokenResponse reIssueToken(String refreshToken) {
+    public TokenResponseDto reIssueToken(String refreshToken) {
         if (refreshToken == null) {
             throw new CustomException(AuthErrorStatus._EXPIRED_REFRESH_TOKEN);
         }
@@ -33,6 +33,6 @@ public class AuthService {
         String newRefreshToken = jwtUtil.generateAccessOrRefreshToken(userId, jwtUtil.getRefreshTokenExpirationTime());
 
         redisManager.saveRefreshToken(userId.toString(), newRefreshToken);
-        return new TokenResponse(newAccessToken, newRefreshToken, jwtUtil.getAccessTokenExpirationTime(), jwtUtil.getRefreshTokenExpirationTime());
+        return new TokenResponseDto(newAccessToken, newRefreshToken, jwtUtil.getAccessTokenExpirationTime(), jwtUtil.getRefreshTokenExpirationTime());
     }
 }

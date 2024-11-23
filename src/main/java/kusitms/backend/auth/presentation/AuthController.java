@@ -2,7 +2,7 @@ package kusitms.backend.auth.presentation;
 
 import jakarta.servlet.http.HttpServletResponse;
 import kusitms.backend.auth.application.AuthService;
-import kusitms.backend.auth.dto.response.TokenResponse;
+import kusitms.backend.auth.dto.response.TokenResponseDto;
 import kusitms.backend.auth.status.AuthSuccessStatus;
 import kusitms.backend.global.dto.ApiResponse;
 import kusitms.backend.global.exception.CustomException;
@@ -36,11 +36,11 @@ public class AuthController {
     ) {
 
         // AuthService를 통해 새 토큰 생성
-        TokenResponse tokenResponse = authService.reIssueToken(refreshToken);
+        TokenResponseDto tokenResponseDto = authService.reIssueToken(refreshToken);
 
         // 새 토큰을 쿠키에 설정
-        CookieUtil.setAuthCookies(response, tokenResponse.accessToken(), tokenResponse.refreshToken(),
-                tokenResponse.accessTokenExpiration(), tokenResponse.refreshTokenExpiration());
+        CookieUtil.setAuthCookies(response, tokenResponseDto.accessToken(), tokenResponseDto.refreshToken(),
+                tokenResponseDto.accessTokenExpiration(), tokenResponseDto.refreshTokenExpiration());
 
         return ApiResponse.onSuccess(AuthSuccessStatus._OK_RE_ISSUE_TOKEN);
     }

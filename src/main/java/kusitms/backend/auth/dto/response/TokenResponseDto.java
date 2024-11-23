@@ -1,6 +1,6 @@
 package kusitms.backend.auth.dto.response;
 
-public record TokenResponse(
+public record TokenResponseDto(
         String accessToken,
         String refreshToken,
         long accessTokenExpiration,
