@@ -31,7 +31,7 @@ public class AuthController {
      */
     @PutMapping("/token/re-issue")
     public ResponseEntity<ApiResponse<Void>> reIssueToken(
-            @CookieValue("refreshToken") String refreshToken,
+            @CookieValue(value = "refreshToken", required = false) String refreshToken,
             HttpServletResponse response
     ) {
 
