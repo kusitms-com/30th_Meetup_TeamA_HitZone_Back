@@ -116,6 +116,18 @@ public class UserService {
         String providerId = jwtUtil.getProviderIdFromRegisterToken(registerToken);
         String email = jwtUtil.getEmailFromRegisterToken(registerToken);
 
+        /* 1인 1계정 처리를 위한 이미 등록된 회원인지 확인하여 알려주기 (현재 미사용하는 기능으로 주석 처리)
+        User existedUser = userRepository.findByPhoneNumber(request.phoneNumber());
+        if (existedUser != null && existedUser.getProvider() != ProviderStatusType.of(provider)) {
+            if (existedUser.getProvider() == ProviderStatusType.of("kakao")) {
+                throw new CustomException(UserErrorStatus._EXISTING_USER_ACCOUNT_KAKAO);
+            } else if (existedUser.getProvider() == ProviderStatusType.of("google")) {
+                throw new CustomException(UserErrorStatus._EXISTING_USER_ACCOUNT_GOOGLE);
+            } else if (existedUser.getProvider() == ProviderStatusType.of("naver")) {
+                throw new CustomException(UserErrorStatus._EXISTING_USER_ACCOUNT_NAVER);
+            }
+        }*/
+
         userRepository.save(
                 SignUpRequestDto.toEntity(
                         provider,
