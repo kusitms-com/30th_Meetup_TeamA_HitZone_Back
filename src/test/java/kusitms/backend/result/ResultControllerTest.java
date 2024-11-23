@@ -5,7 +5,7 @@ import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import jakarta.servlet.http.Cookie;
 import kusitms.backend.configuration.ControllerTestConfig;
-import kusitms.backend.result.application.ResultService;
+import kusitms.backend.result.application.ResultApplicationService;
 import kusitms.backend.result.common.Reference;
 import kusitms.backend.result.common.ReferencesGroup;
 import kusitms.backend.result.application.dto.request.SaveTopRankedZoneRequestDto;
@@ -39,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ResultControllerTest extends ControllerTestConfig {
 
     @MockBean
-    private ResultService resultService;
+    private ResultApplicationService resultApplicationService;
 
     @Test
     @DisplayName("구역 추천 결과 DB 저장")
@@ -54,7 +54,7 @@ public class ResultControllerTest extends ControllerTestConfig {
             """;
         SaveTopRankedZoneResponseDto saveTopRankedZoneResponseDto = SaveTopRankedZoneResponseDto.of(1L);
 
-        Mockito.when(resultService.saveRecommendedZones(anyString(), any(SaveTopRankedZoneRequestDto.class)))
+        Mockito.when(resultApplicationService.saveRecommendedZones(anyString(), any(SaveTopRankedZoneRequestDto.class)))
                 .thenReturn(saveTopRankedZoneResponseDto);
 
         // when
@@ -112,7 +112,7 @@ public class ResultControllerTest extends ControllerTestConfig {
                 List.of( "#야구장미식가", "#먹으러왔는데야구도한다?")
         );
 
-        Mockito.when(resultService.getRecommendedProfile(anyLong()))
+        Mockito.when(resultApplicationService.getRecommendedProfile(anyLong()))
                 .thenReturn(getProfileResponseDto);
 
         // when
@@ -204,7 +204,7 @@ public class ResultControllerTest extends ControllerTestConfig {
 
         GetZonesResponseDto getZonesResponseDto = GetZonesResponseDto.of(List.of(redZone, blueZone));
 
-        Mockito.when(resultService.getRecommendedZones(anyLong(), anyLong()))
+        Mockito.when(resultApplicationService.getRecommendedZones(anyLong(), anyLong()))
                 .thenReturn(getZonesResponseDto);
 
         // when

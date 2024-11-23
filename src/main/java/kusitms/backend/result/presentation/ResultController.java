@@ -3,7 +3,7 @@ package kusitms.backend.result.presentation;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import kusitms.backend.global.dto.ApiResponse;
-import kusitms.backend.result.application.ResultService;
+import kusitms.backend.result.application.ResultApplicationService;
 import kusitms.backend.result.application.dto.request.SaveTopRankedZoneRequestDto;
 import kusitms.backend.result.application.dto.response.GetProfileResponseDto;
 import kusitms.backend.result.application.dto.response.GetZonesResponseDto;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 public class ResultController {
 
-    private final ResultService resultService;
+    private final ResultApplicationService resultApplicationService;
 
     /**
      * 구역 추천받은 결과를 DB에 저장한다.
@@ -31,7 +31,7 @@ public class ResultController {
             @CookieValue(required = false) String accessToken,
             @Valid @RequestBody SaveTopRankedZoneRequestDto request
     ) {
-        return ApiResponse.onSuccess(ResultSuccessStatus._OK_SAVE_RECOMMEND_ZONES, resultService.saveRecommendedZones(accessToken, request));
+        return ApiResponse.onSuccess(ResultSuccessStatus._OK_SAVE_RECOMMEND_ZONES, resultApplicationService.saveRecommendedZones(accessToken, request));
     }
 
     /**
@@ -42,7 +42,7 @@ public class ResultController {
     public ResponseEntity<ApiResponse<GetProfileResponseDto>> getRecommendedProfile(
             @RequestParam @Min(1L) Long resultId
     ) {
-        return ApiResponse.onSuccess(ResultSuccessStatus._OK_GET_RECOMMEND_PROFILE, resultService.getRecommendedProfile(resultId));
+        return ApiResponse.onSuccess(ResultSuccessStatus._OK_GET_RECOMMEND_PROFILE, resultApplicationService.getRecommendedProfile(resultId));
     }
 
     /**
@@ -54,7 +54,7 @@ public class ResultController {
             @RequestParam @Min(1L) Long resultId,
             @RequestParam @Min(1L) Long count
     ) {
-        return ApiResponse.onSuccess(ResultSuccessStatus._OK_GET_RECOMMEND_ZONES, resultService.getRecommendedZones(resultId, count));
+        return ApiResponse.onSuccess(ResultSuccessStatus._OK_GET_RECOMMEND_ZONES, resultApplicationService.getRecommendedZones(resultId, count));
     }
 
 }

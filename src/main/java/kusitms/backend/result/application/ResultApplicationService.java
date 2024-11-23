@@ -30,7 +30,7 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ResultService {
+public class ResultApplicationService {
 
     private final UserService userService;
     private final StadiumService stadiumService;
