@@ -54,7 +54,7 @@ public class ResultControllerTest extends ControllerTestConfig {
             """;
         SaveTopRankedZoneResponseDto saveTopRankedZoneResponseDto = SaveTopRankedZoneResponseDto.of(1L);
 
-        Mockito.when(resultApplicationService.saveRecommendedZones(anyString(), any(SaveTopRankedZoneRequestDto.class)))
+        Mockito.when(resultApplicationService.saveRecommendedResult(anyString(), any(SaveTopRankedZoneRequestDto.class)))
                 .thenReturn(saveTopRankedZoneResponseDto);
 
         // when

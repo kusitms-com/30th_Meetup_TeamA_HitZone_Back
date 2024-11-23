@@ -29,11 +29,11 @@ public class ResultController {
      * @return Result 엔티티의 id
      */
     @PostMapping("/results/save")
-    public ResponseEntity<ApiResponse<SaveTopRankedZoneResponseDto>> saveRecommendedZones(
+    public ResponseEntity<ApiResponse<SaveTopRankedZoneResponseDto>> saveRecommendedResult(
             @CookieValue(required = false) String accessToken,
             @Valid @RequestBody SaveTopRankedZoneRequestDto request
     ) {
-        SaveTopRankedZoneResponseDto response = resultApplicationService.saveRecommendedZones(accessToken, request);
+        SaveTopRankedZoneResponseDto response = resultApplicationService.saveRecommendedResult(accessToken, request);
         return ApiResponse.onSuccess(ResultSuccessStatus._OK_SAVE_RECOMMEND_ZONES, response);
     }
 

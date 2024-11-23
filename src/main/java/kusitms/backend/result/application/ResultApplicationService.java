@@ -38,7 +38,7 @@ public class ResultApplicationService {
     private final JWTUtil jwtUtil;
 
     @Transactional
-    public <T extends Enum<T> & StadiumStatusType> SaveTopRankedZoneResponseDto saveRecommendedZones(String accessToken, SaveTopRankedZoneRequestDto request) {
+    public <T extends Enum<T> & StadiumStatusType> SaveTopRankedZoneResponseDto saveRecommendedResult(String accessToken, SaveTopRankedZoneRequestDto request) {
 
         T[] zones = switch (request.stadium()) {
             case "잠실종합운동장 (잠실)" -> (T[]) JamsilStadiumStatusType.values();
