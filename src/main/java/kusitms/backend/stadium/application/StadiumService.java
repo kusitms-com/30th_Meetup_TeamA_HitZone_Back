@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.List;
 
+import static kusitms.backend.result.domain.enums.KtWizStadiumStatusType.CHEERING_DUMMY;
+
 @Service
 @RequiredArgsConstructor
 public class StadiumService {
@@ -55,6 +57,7 @@ public class StadiumService {
 
     private List<GetStadiumInfosResponseDto.ZoneInfo> getZonesNameAndColorFromStadium(StadiumStatusType[] statusTypes) {
         return Arrays.stream(statusTypes)
+                .filter(status -> status != CHEERING_DUMMY)
                 .map(status -> GetStadiumInfosResponseDto.ZoneInfo.of(status.getZoneName(), status.getZoneColor()))
                 .toList();
     }

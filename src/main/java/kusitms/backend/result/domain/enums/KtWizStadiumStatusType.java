@@ -11,7 +11,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public enum KtWizStadiumStatusType implements StadiumStatusType{
 
-    //특징 확인 필요
     CENTER("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/kt/center.svg",
             "중앙지정석",
             "#5E346E",
