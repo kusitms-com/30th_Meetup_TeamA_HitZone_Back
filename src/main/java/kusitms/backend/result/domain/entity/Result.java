@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,24 +22,36 @@ public class Result extends BaseTimeEntity {
     @Column(name = "result_id", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "stadium_id", nullable = false)
-    private Stadium stadium;
+    @Column(name = "user_id", nullable = false)
+    private Long userId; // User를 ID로 간접 참조
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "stadium_id", nullable = false)
+    private Long stadiumId; // Stadium을 ID로 간접 참조
 
     @Column(nullable = false)
     private String preference;
 
-    @OneToMany(mappedBy = "result", cascade = CascadeType.ALL)
-    private List<Zone> zones;
+    @OneToOne(mappedBy = "result", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Profile profile;
+
+    @OneToMany(mappedBy = "result", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Zone> zones = new ArrayList<>();
 
     @Builder
-    public Result(Stadium stadium, User user, String preference) {
-        this.stadium = stadium;
-        this.user = user;
+    public Result(Long userId, Long stadiumId, String preference) {
+        this.userId = userId;
+        this.stadiumId = stadiumId;
         this.preference = preference;
     }
+
+    public void addProfile(Profile profile) {
+        this.profile = profile;
+        profile.setResult(this);
+    }
+
+    public void addZone(Zone zone){
+        this.zones.add(zone);
+        zone.setResult(this);
+    }
+
 }
