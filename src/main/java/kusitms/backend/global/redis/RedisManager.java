@@ -6,6 +6,7 @@ import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.global.status.ErrorStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -16,21 +17,24 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class RedisManager {
 
-    private static final int AUTH_CODE_EXPIRATION_MINUTES = 5; // 인증 코드 유효기간 (분)
-    private static final int REFRESH_TOKEN_EXPIRATION_DAYS = 14; // 리프레시 토큰 유효기간 (일)
-
     private final StringRedisTemplate redisTemplate;
     private final JWTUtil jwtUtil;
 
+    @Value("${spring.redis.auth-code-expiration-minutes}")
+    private int authCodeExpirationMinutes; // 인증 코드 유효기간 (분)
+
+    @Value("${spring.redis.refresh-token-expiration-days}")
+    private int refreshTokenExpirationDays; // 리프레시 토큰 유효기간 (일)
+
     /**
-     * 휴대폰 인증 코드 저장 (5분간 유효).
+     * 휴대폰 인증 코드 저장.
      *
      * @param phoneNumber 휴대폰 번호
      * @param authCode    인증 코드
      */
     public void savePhoneVerificationCode(String phoneNumber, String authCode) {
         try {
-            redisTemplate.opsForValue().set(phoneNumber, authCode, AUTH_CODE_EXPIRATION_MINUTES, TimeUnit.MINUTES);
+            redisTemplate.opsForValue().set(phoneNumber, authCode, authCodeExpirationMinutes, TimeUnit.MINUTES);
             log.info("Saved auth code for phone number: {}", phoneNumber);
         } catch (Exception e) {
             log.error("Failed to save auth code for phone number: {}", phoneNumber, e);
@@ -54,14 +58,14 @@ public class RedisManager {
     }
 
     /**
-     * 리프레시 토큰 저장 (2주간 유효).
+     * 리프레시 토큰 저장.
      *
      * @param userId       사용자 ID
      * @param refreshToken 리프레시 토큰
      */
     public void saveRefreshToken(String userId, String refreshToken) {
         try {
-            redisTemplate.opsForValue().set(userId, refreshToken, REFRESH_TOKEN_EXPIRATION_DAYS, TimeUnit.DAYS);
+            redisTemplate.opsForValue().set(userId, refreshToken, refreshTokenExpirationDays, TimeUnit.DAYS);
             log.info("Saved refresh token for userId: {}", userId);
         } catch (Exception e) {
             log.error("Failed to save refresh token for userId: {}", userId, e);
