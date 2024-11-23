@@ -7,9 +7,6 @@ import kusitms.backend.global.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class ChatbotService {
@@ -41,29 +38,20 @@ public class ChatbotService {
     private <T extends Enum<T> & GuideAnswer> GetGuideChatbotAnswerResponse getAnswersByOrderAndStadium(
             int orderNumber, String stadiumName, T[] guideAnswers) {
 
-        // 1. orderNumber에 맞는 enum 리스트 필터링
-        List<T> matchingAnswers = new ArrayList<>();
-        for (T answer : guideAnswers) {
-            if (answer.getId() == orderNumber) {
-                matchingAnswers.add(answer);
-            }
-        }
-
-        // 2. stadiumName이 일치하는 답변 찾기
-        for (T answer : matchingAnswers) {
-            if (stadiumName.equals(answer.getStadiumName())) {
-                return GetGuideChatbotAnswerResponse.of(answer.getAnswers(), answer.getImgUrl());
-            }
-        }
-
-        // 3. 일치하는 stadiumName이 없을 경우, 기본 응답 반환
-        for (T answer : matchingAnswers) {
-            if (answer.getStadiumName() == null) {
-                return GetGuideChatbotAnswerResponse.of(answer.getAnswers(), answer.getImgUrl());
-            }
-        }
-
-        // 4. 기본 응답도 없을 경우 예외 처리
-        throw new CustomException(ChatbotErrorStatus._NOT_FOUND_GUIDE_CHATBOT_ANSWER);
+        // 1. orderNumber와 stadiumName이 모두 일치하는 답변을 찾기
+        return java.util.Arrays.stream(guideAnswers)
+                .filter(answer -> answer.getId() == orderNumber) // orderNumber 필터링
+                .filter(answer -> stadiumName.equals(answer.getStadiumName())) // stadiumName 필터링
+                .findFirst()
+                .or(() ->
+                        // 2. stadiumName이 null인 기본 답변을 찾기
+                        java.util.Arrays.stream(guideAnswers)
+                                .filter(answer -> answer.getId() == orderNumber)
+                                .filter(answer -> answer.getStadiumName() == null)
+                                .findFirst()
+                )
+                .map(answer -> GetGuideChatbotAnswerResponse.of(answer.getAnswers(), answer.getImgUrl()))
+                // 3. 아무 답변도 없으면 예외 처리
+                .orElseThrow(() -> new CustomException(ChatbotErrorStatus._NOT_FOUND_GUIDE_CHATBOT_ANSWER));
     }
 }
