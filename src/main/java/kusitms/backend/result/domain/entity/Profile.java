@@ -39,8 +39,7 @@ public class Profile extends BaseTimeEntity {
     private List<String> hashTags;
 
     @Builder
-    public Profile(Result result, String imgUrl, String nickname, String type, String explanation, List<String> hashTags) {
-        this.result = result;
+    public Profile(String imgUrl, String nickname, String type, String explanation, List<String> hashTags) {
         this.imgUrl = imgUrl;
         this.nickname = nickname;
         this.type = type;

@@ -11,22 +11,15 @@ import kusitms.backend.result.domain.enums.JamsilStadiumStatusType;
 import kusitms.backend.result.domain.enums.KtWizStadiumStatusType;
 import kusitms.backend.result.domain.enums.ProfileStatusType;
 import kusitms.backend.result.domain.enums.StadiumStatusType;
-import kusitms.backend.result.domain.repository.ProfileRepository;
 import kusitms.backend.result.domain.repository.ResultRepository;
-import kusitms.backend.result.domain.repository.ZoneRepository;
 import kusitms.backend.result.dto.request.SaveTopRankedZoneRequestDto;
 import kusitms.backend.result.dto.response.GetProfileResponseDto;
 import kusitms.backend.result.dto.response.GetZonesResponseDto;
 import kusitms.backend.result.dto.response.SaveTopRankedZoneResponseDto;
 import kusitms.backend.result.status.ResultErrorStatus;
 import kusitms.backend.stadium.application.StadiumService;
-import kusitms.backend.stadium.domain.entity.Stadium;
-import kusitms.backend.stadium.domain.repository.StadiumRepository;
 import kusitms.backend.stadium.status.StadiumErrorStatus;
 import kusitms.backend.user.application.UserService;
-import kusitms.backend.user.domain.entity.User;
-import kusitms.backend.user.domain.repository.UserRepository;
-import kusitms.backend.user.status.UserErrorStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -42,8 +35,6 @@ public class ResultService {
     private final UserService userService;
     private final StadiumService stadiumService;
     private final ResultRepository resultRepository;
-    private final ZoneRepository zoneRepository;
-    private final ProfileRepository profileRepository;
     private final JWTUtil jwtUtil;
 
     @Transactional
@@ -82,24 +73,22 @@ public class ResultService {
         }
 
         Profile profile = Profile.builder()
-                .result(result)
                 .imgUrl(recommendedProfile.getImgUrl())
                 .nickname(recommendedProfile.getNickName())
                 .type(recommendedProfile.getType())
                 .hashTags(recommendedProfile.getHashTags())
                 .build();
-        profileRepository.save(profile);
+        result.addProfile(profile);
 
        recommendedZones.forEach(zoneEnum -> {
            Zone zone = Zone.builder()
-                   .result(result)
                    .name(zoneEnum.getZoneName())
                    .color(zoneEnum.getZoneColor())
                    .explanations(zoneEnum.getExplanations())
                    .tip(zoneEnum.getTip())
                    .referencesGroup(zoneEnum.getReferencesGroup())
                    .build();
-           zoneRepository.save(zone);
+           result.addZone(zone);
        });
 
        return SaveTopRankedZoneResponseDto.of(result.getId());
@@ -109,16 +98,14 @@ public class ResultService {
     public GetProfileResponseDto getRecommendedProfile(Long resultId) {
         Result result = resultRepository.findById(resultId)
                 .orElseThrow(() -> new CustomException(ResultErrorStatus._NOT_FOUND_RESULT));
-        Profile profile = profileRepository.findByResult(result)
-                .orElseThrow(() -> new CustomException(ResultErrorStatus._NOT_FOUND_PROFILE));
-        return GetProfileResponseDto.from(profile);
+        return GetProfileResponseDto.from(result.getProfile());
     }
 
     @Transactional(readOnly = true)
     public GetZonesResponseDto getRecommendedZones(Long resultId, Long count) {
         Result result = resultRepository.findById(resultId)
                 .orElseThrow(() -> new CustomException(ResultErrorStatus._NOT_FOUND_RESULT));
-        List<GetZonesResponseDto.ZoneResponseDto> zones = zoneRepository.findAllByResult(result)
+        List<GetZonesResponseDto.ZoneResponseDto> zones = result.getZones()
                 .stream()
                 .limit(count)
                 .map(GetZonesResponseDto.ZoneResponseDto::from)

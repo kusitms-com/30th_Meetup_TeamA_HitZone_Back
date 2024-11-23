@@ -45,8 +45,7 @@ public class Zone extends BaseTimeEntity {
     private List<ReferencesGroup> referencesGroup;
 
     @Builder
-    public Zone(Result result, String name, String color, List<String> explanations, String tip, List<ReferencesGroup> referencesGroup) {
-        this.result = result;
+    public Zone(String name, String color, List<String> explanations, String tip, List<ReferencesGroup> referencesGroup) {
         this.name = name;
         this.color = color;
         this.explanations = explanations;
