@@ -125,10 +125,10 @@ public enum KtWizStadiumStatusType implements StadiumStatusType{
                             )
                     )
             ),
-            List.of("나 혼자", "같은 팀 팬과"),
-            List.of("열정적인 응원"),
             List.of(),
-            List.of("다른 팀 팬과", "큰 소리 싫어요", "음식 먹기 편한", "삼겹살 구워먹기 가능"),
+            List.of(),
+            List.of(),
+            List.of(),
             new String[]{"데이터 추가 입력 예정"},
             new String[]{"[1루] 약 27~32cm [3루] 약 27~32cm"},
             new String[]{"[1루] 약 28cm [3루] 약 26~33cm"},
