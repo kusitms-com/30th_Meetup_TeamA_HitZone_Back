@@ -15,16 +15,16 @@ public class MessageFactory {
 
     // 사용자 메시지 생성
     public Message createUserMessage(String content) {
-        return new Message(Role.user, content);
+        return new Message(Role.USER.getRole(), content);
     }
 
     // 시스템 메시지 생성
     public Message createSystemMessage() {
-        return new Message(Role.system, new String(Base64.getDecoder().decode(baseballPrompt)));
+        return new Message(Role.SYSTEM.getRole(), new String(Base64.getDecoder().decode(baseballPrompt)));
     }
 
     // 어시스턴트 메시지 생성
     public Message createAssistantMessage(String content) {
-        return new Message(Role.assistant, content);
+        return new Message(Role.ASSISTANT.getRole(), content);
     }
 }
