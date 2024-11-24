@@ -1,4 +1,4 @@
-package kusitms.backend.stadium.dto.response;
+package kusitms.backend.stadium.application.dto.response;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package kusitms.backend.result.domain.enums;
+package kusitms.backend.stadium.domain.enums;
 
 import kusitms.backend.result.domain.value.Reference;
 import kusitms.backend.result.domain.value.ReferencesGroup;
@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 @RequiredArgsConstructor
-public enum KtWizStadiumStatusType implements StadiumStatusType{
+public enum KtWizStadiumStatusType implements StadiumStatusType {
 
     //특징 확인 필요
     CENTER("https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/kt/center.svg",

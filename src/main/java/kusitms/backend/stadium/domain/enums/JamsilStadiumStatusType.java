@@ -1,4 +1,4 @@
-package kusitms.backend.result.domain.enums;
+package kusitms.backend.stadium.domain.enums;
 
 import kusitms.backend.result.domain.value.Reference;
 import kusitms.backend.result.domain.value.ReferencesGroup;

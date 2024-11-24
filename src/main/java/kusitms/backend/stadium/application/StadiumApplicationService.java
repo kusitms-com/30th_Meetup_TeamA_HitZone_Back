@@ -1,32 +1,45 @@
 package kusitms.backend.stadium.application;
 
 import kusitms.backend.global.exception.CustomException;
-import kusitms.backend.result.domain.enums.JamsilStadiumStatusType;
-import kusitms.backend.result.domain.enums.KtWizStadiumStatusType;
-import kusitms.backend.result.domain.enums.StadiumStatusType;
+import kusitms.backend.stadium.domain.enums.JamsilStadiumStatusType;
+import kusitms.backend.stadium.domain.enums.KtWizStadiumStatusType;
+import kusitms.backend.stadium.domain.enums.StadiumStatusType;
 import kusitms.backend.stadium.domain.entity.Stadium;
 import kusitms.backend.stadium.domain.enums.StadiumInfo;
 import kusitms.backend.stadium.domain.repository.StadiumRepository;
-import kusitms.backend.stadium.dto.response.GetStadiumInfosResponseDto;
-import kusitms.backend.stadium.dto.response.GetZoneGuideResponseDto;
+import kusitms.backend.stadium.application.dto.response.GetStadiumInfosResponseDto;
+import kusitms.backend.stadium.application.dto.response.GetZoneGuideResponseDto;
 import kusitms.backend.stadium.status.StadiumErrorStatus;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class StadiumApplicationService {
 
     private final StadiumRepository stadiumRepository;
 
+    public <T extends Enum<T> & StadiumStatusType> T[] extractZonesByStadiumName (String stadiumName){
+        T[] zones = switch (stadiumName) {
+            case "잠실종합운동장 (잠실)" -> (T[]) JamsilStadiumStatusType.values();
+            case "수원KT위즈파크" -> (T[]) KtWizStadiumStatusType.values();
+            default -> throw new CustomException(StadiumErrorStatus._NOT_FOUND_STADIUM);
+        };
+        log.info("해당 스타디움의 구장리스트 반환 완료");
+        return zones;
+    }
+
     @Transactional(readOnly = true)
     public Long getIdByStadiumName(String staiumName) {
         Stadium stadium = stadiumRepository.findByName(staiumName)
                 .orElseThrow(() -> new CustomException(StadiumErrorStatus._NOT_FOUND_STADIUM));
+        log.info("The Corresponding stadium Id is " + stadium.getId());
         return stadium.getId();
     }
 

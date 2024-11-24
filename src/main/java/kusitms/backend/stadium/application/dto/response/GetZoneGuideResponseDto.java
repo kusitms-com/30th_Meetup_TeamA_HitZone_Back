@@ -1,8 +1,8 @@
-package kusitms.backend.stadium.dto.response;
+package kusitms.backend.stadium.application.dto.response;
 
 
 import kusitms.backend.result.domain.value.ReferencesGroup;
-import kusitms.backend.result.domain.enums.StadiumStatusType;
+import kusitms.backend.stadium.domain.enums.StadiumStatusType;
 
 import java.util.List;
 

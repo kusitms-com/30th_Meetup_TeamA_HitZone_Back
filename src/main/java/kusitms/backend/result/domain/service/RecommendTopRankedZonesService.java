@@ -1,7 +1,7 @@
 package kusitms.backend.result.domain.service;
 
-import kusitms.backend.result.domain.enums.StadiumStatusType;
 import kusitms.backend.result.domain.util.KeywordUtil;
+import kusitms.backend.stadium.domain.enums.StadiumStatusType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +12,13 @@ import java.util.stream.Collectors;
 @Service
 public class RecommendTopRankedZonesService {
 
+    /**
+     * 해당하는 키워드에 따른 추천 구역을 3가지 반환한다.
+     * @param zones 해당 구장의 구역 리스트 정보
+     * @param clientKeywords 클라이언트로부터 받은 키워드 리스트
+     * @return 3개의 추천 구역정보 리스트
+     * @param <T> StadiumStatusType 인터페이스를 상속한 ENUM 형식
+     */
     public <T extends Enum<T> & StadiumStatusType> List<T> getTopRankedZones(
             T[] zones,
             List<String> clientKeywords
@@ -72,6 +79,7 @@ public class RecommendTopRankedZonesService {
             }
         }
 
+        log.info("filteredZones is returned: {}", filteredZones);
         return filteredZones;
     }
 }

@@ -23,10 +23,10 @@ public class ResultController {
     private final ResultApplicationService resultApplicationService;
 
     /**
-     * 구역 추천받은 결과를 DB에 저장한다.
+     * 클라이언트로부터 받은 키워드에 따른 추천받은 구역 결과를 DB에 저장한다.
      * @param accessToken 쿠키로부터 받은 어세스토큰
      * @param request (스타디움명, 선호구역(1루석, 3루석), 유저 선호 키워드 배열)
-     * @return Result 엔티티의 id
+     * @return 저장한 Result 엔티티의 id
      */
     @PostMapping("/results/save")
     public ResponseEntity<ApiResponse<SaveTopRankedZoneResponseDto>> saveRecommendedResult(
@@ -38,9 +38,9 @@ public class ResultController {
     }
 
     /**
-     * 해당 결과의 프로필 정보를 조회한다.
+     * 결과에 해당하는 프로필 정보를 조회한다.
      * @param resultId Result 엔티티의 id
-     * @return 결과에 해당하는 프로필 정보(id, 이미지Url, 닉네임, 타입, 해시태그 리스트)
+     * @return 결과에 해당하는 프로필 정보(id, 이미지 Url, 닉네임, 타입, 해시태그 리스트)
      */
     @GetMapping("/results/profile")
     public ResponseEntity<ApiResponse<GetProfileResponseDto>> getRecommendedProfile(
@@ -51,7 +51,7 @@ public class ResultController {
     }
 
     /**
-     * 해당 결과의 추천구역 리스트를 조회한다.
+     * 결과에 해당하는 추천구역 리스트를 조회한다.
      * @param resultId Result 엔티티의 id
      * @param count 클라이언트측에서 받고자 하는 추천구역의 개수
      * @return 추천구역의 리스트(id, 구역명, 구역색, 설명 리스트, 팁, 참고사항 리스트)

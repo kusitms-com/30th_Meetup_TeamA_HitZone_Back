@@ -1,7 +1,7 @@
 package kusitms.backend.result.application.dto.response;
 
-import kusitms.backend.result.domain.value.ReferencesGroup;
 import kusitms.backend.result.domain.model.Zone;
+import kusitms.backend.result.domain.value.ReferencesGroup;
 
 import java.util.List;
 

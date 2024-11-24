@@ -1,45 +1,42 @@
 package kusitms.backend.result.domain.model;
 
-import jakarta.persistence.*;
 import kusitms.backend.global.domain.BaseTimeEntity;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Result extends BaseTimeEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "result_id", nullable = false)
     private Long id;
-
-    @Column(name = "user_id", nullable = false)
     private Long userId; // User를 ID로 간접 참조
-
-    @Column(name = "stadium_id", nullable = false)
     private Long stadiumId; // Stadium을 ID로 간접 참조
-
-    @Column(nullable = false)
     private String preference;
-
-    @OneToOne(mappedBy = "result", cascade = CascadeType.ALL, orphanRemoval = true)
     private Profile profile;
-
-    @OneToMany(mappedBy = "result", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Zone> zones = new ArrayList<>();
 
-    @Builder
-    public Result(Long userId, Long stadiumId, String preference) {
+    public Result(Long id,
+                  Long userId,
+                  Long stadiumId,
+                  String preference
+    ) {
+        this.id = id;
         this.userId = userId;
         this.stadiumId = stadiumId;
         this.preference = preference;
+    }
+
+    public static Result toDomain(
+            Long id,
+            Long userId,
+            Long stadiumId,
+            String preference
+    ) {
+        return new Result(id, userId, stadiumId, preference);
     }
 
     public void addProfile(Profile profile) {

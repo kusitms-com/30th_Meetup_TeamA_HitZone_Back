@@ -14,11 +14,16 @@ import java.util.Map;
 @Service
 public class RecommendUserProfileService {
 
+    /**
+     * 해당하는 키워드에 따른 프로필 정보를 반환한다.
+     * @param profiles 5가지의 프로필 리스트 정보
+     * @param clientKeywords 클라이언트로부터 받은 키워드 리스트
+     * @return 프로필 정보
+     */
     public ProfileStatusType getRecommendedUserProfile(
             ProfileStatusType[] profiles,
             List<String> clientKeywords
     ) {
-
         ProfileStatusType filteredProfile = Arrays.stream(profiles)
                 .filter(profile -> !KeywordUtil.hasForbiddenKeywords(profile.getForbiddenKeywords(), clientKeywords))
                 .map(profile -> {
@@ -65,6 +70,8 @@ public class RecommendUserProfileService {
                     .findFirst()
                     .orElse(null);
         }
+
+        log.info("filteredProfile is returned: {}", filteredProfile);
         return filteredProfile;
     }
 }

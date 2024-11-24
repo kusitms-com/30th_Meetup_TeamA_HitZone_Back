@@ -6,12 +6,12 @@ import com.epages.restdocs.apispec.Schema;
 import jakarta.servlet.http.Cookie;
 import kusitms.backend.configuration.ControllerTestConfig;
 import kusitms.backend.result.application.ResultApplicationService;
-import kusitms.backend.result.domain.value.Reference;
-import kusitms.backend.result.domain.value.ReferencesGroup;
 import kusitms.backend.result.application.dto.request.SaveTopRankedZoneRequestDto;
 import kusitms.backend.result.application.dto.response.GetProfileResponseDto;
 import kusitms.backend.result.application.dto.response.GetZonesResponseDto;
 import kusitms.backend.result.application.dto.response.SaveTopRankedZoneResponseDto;
+import kusitms.backend.result.domain.value.Reference;
+import kusitms.backend.result.domain.value.ReferencesGroup;
 import kusitms.backend.result.presentation.ResultController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ResultController.class)
-public class ResultControllerTest extends ControllerTestConfig {
+public class ResultEntityControllerTest extends ControllerTestConfig {
 
     @MockBean
     private ResultApplicationService resultApplicationService;
