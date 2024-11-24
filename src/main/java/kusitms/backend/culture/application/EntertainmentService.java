@@ -5,8 +5,8 @@ import kusitms.backend.culture.domain.repository.EntertainmentRepository;
 import kusitms.backend.culture.dto.response.GetEntertainmentsResponseDto;
 import kusitms.backend.culture.status.FoodErrorStatus;
 import kusitms.backend.global.exception.CustomException;
-import kusitms.backend.stadium.domain.entity.Stadium;
-import kusitms.backend.stadium.domain.repository.StadiumRepository;
+import kusitms.backend.stadium.domain.model.Stadium;
+import kusitms.backend.stadium.infra.jpa.repository.StadiumJpaRepository;
 import kusitms.backend.stadium.status.StadiumErrorStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ import java.util.List;
 public class EntertainmentService {
 
     private final EntertainmentRepository entertainmentRepository;
-    private final StadiumRepository stadiumRepository;
+    private final StadiumJpaRepository stadiumRepository;
 
     @Transactional(readOnly = true)
     public GetEntertainmentsResponseDto getSuitableEntertainments(String stadiumName, String boundary) {

@@ -6,8 +6,8 @@ import kusitms.backend.culture.domain.repository.FoodRepository;
 import kusitms.backend.culture.dto.response.GetFoodsResponseDto;
 import kusitms.backend.culture.status.FoodErrorStatus;
 import kusitms.backend.global.exception.CustomException;
-import kusitms.backend.stadium.domain.entity.Stadium;
-import kusitms.backend.stadium.domain.repository.StadiumRepository;
+import kusitms.backend.stadium.domain.model.Stadium;
+import kusitms.backend.stadium.infra.jpa.repository.StadiumJpaRepository;
 import kusitms.backend.stadium.status.StadiumErrorStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ import java.util.List;
 public class FoodService {
 
     private final FoodRepository foodRepository;
-    private final StadiumRepository stadiumRepository;
+    private final StadiumJpaRepository stadiumRepository;
 
     @Transactional(readOnly = true)
     public GetFoodsResponseDto getSuitableFoods(String stadiumName, String boundary, String course) {

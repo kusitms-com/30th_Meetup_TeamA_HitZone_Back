@@ -24,6 +24,7 @@ public class StadiumController {
 
     /**
      * 해당 스타디움의 홈 이미지, 구역 이름 & 색상 리스트를 조회한다.
+     * @param stadiumName 스타디움명
      * @return 홈 이미지, 구역 이름 & 색상 리스트
      */
     @GetMapping("/stadium/zones")
@@ -33,9 +34,10 @@ public class StadiumController {
         return ApiResponse.onSuccess(StadiumSuccessStatus._OK_GET_ZONE_INFOS, stadiumApplicationService.getStadiumInfos(stadiumName));
     }
 
-
     /**
      * 해당 스타디움 구역의 정보와 팁을 반환한다.
+     * @param stadiumName 스타디움명
+     * @param zoneName 구역명
      * @return 구역 정보(구역명, 구역색깔, 한줄 설명, 출입구, 단차 간격, 좌석 간격, 팁, 참고사항)
      */
     @GetMapping("/stadium/zones/guide")

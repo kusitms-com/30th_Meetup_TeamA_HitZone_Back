@@ -5,7 +5,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import kusitms.backend.culture.domain.entity.Food;
 import kusitms.backend.culture.domain.enums.Boundary;
 import kusitms.backend.culture.domain.enums.Course;
-import kusitms.backend.stadium.domain.entity.Stadium;
+import kusitms.backend.stadium.domain.model.Stadium;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

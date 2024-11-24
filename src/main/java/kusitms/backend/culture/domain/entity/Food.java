@@ -5,7 +5,7 @@ import kusitms.backend.culture.domain.enums.Boundary;
 import kusitms.backend.culture.domain.enums.Course;
 import kusitms.backend.global.domain.BaseTimeEntity;
 import kusitms.backend.result.infra.converter.StringListConverter;
-import kusitms.backend.stadium.domain.entity.Stadium;
+import kusitms.backend.stadium.domain.model.Stadium;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

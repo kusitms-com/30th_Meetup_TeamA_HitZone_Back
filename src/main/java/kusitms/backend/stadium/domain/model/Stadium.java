@@ -1,27 +1,30 @@
-package kusitms.backend.stadium.domain.entity;
+package kusitms.backend.stadium.domain.model;
 
-import jakarta.persistence.*;
 import kusitms.backend.global.domain.BaseTimeEntity;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Stadium extends BaseTimeEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "stadium_id", nullable = false)
     private Long id;
-
-    @Column(nullable = false)
     private String name;
 
-    @Builder
-    public Stadium(String name) {
+    public Stadium(
+            Long id,
+            String name
+    ) {
+        this.id = id;
         this.name = name;
     }
+
+    public static Stadium toDomain(
+            Long id,
+            String name
+    ) {
+        return new Stadium(id, name);
+    }
+
 }
