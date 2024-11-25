@@ -51,7 +51,7 @@ public class JWTFilter extends OncePerRequestFilter {
                 || path.equals("/api/v1/token/re-issue")
                 || path.equals("/api/v1/test/docs") || path.startsWith(("/swagger-ui")) || path.startsWith("/v3/api-docs")
                 || path.startsWith("/api/v1/results") || path.startsWith("/api/v1/stadium")
-                || path.startsWith("/api/v1/culture")
+                || path.equals("/api/v1/foods") || path.equals("/api/v1/entertainments")
                 || path.startsWith("/api/v1/chatbot")
                 ;
     }

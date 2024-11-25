@@ -3,7 +3,7 @@ package kusitms.backend.auth.handler;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kusitms.backend.auth.jwt.JWTUtil;
-import kusitms.backend.user.application.UserService;
+import kusitms.backend.user.application.UserApplicationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -19,7 +19,7 @@ import java.io.IOException;
 public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final JWTUtil jwtUtil;
-    private final UserService userService;
+    private final UserApplicationService userApplicationService;
 
     /**
      * OAuth2 로그인 성공 후 처리.
@@ -34,13 +34,13 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         OAuth2AuthenticationToken token = (OAuth2AuthenticationToken) authentication;
 
         // 신규 사용자 처리
-        if (userService.isNewUser(token)) {
-            userService.handleNewUser(token, response);
+        if (userApplicationService.isNewUser(token)) {
+            userApplicationService.handleNewUser(token, response);
             getRedirectStrategy().sendRedirect(request, response, jwtUtil.getRedirectOnboardingUrl());
         }
         // 기존 사용자 처리
         else {
-            userService.handleExistingUser(token, response);
+            userApplicationService.handleExistingUser(token, response);
             getRedirectStrategy().sendRedirect(request, response, jwtUtil.getRedirectBaseUrl());
         }
     }

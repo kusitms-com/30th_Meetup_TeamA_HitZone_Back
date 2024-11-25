@@ -1,7 +1,10 @@
 package kusitms.backend.result.domain.repository;
 
-import kusitms.backend.result.domain.entity.Result;
-import org.springframework.data.jpa.repository.JpaRepository;
+import kusitms.backend.result.domain.model.Result;
+import org.springframework.stereotype.Repository;
 
-public interface ResultRepository extends JpaRepository<Result, Long> {
+@Repository
+public interface ResultRepository {
+    Result saveResult(Result result);
+    Result findResultById(Long id);
 }

@@ -4,11 +4,11 @@ import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import kusitms.backend.configuration.ControllerTestConfig;
-import kusitms.backend.result.common.Reference;
-import kusitms.backend.result.common.ReferencesGroup;
-import kusitms.backend.stadium.application.StadiumService;
-import kusitms.backend.stadium.dto.response.GetStadiumInfosResponseDto;
-import kusitms.backend.stadium.dto.response.GetZoneGuideResponseDto;
+import kusitms.backend.result.domain.value.Reference;
+import kusitms.backend.result.domain.value.ReferencesGroup;
+import kusitms.backend.stadium.application.StadiumApplicationService;
+import kusitms.backend.stadium.application.dto.response.GetStadiumInfosResponseDto;
+import kusitms.backend.stadium.application.dto.response.GetZoneGuideResponseDto;
 import kusitms.backend.stadium.presentation.StadiumController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class StadiumControllerTest extends ControllerTestConfig {
 
     @MockBean
-    private StadiumService stadiumService;
+    private StadiumApplicationService stadiumApplicationService;
 
     @Test
     @DisplayName("해당 스타디움의 정보를 조회한다.")
@@ -56,7 +56,7 @@ public class StadiumControllerTest extends ControllerTestConfig {
                 )
         );
 
-        Mockito.when(stadiumService.getStadiumInfos(anyString()))
+        Mockito.when(stadiumApplicationService.getStadiumInfos(anyString()))
                 .thenReturn(getStadiumInfosResponseDto);
 
         // when
@@ -132,7 +132,7 @@ public class StadiumControllerTest extends ControllerTestConfig {
                 List.of(referencesGroup)
         );
 
-        Mockito.when(stadiumService.getZoneGuide(anyString(), anyString()))
+        Mockito.when(stadiumApplicationService.getZoneGuide(anyString(), anyString()))
                 .thenReturn(getZoneGuideResponseDto);
 
         // when

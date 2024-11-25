@@ -37,5 +37,4 @@ public abstract class ControllerTestConfig {
                 .alwaysDo(print())
                 .build();
     }
-
 }

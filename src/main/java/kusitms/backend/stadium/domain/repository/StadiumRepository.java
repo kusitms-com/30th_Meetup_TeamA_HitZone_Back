@@ -1,10 +1,15 @@
 package kusitms.backend.stadium.domain.repository;
 
-import kusitms.backend.stadium.domain.entity.Stadium;
-import org.springframework.data.jpa.repository.JpaRepository;
+import kusitms.backend.stadium.domain.enums.Boundary;
+import kusitms.backend.stadium.domain.enums.Course;
+import kusitms.backend.stadium.domain.model.Food;
+import kusitms.backend.stadium.domain.model.Stadium;
+import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
-public interface StadiumRepository extends JpaRepository<Stadium, Long> {
-    Optional<Stadium> findByName(String stadium);
+@Repository
+public interface StadiumRepository {
+    Stadium findStadiumByName(String stadiumName);
+    List<Food> getFoodsOnCondition(Stadium stadium, Boundary boundary, Course course);
 }
