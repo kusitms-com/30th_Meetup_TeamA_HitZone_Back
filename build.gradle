@@ -93,13 +93,13 @@ sourceSets {
 
 tasks.named('compileJava') {
     doFirst {
-        // QClass 파일 자동 삭제
         def querydslGeneratedDir = layout.buildDirectory.dir("generated/sources/annotationProcessor/java/main").get().asFile
         if (querydslGeneratedDir.exists()) {
             querydslGeneratedDir.deleteDir()
         }
     }
 }
+
 ext {
     snippetsDir = file('build/generated-snippets')
 }

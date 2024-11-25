@@ -12,13 +12,17 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.List;
 
+import static kusitms.backend.stadium.domain.enums.KtWizStadiumStatusType.CHEERING_DUMMY;
+
 @Service
 public class StadiumDomainService {
 
     /**
-     * 스타디움명을 통하여 스타디움 정보를 조회한다.
-     * @param stadiumName 스타디움명
-     * @return 스타디움 정보 (이미지 Url, 1루팀, 3루팀)
+     * 주어진 경기장 이름에 대한 기본 정보를 조회.
+     *
+     * @param stadiumName 경기장 이름
+     * @return 경기장 기본 정보
+     * @throws CustomException 유효하지 않은 경기장 이름이 주어진 경우
      */
     public StadiumInfo getStadiumInfoByName(String stadiumName) {
         return switch (stadiumName) {
@@ -29,9 +33,11 @@ public class StadiumDomainService {
     }
 
     /**
-     * 스타디움명을 토대로 구역 가이드 정보 리스트를 조회한다.
-     * @param stadiumName 스타디움명
-     * @return 구역 가이드 정보 리스트 (이미지 Url, 구역명, 구역 색상, 한줄 설명, 설명 리스트, 1루팀, 3루팀, 팁, 참고 사항 리스트, 키워드 리스트, 입구, 단차, 좌석, 유용한 점)
+     * 주어진 경기장 이름에 대한 상태 타입 배열을 조회.
+     *
+     * @param stadiumName 경기장 이름
+     * @return 경기장 상태 타입 배열
+     * @throws CustomException 유효하지 않은 경기장 이름이 주어진 경우
      */
     public StadiumStatusType[] getStatusTypesByName(String stadiumName) {
         return switch (stadiumName) {
@@ -42,21 +48,26 @@ public class StadiumDomainService {
     }
 
     /**
-     * 구역 가이드 정보에서 이미지 Url, 1루팀, 3루팀, 구역명, 구역 색상만 추출한다.
-     * @param statusTypes 구역 가이드 정보 리스트
-     * @return 구역 정보 리스트 (이미지 Url, 1루팀, 3루팀, 구역명, 구역 색상)
+     * 주어진 상태 타입 배열에서 특정 구역의 이름과 색상을 조회.
+     * CHEERING_DUMMY 구역은 제외됩니다.
+     *
+     * @param statusTypes 상태 타입 배열
+     * @return 구역 이름과 색상 정보를 담은 리스트
      */
     public List<GetStadiumInfosResponseDto.ZoneInfo> getZonesNameAndColorFromStadium(StadiumStatusType[] statusTypes) {
         return Arrays.stream(statusTypes)
+                .filter(status -> status != CHEERING_DUMMY)
                 .map(status -> GetStadiumInfosResponseDto.ZoneInfo.of(status.getZoneName(), status.getZoneColor()))
                 .toList();
     }
 
     /**
-     * 구역 리스트에서 구역명에 해당하는 것만 추출한다.
-     * @param statusTypes 구역가이드 정보 리스트
-     * @param zoneName 구역명
-     * @return
+     * 주어진 상태 타입 배열에서 특정 구역 이름과 일치하는 구역 정보를 조회.
+     *
+     * @param statusTypes 상태 타입 배열
+     * @param zoneName    구역 이름
+     * @return 일치하는 구역 정보
+     * @throws CustomException 일치하는 구역을 찾을 수 없는 경우
      */
     public StadiumStatusType findZoneInStadium(StadiumStatusType[] statusTypes, String zoneName) {
         return Arrays.stream(statusTypes)

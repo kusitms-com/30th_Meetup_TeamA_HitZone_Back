@@ -53,9 +53,11 @@ public class StadiumApplicationService {
     }
 
     /**
-     * 해당 스타디움명을 통하여 스타디움 정보를 반환한다.
-     * @param stadiumName 스타디움명
-     * @return 스타디움 정보 (이미지 Url, 1루석 팀, 3루석 팀, 구역명, 구역 색상)
+     * 주어진 경기장 이름에 대한 정보를 조회.
+     *
+     * @param stadiumName 경기장 이름
+     * @return 경기장 정보와 구역 정보 리스트를 포함하는 DTO
+     * @throws CustomException 유효하지 않은 경기장 이름이 주어진 경우
      */
     public GetStadiumInfosResponseDto getStadiumInfos(String stadiumName) {
         StadiumInfo stadiumInfo = stadiumDomainService.getStadiumInfoByName(stadiumName);
@@ -66,10 +68,12 @@ public class StadiumApplicationService {
     }
 
     /**
-     * 해당 스타디움, 구역의 정보를 반환한다.
-     * @param stadiumName 스다티움명
-     * @param zoneName 구역명
-     * @return 해당 구역 정보 (이미지 Url, 구역명, 구역 색상, 설명, 1루팀, 3루팀, 입구, 단차, 좌석 거리, 유용한 점, 팁, 참고 사항)
+     * 주어진 경기장 이름에 해당하는 구역 정보를 조회.
+     *
+     * @param stadiumName 경기장 이름
+     * @param zoneName    구역 이름
+     * @return 구역 정보 DTO
+     * @throws CustomException 유효하지 않은 경기장 이름이나 구역 이름이 주어진 경우
      */
     public GetZoneGuideResponseDto getZoneGuide(String stadiumName, String zoneName) {
         StadiumStatusType zoneType = switch (stadiumName) {
