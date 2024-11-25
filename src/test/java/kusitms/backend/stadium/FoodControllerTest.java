@@ -55,7 +55,7 @@ public class FoodControllerTest extends ControllerTestConfig {
 
         // when
         ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/foods")
-                .param("stadiumName", "잠실종합운동장")
+                .param("stadiumName", "잠실종합운동장 (잠실)")
                 .param("boundary", "내부")
                 .param("course", "후식")
                 .contentType(MediaType.APPLICATION_JSON)

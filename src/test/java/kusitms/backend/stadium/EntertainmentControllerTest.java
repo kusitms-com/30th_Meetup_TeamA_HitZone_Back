@@ -51,7 +51,7 @@ public class EntertainmentControllerTest extends ControllerTestConfig {
 
         // when
         ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/entertainments")
-                .param("stadiumName", "잠실종합운동장")
+                .param("stadiumName", "잠실종합운동장 (잠실)")
                 .param("boundary", "내부")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON));
