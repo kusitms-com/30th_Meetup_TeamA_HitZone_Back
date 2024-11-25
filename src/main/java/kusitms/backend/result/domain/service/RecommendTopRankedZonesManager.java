@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -23,18 +22,10 @@ public class RecommendTopRankedZonesManager {
             T[] zones,
             List<String> clientKeywords
     ) {
-// Step 1: Filter zones by forbidden keywords
         List<T> filteredZones = filteredZonesByForbiddenKeywords(zones, clientKeywords);
-
-        // Step 2: Map zones to match details
         List<Map<String, Object>> zoneDetails = mapZoneByMatchDetails(filteredZones, clientKeywords);
-
-        // Step 3: Sort and limit the zones
         List<T> topZones = sortAndLimitZones(zoneDetails);
-
-        // Step 4: Add priority dummy zones
         List<T> resultZones = addPriorityDummyZones(zones, topZones);
-
         log.info("filteredZones is returned: {}", resultZones);
         return resultZones;
     }
@@ -146,5 +137,3 @@ public class RecommendTopRankedZonesManager {
         return resultZones;
     }
 }
-
-
