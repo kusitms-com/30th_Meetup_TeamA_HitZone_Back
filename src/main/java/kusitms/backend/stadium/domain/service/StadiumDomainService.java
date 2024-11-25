@@ -77,5 +77,4 @@ public class StadiumDomainService {
                 .map(GetEntertainmentsResponseDto.EntertainmentDto::from)
                 .toList();
     }
-
 }

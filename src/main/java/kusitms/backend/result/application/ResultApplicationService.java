@@ -34,7 +34,6 @@ public class ResultApplicationService {
     private final ResultRepository resultRepository;
     private final JWTUtil jwtUtil;
 
-
     /**
      *  클라이언트측으로부터 받은 키워드를 통해 추천 결과를 생성해준다.
      * @param accessToken 쿠키로부터 받은 어세스 토큰

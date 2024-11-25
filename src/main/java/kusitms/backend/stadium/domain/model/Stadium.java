@@ -40,5 +40,4 @@ public class Stadium {
         this.entertainments.add(entertainment);
         entertainment.assignToStadium(this);
     }
-
 }

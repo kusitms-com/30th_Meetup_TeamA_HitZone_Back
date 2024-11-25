@@ -24,9 +24,9 @@ public class ResultMapper {
                 resultEntity.getStadiumId(),
                 resultEntity.getPreference()
         );
+
         result.addProfile(profile);
         zones.forEach(result::addZone);
-
         return result;
     }
 
@@ -46,7 +46,6 @@ public class ResultMapper {
 
         resultEntity.addProfileEntity(profileEntity);
         zoneEntities.forEach(resultEntity::addZoneEntity);
-
         return resultEntity;
     }
 }

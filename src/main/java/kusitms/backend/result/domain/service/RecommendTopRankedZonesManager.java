@@ -133,7 +133,6 @@ public class RecommendTopRankedZonesManager {
                 resultZones.add(priorityDummyZone);
             }
         }
-
         return resultZones;
     }
 }

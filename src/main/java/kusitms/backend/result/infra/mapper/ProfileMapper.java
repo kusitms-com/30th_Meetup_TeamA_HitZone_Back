@@ -24,5 +24,4 @@ public class ProfileMapper {
                 profile.getHashTags()
         );
     }
-
 }

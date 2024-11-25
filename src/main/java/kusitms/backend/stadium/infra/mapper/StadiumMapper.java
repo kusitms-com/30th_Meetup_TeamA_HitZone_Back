@@ -21,14 +21,13 @@ public class StadiumMapper {
                 .map(EntertainmentMapper::toDomain)
                 .toList();
 
-
         Stadium stadium = Stadium.toDomain(
                 stadiumEntity.getId(),
                 stadiumEntity.getName()
         );
+
         foods.forEach(stadium::addFood);
         entertainments.forEach(stadium::addEntertainment);
-
         return stadium;
     }
 
@@ -46,9 +45,9 @@ public class StadiumMapper {
                 stadium.getId(),
                 stadium.getName()
         );
+
         foodEntities.forEach(stadiumEntity::addFoodEntity);
         entertainmentEntities.forEach(stadiumEntity::addEntertainmentEntity);
-
         return stadiumEntity;
     }
 }

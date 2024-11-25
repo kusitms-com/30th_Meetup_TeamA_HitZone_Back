@@ -1,6 +1,5 @@
 package kusitms.backend.stadium.infra.mapper;
 
-
 import kusitms.backend.stadium.domain.model.Food;
 import kusitms.backend.stadium.infra.jpa.entity.FoodEntity;
 
@@ -33,6 +32,4 @@ public class FoodMapper {
                 food.getTip()
         );
     }
-
 }
-

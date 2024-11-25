@@ -29,6 +29,3 @@ public class ResultRepositoryImpl implements ResultRepository {
                 .orElseThrow(() -> new CustomException(ResultErrorStatus._NOT_FOUND_RESULT));
     }
 }
-
-
-

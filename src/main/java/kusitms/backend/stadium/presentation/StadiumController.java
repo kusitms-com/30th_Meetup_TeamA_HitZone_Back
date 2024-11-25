@@ -93,5 +93,4 @@ public class StadiumController {
         }
         return ApiResponse.onSuccess(status, stadiumApplicationService.getFoodsOnCondition(stadiumName, boundary, course));
     }
-
 }

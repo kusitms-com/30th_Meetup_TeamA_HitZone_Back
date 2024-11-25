@@ -27,7 +27,6 @@ public record GetZonesResponseDto (
             );
         }
     }
-
     public static GetZonesResponseDto of(List<ZoneResponseDto> zones) {
         return new GetZonesResponseDto(zones);
     }
