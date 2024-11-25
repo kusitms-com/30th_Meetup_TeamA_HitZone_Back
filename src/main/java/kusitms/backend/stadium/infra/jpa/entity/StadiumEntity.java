@@ -6,6 +6,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -20,6 +23,12 @@ public class StadiumEntity extends BaseTimeEntity {
     @Column(nullable = false)
     private String name;
 
+    @OneToMany(mappedBy = "stadiumEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FoodEntity> foodEntities = new ArrayList<>();
+
+    @OneToMany(mappedBy = "stadiumEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<EntertainmentEntity> entertainmentEntities = new ArrayList<>();
+
     public StadiumEntity(
             Long id,
             String name
@@ -33,5 +42,15 @@ public class StadiumEntity extends BaseTimeEntity {
             String name
     ) {
         return new StadiumEntity(id, name);
+    }
+
+    public void addFoodEntity(FoodEntity foodEntity) {
+        this.foodEntities.add(foodEntity);
+        foodEntity.assignToStadiumEntity(this);
+    }
+
+    public void addEntertainmentEntity(EntertainmentEntity entertainmentEntity) {
+        this.entertainmentEntities.add(entertainmentEntity);
+        entertainmentEntity.assignToStadiumEntity(this);
     }
 }

@@ -5,12 +5,17 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Stadium extends BaseTimeEntity {
 
     private Long id;
     private String name;
+    private List<Food> foods = new ArrayList<>();
+    private List<Entertainment> entertainments = new ArrayList<>();
 
     public Stadium(
             Long id,
@@ -25,6 +30,16 @@ public class Stadium extends BaseTimeEntity {
             String name
     ) {
         return new Stadium(id, name);
+    }
+
+    public void addFood(Food food) {
+        this.foods.add(food);
+        food.assignToStadium(this);
+    }
+
+    public void addEntertainment(Entertainment entertainment){
+        this.entertainments.add(entertainment);
+        entertainment.assignToStadium(this);
     }
 
 }

@@ -1,11 +1,10 @@
 package kusitms.backend.stadium.domain.service;
 
 import kusitms.backend.global.exception.CustomException;
+import kusitms.backend.stadium.application.dto.response.GetEntertainmentsResponseDto;
 import kusitms.backend.stadium.application.dto.response.GetStadiumInfosResponseDto;
-import kusitms.backend.stadium.domain.enums.JamsilStadiumStatusType;
-import kusitms.backend.stadium.domain.enums.KtWizStadiumStatusType;
-import kusitms.backend.stadium.domain.enums.StadiumInfo;
-import kusitms.backend.stadium.domain.enums.StadiumStatusType;
+import kusitms.backend.stadium.domain.enums.*;
+import kusitms.backend.stadium.domain.model.Stadium;
 import kusitms.backend.stadium.status.StadiumErrorStatus;
 import org.springframework.stereotype.Service;
 
@@ -64,4 +63,19 @@ public class StadiumDomainService {
                 .findFirst()
                 .orElseThrow(() -> new CustomException(StadiumErrorStatus._NOT_FOUND_ZONE));
     }
+
+    /**
+     * 해당 스타디움의 boundary의 즐길거리 리스트를 반환한다.
+     * @param stadium 스타디움
+     * @param existBoundary 내부 or 외부
+     * @return 즐길거리 리스트 (이미지Url, boundary, 이름, 설명 리스트, 팁 리스트)
+     */
+    public List<GetEntertainmentsResponseDto.EntertainmentDto> getEntertainmentsOnCondition(Stadium stadium, Boundary existBoundary) {
+        return stadium.getEntertainments()
+                .stream()
+                .filter(entertainment -> entertainment.getBoundary().equals(existBoundary))
+                .map(GetEntertainmentsResponseDto.EntertainmentDto::from)
+                .toList();
+    }
+
 }

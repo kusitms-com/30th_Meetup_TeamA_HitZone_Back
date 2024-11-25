@@ -1,12 +1,11 @@
 package kusitms.backend.stadium.application;
 
 import kusitms.backend.global.exception.CustomException;
+import kusitms.backend.stadium.application.dto.response.GetEntertainmentsResponseDto;
+import kusitms.backend.stadium.application.dto.response.GetFoodsResponseDto;
 import kusitms.backend.stadium.application.dto.response.GetStadiumInfosResponseDto;
 import kusitms.backend.stadium.application.dto.response.GetZoneGuideResponseDto;
-import kusitms.backend.stadium.domain.enums.JamsilStadiumStatusType;
-import kusitms.backend.stadium.domain.enums.KtWizStadiumStatusType;
-import kusitms.backend.stadium.domain.enums.StadiumInfo;
-import kusitms.backend.stadium.domain.enums.StadiumStatusType;
+import kusitms.backend.stadium.domain.enums.*;
 import kusitms.backend.stadium.domain.model.Stadium;
 import kusitms.backend.stadium.domain.repository.StadiumRepository;
 import kusitms.backend.stadium.domain.service.StadiumDomainService;
@@ -85,4 +84,46 @@ public class StadiumApplicationService {
         return GetZoneGuideResponseDto.from(zoneType);
     }
 
+    /**
+     * 해당 스타디움의 boundary의 즐길거리 리스트를 반환한다.
+     * @param stadiumName 스타디움명
+     * @param boundary 위치 (내부 or 외부)
+     * @return 즐길거리 리스트 (이미지Url, boundary, 이름, 설명 리스트, 팁 리스트)
+     */
+    @Transactional(readOnly = true)
+    public GetEntertainmentsResponseDto getSuitableEntertainments(String stadiumName, String boundary) {
+        Stadium stadium = stadiumRepository.findStadiumByName(stadiumName);
+        log.info("The Corresponding stadium Id is " + stadium.getEntertainments());
+        Boundary existBoundary = Boundary.findByName(boundary)
+                .orElseThrow(() -> new CustomException(StadiumErrorStatus._BAD_REQUEST_BOUNDARY));
+
+        List<GetEntertainmentsResponseDto.EntertainmentDto> entertainments = stadiumDomainService.getEntertainmentsOnCondition(stadium, existBoundary);
+        log.info("조건에 해당하는 즐길거리 목록이 조회되었습니다.");
+        return GetEntertainmentsResponseDto.of(entertainments);
+    }
+
+    /**
+     * 해당 구장의 boundary와 course에 해당하는 매장들의 리스트를 반환한다.
+     * @param stadiumName 스타디움명
+     * @param boundary 위치 (내부 or 외부)
+     * @param course 식사 코스 (식사 or 후식)
+     * @return 매장 정보 리스트 (이미지 Url, boundary, course, 매장명, 위치, 메뉴 리스트, 가격, 팁)
+     */
+    @Transactional(readOnly = true)
+    public GetFoodsResponseDto getFoodsOnCondition(String stadiumName, String boundary, String course) {
+        Stadium stadium = stadiumRepository.findStadiumByName(stadiumName);
+        Boundary existBoundary = Boundary.findByName(boundary)
+                .orElseThrow(() -> new CustomException(StadiumErrorStatus._BAD_REQUEST_BOUNDARY));
+        Course existCourse = null;
+        if ("내부".equals(boundary)) {
+            existCourse = Course.findByName(course)
+                    .orElseThrow(() -> new CustomException(StadiumErrorStatus._BAD_REQUEST_COURSE));
+        }
+
+        List<GetFoodsResponseDto.FoodDto> foods = stadiumRepository.getFoodsOnCondition(stadium, existBoundary, existCourse)
+                        .stream()
+                        .map(GetFoodsResponseDto.FoodDto::from)
+                        .toList();
+        return GetFoodsResponseDto.of(foods);
+    }
 }
