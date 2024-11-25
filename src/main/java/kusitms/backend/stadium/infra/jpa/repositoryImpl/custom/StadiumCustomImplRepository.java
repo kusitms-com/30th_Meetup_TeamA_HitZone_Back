@@ -6,7 +6,7 @@ import kusitms.backend.stadium.domain.enums.Boundary;
 import kusitms.backend.stadium.domain.enums.Course;
 import kusitms.backend.stadium.domain.model.Stadium;
 import kusitms.backend.stadium.infra.jpa.entity.FoodEntity;
-import kusitms.backend.stadium.infra.jpa.repository.custom.StadiumRepositoryCustom;
+import kusitms.backend.stadium.infra.jpa.repository.custom.StadiumCustomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +16,7 @@ import static kusitms.backend.stadium.infra.jpa.entity.QFoodEntity.foodEntity;
 
 @Repository
 @RequiredArgsConstructor
-public class StadiumRepositoryImpl implements StadiumRepositoryCustom {
+public class StadiumCustomImplRepository implements StadiumCustomRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 

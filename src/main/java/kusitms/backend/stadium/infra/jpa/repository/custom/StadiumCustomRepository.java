@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface StadiumRepositoryCustom {
+public interface StadiumCustomRepository {
     List<FoodEntity> findFoodsByConditions(Stadium stadium, Boundary boundary, Course course);
 }

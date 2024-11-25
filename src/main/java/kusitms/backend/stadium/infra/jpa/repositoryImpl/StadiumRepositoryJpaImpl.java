@@ -7,7 +7,7 @@ import kusitms.backend.stadium.domain.model.Food;
 import kusitms.backend.stadium.domain.model.Stadium;
 import kusitms.backend.stadium.domain.repository.StadiumRepository;
 import kusitms.backend.stadium.infra.jpa.repository.StadiumJpaRepository;
-import kusitms.backend.stadium.infra.jpa.repository.custom.StadiumRepositoryCustom;
+import kusitms.backend.stadium.infra.jpa.repository.custom.StadiumCustomRepository;
 import kusitms.backend.stadium.infra.mapper.FoodMapper;
 import kusitms.backend.stadium.infra.mapper.StadiumMapper;
 import kusitms.backend.stadium.status.StadiumErrorStatus;
@@ -21,7 +21,7 @@ import java.util.List;
 public class StadiumRepositoryJpaImpl implements StadiumRepository {
 
     private final StadiumJpaRepository stadiumJpaRepository;
-    private final StadiumRepositoryCustom stadiumRepositoryCustom;
+    private final StadiumCustomRepository stadiumCustomRepository;
 
     @Override
     public Stadium findStadiumByName(String stadiumName) {
@@ -32,7 +32,7 @@ public class StadiumRepositoryJpaImpl implements StadiumRepository {
 
     @Override
     public List<Food> getFoodsOnCondition(Stadium stadium, Boundary boundary, Course course) {
-        return stadiumRepositoryCustom.findFoodsByConditions(stadium,boundary,course)
+        return stadiumCustomRepository.findFoodsByConditions(stadium,boundary,course)
                 .stream()
                 .map(FoodMapper::toDomain)
                 .toList();
