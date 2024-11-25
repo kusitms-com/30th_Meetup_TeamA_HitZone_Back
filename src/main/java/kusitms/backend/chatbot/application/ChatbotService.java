@@ -52,14 +52,14 @@ public class ChatbotService {
         // 2. stadiumName이 일치하는 답변 찾기
         for (T answer : matchingAnswers) {
             if (stadiumName.equals(answer.getStadiumName())) {
-                return GetGuideChatbotAnswerResponse.of(answer.getAnswers(), answer.getImgUrl());
+                return GetGuideChatbotAnswerResponse.of(answer.getAnswer(), answer.getImgUrl());
             }
         }
 
         // 3. 일치하는 stadiumName이 없을 경우, 기본 응답 반환
         for (T answer : matchingAnswers) {
             if (answer.getStadiumName() == null) {
-                return GetGuideChatbotAnswerResponse.of(answer.getAnswers(), answer.getImgUrl());
+                return GetGuideChatbotAnswerResponse.of(answer.getAnswer(), answer.getImgUrl());
             }
         }
 
