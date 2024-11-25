@@ -264,7 +264,7 @@
         "parameters" : [ {
           "name" : "stadiumName",
           "in" : "query",
-          "description" : "구장명",
+          "description" : "구장명 [예시 : 잠실종합운동장]",
           "required" : true,
           "schema" : {
             "type" : "string"
@@ -272,7 +272,7 @@
         }, {
           "name" : "boundary",
           "in" : "query",
-          "description" : "구장 영역(내부 or 외부)",
+          "description" : "구장 영역 (내부 or 외부) [예시 : 내부]",
           "required" : true,
           "schema" : {
             "type" : "string"
@@ -306,7 +306,7 @@
         "parameters" : [ {
           "name" : "stadiumName",
           "in" : "query",
-          "description" : "구장명",
+          "description" : "구장명 [예시 : 잠실종합운동장]",
           "required" : true,
           "schema" : {
             "type" : "string"
@@ -314,7 +314,7 @@
         }, {
           "name" : "boundary",
           "in" : "query",
-          "description" : "구장 영역(내부 or 외부)",
+          "description" : "구장 영역(내부 or 외부) [예시 : 내부]",
           "required" : true,
           "schema" : {
             "type" : "string"
@@ -322,7 +322,7 @@
         }, {
           "name" : "course",
           "in" : "query",
-          "description" : "구장 코스(식사 or 후식) - 내부일때는 꼭 입력해주세요.",
+          "description" : "구장 코스(식사 or 후식) - 내부일때는 꼭 입력해주세요 [예시 : 후식]",
           "required" : false,
           "schema" : {
             "type" : "string"
@@ -527,6 +527,7 @@
                 "examples" : {
                   "stadium/names" : {
                     "value" : "{\n  \"isSuccess\" : true,\n  \"code\" : \"200\",\n  \"message\" : \"해당 스타디움의 정보가 조회되었습니다.\",\n  \"payload\" : {\n    \"imgUrl\" : \"https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/guide/lg/guide_home_lg.svg\",\n    \"firstBaseSide\" : \"두산베어스, LG 트윈스\",\n    \"thirdBaseSide\" : \"상대팀\",\n    \"zones\" : [ {\n      \"zoneName\" : \"레드석\",\n      \"zoneColor\" : \"#DC032A\"\n    }, {\n      \"zoneName\" : \"블루석\",\n      \"zoneColor\" : \"#4699F2\"\n    }, {\n      \"zoneName\" : \"네이비석\",\n      \"zoneColor\" : \"#242953\"\n    }, {\n      \"zoneName\" : \"오렌지석\",\n      \"zoneColor\" : \"#E16900\"\n    }, {\n      \"zoneName\" : \"익사이팅석\",\n      \"zoneColor\" : \"#6D6D6D\"\n    }, {\n      \"zoneName\" : \"외야그린석\",\n      \"zoneColor\" : \"#339600\"\n    }, {\n      \"zoneName\" : \"테이블석\",\n      \"zoneColor\" : \"#7C0065\"\n    }, {\n      \"zoneName\" : \"프리미엄석\",\n      \"zoneColor\" : \"#185DDD\"\n    } ]\n  }\n}"
+<<<<<<< HEAD
                   }
                 }
               }
@@ -583,6 +584,8 @@
                 "examples" : {
                   "test/docs" : {
                     "value" : "{\n  \"isSuccess\" : true,\n  \"code\" : \"200\",\n  \"message\" : \"성공입니다.\",\n  \"payload\" : {\n    \"keyword\" : \"테스트키워드\",\n    \"tip\" : \"테스트팁\"\n  }\n}"
+=======
+>>>>>>> 8edac89d9e08259a5bf3f403ba719cb7882d4bb1
                   }
                 }
               }
@@ -819,11 +822,269 @@
       "SignUpRequest" : {
         "title" : "SignUpRequest",
         "required" : [ "nickname" ],
+<<<<<<< HEAD
+=======
         "type" : "object",
         "properties" : {
           "nickname" : {
             "type" : "string",
             "description" : "사용자가 입력한 닉네임"
+          }
+        }
+      },
+      "GetEntertainmentsResponseDto" : {
+        "title" : "GetEntertainmentsResponseDto",
+        "required" : [ "code", "isSuccess", "message" ],
+>>>>>>> 8edac89d9e08259a5bf3f403ba719cb7882d4bb1
+        "type" : "object",
+        "properties" : {
+          "nickname" : {
+            "type" : "string",
+<<<<<<< HEAD
+            "description" : "사용자가 입력한 닉네임"
+=======
+            "description" : "응답 코드"
+          },
+          "payload" : {
+            "type" : "object",
+            "properties" : {
+              "entertainments" : {
+                "type" : "array",
+                "items" : {
+                  "required" : [ "boundary", "explanations", "imgUrl", "name", "tips" ],
+                  "type" : "object",
+                  "properties" : {
+                    "boundary" : {
+                      "type" : "string",
+                      "description" : "해당 즐길거리의 영역 (내부 or 외부)"
+                    },
+                    "imgUrl" : {
+                      "type" : "string",
+                      "description" : "해당 즐길거리의 이미지 URL"
+                    },
+                    "name" : {
+                      "type" : "string",
+                      "description" : "해당 즐길거리의 이름"
+                    },
+                    "explanations" : {
+                      "type" : "array",
+                      "description" : "해당 즐길거리의 설명 리스트",
+                      "items" : {
+                        "oneOf" : [ {
+                          "type" : "object"
+                        }, {
+                          "type" : "boolean"
+                        }, {
+                          "type" : "string"
+                        }, {
+                          "type" : "number"
+                        } ]
+                      }
+                    },
+                    "tips" : {
+                      "type" : "array",
+                      "description" : "해당 즐길거리의 팁 리스트",
+                      "items" : {
+                        "oneOf" : [ {
+                          "type" : "object"
+                        }, {
+                          "type" : "boolean"
+                        }, {
+                          "type" : "string"
+                        }, {
+                          "type" : "number"
+                        } ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description" : "응답 데이터"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "응답 메시지"
+          },
+          "isSuccess" : {
+            "type" : "boolean",
+            "description" : "성공 여부"
+>>>>>>> 8edac89d9e08259a5bf3f403ba719cb7882d4bb1
+          }
+        }
+      },
+      "SignUpResponse" : {
+        "title" : "SignUpResponse",
+        "required" : [ "code", "isSuccess", "message" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "응답 코드"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "응답 메시지"
+          },
+          "isSuccess" : {
+            "type" : "boolean",
+            "description" : "성공 여부"
+          }
+        }
+      },
+      "GetClovaChatbotAnswerRequest" : {
+        "title" : "GetClovaChatbotAnswerRequest",
+        "required" : [ "message" ],
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "type" : "string",
+            "description" : "사용자가 보낸 메시지"
+          }
+        }
+      },
+      "SaveTopRankedZoneRequestDto" : {
+        "title" : "SaveTopRankedZoneRequestDto",
+        "required" : [ "clientKeywords", "preference", "stadium" ],
+        "type" : "object",
+        "properties" : {
+          "preference" : {
+            "type" : "string",
+            "description" : "선호 구역 [예시 : 1루석 또는 3루석]"
+          },
+          "clientKeywords" : {
+            "type" : "array",
+            "description" : "사용자 키워드 배열",
+            "items" : {
+              "oneOf" : [ {
+                "type" : "object"
+              }, {
+                "type" : "boolean"
+              }, {
+                "type" : "string"
+              }, {
+                "type" : "number"
+              } ]
+            }
+          },
+          "stadium" : {
+            "type" : "string",
+            "description" : "경기장 이름 [예시 : 잠실종합운동장 (잠실)]"
+          }
+        }
+      },
+      "CheckNicknameRequest" : {
+        "title" : "CheckNicknameRequest",
+        "required" : [ "nickname" ],
+        "type" : "object",
+        "properties" : {
+          "nickname" : {
+            "type" : "string",
+            "description" : "사용자가 입력한 닉네임"
+          }
+        }
+      },
+      "GetClovaChatbotAnswerResponse" : {
+        "title" : "GetClovaChatbotAnswerResponse",
+        "required" : [ "code", "isSuccess", "message", "payload" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "응답 코드"
+          },
+          "payload" : {
+            "required" : [ "answer" ],
+            "type" : "object",
+            "properties" : {
+              "answer" : {
+                "type" : "string",
+                "description" : "Clova 챗봇의 답변"
+              }
+            },
+            "description" : "응답 데이터"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "응답 메시지"
+          },
+          "isSuccess" : {
+            "type" : "boolean",
+            "description" : "성공 여부"
+          }
+        }
+      },
+      "api-v1-token-re-issue-145562816" : {
+        "required" : [ "code", "isSuccess", "message" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "응답 코드"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "응답 메시지"
+          },
+          "isSuccess" : {
+            "type" : "boolean",
+            "description" : "성공 여부"
+          }
+        }
+      },
+      "GetStadiumInfosResponseDto" : {
+        "title" : "GetStadiumInfosResponseDto",
+        "required" : [ "code", "isSuccess", "message" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "응답 코드"
+          },
+          "payload" : {
+            "required" : [ "firstBaseSide", "imgUrl", "thirdBaseSide", "zones" ],
+            "type" : "object",
+            "properties" : {
+              "imgUrl" : {
+                "type" : "string",
+                "description" : "이미지 URL"
+              },
+              "thirdBaseSide" : {
+                "type" : "string",
+                "description" : "3루석 설명"
+              },
+              "zones" : {
+                "type" : "array",
+                "description" : "구역 정보 리스트",
+                "items" : {
+                  "required" : [ "zoneColor", "zoneName" ],
+                  "type" : "object",
+                  "properties" : {
+                    "zoneName" : {
+                      "type" : "string",
+                      "description" : "구역 이름"
+                    },
+                    "zoneColor" : {
+                      "type" : "string",
+                      "description" : "구역 색상 코드"
+                    }
+                  }
+                }
+              },
+              "firstBaseSide" : {
+                "type" : "string",
+                "description" : "1루석 설명"
+              }
+            },
+            "description" : "응답 데이터"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "응답 메시지"
+          },
+          "isSuccess" : {
+            "type" : "boolean",
+            "description" : "성공 여부"
           }
         }
       },
@@ -904,6 +1165,7 @@
           }
         }
       },
+<<<<<<< HEAD
       "TestDocsResponseDto" : {
         "title" : "TestDocsResponseDto",
         "required" : [ "code", "isSuccess", "message" ],
@@ -1016,6 +1278,10 @@
       },
       "SignUpResponse" : {
         "title" : "SignUpResponse",
+=======
+      "GetProfileResponseDto" : {
+        "title" : "GetProfileResponseDto",
+>>>>>>> 8edac89d9e08259a5bf3f403ba719cb7882d4bb1
         "required" : [ "code", "isSuccess", "message" ],
         "type" : "object",
         "properties" : {
@@ -1023,6 +1289,47 @@
             "type" : "string",
             "description" : "응답 코드"
           },
+<<<<<<< HEAD
+=======
+          "payload" : {
+            "required" : [ "hashTags", "imgUrl", "nickname", "profileId", "type" ],
+            "type" : "object",
+            "properties" : {
+              "imgUrl" : {
+                "type" : "string",
+                "description" : "해당 결과의 이미지 URL"
+              },
+              "hashTags" : {
+                "type" : "array",
+                "description" : "해당 결과의 프로필 해시태그 리스트",
+                "items" : {
+                  "oneOf" : [ {
+                    "type" : "object"
+                  }, {
+                    "type" : "boolean"
+                  }, {
+                    "type" : "string"
+                  }, {
+                    "type" : "number"
+                  } ]
+                }
+              },
+              "profileId" : {
+                "type" : "number",
+                "description" : "해당 결과의 프로필 ID"
+              },
+              "nickname" : {
+                "type" : "string",
+                "description" : "해당 결과의 프로필 닉네임"
+              },
+              "type" : {
+                "type" : "string",
+                "description" : "해당 결과의 프로필 타입"
+              }
+            },
+            "description" : "응답 데이터"
+          },
+>>>>>>> 8edac89d9e08259a5bf3f403ba719cb7882d4bb1
           "message" : {
             "type" : "string",
             "description" : "응답 메시지"
@@ -1033,6 +1340,7 @@
           }
         }
       },
+<<<<<<< HEAD
       "GetClovaChatbotAnswerRequest" : {
         "title" : "GetClovaChatbotAnswerRequest",
         "required" : [ "message" ],
@@ -1057,6 +1365,11 @@
       "SaveTopRankedZoneRequestDto" : {
         "title" : "SaveTopRankedZoneRequestDto",
         "required" : [ "clientKeywords", "preference", "stadium" ],
+=======
+      "SaveTopRankedZoneResponseDto" : {
+        "title" : "SaveTopRankedZoneResponseDto",
+        "required" : [ "code", "isSuccess", "message" ],
+>>>>>>> 8edac89d9e08259a5bf3f403ba719cb7882d4bb1
         "type" : "object",
         "properties" : {
           "preference" : {
@@ -1095,6 +1408,7 @@
           }
         }
       },
+<<<<<<< HEAD
       "GetClovaChatbotAnswerResponse" : {
         "title" : "GetClovaChatbotAnswerResponse",
         "required" : [ "code", "isSuccess", "message", "payload" ],
@@ -1286,6 +1600,8 @@
           }
         }
       },
+=======
+>>>>>>> 8edac89d9e08259a5bf3f403ba719cb7882d4bb1
       "GetGuideChatbotAnswerResponse" : {
         "title" : "GetGuideChatbotAnswerResponse",
         "required" : [ "code", "isSuccess", "message", "payload" ],

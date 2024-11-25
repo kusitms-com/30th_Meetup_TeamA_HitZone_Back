@@ -4,7 +4,7 @@ import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.stadium.application.dto.response.GetEntertainmentsResponseDto;
 import kusitms.backend.stadium.domain.enums.Boundary;
 import kusitms.backend.stadium.domain.model.Stadium;
-import kusitms.backend.stadium.status.StadiumErrorStatus;
+import kusitms.backend.stadium.status.EntertainmentErrorStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class EntertainmentApplicationService {
         Stadium stadium = stadiumApplicationService.findStadiumByName(stadiumName);
         log.info("The Corresponding stadium Id is " + stadium.getEntertainments());
         Boundary existBoundary = Boundary.findByName(boundary)
-                .orElseThrow(() -> new CustomException(StadiumErrorStatus._BAD_REQUEST_BOUNDARY));
+                .orElseThrow(() -> new CustomException(EntertainmentErrorStatus._BAD_REQUEST_BOUNDARY));
 
         List<GetEntertainmentsResponseDto.EntertainmentDto> entertainments = stadium.getEntertainments()
                 .stream()

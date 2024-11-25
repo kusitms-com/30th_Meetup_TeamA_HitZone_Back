@@ -29,15 +29,15 @@ spring:
 
   jwt:
     secret: ${JWT_SECRET}
-    redirect:
-      onboarding: ${JWT_REDIRECT_ONBOARDING}
-      base: ${JWT_REDIRECT_BASE}
-    register-token:
-      expiration-time: ${REGISTER_TOKEN_EXPIRATION_TIME}    # 5 minute
-    access-token:
-      expiration-time: ${ACCESS_TOKEN_EXPIRATION_TIME}    # 1 hour
-    refresh-token:
-      expiration-time: ${REFRESH_TOKEN_EXPIRATION_TIME}  # 14 days
+    register-token-expiration-time: ${REGISTER_TOKEN_EXPIRATION_TIME}    # 5 minutes
+    access-token-expiration-time: ${ACCESS_TOKEN_EXPIRATION_TIME}        # 1 hour
+    refresh-token-expiration-time: ${REFRESH_TOKEN_EXPIRATION_TIME}      # 14 days
+    redirect-onboarding: ${JWT_REDIRECT_ONBOARDING}
+    redirect-base: ${JWT_REDIRECT_BASE}
+
+  redis:
+    auth-code-expiration-minutes: ${AUTH_CODE_EXPIRATION_MINUTES} # 인증 코드 유효기간 (분)
+    refresh-token-expiration-days: ${REFRESH_TOKEN_EXPIRATION_DAYS} # 리프레시 토큰 유효기간 (일)
 
   security:
     oauth2:
@@ -114,4 +114,3 @@ cloud:
       auto: false
     stack:
       auto: false
-

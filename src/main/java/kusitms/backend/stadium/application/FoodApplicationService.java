@@ -5,7 +5,7 @@ import kusitms.backend.stadium.application.dto.response.GetFoodsResponseDto;
 import kusitms.backend.stadium.domain.enums.Boundary;
 import kusitms.backend.stadium.domain.enums.Course;
 import kusitms.backend.stadium.domain.model.Stadium;
-import kusitms.backend.stadium.status.StadiumErrorStatus;
+import kusitms.backend.stadium.status.FoodErrorStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,11 +31,11 @@ public class FoodApplicationService {
     public GetFoodsResponseDto getFoodsOnCondition(String stadiumName, String boundary, String course) {
         Stadium stadium = stadiumApplicationService.findStadiumByName(stadiumName);
         Boundary existBoundary = Boundary.findByName(boundary)
-                .orElseThrow(() -> new CustomException(StadiumErrorStatus._BAD_REQUEST_BOUNDARY));
+                .orElseThrow(() -> new CustomException(FoodErrorStatus._BAD_REQUEST_BOUNDARY));
         Course existCourse = null;
         if ("내부".equals(boundary)) {
             existCourse = Course.findByName(course)
-                    .orElseThrow(() -> new CustomException(StadiumErrorStatus._BAD_REQUEST_COURSE));
+                    .orElseThrow(() -> new CustomException(FoodErrorStatus._BAD_REQUEST_COURSE));
         }
 
         List<GetFoodsResponseDto.FoodDto> foods = stadiumApplicationService.getFoodsOnCondition(stadium, existBoundary, existCourse)
