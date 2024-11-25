@@ -18,7 +18,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class StadiumRepositoryJpaImpl implements StadiumRepository {
+public class StadiumRepositoryImpl implements StadiumRepository {
 
     private final StadiumJpaRepository stadiumJpaRepository;
     private final StadiumCustomRepository stadiumCustomRepository;

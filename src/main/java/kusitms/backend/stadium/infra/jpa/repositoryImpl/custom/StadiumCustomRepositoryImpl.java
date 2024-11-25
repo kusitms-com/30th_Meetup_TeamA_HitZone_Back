@@ -16,7 +16,7 @@ import static kusitms.backend.stadium.infra.jpa.entity.QFoodEntity.foodEntity;
 
 @Repository
 @RequiredArgsConstructor
-public class StadiumCustomImplRepository implements StadiumCustomRepository {
+public class StadiumCustomRepositoryImpl implements StadiumCustomRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
