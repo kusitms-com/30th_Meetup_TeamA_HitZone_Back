@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import kusitms.backend.global.dto.ApiResponse;
 import kusitms.backend.stadium.application.EntertainmentApplicationService;
 import kusitms.backend.stadium.application.dto.response.GetEntertainmentsResponseDto;
-import kusitms.backend.stadium.status.StadiumSuccessStatus;
+import kusitms.backend.stadium.status.EntertainmentSuccessStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -32,11 +32,11 @@ public class EntertainmentController {
             @RequestParam @NotBlank String stadiumName,
             @RequestParam @NotBlank String boundary
     ) {
-        StadiumSuccessStatus status;
+        EntertainmentSuccessStatus status;
         if ("내부".equals(boundary)) {
-            status = StadiumSuccessStatus._OK_GET_INTERIOR_ENTERTAINMENTS;
+            status = EntertainmentSuccessStatus._OK_GET_INTERIOR_ENTERTAINMENTS;
         } else {
-            status = StadiumSuccessStatus._OK_GET_EXTERIOR_ENTERTAINMENTS;
+            status = EntertainmentSuccessStatus._OK_GET_EXTERIOR_ENTERTAINMENTS;
         }
         return ApiResponse.onSuccess(status, entertainmentApplicationService.getSuitableEntertainments(stadiumName, boundary));
     }

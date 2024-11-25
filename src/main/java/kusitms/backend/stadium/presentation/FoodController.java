@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import kusitms.backend.global.dto.ApiResponse;
 import kusitms.backend.stadium.application.FoodApplicationService;
 import kusitms.backend.stadium.application.dto.response.GetFoodsResponseDto;
-import kusitms.backend.stadium.status.StadiumSuccessStatus;
+import kusitms.backend.stadium.status.FoodSuccessStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -34,13 +34,13 @@ public class FoodController {
             @RequestParam @NotBlank String boundary,
             @RequestParam(required = false) String course
     ) {
-        StadiumSuccessStatus status;
+        FoodSuccessStatus status;
         if ("내부".equals(boundary) && "식사".equals(course)) {
-            status = StadiumSuccessStatus._OK_GET_INTERIOR_MEALS;
+            status = FoodSuccessStatus._OK_GET_INTERIOR_MEALS;
         } else if ("내부".equals(boundary) && "후식".equals(course)) {
-            status = StadiumSuccessStatus._OK_GET_INTERIOR_DESSERTS;
+            status = FoodSuccessStatus._OK_GET_INTERIOR_DESSERTS;
         } else {
-            status = StadiumSuccessStatus._OK_GET_EXTERIOR_TOTAL;
+            status = FoodSuccessStatus._OK_GET_EXTERIOR_TOTAL;
         }
         return ApiResponse.onSuccess(status, foodApplicationService.getFoodsOnCondition(stadiumName, boundary, course));
     }
