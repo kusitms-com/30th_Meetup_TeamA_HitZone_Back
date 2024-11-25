@@ -82,7 +82,6 @@ public class ResultApplicationService {
     @Transactional(readOnly = true)
     public GetZonesResponseDto getRecommendedZones(Long resultId, Long count) {
         Result result = resultRepository.findResultById(resultId);
-
         List<GetZonesResponseDto.ZoneResponseDto> zones = result.getZones()
                 .stream()
                 .limit(count)

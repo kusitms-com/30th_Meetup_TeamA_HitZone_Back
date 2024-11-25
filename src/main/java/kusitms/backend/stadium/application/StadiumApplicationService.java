@@ -31,7 +31,6 @@ public class StadiumApplicationService {
      * @return 해당 스타디움의 구역 리스트 (정보 포함)
      * @param <T> StadiumStatusType 인터페이스를 상속한 ENUM 형식
      */
-    @Transactional(readOnly = true)
     public <T extends Enum<T> & StadiumStatusType> T[] extractZonesByStadiumName (String stadiumName){
         T[] zones = switch (stadiumName) {
             case "잠실종합운동장 (잠실)" -> (T[]) JamsilStadiumStatusType.values();
@@ -59,7 +58,6 @@ public class StadiumApplicationService {
      * @param stadiumName 스타디움명
      * @return 스타디움 정보 (이미지 Url, 1루석 팀, 3루석 팀, 구역명, 구역 색상)
      */
-    @Transactional(readOnly = true)
     public GetStadiumInfosResponseDto getStadiumInfos(String stadiumName) {
         StadiumInfo stadiumInfo = stadiumDomainService.getStadiumInfoByName(stadiumName);
         StadiumStatusType[] stadiumStatusTypes = stadiumDomainService.getStatusTypesByName(stadiumName);
@@ -74,7 +72,6 @@ public class StadiumApplicationService {
      * @param zoneName 구역명
      * @return 해당 구역 정보 (이미지 Url, 구역명, 구역 색상, 설명, 1루팀, 3루팀, 입구, 단차, 좌석 거리, 유용한 점, 팁, 참고 사항)
      */
-    @Transactional(readOnly = true)
     public GetZoneGuideResponseDto getZoneGuide(String stadiumName, String zoneName) {
         StadiumStatusType zoneType = switch (stadiumName) {
             case "잠실종합운동장 (잠실)" -> stadiumDomainService.findZoneInStadium(JamsilStadiumStatusType.values(), zoneName);
