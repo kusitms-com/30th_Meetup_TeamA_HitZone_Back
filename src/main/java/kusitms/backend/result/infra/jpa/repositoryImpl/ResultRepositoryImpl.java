@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class ResultRepositoryJpaImpl implements ResultRepository {
+public class ResultRepositoryImpl implements ResultRepository {
 
     private final ResultJpaRepository resultJpaRepository;
 
