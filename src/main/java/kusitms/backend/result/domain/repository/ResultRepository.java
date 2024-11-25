@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ResultRepository {
-    Long saveResult(Result result);
+    Result saveResult(Result result);
     Result findResultById(Long id);
 }

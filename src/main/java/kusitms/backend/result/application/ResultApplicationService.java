@@ -57,7 +57,7 @@ public class ResultApplicationService {
                 zones, List.of(request.clientKeywords()));
 
         Result result = resultDomainService.buildResult(userId, stadiumId, request.preference(), recommendedProfile, recommendedZones);
-        Long resultId = resultRepository.saveResult(result);
+        Long resultId = resultRepository.saveResult(result).getId();
 
         return SaveTopRankedZoneResponseDto.of(resultId);
     }

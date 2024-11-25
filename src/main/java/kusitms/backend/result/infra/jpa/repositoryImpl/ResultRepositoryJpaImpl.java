@@ -17,9 +17,9 @@ public class ResultRepositoryJpaImpl implements ResultRepository {
     private final ResultJpaRepository resultJpaRepository;
 
     @Override
-    public Long saveResult(Result result) {
-        ResultEntity savedEntity = resultJpaRepository.save(ResultMapper.toEntity(result));
-        return savedEntity.getId();
+    public Result saveResult(Result result) {
+        ResultEntity resultEntity = resultJpaRepository.save(ResultMapper.toEntity(result));
+        return ResultMapper.toDomain(resultEntity);
     }
 
     @Override
