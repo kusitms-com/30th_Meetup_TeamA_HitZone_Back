@@ -50,7 +50,7 @@ public class StadiumApplicationService {
     @Transactional(readOnly = true)
     public Long getIdByStadiumName(String staiumName) {
         Stadium stadium = stadiumRepository.findStadiumByName(staiumName);
-        log.info("The Corresponding stadium Id is " + stadium.getId());
+        log.info("The Corresponding stadium Id is {}", stadium.getId());
         return stadium.getId();
     }
 
@@ -64,6 +64,7 @@ public class StadiumApplicationService {
         StadiumInfo stadiumInfo = stadiumDomainService.getStadiumInfoByName(stadiumName);
         StadiumStatusType[] stadiumStatusTypes = stadiumDomainService.getStatusTypesByName(stadiumName);
         List<GetStadiumInfosResponseDto.ZoneInfo> zoneInfos = stadiumDomainService.getZonesNameAndColorFromStadium(stadiumStatusTypes);
+        log.info("The Corresponding stadium info is returned");
         return GetStadiumInfosResponseDto.of(stadiumInfo.getImgUrl(), stadiumInfo.getFirstBaseSide(), stadiumInfo.getThirdBaseSide(), zoneInfos);
     }
 

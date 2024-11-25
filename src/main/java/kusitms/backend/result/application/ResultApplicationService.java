@@ -45,16 +45,16 @@ public class ResultApplicationService {
     @Transactional
     public <T extends Enum<T> & StadiumStatusType> SaveTopRankedZoneResponseDto saveRecommendedResult(String accessToken, SaveTopRankedZoneRequestDto request) {
         T[] zones = stadiumApplicationService.extractZonesByStadiumName(request.stadium());
-        ProfileStatusType recommendedProfile = recommendUserProfileService.getRecommendedUserProfile(
-                ProfileStatusType.values(), List.of(request.clientKeywords()));
-        List<T> recommendedZones = recommendTopRankedZonesService.getTopRankedZones(
-                zones, List.of(request.clientKeywords()));
-
         Long stadiumId = stadiumApplicationService.getIdByStadiumName(request.stadium());
         Long userId = accessToken != null ? jwtUtil.getUserIdFromToken(accessToken) : null;
         if (userId != null) {
             userApplicationService.isExistUserById(userId);
         }
+
+        ProfileStatusType recommendedProfile = recommendUserProfileService.getRecommendedUserProfile(
+                ProfileStatusType.values(), List.of(request.clientKeywords()));
+        List<T> recommendedZones = recommendTopRankedZonesService.getTopRankedZones(
+                zones, List.of(request.clientKeywords()));
 
         Result result = resultDomainService.buildResult(userId, stadiumId, request.preference(), recommendedProfile, recommendedZones);
         Long resultId = resultRepository.saveResult(result);
