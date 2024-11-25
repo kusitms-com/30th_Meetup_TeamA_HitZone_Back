@@ -3,14 +3,14 @@ package kusitms.backend.result.domain.service;
 import kusitms.backend.result.domain.util.KeywordUtil;
 import kusitms.backend.stadium.domain.enums.StadiumStatusType;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
-@Service
-public class RecommendTopRankedZonesService {
+@Component
+public class RecommendTopRankedZonesManager {
 
     /**
      * 해당하는 키워드에 따른 추천 구역을 3가지 반환한다.

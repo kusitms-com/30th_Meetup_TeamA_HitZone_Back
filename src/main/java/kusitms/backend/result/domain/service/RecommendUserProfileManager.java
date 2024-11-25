@@ -3,7 +3,7 @@ package kusitms.backend.result.domain.service;
 import kusitms.backend.result.domain.enums.ProfileStatusType;
 import kusitms.backend.result.domain.util.KeywordUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
-@Service
-public class RecommendUserProfileService {
+@Component
+public class RecommendUserProfileManager {
 
     /**
      * 해당하는 키워드에 따른 프로필 정보를 반환한다.

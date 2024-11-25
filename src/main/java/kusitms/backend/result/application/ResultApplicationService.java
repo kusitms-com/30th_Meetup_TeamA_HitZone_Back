@@ -8,8 +8,8 @@ import kusitms.backend.result.application.dto.response.SaveTopRankedZoneResponse
 import kusitms.backend.result.domain.enums.ProfileStatusType;
 import kusitms.backend.result.domain.model.Result;
 import kusitms.backend.result.domain.repository.ResultRepository;
-import kusitms.backend.result.domain.service.RecommendTopRankedZonesService;
-import kusitms.backend.result.domain.service.RecommendUserProfileService;
+import kusitms.backend.result.domain.service.RecommendTopRankedZonesManager;
+import kusitms.backend.result.domain.service.RecommendUserProfileManager;
 import kusitms.backend.result.domain.service.ResultDomainService;
 import kusitms.backend.stadium.application.StadiumApplicationService;
 import kusitms.backend.stadium.domain.enums.StadiumStatusType;
@@ -28,8 +28,8 @@ public class ResultApplicationService {
 
     private final UserApplicationService userApplicationService;
     private final StadiumApplicationService stadiumApplicationService;
-    private final RecommendUserProfileService recommendUserProfileService;
-    private final RecommendTopRankedZonesService recommendTopRankedZonesService;
+    private final RecommendUserProfileManager recommendUserProfileManager;
+    private final RecommendTopRankedZonesManager recommendTopRankedZonesManager;
     private final ResultDomainService resultDomainService;
     private final ResultRepository resultRepository;
     private final JWTUtil jwtUtil;
@@ -51,9 +51,9 @@ public class ResultApplicationService {
             userApplicationService.isExistUserById(userId);
         }
 
-        ProfileStatusType recommendedProfile = recommendUserProfileService.getRecommendedUserProfile(
+        ProfileStatusType recommendedProfile = recommendUserProfileManager.getRecommendedUserProfile(
                 ProfileStatusType.values(), List.of(request.clientKeywords()));
-        List<T> recommendedZones = recommendTopRankedZonesService.getTopRankedZones(
+        List<T> recommendedZones = recommendTopRankedZonesManager.getTopRankedZones(
                 zones, List.of(request.clientKeywords()));
 
         Result result = resultDomainService.buildResult(userId, stadiumId, request.preference(), recommendedProfile, recommendedZones);
