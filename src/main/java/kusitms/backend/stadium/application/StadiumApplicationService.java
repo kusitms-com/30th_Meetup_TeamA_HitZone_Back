@@ -1,7 +1,6 @@
 package kusitms.backend.stadium.application;
 
 import kusitms.backend.global.exception.CustomException;
-import kusitms.backend.stadium.application.dto.response.GetEntertainmentsResponseDto;
 import kusitms.backend.stadium.application.dto.response.GetStadiumInfosResponseDto;
 import kusitms.backend.stadium.application.dto.response.GetZoneGuideResponseDto;
 import kusitms.backend.stadium.domain.enums.*;
@@ -80,24 +79,6 @@ public class StadiumApplicationService {
         };
         log.info("구역명에 해당하는 구역 정보를 조회하였습니다.");
         return GetZoneGuideResponseDto.from(zoneType);
-    }
-
-    /**
-     * 해당 스타디움의 boundary의 즐길거리 리스트를 반환한다.
-     * @param stadiumName 스타디움명
-     * @param boundary 위치 (내부 or 외부)
-     * @return 즐길거리 리스트 (이미지Url, boundary, 이름, 설명 리스트, 팁 리스트)
-     */
-    @Transactional(readOnly = true)
-    public GetEntertainmentsResponseDto getSuitableEntertainments(String stadiumName, String boundary) {
-        Stadium stadium = findStadiumByName(stadiumName);
-        log.info("The Corresponding stadium Id is " + stadium.getEntertainments());
-        Boundary existBoundary = Boundary.findByName(boundary)
-                .orElseThrow(() -> new CustomException(StadiumErrorStatus._BAD_REQUEST_BOUNDARY));
-
-        List<GetEntertainmentsResponseDto.EntertainmentDto> entertainments = stadiumDomainService.getEntertainmentsOnCondition(stadium, existBoundary);
-        log.info("조건에 해당하는 즐길거리 목록이 조회되었습니다.");
-        return GetEntertainmentsResponseDto.of(entertainments);
     }
 
     /**
