@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/results")
 @Validated
 public class ResultController {
 
@@ -28,7 +28,7 @@ public class ResultController {
      * @param request (스타디움명, 선호구역(1루석, 3루석), 유저 선호 키워드 배열)
      * @return 저장한 Result 엔티티의 id
      */
-    @PostMapping("/results/save")
+    @PostMapping("/save")
     public ResponseEntity<ApiResponse<SaveTopRankedZoneResponseDto>> saveRecommendedResult(
             @CookieValue(required = false) String accessToken,
             @Valid @RequestBody SaveTopRankedZoneRequestDto request
@@ -42,7 +42,7 @@ public class ResultController {
      * @param resultId Result 엔티티의 id
      * @return 결과에 해당하는 프로필 정보(id, 이미지 Url, 닉네임, 타입, 해시태그 리스트)
      */
-    @GetMapping("/results/profile")
+    @GetMapping("/profile")
     public ResponseEntity<ApiResponse<GetProfileResponseDto>> getRecommendedProfile(
             @RequestParam @Min(1L) Long resultId
     ) {
@@ -56,7 +56,7 @@ public class ResultController {
      * @param count 클라이언트측에서 받고자 하는 추천구역의 개수
      * @return 추천구역의 리스트(id, 구역명, 구역색, 설명 리스트, 팁, 참고사항 리스트)
      */
-    @GetMapping("/results/zones")
+    @GetMapping("/zones")
     public ResponseEntity<ApiResponse<GetZonesResponseDto>> getRecommendedZones(
             @RequestParam @Min(1L) Long resultId,
             @RequestParam @Min(1L) Long count
