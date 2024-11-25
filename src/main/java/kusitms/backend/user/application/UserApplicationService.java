@@ -27,7 +27,7 @@ public class UserApplicationService {
     private final RedisManager redisManager;
 
     @Transactional(readOnly = true)
-    public void isExistUserById(Long userId){
+    public void validateUserExistsById(Long userId){
         userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(UserErrorStatus._NOT_FOUND_USER));
         log.info("유저 정보 조회 성공");

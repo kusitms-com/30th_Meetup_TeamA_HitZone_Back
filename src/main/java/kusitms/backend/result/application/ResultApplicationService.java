@@ -47,7 +47,7 @@ public class ResultApplicationService {
         Long stadiumId = stadiumApplicationService.getIdByStadiumName(request.stadium());
         Long userId = accessToken != null ? jwtUtil.getUserIdFromToken(accessToken) : null;
         if (userId != null) {
-            userApplicationService.isExistUserById(userId);
+            userApplicationService.validateUserExistsById(userId);
         }
 
         ProfileStatusType recommendedProfile = recommendUserProfileManager.getRecommendedUserProfile(
