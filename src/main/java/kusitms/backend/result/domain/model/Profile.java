@@ -1,6 +1,5 @@
 package kusitms.backend.result.domain.model;
 
-import kusitms.backend.global.domain.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +8,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Profile extends BaseTimeEntity {
+public class Profile {
 
     private Long id;
     private Result result;

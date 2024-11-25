@@ -1,6 +1,5 @@
 package kusitms.backend.result.domain.model;
 
-import kusitms.backend.global.domain.BaseTimeEntity;
 import kusitms.backend.result.domain.value.ReferencesGroup;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -10,7 +9,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Zone extends BaseTimeEntity {
+public class Zone {
 
     private Long id;
     private Result result;

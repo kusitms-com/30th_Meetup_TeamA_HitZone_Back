@@ -1,6 +1,5 @@
 package kusitms.backend.stadium.domain.model;
 
-import kusitms.backend.global.domain.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +9,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Stadium extends BaseTimeEntity {
+public class Stadium {
 
     private Long id;
     private String name;

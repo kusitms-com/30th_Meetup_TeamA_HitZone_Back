@@ -1,6 +1,5 @@
 package kusitms.backend.result.domain.model;
 
-import kusitms.backend.global.domain.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +9,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Result extends BaseTimeEntity {
+public class Result {
 
     private Long id;
     private Long userId; // User를 ID로 간접 참조
