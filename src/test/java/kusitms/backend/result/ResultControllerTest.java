@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ResultController.class)
-public class ResultEntityControllerTest extends ControllerTestConfig {
+public class ResultControllerTest extends ControllerTestConfig {
 
     @MockBean
     private ResultApplicationService resultApplicationService;

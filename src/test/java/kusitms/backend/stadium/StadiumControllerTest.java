@@ -7,8 +7,12 @@ import kusitms.backend.configuration.ControllerTestConfig;
 import kusitms.backend.result.domain.value.Reference;
 import kusitms.backend.result.domain.value.ReferencesGroup;
 import kusitms.backend.stadium.application.StadiumApplicationService;
+import kusitms.backend.stadium.application.dto.response.GetEntertainmentsResponseDto;
+import kusitms.backend.stadium.application.dto.response.GetFoodsResponseDto;
 import kusitms.backend.stadium.application.dto.response.GetStadiumInfosResponseDto;
 import kusitms.backend.stadium.application.dto.response.GetZoneGuideResponseDto;
+import kusitms.backend.stadium.domain.enums.Boundary;
+import kusitms.backend.stadium.domain.enums.Course;
 import kusitms.backend.stadium.presentation.StadiumController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(StadiumController.class)
-public class StadiumEntityControllerTest extends ControllerTestConfig {
+public class StadiumControllerTest extends ControllerTestConfig {
 
     @MockBean
     private StadiumApplicationService stadiumApplicationService;
@@ -202,4 +206,140 @@ public class StadiumEntityControllerTest extends ControllerTestConfig {
                         )
                 ));
     }
+
+    @Test
+    @DisplayName("해당 구장의 먹거리 목록을 조회한다.")
+    public void getSuitableFoods() throws Exception {
+
+        GetFoodsResponseDto.FoodDto foodDto = new GetFoodsResponseDto.FoodDto(
+                "테스트이미지",
+                Boundary.INTERIOR,
+                Course.DESSERT,
+                "통밥",
+                "2층 B06 / 2.5층 C05 (1,3루 내야지정석)",
+                List.of("김치말이국수"),
+                "국수 7,000원 (삼겹살+국수 세트 26,000원)",
+                "잠실야구장의 최고 인기 메뉴, 김치말이국수! 전석 매진일 기준 경기 1시간 전 주문 필요해요."
+        );
+        GetFoodsResponseDto getFoodsResponseDto = GetFoodsResponseDto.of(List.of(foodDto));
+
+        Mockito.when(stadiumApplicationService.getFoodsOnCondition(anyString(), anyString(), anyString())).thenReturn(getFoodsResponseDto);
+
+        // when
+        ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/culture/foods")
+                .param("stadiumName", "잠실종합운동장")
+                .param("boundary", "내부")
+                .param("course", "후식")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
+
+        // then
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.isSuccess").value(true))
+                .andExpect(jsonPath("$.code").value("200"))
+                .andExpect(jsonPath("$.message").value("구장내부 디저트류 매장 조회가 완료되었습니다."))
+                .andExpect(jsonPath("$.payload.foods[0].imgUrl").value("테스트이미지"))
+                .andExpect(jsonPath("$.payload.foods[0].boundary").value("INTERIOR"))
+                .andExpect(jsonPath("$.payload.foods[0].course").value("DESSERT"))
+                .andExpect(jsonPath("$.payload.foods[0].name").value("통밥"))
+                .andExpect(jsonPath("$.payload.foods[0].location").value("2층 B06 / 2.5층 C05 (1,3루 내야지정석)"))
+                .andExpect(jsonPath("$.payload.foods[0].menu[0]").value("김치말이국수"))
+                .andExpect(jsonPath("$.payload.foods[0].price").value("국수 7,000원 (삼겹살+국수 세트 26,000원)"))
+                .andExpect(jsonPath("$.payload.foods[0].tip").value("잠실야구장의 최고 인기 메뉴, 김치말이국수! 전석 매진일 기준 경기 1시간 전 주문 필요해요."))
+
+                .andDo(MockMvcRestDocumentationWrapper.document("culture/foods",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(
+                                ResourceSnippetParameters.builder()
+                                        .tag("Culture")
+                                        .description("해당 구장의 음식 목록을 조회한다.")
+                                        .queryParameters(
+                                                parameterWithName("stadiumName").description("구장명 [예시 : 잠실종합운동장]"),
+                                                parameterWithName("boundary").description("구장 영역(내부 or 외부) [예시 : 내부]"),
+                                                parameterWithName("course").description("구장 코스(식사 or 후식) - 내부일때는 꼭 입력해주세요 [예시 : 후식]").optional()
+                                        )
+                                        .responseFields(
+                                                fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("성공 여부"),
+                                                fieldWithPath("code").type(JsonFieldType.STRING).description("응답 코드"),
+                                                fieldWithPath("message").type(JsonFieldType.STRING).description("응답 메시지"),
+                                                fieldWithPath("payload").type(JsonFieldType.OBJECT).description("응답 데이터").optional(),
+                                                fieldWithPath("payload.foods[].imgUrl").type(JsonFieldType.STRING).description("해당 매장의 이미지 URL"),
+                                                fieldWithPath("payload.foods[].boundary").type(JsonFieldType.STRING).description("해당 매장의 영역(내부 or 외부)"),
+                                                fieldWithPath("payload.foods[].course").type(JsonFieldType.STRING).description("해당 매장의 코스(식사 or 후식 or 전체)"),
+                                                fieldWithPath("payload.foods[].name").type(JsonFieldType.STRING).description("해당 매장의 이름"),
+                                                fieldWithPath("payload.foods[].location").type(JsonFieldType.STRING).description("해당 매장의 위치"),
+                                                fieldWithPath("payload.foods[].menu[]").type(JsonFieldType.ARRAY).description("해당 매장의 대표 메뉴 리스트"),
+                                                fieldWithPath("payload.foods[].price").type(JsonFieldType.STRING).description("해당 매장의 음식 가격 정보"),
+                                                fieldWithPath("payload.foods[].tip").type(JsonFieldType.STRING).description("해당 매장과 관련된 팁")
+                                        )
+                                        .responseSchema(Schema.schema("GetFoodsResponseDto"))
+                                        .build()
+                        )
+                ));
+    }
+
+    @Test
+    @DisplayName("해당 구장의 즐길거리 목록을 조회한다.")
+    public void getSuitableEntertainments() throws Exception {
+
+        GetEntertainmentsResponseDto.EntertainmentDto entertainmentDto = new GetEntertainmentsResponseDto.EntertainmentDto(
+                "테스트이미지",
+                Boundary.INTERIOR,
+                "포토카드",
+                List.of("선수들의 사진을 뽑을 수 있는 포토카드! 경기 시작 전에 포토카드 기계로 가서 포토카드를 뽑을 수 있어요."),
+                List.of("기계의 QR을 통해 원하는 선수나, 자신의 사진으로 커스텀 포토카드를 뽑을 수 있으니 참고하세요!")
+        );
+        GetEntertainmentsResponseDto getEntertainmentsResponseDto = GetEntertainmentsResponseDto.of(List.of(entertainmentDto));
+
+        Mockito.when(stadiumApplicationService.getSuitableEntertainments(anyString(), anyString())).thenReturn(getEntertainmentsResponseDto);
+
+        // when
+        ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/culture/entertainments")
+                .param("stadiumName", "잠실종합운동장")
+                .param("boundary", "내부")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
+
+        // then
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.isSuccess").value(true))
+                .andExpect(jsonPath("$.code").value("200"))
+                .andExpect(jsonPath("$.message").value("구장내부 즐길거리 조회가 완료되었습니다."))
+                .andExpect(jsonPath("$.payload.entertainments[0].imgUrl").value("테스트이미지"))
+                .andExpect(jsonPath("$.payload.entertainments[0].boundary").value("INTERIOR"))
+                .andExpect(jsonPath("$.payload.entertainments[0].name").value("포토카드"))
+                .andExpect(jsonPath("$.payload.entertainments[0].explanations[0]").value("선수들의 사진을 뽑을 수 있는 포토카드! 경기 시작 전에 포토카드 기계로 가서 포토카드를 뽑을 수 있어요."))
+                .andExpect(jsonPath("$.payload.entertainments[0].tips[0]").value("기계의 QR을 통해 원하는 선수나, 자신의 사진으로 커스텀 포토카드를 뽑을 수 있으니 참고하세요!"))
+
+                .andDo(MockMvcRestDocumentationWrapper.document("culture/entertainments",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(
+                                ResourceSnippetParameters.builder()
+                                        .tag("Culture")
+                                        .description("해당 구장의 즐길거리 목록을 조회한다.")
+                                        .queryParameters(
+                                                parameterWithName("stadiumName").description("구장명 [예시 : 잠실종합운동장]"),
+                                                parameterWithName("boundary").description("구장 영역 (내부 or 외부) [예시 : 내부]")
+                                        )
+                                        .responseFields(
+                                                fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("성공 여부"),
+                                                fieldWithPath("code").type(JsonFieldType.STRING).description("응답 코드"),
+                                                fieldWithPath("message").type(JsonFieldType.STRING).description("응답 메시지"),
+                                                fieldWithPath("payload").type(JsonFieldType.OBJECT).description("응답 데이터").optional(),
+                                                fieldWithPath("payload.entertainments[].imgUrl").type(JsonFieldType.STRING).description("해당 즐길거리의 이미지 URL"),
+                                                fieldWithPath("payload.entertainments[].boundary").type(JsonFieldType.STRING).description("해당 즐길거리의 영역 (내부 or 외부)"),
+                                                fieldWithPath("payload.entertainments[].name").type(JsonFieldType.STRING).description("해당 즐길거리의 이름"),
+                                                fieldWithPath("payload.entertainments[].explanations[]").type(JsonFieldType.ARRAY).description("해당 즐길거리의 설명 리스트"),
+                                                fieldWithPath("payload.entertainments[].tips[]").type(JsonFieldType.ARRAY).description("해당 즐길거리의 팁 리스트")
+                                        )
+                                        .responseSchema(Schema.schema("GetEntertainmentsResponseDto"))
+                                        .build()
+                        )
+                ));
+    }
+
 }
