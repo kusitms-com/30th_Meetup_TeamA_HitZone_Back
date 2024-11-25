@@ -79,6 +79,7 @@ java {
     }
 }
 
+// annotationProcessor로 생성된 파일 디렉토리 지정
 tasks.named('compileJava', JavaCompile).configure {
     options.annotationProcessorGeneratedSourcesDirectory = file("$build/generated/sources/annotationProcessor/java/main")
 }
@@ -86,13 +87,16 @@ tasks.named('compileJava', JavaCompile).configure {
 sourceSets {
     main {
         java {
+            // Q 클래스가 생성되는 경로를 추가
             srcDirs += "$build/generated/sources/annotationProcessor/java/main"
         }
     }
 }
 
+
 tasks.named('compileJava') {
     doFirst {
+        // QClass 파일 자동 삭제
         def querydslGeneratedDir = layout.buildDirectory.dir("generated/sources/annotationProcessor/java/main").get().asFile
         if (querydslGeneratedDir.exists()) {
             querydslGeneratedDir.deleteDir()
