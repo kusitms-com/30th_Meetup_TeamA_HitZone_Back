@@ -1,6 +1,6 @@
-package kusitms.backend.user.dto.response;
+package kusitms.backend.user.application.dto.response;
 
-import kusitms.backend.user.domain.entity.User;
+import kusitms.backend.user.domain.model.User;
 
 public record UserInfoResponseDto (
         String nickname,

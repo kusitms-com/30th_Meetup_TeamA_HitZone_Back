@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @RequiredArgsConstructor
-public enum UserErrorStatus implements BaseErrorCode {
+public enum  UserErrorStatus implements BaseErrorCode {
 
     _NOT_FOUND_USER(HttpStatus.NOT_FOUND, "USER-001", "해당 사용자를 찾을 수 없습니다."),
     _BAD_REQUEST_PROVIDER_STATUS_TYPE(HttpStatus.BAD_REQUEST, "USER-002", "잘못된 provider값입니다. (local, kakao, google, naver 중 하나로 입력해주세요.)"),

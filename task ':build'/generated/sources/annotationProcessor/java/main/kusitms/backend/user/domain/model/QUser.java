@@ -1,4 +1,4 @@
-package kusitms.backend.user.domain.entity;
+package kusitms.backend.user.domain.model;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 

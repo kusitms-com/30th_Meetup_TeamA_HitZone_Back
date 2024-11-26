@@ -1,7 +1,7 @@
-package kusitms.backend.user.dto.request;
+package kusitms.backend.user.application.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
-import kusitms.backend.user.domain.entity.User;
+import kusitms.backend.user.domain.model.User;
 import kusitms.backend.user.domain.enums.ProviderStatusType;
 
 public record SignUpRequestDto(

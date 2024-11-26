@@ -1,4 +1,4 @@
-package kusitms.backend.user.dto.request;
+package kusitms.backend.user.application.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 

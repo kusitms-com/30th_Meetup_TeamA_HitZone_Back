@@ -3,9 +3,9 @@ package kusitms.backend.user.presentation;
 import jakarta.validation.Valid;
 import kusitms.backend.global.dto.ApiResponse;
 import kusitms.backend.user.application.UserApplicationService;
-import kusitms.backend.user.dto.request.CheckNicknameRequestDto;
-import kusitms.backend.user.dto.request.SignUpRequestDto;
-import kusitms.backend.user.dto.response.UserInfoResponseDto;
+import kusitms.backend.user.application.dto.request.CheckNicknameRequestDto;
+import kusitms.backend.user.application.dto.request.SignUpRequestDto;
+import kusitms.backend.user.application.dto.response.UserInfoResponseDto;
 import kusitms.backend.user.status.UserSuccessStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/user")
 public class UserController {
+
     private final UserApplicationService userApplicationService;
 
     /**
@@ -34,7 +35,7 @@ public class UserController {
      * 유저 정보를 조회한다.
      * @return 닉네임, 이메일
      */
-    @GetMapping("/user-info")
+    @GetMapping("/info")
     public ResponseEntity<ApiResponse<UserInfoResponseDto>> getUserInfo(
             @CookieValue String accessToken
     ) {
@@ -60,7 +61,7 @@ public class UserController {
      * 휴대폰에 6자리 인증코드를 보낸다.
      * @return X
      */
-//    @PostMapping("/send-code")
+//    @PostMapping("/code/send")
 //    public ResponseEntity<ApiResponse<Void>> sendAuthCode(
 //        @Valid @RequestBody SendAuthCodeRequestDto request
 //    ) {
@@ -71,7 +72,7 @@ public class UserController {
      * 인증코드를 확인하여 휴대폰 인증을 진행한다.
      * @return X
      */
-//    @PostMapping("/verify-code")
+//    @PostMapping("/code/verify")
 //    public ResponseEntity<ApiResponse<Void>> verifyAuthCode(
 //            @Valid @RequestBody VerifyAuthCodeRequestDto request
 //    ) {

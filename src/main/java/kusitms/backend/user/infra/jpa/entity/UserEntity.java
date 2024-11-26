@@ -1,10 +1,9 @@
-package kusitms.backend.user.domain.entity;
+package kusitms.backend.user.infra.jpa.entity;
 
 import jakarta.persistence.*;
 import kusitms.backend.global.domain.BaseTimeEntity;
 import kusitms.backend.user.domain.enums.ProviderStatusType;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="users")
-public class User extends BaseTimeEntity {
+public class UserEntity extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,11 +34,27 @@ public class User extends BaseTimeEntity {
 //    @Column(nullable = false, unique = true)
 //    private String phoneNumber;
 
-    @Builder
-    public User(ProviderStatusType provider, String providerId, String email, String nickname) {
+    public UserEntity(
+            Long id,
+            ProviderStatusType provider,
+            String providerId,
+            String email,
+            String nickname
+    ) {
+        this.id = id;
         this.provider = provider;
         this.providerId = providerId;
         this.email = email;
         this.nickname = nickname;
+    }
+
+    public static UserEntity toDomain(
+            Long id,
+            ProviderStatusType provider,
+            String providerId,
+            String email,
+            String nickname
+    ) {
+        return new UserEntity(id, provider, providerId, email, nickname);
     }
 }

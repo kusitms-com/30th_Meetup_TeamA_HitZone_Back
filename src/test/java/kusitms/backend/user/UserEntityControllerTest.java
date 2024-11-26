@@ -6,9 +6,9 @@ import com.epages.restdocs.apispec.Schema;
 import jakarta.servlet.http.Cookie;
 import kusitms.backend.configuration.ControllerTestConfig;
 import kusitms.backend.user.application.UserApplicationService;
-import kusitms.backend.user.dto.request.CheckNicknameRequestDto;
-import kusitms.backend.user.dto.request.SignUpRequestDto;
-import kusitms.backend.user.dto.response.UserInfoResponseDto;
+import kusitms.backend.user.application.dto.request.CheckNicknameRequestDto;
+import kusitms.backend.user.application.dto.request.SignUpRequestDto;
+import kusitms.backend.user.application.dto.response.UserInfoResponseDto;
 import kusitms.backend.user.presentation.UserController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(UserController.class)
-public class UserControllerTest extends ControllerTestConfig {
+public class UserEntityControllerTest extends ControllerTestConfig {
 
     @MockBean
     private UserApplicationService userApplicationService;
