@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 @RequiredArgsConstructor
 public enum AuthErrorStatus implements BaseErrorCode {
+
     _INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "AUTH-001", "유효하지 않은 토큰입니다."),
     _NOT_AUTHENTICATED(HttpStatus.UNAUTHORIZED, "AUTH-002", "사용자 인증에 실패했습니다."),
     _EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED, "AUTH-003", "만료된 토큰입니다."),

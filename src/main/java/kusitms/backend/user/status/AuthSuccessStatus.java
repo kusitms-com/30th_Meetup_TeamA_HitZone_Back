@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 @AllArgsConstructor
 public enum AuthSuccessStatus implements BaseCode {
+
     _OK_RE_ISSUE_TOKEN(HttpStatus.OK, "200", "토큰 재발급에 성공하였습니다."),
     ;
 

@@ -51,7 +51,7 @@ public class UserEntityControllerTest extends ControllerTestConfig {
         Mockito.doNothing().when(userApplicationService).checkNickname(any(CheckNicknameRequestDto.class));
 
         // when
-        ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.post("/api/v1/nickname/check")
+        ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.post("/api/v1/user/nickname/check")
                 .content(checkNicknameJsonRequest)
                 .cookie(new Cookie("registerToken", "test"))
                 .contentType(MediaType.APPLICATION_JSON)
@@ -96,10 +96,11 @@ public class UserEntityControllerTest extends ControllerTestConfig {
                 "nickname" : "유저 닉네임"
             }
             """;
-        Mockito.doNothing().when(userApplicationService).signupUser(anyString(), any(SignUpRequestDto.class));
 
+        Mockito.when(userApplicationService.signupUser(anyString(), any(SignUpRequestDto.class)))
+                .thenReturn(new TokenResponseDto("newAccessToken", "newRefreshToken", 3600L, 7200L));;
         // when
-        ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.post("/api/v1/signup")
+        ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.post("/api/v1/user/signup")
                 .cookie(new Cookie("registerToken", "test"))
                 .content(signUpRequestDto)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -146,7 +147,7 @@ public class UserEntityControllerTest extends ControllerTestConfig {
                 .thenReturn(userInfoResponseDto);
 
         // when
-        ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/user-info")
+        ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/user/info")
                 .cookie(new Cookie("accessToken", "test"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON));
@@ -192,7 +193,7 @@ public class UserEntityControllerTest extends ControllerTestConfig {
                 .thenReturn(new TokenResponseDto("newAccessToken", "newRefreshToken", 3600L, 7200L));
 
         // when
-        ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.put("/api/v1/token/re-issue")
+        ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.put("/api/v1/user/token/re-issue")
                 .cookie(new Cookie("refreshToken", "test"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON));
@@ -208,7 +209,7 @@ public class UserEntityControllerTest extends ControllerTestConfig {
                         preprocessResponse(prettyPrint()),
                         resource(
                                 ResourceSnippetParameters.builder()
-                                        .tag("Auth")
+                                        .tag("User")
                                         .description("리프레시 토큰을 통해 액세스 토큰을 재발급합니다.")
                                         .responseFields(
                                                 fieldWithPath("isSuccess").description("성공 여부"),

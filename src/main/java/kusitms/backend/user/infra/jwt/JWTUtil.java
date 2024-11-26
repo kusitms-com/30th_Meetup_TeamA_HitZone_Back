@@ -5,8 +5,8 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import kusitms.backend.user.status.AuthErrorStatus;
 import kusitms.backend.global.exception.CustomException;
+import kusitms.backend.user.status.AuthErrorStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

@@ -2,8 +2,8 @@ package kusitms.backend.user.infra.handler;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kusitms.backend.user.infra.jwt.JWTUtil;
 import kusitms.backend.user.application.UserApplicationService;
+import kusitms.backend.user.infra.jwt.JWTUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;

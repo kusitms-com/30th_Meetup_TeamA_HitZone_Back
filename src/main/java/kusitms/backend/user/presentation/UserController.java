@@ -2,15 +2,15 @@ package kusitms.backend.user.presentation;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import kusitms.backend.user.application.dto.response.TokenResponseDto;
-import kusitms.backend.user.status.AuthSuccessStatus;
 import kusitms.backend.global.dto.ApiResponse;
 import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.global.util.CookieUtil;
 import kusitms.backend.user.application.UserApplicationService;
 import kusitms.backend.user.application.dto.request.CheckNicknameRequestDto;
 import kusitms.backend.user.application.dto.request.SignUpRequestDto;
+import kusitms.backend.user.application.dto.response.TokenResponseDto;
 import kusitms.backend.user.application.dto.response.UserInfoResponseDto;
+import kusitms.backend.user.status.AuthSuccessStatus;
 import kusitms.backend.user.status.UserSuccessStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
