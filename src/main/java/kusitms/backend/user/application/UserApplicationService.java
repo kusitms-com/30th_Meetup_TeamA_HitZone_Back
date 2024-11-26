@@ -18,6 +18,7 @@ import kusitms.backend.user.application.dto.request.SendAuthCodeRequestDto;
 import kusitms.backend.user.application.dto.request.SignUpRequestDto;
 import kusitms.backend.user.application.dto.request.VerifyAuthCodeRequestDto;
 import kusitms.backend.user.application.dto.response.UserInfoResponseDto;
+import kusitms.backend.user.infra.sms.SmsManager;
 import kusitms.backend.user.status.UserErrorStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
