@@ -31,14 +31,14 @@ public class User {
         this.nickname = nickname;
     }
 
-    public static UserEntity toDomain(
+    public static User toDomain(
             Long id,
             ProviderStatusType provider,
             String providerId,
             String email,
             String nickname
     ) {
-        return new UserEntity(id, provider, providerId, email, nickname);
+        return new User(id, provider, providerId, email, nickname);
     }
 }
 

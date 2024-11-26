@@ -48,7 +48,7 @@ public class UserEntity extends BaseTimeEntity {
         this.nickname = nickname;
     }
 
-    public static UserEntity toDomain(
+    public static UserEntity toEntity(
             Long id,
             ProviderStatusType provider,
             String providerId,
