@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SmsService {
+public class SmsManager {
 
     @Value("${twilio.account_sid}")
     private String accountSid;

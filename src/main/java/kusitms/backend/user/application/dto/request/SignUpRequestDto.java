@@ -7,14 +7,14 @@ import kusitms.backend.user.domain.enums.ProviderStatusType;
 public record SignUpRequestDto(
         @NotBlank(message = "닉네임은 공백이나 빈칸일 수 없습니다.") String nickname
 ) {
-        public static User toEntity(String provider, String providerId, String email, String nickname) {
-                return User.builder()
-                        .provider(ProviderStatusType.of(provider))
-                        .providerId(providerId)
-                        .email(email)
-                        .nickname(nickname)
-                        .build();
-        }
+//        public static User toDomain(String provider, String providerId, String email, String nickname) {
+//                return User.toDomain()
+//                        .provider(ProviderStatusType.of(provider))
+//                        .providerId(providerId)
+//                        .email(email)
+//                        .nickname(nickname)
+//                        .build();
+//        }
 
         // 전화번호를 010-xxxx-xxxx 형식으로 변환
 //        private static String formatPhoneNumber(String phoneNumber) {

@@ -31,9 +31,10 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class UserApplicationService {
+
     private final UserRepository userRepository;
     private final JWTUtil jwtUtil;
-    private final SmsService smsService;
+    private final SmsManager smsManager;
     private final RedisManager redisManager;
     private final DistributedLockManager distributedLockManager;
     
@@ -176,7 +177,7 @@ public class UserApplicationService {
     public void sendAuthCode(SendAuthCodeRequestDto request) {
         String authCode = generateAuthCode();
         redisManager.savePhoneVerificationCode(request.phoneNumber(), authCode);
-        smsService.sendSms(request.phoneNumber(), "히트존 인증 코드 번호 : " + authCode);
+        smsManager.sendSms(request.phoneNumber(), "히트존 인증 코드 번호 : " + authCode);
         log.info("인증 코드 발송 완료: {}", request.phoneNumber());
     }
 
