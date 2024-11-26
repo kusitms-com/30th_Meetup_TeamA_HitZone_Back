@@ -79,27 +79,20 @@ java {
     }
 }
 
-tasks.named('compileJava', JavaCompile).configure {
-    options.annotationProcessorGeneratedSourcesDirectory = file("$build/generated/sources/annotationProcessor/java/main")
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += [
+            "-s", layout.buildDirectory.dir("generated/sources/annotationProcessor/java/main").get().asFile.absolutePath
+    ]
 }
 
 sourceSets {
     main {
         java {
-            srcDirs += "$build/generated/sources/annotationProcessor/java/main"
+            srcDirs += layout.buildDirectory.dir("generated/sources/annotationProcessor/java/main").get().asFile
         }
     }
 }
 
-tasks.named('compileJava') {
-    doFirst {
-        // QClass 파일 자동 삭제
-        def querydslGeneratedDir = layout.buildDirectory.dir("generated/sources/annotationProcessor/java/main").get().asFile
-        if (querydslGeneratedDir.exists()) {
-            querydslGeneratedDir.deleteDir()
-        }
-    }
-}
 ext {
     snippetsDir = file('build/generated-snippets')
 }
