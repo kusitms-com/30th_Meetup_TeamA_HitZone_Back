@@ -1,9 +1,9 @@
 package kusitms.backend.global.redis;
 
-import kusitms.backend.user.infra.jwt.JWTUtil;
-import kusitms.backend.user.status.AuthErrorStatus;
 import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.global.status.ErrorStatus;
+import kusitms.backend.user.infra.jwt.JWTUtil;
+import kusitms.backend.user.status.AuthErrorStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
