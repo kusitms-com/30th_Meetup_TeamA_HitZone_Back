@@ -216,12 +216,12 @@ public class UserApplicationService {
         log.info("인증 코드 검증 성공: {}", request.phoneNumber());
     }
 
-
     /**
      * 닉네임 중복 확인.
      *
      * @param request 닉네임 중복 확인 요청 정보
      */
+    @Transactional
     public void checkNickname(CheckNicknameRequestDto request) {
         String nickname = request.nickname();
         String lockKey = "lock:nickname:" + nickname;
@@ -232,28 +232,16 @@ public class UserApplicationService {
         }
 
         try {
-            // 2. 닉네임 중복 확인 (트랜잭션이 필요한 부분)
-            validateNickname(nickname);
+            // 2. 닉네임 중복 확인
+            User user = userRepository.findUserByNickname(nickname);
+            if (user != null) {
+                throw new CustomException(UserErrorStatus._DUPLICATED_NICKNAME);
+            }
+
+            log.info("닉네임 사용 가능: {}", nickname);
         } finally {
-            // 3. 락 해제 (트랜잭션과 무관한 작업)
+            // 3. 락 해제
             distributedLockManager.releaseLock(lockKey);
         }
     }
-
-    /**
-     * 닉네임 중복 확인.
-     *
-     * @param nickname 중복 확인을 해 볼 닉네임
-     */
-    @Transactional(readOnly = true)
-    public void validateNickname(String nickname) {
-        User user = userRepository.findUserByNickname(nickname);
-        if (user != null) {
-            throw new CustomException(UserErrorStatus._DUPLICATED_NICKNAME);
-        }
-        log.info("닉네임 사용 가능: {}", nickname);
-    }
-
-
-
 }
