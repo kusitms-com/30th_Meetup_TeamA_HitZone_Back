@@ -8,6 +8,7 @@ import kusitms.backend.configuration.ControllerTestConfig;
 import kusitms.backend.user.application.UserApplicationService;
 import kusitms.backend.user.application.dto.request.CheckNicknameRequestDto;
 import kusitms.backend.user.application.dto.request.SignUpRequestDto;
+import kusitms.backend.user.application.dto.response.TokenResponseDto;
 import kusitms.backend.user.application.dto.response.UserInfoResponseDto;
 import kusitms.backend.user.presentation.UserController;
 import org.junit.jupiter.api.DisplayName;
@@ -182,4 +183,44 @@ public class UserEntityControllerTest extends ControllerTestConfig {
                         )
                 ));
     }
+
+    @Test
+    @DisplayName("토큰 재발급을 한다.")
+    public void reIssueToken() throws Exception {
+
+        Mockito.when(userApplicationService.reIssueToken(anyString()))
+                .thenReturn(new TokenResponseDto("newAccessToken", "newRefreshToken", 3600L, 7200L));
+
+        // when
+        ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.put("/api/v1/token/re-issue")
+                .cookie(new Cookie("refreshToken", "test"))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
+
+        // then
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.isSuccess").value(true))
+                .andExpect(jsonPath("$.code").value(200))
+                .andExpect(jsonPath("$.message").value("토큰 재발급에 성공하였습니다."))
+                .andDo(MockMvcRestDocumentationWrapper.document("token/re-issue",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(
+                                ResourceSnippetParameters.builder()
+                                        .tag("Auth")
+                                        .description("리프레시 토큰을 통해 액세스 토큰을 재발급합니다.")
+                                        .responseFields(
+                                                fieldWithPath("isSuccess").description("성공 여부"),
+                                                fieldWithPath("code").description("응답 코드"),
+                                                fieldWithPath("message").description("응답 메시지")
+                                        )
+                                        .build()
+                        ),
+                        requestCookies(
+                                cookieWithName("refreshToken").description("리프레시 토큰")
+                        )
+                ));
+    }
+
 }
