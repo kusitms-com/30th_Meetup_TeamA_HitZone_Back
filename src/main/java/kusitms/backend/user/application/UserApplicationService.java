@@ -11,6 +11,7 @@ import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.global.redis.DistributedLockManager;
 import kusitms.backend.global.redis.RedisManager;
 import kusitms.backend.global.util.CookieUtil;
+import kusitms.backend.user.domain.enums.ProviderStatusType;
 import kusitms.backend.user.domain.model.User;
 import kusitms.backend.user.domain.repository.UserRepository;
 import kusitms.backend.user.application.dto.request.CheckNicknameRequestDto;
@@ -38,7 +39,13 @@ public class UserApplicationService {
     private final SmsManager smsManager;
     private final RedisManager redisManager;
     private final DistributedLockManager distributedLockManager;
-    
+
+    private static final long LOCK_TIMEOUT = 5000; // 5초
+
+    /**
+     * 유저 ID를 통해 DB에 저장된 유저인지 확인한다.
+     * @param userId 유저 고유 ID
+     */
     @Transactional(readOnly = true)
     public void validateUserExistsById(Long userId){
         userRepository.findById(userId)
@@ -46,16 +53,13 @@ public class UserApplicationService {
         log.info("유저 정보 조회 성공");
     }
 
-
-
-    private static final long LOCK_TIMEOUT = 5000; // 5초
-
     /**
      * OAuth2 사용자 정보 추출 및 신규 여부 확인.
      *
      * @param token OAuth2 인증 토큰
      * @return 신규 사용자 여부
      */
+    @Transactional(readOnly = true)
     public boolean isNewUser(OAuth2AuthenticationToken token) {
         OAuth2UserInfo oAuth2UserInfo = extractOAuth2UserInfo(token);
         return userRepository.findByProviderId(oAuth2UserInfo.getProviderId()) == null;
@@ -84,6 +88,7 @@ public class UserApplicationService {
      * @param token    OAuth2 인증 토큰
      * @param response HTTP 응답 객체
      */
+    @Transactional(readOnly = true)
     public void handleExistingUser(OAuth2AuthenticationToken token, HttpServletResponse response) {
         OAuth2UserInfo oAuth2UserInfo = extractOAuth2UserInfo(token);
         User existUser = userRepository.findByProviderId(oAuth2UserInfo.getProviderId());
@@ -120,9 +125,9 @@ public class UserApplicationService {
      * @param registerToken 회원가입 토큰
      * @param request       회원가입 요청 정보
      */
-
     @Transactional
     public void signupUser(String registerToken, SignUpRequestDto request) {
+
         if (registerToken == null) {
             throw new CustomException(AuthErrorStatus._EXPIRED_REGISTER_TOKEN);
         }
@@ -144,14 +149,14 @@ public class UserApplicationService {
             }
         }*/
 
-        userRepository.save(
-                SignUpRequestDto.toEntity(
-                        provider,
-                        providerId,
-                        email,
-                        request.nickname()
-                )
+        User user = User.toDomain(
+                null,
+                ProviderStatusType.of(provider),
+                providerId,
+                email,
+                request.nickname()
         );
+        userRepository.save(user);
         log.info("회원가입 성공: {}", email);
     }
 
