@@ -1,4 +1,4 @@
-package kusitms.backend.auth.handler;
+package kusitms.backend.user.infra.handler;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

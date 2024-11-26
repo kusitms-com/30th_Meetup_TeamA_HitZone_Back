@@ -1,11 +1,11 @@
-package kusitms.backend.auth.jwt;
+package kusitms.backend.user.infra.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import kusitms.backend.auth.status.AuthErrorStatus;
+import kusitms.backend.user.status.AuthErrorStatus;
 import kusitms.backend.global.exception.CustomException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

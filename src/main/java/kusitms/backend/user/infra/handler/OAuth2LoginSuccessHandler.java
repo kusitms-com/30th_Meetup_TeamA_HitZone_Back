@@ -1,8 +1,8 @@
-package kusitms.backend.auth.handler;
+package kusitms.backend.user.infra.handler;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kusitms.backend.auth.jwt.JWTUtil;
+import kusitms.backend.user.infra.jwt.JWTUtil;
 import kusitms.backend.user.application.UserApplicationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,7 +1,7 @@
 package kusitms.backend.global.redis;
 
-import kusitms.backend.auth.jwt.JWTUtil;
-import kusitms.backend.auth.status.AuthErrorStatus;
+import kusitms.backend.user.infra.jwt.JWTUtil;
+import kusitms.backend.user.status.AuthErrorStatus;
 import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.global.status.ErrorStatus;
 import lombok.RequiredArgsConstructor;

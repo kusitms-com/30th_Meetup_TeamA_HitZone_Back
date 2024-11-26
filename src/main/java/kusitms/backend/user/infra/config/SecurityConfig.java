@@ -1,9 +1,9 @@
-package kusitms.backend.global.config;
+package kusitms.backend.user.infra.config;
 
-import kusitms.backend.auth.handler.OAuth2LoginFailureHandler;
-import kusitms.backend.auth.handler.OAuth2LoginSuccessHandler;
-import kusitms.backend.auth.jwt.JWTFilter;
-import kusitms.backend.auth.jwt.JWTUtil;
+import kusitms.backend.user.infra.handler.OAuth2LoginFailureHandler;
+import kusitms.backend.user.infra.handler.OAuth2LoginSuccessHandler;
+import kusitms.backend.user.infra.jwt.JWTFilter;
+import kusitms.backend.user.infra.jwt.JWTUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

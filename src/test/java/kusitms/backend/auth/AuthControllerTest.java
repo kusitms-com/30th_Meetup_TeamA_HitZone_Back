@@ -4,7 +4,7 @@ import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import jakarta.servlet.http.Cookie;
 import kusitms.backend.auth.application.AuthService;
-import kusitms.backend.auth.dto.response.TokenResponseDto;
+import kusitms.backend.user.application.dto.response.TokenResponseDto;
 import kusitms.backend.auth.presentation.AuthController;
 import kusitms.backend.configuration.ControllerTestConfig;
 import org.junit.jupiter.api.DisplayName;

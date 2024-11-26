@@ -1,4 +1,4 @@
-package kusitms.backend.auth.dto.response;
+package kusitms.backend.user.application.dto.response;
 
 public interface OAuth2UserInfo {
     //제공자 (Ex. naver, google, ...)

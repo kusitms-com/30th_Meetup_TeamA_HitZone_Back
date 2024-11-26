@@ -1,4 +1,4 @@
-package kusitms.backend.auth.jwt;
+package kusitms.backend.user.infra.jwt;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;

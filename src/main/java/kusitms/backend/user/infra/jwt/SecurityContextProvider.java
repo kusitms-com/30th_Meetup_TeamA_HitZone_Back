@@ -1,6 +1,6 @@
-package kusitms.backend.auth.jwt;
+package kusitms.backend.user.infra.jwt;
 
-import kusitms.backend.auth.status.AuthErrorStatus;
+import kusitms.backend.user.status.AuthErrorStatus;
 import kusitms.backend.global.exception.CustomException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;

@@ -1,4 +1,4 @@
-package kusitms.backend.auth.jwt;
+package kusitms.backend.user.infra.jwt;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -2,21 +2,20 @@ package kusitms.backend.user.application;
 
 import jakarta.servlet.http.HttpServletResponse;
 import kusitms.backend.auth.dto.response.*;
-import kusitms.backend.auth.jwt.JWTUtil;
-import kusitms.backend.auth.status.AuthErrorStatus;
+import kusitms.backend.user.infra.jwt.JWTUtil;
+import kusitms.backend.user.status.AuthErrorStatus;
 import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.global.redis.DistributedLockManager;
 import kusitms.backend.global.redis.RedisManager;
 import kusitms.backend.global.util.CookieUtil;
+import kusitms.backend.user.application.dto.response.*;
 import kusitms.backend.user.domain.enums.ProviderStatusType;
 import kusitms.backend.user.domain.model.User;
 import kusitms.backend.user.domain.repository.UserRepository;
-import kusitms.backend.user.infra.jpa.repository.UserJpaRepository;
 import kusitms.backend.user.application.dto.request.CheckNicknameRequestDto;
 import kusitms.backend.user.application.dto.request.SendAuthCodeRequestDto;
 import kusitms.backend.user.application.dto.request.SignUpRequestDto;
 import kusitms.backend.user.application.dto.request.VerifyAuthCodeRequestDto;
-import kusitms.backend.user.application.dto.response.UserInfoResponseDto;
 import kusitms.backend.user.infra.sms.SmsManager;
 import kusitms.backend.user.status.UserErrorStatus;
 import lombok.RequiredArgsConstructor;
@@ -243,5 +242,24 @@ public class UserApplicationService {
             // 3. 락 해제
             distributedLockManager.releaseLock(lockKey);
         }
+    }
+
+    /**
+     * Refresh Token 검증 및 새로운 토큰 발급.
+     *
+     * @param refreshToken 클라이언트로부터 받은 리프레시 토큰
+     * @return 새로 생성된 Access Token과 Refresh Token
+     */
+    public TokenResponseDto reIssueToken(String refreshToken) {
+        if (refreshToken == null) {
+            throw new CustomException(AuthErrorStatus._EXPIRED_REFRESH_TOKEN);
+        }
+
+        Long userId = redisManager.validateAndExtractUserId(refreshToken);
+        String newAccessToken = jwtUtil.generateAccessOrRefreshToken(userId, jwtUtil.getAccessTokenExpirationTime());
+        String newRefreshToken = jwtUtil.generateAccessOrRefreshToken(userId, jwtUtil.getRefreshTokenExpirationTime());
+
+        redisManager.saveRefreshToken(userId.toString(), newRefreshToken);
+        return new TokenResponseDto(newAccessToken, newRefreshToken, jwtUtil.getAccessTokenExpirationTime(), jwtUtil.getRefreshTokenExpirationTime());
     }
 }

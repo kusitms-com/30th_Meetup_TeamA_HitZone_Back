@@ -1,6 +1,6 @@
 package kusitms.backend.result.application;
 
-import kusitms.backend.auth.jwt.JWTUtil;
+import kusitms.backend.user.infra.jwt.JWTUtil;
 import kusitms.backend.result.application.dto.request.SaveTopRankedZoneRequestDto;
 import kusitms.backend.result.application.dto.response.GetProfileResponseDto;
 import kusitms.backend.result.application.dto.response.GetZonesResponseDto;

@@ -1,4 +1,4 @@
-package kusitms.backend.auth.status;
+package kusitms.backend.user.status;
 
 import kusitms.backend.global.code.BaseCode;
 import kusitms.backend.global.dto.ReasonDto;
