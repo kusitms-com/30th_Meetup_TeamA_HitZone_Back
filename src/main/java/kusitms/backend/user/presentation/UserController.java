@@ -1,13 +1,17 @@
 package kusitms.backend.user.presentation;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import kusitms.backend.auth.dto.response.TokenResponseDto;
 import kusitms.backend.global.dto.ApiResponse;
+import kusitms.backend.global.util.CookieUtil;
 import kusitms.backend.user.application.UserApplicationService;
 import kusitms.backend.user.application.dto.request.CheckNicknameRequestDto;
 import kusitms.backend.user.application.dto.request.SignUpRequestDto;
 import kusitms.backend.user.application.dto.response.UserInfoResponseDto;
 import kusitms.backend.user.status.UserSuccessStatus;
 import lombok.RequiredArgsConstructor;
+import org.antlr.v4.runtime.Token;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,11 +29,15 @@ public class UserController {
      * @return void
      */
     @PostMapping("/signup")
-    public ResponseEntity<ApiResponse<Void>> signupUser(
+    public ResponseEntity<ApiResponse<TokenResponseDto>> signupUser(
             @CookieValue(required = false) String registerToken,
-            @Valid @RequestBody SignUpRequestDto request
+            @Valid @RequestBody SignUpRequestDto request,
+            HttpServletResponse response
     ) {
-        userApplicationService.signupUser(registerToken, request);
+        TokenResponseDto tokenResponseDto = userApplicationService.signupUser(registerToken, request);
+        CookieUtil.setAuthCookies(response, tokenResponseDto.accessToken(), tokenResponseDto.refreshToken(),
+                tokenResponseDto.accessTokenExpiration(), tokenResponseDto.refreshTokenExpiration());
+
         return ApiResponse.onSuccess(UserSuccessStatus._CREATED_USER);
     }
 

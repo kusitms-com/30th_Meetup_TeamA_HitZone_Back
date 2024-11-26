@@ -1,10 +1,7 @@
 package kusitms.backend.user.application;
 
 import jakarta.servlet.http.HttpServletResponse;
-import kusitms.backend.auth.dto.response.GoogleUserInfo;
-import kusitms.backend.auth.dto.response.KakaoUserInfo;
-import kusitms.backend.auth.dto.response.NaverUserInfo;
-import kusitms.backend.auth.dto.response.OAuth2UserInfo;
+import kusitms.backend.auth.dto.response.*;
 import kusitms.backend.auth.jwt.JWTUtil;
 import kusitms.backend.auth.status.AuthErrorStatus;
 import kusitms.backend.global.exception.CustomException;
@@ -14,6 +11,7 @@ import kusitms.backend.global.util.CookieUtil;
 import kusitms.backend.user.domain.enums.ProviderStatusType;
 import kusitms.backend.user.domain.model.User;
 import kusitms.backend.user.domain.repository.UserRepository;
+import kusitms.backend.user.infra.jpa.repository.UserJpaRepository;
 import kusitms.backend.user.application.dto.request.CheckNicknameRequestDto;
 import kusitms.backend.user.application.dto.request.SendAuthCodeRequestDto;
 import kusitms.backend.user.application.dto.request.SignUpRequestDto;
@@ -48,8 +46,7 @@ public class UserApplicationService {
      */
     @Transactional(readOnly = true)
     public void validateUserExistsById(Long userId){
-        userRepository.findById(userId)
-                .orElseThrow(() -> new CustomException(UserErrorStatus._NOT_FOUND_USER));
+        userRepository.findUserById(userId);
         log.info("유저 정보 조회 성공");
     }
 
@@ -62,7 +59,7 @@ public class UserApplicationService {
     @Transactional(readOnly = true)
     public boolean isNewUser(OAuth2AuthenticationToken token) {
         OAuth2UserInfo oAuth2UserInfo = extractOAuth2UserInfo(token);
-        return userRepository.findByProviderId(oAuth2UserInfo.getProviderId()) == null;
+        return userRepository.findUserByProviderId(oAuth2UserInfo.getProviderId()) == null;
     }
 
     /**
@@ -91,7 +88,7 @@ public class UserApplicationService {
     @Transactional(readOnly = true)
     public void handleExistingUser(OAuth2AuthenticationToken token, HttpServletResponse response) {
         OAuth2UserInfo oAuth2UserInfo = extractOAuth2UserInfo(token);
-        User existUser = userRepository.findByProviderId(oAuth2UserInfo.getProviderId());
+        User existUser = userRepository.findUserByProviderId(oAuth2UserInfo.getProviderId());
 
         String accessToken = jwtUtil.generateAccessOrRefreshToken(existUser.getId(), jwtUtil.getAccessTokenExpirationTime());
         String refreshToken = jwtUtil.generateAccessOrRefreshToken(existUser.getId(), jwtUtil.getRefreshTokenExpirationTime());
@@ -126,7 +123,7 @@ public class UserApplicationService {
      * @param request       회원가입 요청 정보
      */
     @Transactional
-    public void signupUser(String registerToken, SignUpRequestDto request) {
+    public TokenResponseDto signupUser(String registerToken, SignUpRequestDto request) {
 
         if (registerToken == null) {
             throw new CustomException(AuthErrorStatus._EXPIRED_REGISTER_TOKEN);
@@ -156,8 +153,14 @@ public class UserApplicationService {
                 email,
                 request.nickname()
         );
-        userRepository.save(user);
+
+        User savedUser = userRepository.saveUser(user);
+        String accessToken = jwtUtil.generateAccessOrRefreshToken(savedUser.getId(), jwtUtil.getAccessTokenExpirationTime());
+        String refreshToken = jwtUtil.generateAccessOrRefreshToken(savedUser.getId(), jwtUtil.getRefreshTokenExpirationTime());
+
+        redisManager.saveRefreshToken(savedUser.getId().toString(), refreshToken);
         log.info("회원가입 성공: {}", email);
+        return new TokenResponseDto(accessToken, refreshToken, jwtUtil.getAccessTokenExpirationTime(), jwtUtil.getRefreshTokenExpirationTime());
     }
 
     /**
@@ -169,8 +172,7 @@ public class UserApplicationService {
     @Transactional(readOnly = true)
     public UserInfoResponseDto getUserInfo(String accessToken) {
         Long userId = jwtUtil.getUserIdFromToken(accessToken);
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new CustomException(UserErrorStatus._NOT_FOUND_USER));
+        User user = userRepository.findUserById(userId);
         log.info("사용자 정보 조회 성공: {}", userId);
         return UserInfoResponseDto.from(user);
     }
@@ -214,12 +216,12 @@ public class UserApplicationService {
         log.info("인증 코드 검증 성공: {}", request.phoneNumber());
     }
 
+
     /**
      * 닉네임 중복 확인.
      *
      * @param request 닉네임 중복 확인 요청 정보
      */
-    @Transactional
     public void checkNickname(CheckNicknameRequestDto request) {
         String nickname = request.nickname();
         String lockKey = "lock:nickname:" + nickname;
@@ -230,16 +232,28 @@ public class UserApplicationService {
         }
 
         try {
-            // 2. 닉네임 중복 확인
-            User user = userRepository.findByNickname(nickname);
-            if (user != null) {
-                throw new CustomException(UserErrorStatus._DUPLICATED_NICKNAME);
-            }
-
-            log.info("닉네임 사용 가능: {}", nickname);
+            // 2. 닉네임 중복 확인 (트랜잭션이 필요한 부분)
+            validateNickname(nickname);
         } finally {
-            // 3. 락 해제
+            // 3. 락 해제 (트랜잭션과 무관한 작업)
             distributedLockManager.releaseLock(lockKey);
         }
     }
+
+    /**
+     * 닉네임 중복 확인.
+     *
+     * @param nickname 중복 확인을 해 볼 닉네임
+     */
+    @Transactional(readOnly = true)
+    public void validateNickname(String nickname) {
+        User user = userRepository.findUserByNickname(nickname);
+        if (user != null) {
+            throw new CustomException(UserErrorStatus._DUPLICATED_NICKNAME);
+        }
+        log.info("닉네임 사용 가능: {}", nickname);
+    }
+
+
+
 }

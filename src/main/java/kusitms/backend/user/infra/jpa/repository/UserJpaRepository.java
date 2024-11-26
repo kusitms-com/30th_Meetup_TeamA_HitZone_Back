@@ -1,10 +1,10 @@
-package kusitms.backend.user.domain.repository;
+package kusitms.backend.user.infra.jpa.repository;
 
-import kusitms.backend.user.domain.model.User;
+import kusitms.backend.user.infra.jpa.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
-    User findByProviderId(String providerId);
-    User findByNickname(String nickname);
-//    User findByPhoneNumber(String phoneNumber);
+public interface UserJpaRepository extends JpaRepository<UserEntity, Long> {
+    UserEntity findByProviderId(String providerId);
+    UserEntity findByNickname(String nickname);
+//    UserEntity findByPhoneNumber(String phoneNumber);
 }
