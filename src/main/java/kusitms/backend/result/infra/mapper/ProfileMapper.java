@@ -6,6 +6,11 @@ import kusitms.backend.result.infra.jpa.entity.ProfileEntity;
 public class ProfileMapper {
 
     public static Profile toDomain(ProfileEntity profileEntity) {
+
+        if (profileEntity == null) {
+            return null;
+        }
+
         return Profile.toDomain(
                 profileEntity.getId(),
                 profileEntity.getImgUrl(),

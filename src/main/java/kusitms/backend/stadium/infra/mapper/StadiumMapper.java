@@ -13,6 +13,10 @@ public class StadiumMapper {
 
     public static Stadium toDomain(StadiumEntity stadiumEntity) {
 
+        if (stadiumEntity == null) {
+            return null;
+        }
+
         List<Food> foods = stadiumEntity.getFoodEntities().stream()
                 .map(FoodMapper::toDomain)
                 .toList();
