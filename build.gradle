@@ -79,7 +79,6 @@ java {
     }
 }
 
-// annotationProcessor로 생성된 파일 디렉토리 지정
 tasks.named('compileJava', JavaCompile).configure {
     options.annotationProcessorGeneratedSourcesDirectory = file("$build/generated/sources/annotationProcessor/java/main")
 }
@@ -87,12 +86,10 @@ tasks.named('compileJava', JavaCompile).configure {
 sourceSets {
     main {
         java {
-            // Q 클래스가 생성되는 경로를 추가
             srcDirs += "$build/generated/sources/annotationProcessor/java/main"
         }
     }
 }
-
 
 tasks.named('compileJava') {
     doFirst {
@@ -103,7 +100,6 @@ tasks.named('compileJava') {
         }
     }
 }
-
 ext {
     snippetsDir = file('build/generated-snippets')
 }
