@@ -13,7 +13,7 @@ public enum ParkingGuideAnswer implements GuideAnswer {
             • 5번 출구로 나오면 바로 중앙매표소 발견 가능해요. (매표소는 평일에는 경기 시작 1시간 30분 전, 주말에는 경기 시작 2시간 전에 열어요!)
             • 무인 매표소는 1루 쪽(중앙매표소 기준 왼쪽)으로 가면 위치해 있어요!
             • 5번 출구로 나오자마자 왼쪽으로 가면 1루, 오른쪽으로 가면 3루로 들어갈 수 있어요!""",
-            null),
+            "https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/chatbot/go_to_lg.png"),
 
     Q1_KT(1, "kt",
             """
@@ -40,7 +40,7 @@ public enum ParkingGuideAnswer implements GuideAnswer {
 
             입구 바로 오른쪽에 위치한 제2주차장과 잠실새내역 방면 종합운동장사거리 제3주차장을 이용하세요!
             잠실종합운동장 부설주차장은 경기 3시간 전부터 주차가 가능해요 (야구 관람시 ‘프로야구’ 경우에 해당)""",
-            null),
+            "https://kr.object.ncloudstorage.com/hitzone-bucket/hitzone/chatbot/lg_parking_pee.png"),
 
     Q2_KT(2, "kt",
             """
