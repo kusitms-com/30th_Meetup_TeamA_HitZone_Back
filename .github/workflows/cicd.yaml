@@ -2,9 +2,9 @@ name: Hitzone CI/CD with Gradle
 
 on:
   push:
-    branches: [ "main", "develop" ]
+    branches: [ "main", "develop", "refactor-v1"]
   pull_request:
-    branches: [ "main", "develop" ]
+    branches: [ "main", "develop", "refactor-v1"]
 
 permissions:
   contents: read
