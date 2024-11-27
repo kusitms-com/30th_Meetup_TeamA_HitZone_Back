@@ -1,4 +1,4 @@
-package kusitms.backend.global.config;
+package kusitms.backend.chatbot.infra.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

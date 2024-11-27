@@ -1,8 +1,9 @@
-package kusitms.backend.chatbot.infrastructure;
+package kusitms.backend.chatbot.infra.adapter;
 
-import kusitms.backend.chatbot.dto.request.ChatbotRequestDto;
-import kusitms.backend.chatbot.dto.request.ClovaRequestDto;
-import kusitms.backend.chatbot.dto.response.ClovaChatbotAnswerDto;
+import kusitms.backend.chatbot.application.dto.request.ChatbotRequestDto;
+import kusitms.backend.chatbot.application.dto.request.ClovaRequestDto;
+import kusitms.backend.chatbot.application.dto.response.ClovaChatbotAnswerDto;
+import kusitms.backend.chatbot.domain.service.ChatbotApiClient;
 import kusitms.backend.chatbot.status.ChatbotErrorStatus;
 import kusitms.backend.global.exception.CustomException;
 import lombok.RequiredArgsConstructor;

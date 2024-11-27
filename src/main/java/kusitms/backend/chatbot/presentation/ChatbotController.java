@@ -3,11 +3,10 @@ package kusitms.backend.chatbot.presentation;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import kusitms.backend.chatbot.application.ChatbotService;
-import kusitms.backend.chatbot.application.ClovaService;
-import kusitms.backend.chatbot.dto.request.GetClovaChatbotAnswerRequestDto;
-import kusitms.backend.chatbot.dto.response.GetClovaChatbotAnswerResponseDto;
-import kusitms.backend.chatbot.dto.response.GetGuideChatbotAnswerResponseDto;
+import kusitms.backend.chatbot.application.service.ChatbotApplicationService;
+import kusitms.backend.chatbot.application.dto.request.GetClovaChatbotAnswerRequestDto;
+import kusitms.backend.chatbot.application.dto.response.GetClovaChatbotAnswerResponseDto;
+import kusitms.backend.chatbot.application.dto.response.GetGuideChatbotAnswerResponseDto;
 import kusitms.backend.chatbot.status.ChatbotSuccessStatus;
 import kusitms.backend.global.dto.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +20,7 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/api/v1/chatbot")
 @Validated
 public class ChatbotController {
-    private final ChatbotService chatbotService;
-    private final ClovaService clovaService;
+    private final ChatbotApplicationService chatbotApplicationService;
 
     /**
      * 가이드 챗봇 답변 조회 API
@@ -42,7 +40,7 @@ public class ChatbotController {
             @RequestParam("categoryName") @NotBlank String categoryName,
             @RequestParam("orderNumber") @Min(1) int orderNumber){
 
-        GetGuideChatbotAnswerResponseDto response = chatbotService.getGuideChatbotAnswer(stadiumName, categoryName, orderNumber);
+        GetGuideChatbotAnswerResponseDto response = chatbotApplicationService.getGuideChatbotAnswer(stadiumName, categoryName, orderNumber);
 
         return ApiResponse.onSuccess(ChatbotSuccessStatus._GET_GUIDE_CHATBOT_ANSWER, response);
     }
@@ -60,7 +58,7 @@ public class ChatbotController {
     public Mono<ResponseEntity<ApiResponse<GetClovaChatbotAnswerResponseDto>>> getClovaChatbotAnswer(
             @Valid @RequestBody GetClovaChatbotAnswerRequestDto request) {
 
-        return clovaService.getClovaChatbotAnswer(request.message())
+        return chatbotApplicationService.getClovaChatbotAnswer(request.message())
                 .map(response -> ApiResponse.onSuccess(ChatbotSuccessStatus._GET_CLOVA_CHATBOT_ANSWER, response));
     }
 }

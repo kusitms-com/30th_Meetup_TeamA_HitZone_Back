@@ -1,7 +1,7 @@
-package kusitms.backend.chatbot.application;
+package kusitms.backend.chatbot.application.factory;
 
 import kusitms.backend.chatbot.domain.enums.Role;
-import kusitms.backend.chatbot.dto.request.MessageDto;
+import kusitms.backend.chatbot.application.dto.request.MessageDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

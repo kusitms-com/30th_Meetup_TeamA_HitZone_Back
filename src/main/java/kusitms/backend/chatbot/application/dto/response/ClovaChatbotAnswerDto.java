@@ -1,4 +1,4 @@
-package kusitms.backend.chatbot.dto.response;
+package kusitms.backend.chatbot.application.dto.response;
 
 public record ClovaChatbotAnswerDto(
         ResultDto result

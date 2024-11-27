@@ -1,8 +1,8 @@
-package kusitms.backend.chatbot.application;
+package kusitms.backend.chatbot.application.factory;
 
-import kusitms.backend.chatbot.dto.request.ChatbotRequestDto;
-import kusitms.backend.chatbot.dto.request.ClovaRequestDto;
-import kusitms.backend.chatbot.dto.request.MessageDto;
+import kusitms.backend.chatbot.application.dto.request.ChatbotRequestDto;
+import kusitms.backend.chatbot.application.dto.request.ClovaRequestDto;
+import kusitms.backend.chatbot.application.dto.request.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -3,10 +3,9 @@ package kusitms.backend.chatbot;
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
-import kusitms.backend.chatbot.application.ChatbotService;
-import kusitms.backend.chatbot.application.ClovaService;
-import kusitms.backend.chatbot.dto.response.GetClovaChatbotAnswerResponseDto;
-import kusitms.backend.chatbot.dto.response.GetGuideChatbotAnswerResponseDto;
+import kusitms.backend.chatbot.application.dto.response.GetClovaChatbotAnswerResponseDto;
+import kusitms.backend.chatbot.application.dto.response.GetGuideChatbotAnswerResponseDto;
+import kusitms.backend.chatbot.application.service.ChatbotApplicationService;
 import kusitms.backend.chatbot.presentation.ChatbotController;
 import kusitms.backend.configuration.ControllerTestConfig;
 import org.junit.jupiter.api.DisplayName;
@@ -34,10 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ChatbotControllerTest extends ControllerTestConfig {
 
     @MockBean
-    private ChatbotService chatbotService;
-
-    @MockBean
-    private ClovaService clovaService;
+    private ChatbotApplicationService chatbotApplicationService;
 
     @Test
     @DisplayName("가이드 챗봇 답변 조회")
@@ -51,7 +47,7 @@ public class ChatbotControllerTest extends ControllerTestConfig {
                 "종합운동장역을 나가기 전, 역사에 위치한 ‘라커디움파크 종합운동장역점’에서도 굿즈를 판매 중이에요!"
         }, null);
 
-        Mockito.when(chatbotService.getGuideChatbotAnswer(anyString(), anyString(), anyInt()))
+        Mockito.when(chatbotApplicationService.getGuideChatbotAnswer(anyString(), anyString(), anyInt()))
                 .thenReturn(response);
 
         // when
@@ -105,7 +101,7 @@ public class ChatbotControllerTest extends ControllerTestConfig {
         GetClovaChatbotAnswerResponseDto response = new GetClovaChatbotAnswerResponseDto(
                 "안녕하세요! 저는 야구 가이드 챗봇 '루키'에요! 야구에 대한 궁금한 점이 있다면 언제든지 물어봐 주세요!");
 
-        Mockito.when(clovaService.getClovaChatbotAnswer(anyString()))
+        Mockito.when(chatbotApplicationService.getClovaChatbotAnswer(anyString()))
                 .thenReturn(Mono.just(response));
 
         String clovaChatbotAnswerJsonRequest = """

@@ -61,7 +61,6 @@ dependencies {
     // MacOS Silicon 라이브러리 누락 문제
     runtimeOnly 'io.netty:netty-resolver-dns-native-macos:4.1.104.Final:osx-aarch_64'
 
-
     // Querydsl 추가
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
     annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
@@ -70,7 +69,6 @@ dependencies {
 
     // S3
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
-
 }
 
 java {
@@ -93,10 +91,9 @@ sourceSets {
 
 tasks.named('compileJava') {
     doFirst {
-        // QClass 파일 자동 삭제
-        def querydslGeneratedDir = layout.buildDirectory.dir("generated/sources/annotationProcessor/java/main").get().asFile
-        if (querydslGeneratedDir.exists()) {
-            querydslGeneratedDir.deleteDir()
+        def generatedDir = file("$build/generated/sources/annotationProcessor/java/main")
+        if (generatedDir.exists()) {
+            generatedDir.deleteDir() // 기존 Q 클래스 삭제
         }
     }
 }
