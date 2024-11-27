@@ -8,7 +8,7 @@ import kusitms.backend.configuration.ControllerTestConfig;
 import kusitms.backend.user.application.UserApplicationService;
 import kusitms.backend.user.application.dto.request.CheckNicknameRequestDto;
 import kusitms.backend.user.application.dto.request.SignUpRequestDto;
-import kusitms.backend.user.application.dto.response.TokenResponseDto;
+import kusitms.backend.user.application.dto.response.AuthTokenResponseDto;
 import kusitms.backend.user.application.dto.response.UserInfoResponseDto;
 import kusitms.backend.user.presentation.UserController;
 import org.junit.jupiter.api.DisplayName;
@@ -98,7 +98,7 @@ public class UserEntityControllerTest extends ControllerTestConfig {
             """;
 
         Mockito.when(userApplicationService.signupUser(anyString(), any(SignUpRequestDto.class)))
-                .thenReturn(new TokenResponseDto("newAccessToken", "newRefreshToken", 3600L, 7200L));;
+                .thenReturn(new AuthTokenResponseDto("newAccessToken", "newRefreshToken", 3600L, 7200L));;
         // when
         ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.post("/api/v1/user/signup")
                 .cookie(new Cookie("registerToken", "test"))
@@ -190,7 +190,7 @@ public class UserEntityControllerTest extends ControllerTestConfig {
     public void reIssueToken() throws Exception {
 
         Mockito.when(userApplicationService.reIssueToken(anyString()))
-                .thenReturn(new TokenResponseDto("newAccessToken", "newRefreshToken", 3600L, 7200L));
+                .thenReturn(new AuthTokenResponseDto("newAccessToken", "newRefreshToken", 3600L, 7200L));
 
         // when
         ResultActions resultActions = this.mockMvc.perform(RestDocumentationRequestBuilders.put("/api/v1/user/token/re-issue")

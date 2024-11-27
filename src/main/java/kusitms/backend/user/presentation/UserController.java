@@ -8,7 +8,7 @@ import kusitms.backend.global.util.CookieUtil;
 import kusitms.backend.user.application.UserApplicationService;
 import kusitms.backend.user.application.dto.request.CheckNicknameRequestDto;
 import kusitms.backend.user.application.dto.request.SignUpRequestDto;
-import kusitms.backend.user.application.dto.response.TokenResponseDto;
+import kusitms.backend.user.application.dto.response.AuthTokenResponseDto;
 import kusitms.backend.user.application.dto.response.UserInfoResponseDto;
 import kusitms.backend.user.status.AuthSuccessStatus;
 import kusitms.backend.user.status.UserSuccessStatus;
@@ -27,17 +27,17 @@ public class UserController {
      * 레지스터 토큰에서 추출한 정보들과 닉네임으로 회원가입을 진행한다.
      * @param registerToken 쿠키로부터 받은 레지스터 토큰
      * @param request 닉네임
-     * @return 어세스 토큰, 리프레시 토큰, 어세스 토큰 만료시간, 리프레시 토큰 만료시간
+     * @return void
      */
     @PostMapping("/signup")
-    public ResponseEntity<ApiResponse<TokenResponseDto>> signupUser(
+    public ResponseEntity<ApiResponse<Void>> signupUser(
             @CookieValue(required = false) String registerToken,
             @Valid @RequestBody SignUpRequestDto request,
             HttpServletResponse response
     ) {
-        TokenResponseDto tokenResponseDto = userApplicationService.signupUser(registerToken, request);
-        CookieUtil.setAuthCookies(response, tokenResponseDto.accessToken(), tokenResponseDto.refreshToken(),
-                tokenResponseDto.accessTokenExpiration(), tokenResponseDto.refreshTokenExpiration());
+        AuthTokenResponseDto authTokenResponseDto = userApplicationService.signupUser(registerToken, request);
+        CookieUtil.setAuthCookies(response, authTokenResponseDto.accessToken(), authTokenResponseDto.refreshToken(),
+                authTokenResponseDto.accessTokenExpiration(), authTokenResponseDto.refreshTokenExpiration());
 
         return ApiResponse.onSuccess(UserSuccessStatus._CREATED_USER);
     }
@@ -83,11 +83,11 @@ public class UserController {
     ) {
 
         // AuthService를 통해 새 토큰 생성
-        TokenResponseDto tokenResponseDto = userApplicationService.reIssueToken(refreshToken);
+        AuthTokenResponseDto authTokenResponseDto = userApplicationService.reIssueToken(refreshToken);
 
         // 새 토큰을 쿠키에 설정
-        CookieUtil.setAuthCookies(response, tokenResponseDto.accessToken(), tokenResponseDto.refreshToken(),
-                tokenResponseDto.accessTokenExpiration(), tokenResponseDto.refreshTokenExpiration());
+        CookieUtil.setAuthCookies(response, authTokenResponseDto.accessToken(), authTokenResponseDto.refreshToken(),
+                authTokenResponseDto.accessTokenExpiration(), authTokenResponseDto.refreshTokenExpiration());
 
         return ApiResponse.onSuccess(AuthSuccessStatus._OK_RE_ISSUE_TOKEN);
     }

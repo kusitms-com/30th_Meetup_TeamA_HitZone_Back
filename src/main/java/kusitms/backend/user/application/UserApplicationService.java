@@ -4,7 +4,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.global.redis.DistributedLockManager;
 import kusitms.backend.global.redis.RedisManager;
-import kusitms.backend.global.util.CookieUtil;
 import kusitms.backend.user.application.dto.request.CheckNicknameRequestDto;
 import kusitms.backend.user.application.dto.request.SendAuthCodeRequestDto;
 import kusitms.backend.user.application.dto.request.SignUpRequestDto;
@@ -66,15 +65,16 @@ public class UserApplicationService {
      * @param token    OAuth2 인증 토큰
      * @param response HTTP 응답 객체
      */
-    public void handleNewUser(OAuth2AuthenticationToken token, HttpServletResponse response) {
+    public RegisterTokenResponseDto handleNewUser(OAuth2AuthenticationToken token, HttpServletResponse response) {
         OAuth2UserInfo oAuth2UserInfo = extractOAuth2UserInfo(token);
         String registerToken = jwtUtil.generateRegisterToken(
                 oAuth2UserInfo.getProvider(),
                 oAuth2UserInfo.getProviderId(),
                 oAuth2UserInfo.getEmail()
         );
-        CookieUtil.setCookie(response, "registerToken", registerToken, (int) jwtUtil.getRegisterTokenExpirationTime() / 1000);
+
         log.info("신규 사용자 처리 완료: {}", oAuth2UserInfo.getEmail());
+        return new RegisterTokenResponseDto(registerToken, jwtUtil.getRegisterTokenExpirationTime());
     }
 
     /**
@@ -84,7 +84,7 @@ public class UserApplicationService {
      * @param response HTTP 응답 객체
      */
     @Transactional(readOnly = true)
-    public void handleExistingUser(OAuth2AuthenticationToken token, HttpServletResponse response) {
+    public AuthTokenResponseDto handleExistingUser(OAuth2AuthenticationToken token, HttpServletResponse response) {
         OAuth2UserInfo oAuth2UserInfo = extractOAuth2UserInfo(token);
         User existUser = userRepository.findUserByProviderId(oAuth2UserInfo.getProviderId());
 
@@ -92,8 +92,9 @@ public class UserApplicationService {
         String refreshToken = jwtUtil.generateAccessOrRefreshToken(existUser.getId(), jwtUtil.getRefreshTokenExpirationTime());
 
         redisManager.saveRefreshToken(existUser.getId().toString(), refreshToken);
-        CookieUtil.setAuthCookies(response, accessToken, refreshToken, jwtUtil.getAccessTokenExpirationTime(), jwtUtil.getRefreshTokenExpirationTime());
+
         log.info("기존 사용자 처리 완료: {}", existUser.getId());
+        return new AuthTokenResponseDto(accessToken, refreshToken, jwtUtil.getAccessTokenExpirationTime(), jwtUtil.getRefreshTokenExpirationTime());
     }
 
     /**
@@ -121,7 +122,7 @@ public class UserApplicationService {
      * @param request       회원가입 요청 정보
      */
     @Transactional
-    public TokenResponseDto signupUser(String registerToken, SignUpRequestDto request) {
+    public AuthTokenResponseDto signupUser(String registerToken, SignUpRequestDto request) {
 
         if (registerToken == null) {
             throw new CustomException(AuthErrorStatus._EXPIRED_REGISTER_TOKEN);
@@ -158,7 +159,7 @@ public class UserApplicationService {
 
         redisManager.saveRefreshToken(savedUser.getId().toString(), refreshToken);
         log.info("회원가입 성공: {}", email);
-        return new TokenResponseDto(accessToken, refreshToken, jwtUtil.getAccessTokenExpirationTime(), jwtUtil.getRefreshTokenExpirationTime());
+        return new AuthTokenResponseDto(accessToken, refreshToken, jwtUtil.getAccessTokenExpirationTime(), jwtUtil.getRefreshTokenExpirationTime());
     }
 
     /**
@@ -249,7 +250,7 @@ public class UserApplicationService {
      * @param refreshToken 클라이언트로부터 받은 리프레시 토큰
      * @return 새로 생성된 Access Token과 Refresh Token
      */
-    public TokenResponseDto reIssueToken(String refreshToken) {
+    public AuthTokenResponseDto reIssueToken(String refreshToken) {
         if (refreshToken == null) {
             throw new CustomException(AuthErrorStatus._EXPIRED_REFRESH_TOKEN);
         }
@@ -259,6 +260,6 @@ public class UserApplicationService {
         String newRefreshToken = jwtUtil.generateAccessOrRefreshToken(userId, jwtUtil.getRefreshTokenExpirationTime());
 
         redisManager.saveRefreshToken(userId.toString(), newRefreshToken);
-        return new TokenResponseDto(newAccessToken, newRefreshToken, jwtUtil.getAccessTokenExpirationTime(), jwtUtil.getRefreshTokenExpirationTime());
+        return new AuthTokenResponseDto(newAccessToken, newRefreshToken, jwtUtil.getAccessTokenExpirationTime(), jwtUtil.getRefreshTokenExpirationTime());
     }
 }

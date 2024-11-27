@@ -2,7 +2,10 @@ package kusitms.backend.user.infra.handler;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import kusitms.backend.global.util.CookieUtil;
 import kusitms.backend.user.application.UserApplicationService;
+import kusitms.backend.user.application.dto.response.AuthTokenResponseDto;
+import kusitms.backend.user.application.dto.response.RegisterTokenResponseDto;
 import kusitms.backend.user.infra.jwt.JWTUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,12 +38,15 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
         // 신규 사용자 처리
         if (userApplicationService.isNewUser(token)) {
-            userApplicationService.handleNewUser(token, response);
+            RegisterTokenResponseDto registerTokenResponseDto = userApplicationService.handleNewUser(token, response);
+            CookieUtil.setRegisterCookies(response, registerTokenResponseDto.registerToken(), registerTokenResponseDto.registerTokenExpiration());
             getRedirectStrategy().sendRedirect(request, response, jwtUtil.getRedirectOnboardingUrl());
         }
         // 기존 사용자 처리
         else {
-            userApplicationService.handleExistingUser(token, response);
+            AuthTokenResponseDto authTokenResponseDto = userApplicationService.handleExistingUser(token, response);
+            CookieUtil.setAuthCookies(response, authTokenResponseDto.accessToken(), authTokenResponseDto.refreshToken(),
+                    authTokenResponseDto.accessTokenExpiration(), authTokenResponseDto.refreshTokenExpiration());
             getRedirectStrategy().sendRedirect(request, response, jwtUtil.getRedirectBaseUrl());
         }
     }
