@@ -1,4 +1,4 @@
-package kusitms.backend.stadium;
+package kusitms.backend.stadium.presentation;
 
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
@@ -9,7 +9,6 @@ import kusitms.backend.result.domain.value.ReferencesGroup;
 import kusitms.backend.stadium.application.StadiumApplicationService;
 import kusitms.backend.stadium.application.dto.response.GetStadiumInfosResponseDto;
 import kusitms.backend.stadium.application.dto.response.GetZoneGuideResponseDto;
-import kusitms.backend.stadium.presentation.StadiumController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

@@ -1,4 +1,4 @@
-package kusitms.backend.stadium;
+package kusitms.backend.stadium.presentation;
 
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
@@ -8,7 +8,6 @@ import kusitms.backend.stadium.application.FoodApplicationService;
 import kusitms.backend.stadium.application.dto.response.GetFoodsResponseDto;
 import kusitms.backend.stadium.domain.enums.Boundary;
 import kusitms.backend.stadium.domain.enums.Course;
-import kusitms.backend.stadium.presentation.FoodController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

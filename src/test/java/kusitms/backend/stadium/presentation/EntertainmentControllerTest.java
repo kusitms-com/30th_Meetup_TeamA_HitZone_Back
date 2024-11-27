@@ -1,4 +1,4 @@
-package kusitms.backend.stadium;
+package kusitms.backend.stadium.presentation;
 
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
@@ -7,7 +7,6 @@ import kusitms.backend.configuration.ControllerTestConfig;
 import kusitms.backend.stadium.application.EntertainmentApplicationService;
 import kusitms.backend.stadium.application.dto.response.GetEntertainmentsResponseDto;
 import kusitms.backend.stadium.domain.enums.Boundary;
-import kusitms.backend.stadium.presentation.EntertainmentController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
