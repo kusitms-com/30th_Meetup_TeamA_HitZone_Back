@@ -35,8 +35,10 @@ public enum ErrorStatus implements BaseErrorCode {
     _RESOURCE_NOT_FOUND(HttpStatus.NOT_FOUND, "COMMON-003", "요청한 리소스를 찾을 수 없습니다."),
 
     // Cookie Errors
-    _MISSING_TOKEN_IN_COOKIE(HttpStatus.UNAUTHORIZED, "COOKIE-001", "쿠키에 토큰이 존재하지 않습니다.")
-    ;
+    _MISSING_TOKEN_IN_COOKIE(HttpStatus.UNAUTHORIZED, "COOKIE-001", "쿠키에 토큰이 존재하지 않습니다."),
+
+    // Format Errors
+    _FAILED_FORMAT_PHONE_NUMBER(HttpStatus.BAD_REQUEST, "FORMAT-001", "잘못된 휴대폰 번호 형식입니다. 010-XXXX-XXXX 형식으로 입력해주세요.");
 
     private final HttpStatus httpStatus;
     private final String code;

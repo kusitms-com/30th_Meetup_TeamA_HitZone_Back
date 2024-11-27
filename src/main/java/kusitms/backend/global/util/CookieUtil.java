@@ -27,6 +27,17 @@ public class CookieUtil {
     }
 
     /**
+     * 유저 온보딩을 위한 쿠키를 설정합니다 (Register Token, Expiration Time).
+     *
+     * @param response          HTTP 응답 객체
+     * @param registerToken       레지스터 토큰
+     * @param registerTokenExpiry 레지스터 토큰 만료 시간 (밀리초)
+     */
+    public static void setRegisterCookies(HttpServletResponse response, String registerToken, long registerTokenExpiry) {
+        setCookie(response, "registerToken", registerToken, (int) registerTokenExpiry / 1000);
+    }
+
+    /**
      * HTTP-Only 쿠키를 설정합니다.
      *
      * @param response HTTP 응답 객체
