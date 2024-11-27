@@ -1,4 +1,4 @@
-package kusitms.backend.chatbot;
+package kusitms.backend.chatbot.presentation;
 
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
@@ -6,7 +6,6 @@ import com.epages.restdocs.apispec.Schema;
 import kusitms.backend.chatbot.application.dto.response.GetClovaChatbotAnswerResponseDto;
 import kusitms.backend.chatbot.application.dto.response.GetGuideChatbotAnswerResponseDto;
 import kusitms.backend.chatbot.application.service.ChatbotApplicationService;
-import kusitms.backend.chatbot.presentation.ChatbotController;
 import kusitms.backend.configuration.ControllerTestConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
