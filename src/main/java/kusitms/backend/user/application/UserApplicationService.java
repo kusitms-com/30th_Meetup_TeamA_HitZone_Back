@@ -1,23 +1,20 @@
 package kusitms.backend.user.application;
 
 import jakarta.servlet.http.HttpServletResponse;
-import kusitms.backend.auth.dto.response.GoogleUserInfo;
-import kusitms.backend.auth.dto.response.KakaoUserInfo;
-import kusitms.backend.auth.dto.response.NaverUserInfo;
-import kusitms.backend.auth.dto.response.OAuth2UserInfo;
-import kusitms.backend.auth.jwt.JWTUtil;
-import kusitms.backend.auth.status.AuthErrorStatus;
 import kusitms.backend.global.exception.CustomException;
 import kusitms.backend.global.redis.DistributedLockManager;
 import kusitms.backend.global.redis.RedisManager;
-import kusitms.backend.global.util.CookieUtil;
-import kusitms.backend.user.domain.entity.User;
+import kusitms.backend.user.application.dto.request.CheckNicknameRequestDto;
+import kusitms.backend.user.application.dto.request.SendAuthCodeRequestDto;
+import kusitms.backend.user.application.dto.request.SignUpRequestDto;
+import kusitms.backend.user.application.dto.request.VerifyAuthCodeRequestDto;
+import kusitms.backend.user.application.dto.response.*;
+import kusitms.backend.user.domain.enums.ProviderStatusType;
+import kusitms.backend.user.domain.model.User;
 import kusitms.backend.user.domain.repository.UserRepository;
-import kusitms.backend.user.dto.request.CheckNicknameRequestDto;
-import kusitms.backend.user.dto.request.SendAuthCodeRequestDto;
-import kusitms.backend.user.dto.request.SignUpRequestDto;
-import kusitms.backend.user.dto.request.VerifyAuthCodeRequestDto;
-import kusitms.backend.user.dto.response.UserInfoResponseDto;
+import kusitms.backend.user.infra.jwt.JWTUtil;
+import kusitms.backend.user.infra.sms.SmsManager;
+import kusitms.backend.user.status.AuthErrorStatus;
 import kusitms.backend.user.status.UserErrorStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,22 +28,24 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class UserApplicationService {
+
     private final UserRepository userRepository;
     private final JWTUtil jwtUtil;
-    private final SmsService smsService;
+    private final SmsManager smsManager;
     private final RedisManager redisManager;
     private final DistributedLockManager distributedLockManager;
-    
-    @Transactional(readOnly = true)
-    public void validateUserExistsById(Long userId){
-        userRepository.findById(userId)
-                .orElseThrow(() -> new CustomException(UserErrorStatus._NOT_FOUND_USER));
-        log.info("유저 정보 조회 성공");
-    }
-
-
 
     private static final long LOCK_TIMEOUT = 5000; // 5초
+
+    /**
+     * 유저 ID를 통해 DB에 저장된 유저인지 확인한다.
+     * @param userId 유저 고유 ID
+     */
+    @Transactional(readOnly = true)
+    public void validateUserExistsById(Long userId){
+        userRepository.findUserById(userId);
+        log.info("유저 정보 조회 성공");
+    }
 
     /**
      * OAuth2 사용자 정보 추출 및 신규 여부 확인.
@@ -54,9 +53,10 @@ public class UserApplicationService {
      * @param token OAuth2 인증 토큰
      * @return 신규 사용자 여부
      */
+    @Transactional(readOnly = true)
     public boolean isNewUser(OAuth2AuthenticationToken token) {
         OAuth2UserInfo oAuth2UserInfo = extractOAuth2UserInfo(token);
-        return userRepository.findByProviderId(oAuth2UserInfo.getProviderId()) == null;
+        return userRepository.findUserByProviderId(oAuth2UserInfo.getProviderId()) == null;
     }
 
     /**
@@ -65,15 +65,16 @@ public class UserApplicationService {
      * @param token    OAuth2 인증 토큰
      * @param response HTTP 응답 객체
      */
-    public void handleNewUser(OAuth2AuthenticationToken token, HttpServletResponse response) {
+    public RegisterTokenResponseDto handleNewUser(OAuth2AuthenticationToken token, HttpServletResponse response) {
         OAuth2UserInfo oAuth2UserInfo = extractOAuth2UserInfo(token);
         String registerToken = jwtUtil.generateRegisterToken(
                 oAuth2UserInfo.getProvider(),
                 oAuth2UserInfo.getProviderId(),
                 oAuth2UserInfo.getEmail()
         );
-        CookieUtil.setCookie(response, "registerToken", registerToken, (int) jwtUtil.getRegisterTokenExpirationTime() / 1000);
+
         log.info("신규 사용자 처리 완료: {}", oAuth2UserInfo.getEmail());
+        return new RegisterTokenResponseDto(registerToken, jwtUtil.getRegisterTokenExpirationTime());
     }
 
     /**
@@ -82,16 +83,18 @@ public class UserApplicationService {
      * @param token    OAuth2 인증 토큰
      * @param response HTTP 응답 객체
      */
-    public void handleExistingUser(OAuth2AuthenticationToken token, HttpServletResponse response) {
+    @Transactional(readOnly = true)
+    public AuthTokenResponseDto handleExistingUser(OAuth2AuthenticationToken token, HttpServletResponse response) {
         OAuth2UserInfo oAuth2UserInfo = extractOAuth2UserInfo(token);
-        User existUser = userRepository.findByProviderId(oAuth2UserInfo.getProviderId());
+        User existUser = userRepository.findUserByProviderId(oAuth2UserInfo.getProviderId());
 
         String accessToken = jwtUtil.generateAccessOrRefreshToken(existUser.getId(), jwtUtil.getAccessTokenExpirationTime());
         String refreshToken = jwtUtil.generateAccessOrRefreshToken(existUser.getId(), jwtUtil.getRefreshTokenExpirationTime());
 
         redisManager.saveRefreshToken(existUser.getId().toString(), refreshToken);
-        CookieUtil.setAuthCookies(response, accessToken, refreshToken, jwtUtil.getAccessTokenExpirationTime(), jwtUtil.getRefreshTokenExpirationTime());
+
         log.info("기존 사용자 처리 완료: {}", existUser.getId());
+        return new AuthTokenResponseDto(accessToken, refreshToken, jwtUtil.getAccessTokenExpirationTime(), jwtUtil.getRefreshTokenExpirationTime());
     }
 
     /**
@@ -118,9 +121,9 @@ public class UserApplicationService {
      * @param registerToken 회원가입 토큰
      * @param request       회원가입 요청 정보
      */
-
     @Transactional
-    public void signupUser(String registerToken, SignUpRequestDto request) {
+    public AuthTokenResponseDto signupUser(String registerToken, SignUpRequestDto request) {
+
         if (registerToken == null) {
             throw new CustomException(AuthErrorStatus._EXPIRED_REGISTER_TOKEN);
         }
@@ -142,15 +145,21 @@ public class UserApplicationService {
             }
         }*/
 
-        userRepository.save(
-                SignUpRequestDto.toEntity(
-                        provider,
-                        providerId,
-                        email,
-                        request.nickname()
-                )
+        User user = User.toDomain(
+                null,
+                ProviderStatusType.of(provider),
+                providerId,
+                email,
+                request.nickname()
         );
+
+        User savedUser = userRepository.saveUser(user);
+        String accessToken = jwtUtil.generateAccessOrRefreshToken(savedUser.getId(), jwtUtil.getAccessTokenExpirationTime());
+        String refreshToken = jwtUtil.generateAccessOrRefreshToken(savedUser.getId(), jwtUtil.getRefreshTokenExpirationTime());
+
+        redisManager.saveRefreshToken(savedUser.getId().toString(), refreshToken);
         log.info("회원가입 성공: {}", email);
+        return new AuthTokenResponseDto(accessToken, refreshToken, jwtUtil.getAccessTokenExpirationTime(), jwtUtil.getRefreshTokenExpirationTime());
     }
 
     /**
@@ -162,8 +171,7 @@ public class UserApplicationService {
     @Transactional(readOnly = true)
     public UserInfoResponseDto getUserInfo(String accessToken) {
         Long userId = jwtUtil.getUserIdFromToken(accessToken);
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new CustomException(UserErrorStatus._NOT_FOUND_USER));
+        User user = userRepository.findUserById(userId);
         log.info("사용자 정보 조회 성공: {}", userId);
         return UserInfoResponseDto.from(user);
     }
@@ -176,7 +184,7 @@ public class UserApplicationService {
     public void sendAuthCode(SendAuthCodeRequestDto request) {
         String authCode = generateAuthCode();
         redisManager.savePhoneVerificationCode(request.phoneNumber(), authCode);
-        smsService.sendSms(request.phoneNumber(), "히트존 인증 코드 번호 : " + authCode);
+        smsManager.sendSms(request.phoneNumber(), "히트존 인증 코드 번호 : " + authCode);
         log.info("인증 코드 발송 완료: {}", request.phoneNumber());
     }
 
@@ -224,7 +232,7 @@ public class UserApplicationService {
 
         try {
             // 2. 닉네임 중복 확인
-            User user = userRepository.findByNickname(nickname);
+            User user = userRepository.findUserByNickname(nickname);
             if (user != null) {
                 throw new CustomException(UserErrorStatus._DUPLICATED_NICKNAME);
             }
@@ -234,5 +242,24 @@ public class UserApplicationService {
             // 3. 락 해제
             distributedLockManager.releaseLock(lockKey);
         }
+    }
+
+    /**
+     * Refresh Token 검증 및 새로운 토큰 발급.
+     *
+     * @param refreshToken 클라이언트로부터 받은 리프레시 토큰
+     * @return 새로 생성된 Access Token과 Refresh Token
+     */
+    public AuthTokenResponseDto reIssueToken(String refreshToken) {
+        if (refreshToken == null) {
+            throw new CustomException(AuthErrorStatus._EXPIRED_REFRESH_TOKEN);
+        }
+
+        Long userId = redisManager.validateAndExtractUserId(refreshToken);
+        String newAccessToken = jwtUtil.generateAccessOrRefreshToken(userId, jwtUtil.getAccessTokenExpirationTime());
+        String newRefreshToken = jwtUtil.generateAccessOrRefreshToken(userId, jwtUtil.getRefreshTokenExpirationTime());
+
+        redisManager.saveRefreshToken(userId.toString(), newRefreshToken);
+        return new AuthTokenResponseDto(newAccessToken, newRefreshToken, jwtUtil.getAccessTokenExpirationTime(), jwtUtil.getRefreshTokenExpirationTime());
     }
 }

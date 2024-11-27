@@ -1,4 +1,4 @@
-package kusitms.backend.global.status;
+package kusitms.backend.user.status;
 
 import kusitms.backend.global.code.BaseCode;
 import kusitms.backend.global.dto.ReasonDto;
@@ -8,10 +8,9 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @AllArgsConstructor
-public enum SuccessStatus implements BaseCode {
-    // Global
-    _OK(HttpStatus.OK, "200", "성공입니다."),
-    _CREATED(HttpStatus.CREATED, "201", "생성에 성공했습니다."),
+public enum AuthSuccessStatus implements BaseCode {
+
+    _OK_RE_ISSUE_TOKEN(HttpStatus.OK, "200", "토큰 재발급에 성공하였습니다."),
     ;
 
     private final HttpStatus httpStatus;
