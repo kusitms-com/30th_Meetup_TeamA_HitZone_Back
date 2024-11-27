@@ -20,20 +20,26 @@ public enum BaseballGuideAnswer implements GuideAnswer {
                     • 노게임이 선언된 경기는 그 시즌 안에 해당 경기가 다시 편성됩니다. 이때 경기는 처음부터 다시 진행돼요.
 
                     3. 우천에 의한 경기 연기
-                    • 비가 내리기 시작하더라도 심판이 경기를 일시 중단하고 기다리다가, 비가 그치거나 그라운드 상태가 회복되면 경기를 재개할 수도 있어요. 이때 경기가 30분 이상 지연될 수 있어요."""
-            , null),
+                    • 비가 내리기 시작하더라도 심판이 경기를 일시 중단하고 기다리다가, 비가 그치거나 그라운드 상태가 회복되면 경기를 재개할 수도 있어요. 이때 경기가 30분 이상 지연될 수 있어요.""",
+            null,
+            null,
+            null),
 
     Q2(2, null,
             """
                     야구 경기의 시간은 평균 3시간입니다.
                     경기 시작 시간은 평일에는 오후 6시 30분, 주말이나 공휴일에는 상황에 따라 오후 2시와 오후 5시 시작으로 나뉘어져요!
                     야구에는 쉬는 시간과 같이 느껴지는 ‘클리닝 타임’이 있어요! 5번의 공격과 5번의 수비가 끝난 ‘5회 말’에 짧은 휴식 시간을 갖습니다.
-                    선수들도 몸을 풀고, 경기장도 재정비 시간을 가집니다! 이 시간을 활용하여 먹거리를 사오거나, 화장실을 다녀오는 것을 추천 드려요!"""
-            , null)
+                    선수들도 몸을 풀고, 경기장도 재정비 시간을 가집니다! 이 시간을 활용하여 먹거리를 사오거나, 화장실을 다녀오는 것을 추천 드려요!""",
+            null,
+            null,
+            null)
     ;
 
     private final int id;
     private final String stadiumName;
     private final String answer;
     private final String imgUrl;
+    private final String linkName;
+    private final String link;
 }

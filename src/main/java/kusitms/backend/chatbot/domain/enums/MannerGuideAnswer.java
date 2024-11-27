@@ -20,6 +20,8 @@ public enum MannerGuideAnswer implements GuideAnswer {
                     ⚾️ 파울볼을 주의하세요!
                     • 야구장에서는 파울볼이 관중석으로 날아오는 일이 자주 발생해요! 경기 중에는 항상 경기에 집중하고, 파울볼 경고 방송에 귀를 기울여야 해요!
                     • 위험한 상황이 생기면 스태프나 주변 관중이 주의를 환기할 수 있으니 경계를 늦추지 않는 것이 좋습니다.""",
+            null,
+            null,
             null)
     ;
 
@@ -27,4 +29,6 @@ public enum MannerGuideAnswer implements GuideAnswer {
     private final String stadiumName;
     private final String answer;
     private final String imgUrl;
+    private final String linkName;
+    private final String link;
 }
