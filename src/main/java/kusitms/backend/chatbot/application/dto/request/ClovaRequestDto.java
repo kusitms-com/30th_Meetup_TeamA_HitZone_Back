@@ -1,4 +1,4 @@
-package kusitms.backend.chatbot.dto.request;
+package kusitms.backend.chatbot.application.dto.request;
 
 import java.util.ArrayList;
 import java.util.List;

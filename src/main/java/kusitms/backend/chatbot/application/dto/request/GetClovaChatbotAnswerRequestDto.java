@@ -1,4 +1,4 @@
-package kusitms.backend.chatbot.dto.request;
+package kusitms.backend.chatbot.application.dto.request;
 
 
 import jakarta.validation.constraints.NotBlank;

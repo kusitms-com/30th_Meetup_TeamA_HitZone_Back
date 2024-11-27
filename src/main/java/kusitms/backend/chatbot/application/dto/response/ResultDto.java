@@ -1,6 +1,6 @@
-package kusitms.backend.chatbot.dto.response;
+package kusitms.backend.chatbot.application.dto.response;
 
-import kusitms.backend.chatbot.dto.request.MessageDto;
+import kusitms.backend.chatbot.application.dto.request.MessageDto;
 
 import java.util.List;
 
