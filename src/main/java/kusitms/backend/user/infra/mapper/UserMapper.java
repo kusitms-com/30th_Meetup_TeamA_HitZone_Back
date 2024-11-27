@@ -6,11 +6,6 @@ import kusitms.backend.user.infra.jpa.entity.UserEntity;
 public class UserMapper {
 
     public static User toDomain(UserEntity userEntity) {
-
-        if (userEntity == null) {
-            return null;
-        }
-
         return User.toDomain(
                 userEntity.getId(),
                 userEntity.getProvider(),

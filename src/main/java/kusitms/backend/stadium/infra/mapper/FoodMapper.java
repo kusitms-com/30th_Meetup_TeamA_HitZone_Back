@@ -6,11 +6,6 @@ import kusitms.backend.stadium.infra.jpa.entity.FoodEntity;
 public class FoodMapper {
 
     public static Food toDomain(FoodEntity foodEntity) {
-
-        if (foodEntity == null) {
-            return null;
-        }
-
         return Food.toDomain(
                 foodEntity.getId(),
                 foodEntity.getImgUrl(),

@@ -27,7 +27,7 @@ public class UserController {
      * 레지스터 토큰에서 추출한 정보들과 닉네임으로 회원가입을 진행한다.
      * @param registerToken 쿠키로부터 받은 레지스터 토큰
      * @param request 닉네임
-     * @return void
+     * @return 어세스 토큰, 리프레시 토큰, 어세스 토큰 만료시간, 리프레시 토큰 만료시간
      */
     @PostMapping("/signup")
     public ResponseEntity<ApiResponse<TokenResponseDto>> signupUser(

@@ -6,11 +6,6 @@ import kusitms.backend.result.infra.jpa.entity.ZoneEntity;
 public class ZoneMapper {
 
     public static Zone toDomain(ZoneEntity zoneEntity) {
-
-        if (zoneEntity == null) {
-            return null;
-        }
-
         return Zone.toDomain(
                 zoneEntity.getId(),
                 zoneEntity.getName(),

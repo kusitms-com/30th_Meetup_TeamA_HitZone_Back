@@ -26,12 +26,18 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User findUserByProviderId(String providerId) {
         UserEntity userEntity = userJpaRepository.findByProviderId(providerId);
+        if (userEntity == null) {
+            return null;
+        }
         return UserMapper.toDomain(userEntity);
     }
 
     @Override
     public User findUserByNickname(String nickname) {
         UserEntity userEntity = userJpaRepository.findByNickname(nickname);
+        if (userEntity == null) {
+            return null;
+        }
         return UserMapper.toDomain(userEntity);
     }
 

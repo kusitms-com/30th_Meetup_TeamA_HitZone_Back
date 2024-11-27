@@ -13,10 +13,6 @@ public class ResultMapper {
 
     public static Result toDomain(ResultEntity resultEntity) {
 
-        if (resultEntity == null) {
-            return null;
-        }
-
         Profile profile = ProfileMapper.toDomain(resultEntity.getProfileEntity());
         List<Zone> zones = resultEntity.getZoneEntities().stream()
                 .map(ZoneMapper::toDomain)

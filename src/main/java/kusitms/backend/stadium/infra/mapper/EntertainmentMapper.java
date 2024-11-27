@@ -7,11 +7,6 @@ import kusitms.backend.stadium.infra.jpa.entity.EntertainmentEntity;
 public class EntertainmentMapper {
 
     public static Entertainment toDomain(EntertainmentEntity entertainmentEntity) {
-
-        if (entertainmentEntity == null) {
-            return null;
-        }
-
         return Entertainment.toDomain(
                 entertainmentEntity.getId(),
                 entertainmentEntity.getImgUrl(),
