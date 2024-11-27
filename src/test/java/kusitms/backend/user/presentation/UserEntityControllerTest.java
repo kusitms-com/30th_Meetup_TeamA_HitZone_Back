@@ -1,4 +1,4 @@
-package kusitms.backend.user;
+package kusitms.backend.user.presentation;
 
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
@@ -10,7 +10,6 @@ import kusitms.backend.user.application.dto.request.CheckNicknameRequestDto;
 import kusitms.backend.user.application.dto.request.SignUpRequestDto;
 import kusitms.backend.user.application.dto.response.AuthTokenResponseDto;
 import kusitms.backend.user.application.dto.response.UserInfoResponseDto;
-import kusitms.backend.user.presentation.UserController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
