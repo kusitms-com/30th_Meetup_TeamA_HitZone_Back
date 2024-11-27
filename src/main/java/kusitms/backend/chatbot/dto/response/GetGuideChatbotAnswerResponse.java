@@ -1,10 +1,12 @@
 package kusitms.backend.chatbot.dto.response;
 
 public record GetGuideChatbotAnswerResponse(
-        String[] answers,
-        String imgUrl
+        String answer,
+        String imgUrl,
+        String linkName,
+        String link
 ) {
-    public static GetGuideChatbotAnswerResponse of(String[] answers, String imgUrl) {
-        return new GetGuideChatbotAnswerResponse(answers, imgUrl);
+    public static GetGuideChatbotAnswerResponse of(String answer, String imgUrl, String linkName, String link) {
+        return new GetGuideChatbotAnswerResponse(answer, imgUrl, linkName, link);
     }
 }

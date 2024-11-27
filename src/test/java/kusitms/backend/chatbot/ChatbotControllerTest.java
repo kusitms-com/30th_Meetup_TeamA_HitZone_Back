@@ -41,13 +41,14 @@ public class ChatbotControllerTest extends ControllerTestConfig {
     @DisplayName("가이드 챗봇 답변 조회")
     public void getGuideChatbotAnswer() throws Exception {
         // given
-        GetGuideChatbotAnswerResponse response = new GetGuideChatbotAnswerResponse(new String[]{
-                "각 구장에 위치한 굿즈샵에서 원하는 응원 도구를 구매할 수 있어요!",
-
-                "잠실 야구장의 경우, 지하철 2호선 '종합운동장역' 6번 출구 앞에 위치한 야구 용품샵 '유니크 스포츠'를 이용할 수 있어요! 홈팀인 엘지 트윈스와 두산 베어스의 굿즈 뿐만 아니라, 원정팀들의 굿즈도 있으니 한 번 방문해보세요!",
-
-                "종합운동장역을 나가기 전, 역사에 위치한 ‘라커디움파크 종합운동장역점’에서도 굿즈를 판매 중이에요!"
-        }, null);
+        GetGuideChatbotAnswerResponse response = new GetGuideChatbotAnswerResponse(
+                """
+                    각 구장에 위치한 굿즈샵에서 원하는 응원 도구를 구매할 수 있어요!
+                    잠실 야구장의 경우, 지하철 2호선 '종합운동장역' 6번 출구 앞에 위치한 야구 용품샵 '유니크 스포츠'를 이용할 수 있어요! 홈팀인 엘지 트윈스와 두산 베어스의 굿즈 뿐만 아니라, 원정팀들의 굿즈도 있으니 한 번 방문해보세요!
+                    종합운동장역을 나가기 전, 역사에 위치한 ‘라커디움파크 종합운동장역점’에서도 굿즈를 판매 중이에요!""",
+                null,
+                null,
+                null);
 
         Mockito.when(chatbotService.getGuideChatbotAnswer(anyString(), anyString(), anyInt()))
                 .thenReturn(response);
@@ -66,8 +67,13 @@ public class ChatbotControllerTest extends ControllerTestConfig {
                 .andExpect(jsonPath("$.isSuccess").value(true))
                 .andExpect(jsonPath("$.code").value("200"))
                 .andExpect(jsonPath("$.message").value("가이드 챗봇 답변을 가져오는 데 성공했습니다."))
-                .andExpect(jsonPath("$.payload.answers[0]").value("각 구장에 위치한 굿즈샵에서 원하는 응원 도구를 구매할 수 있어요!"))
+                .andExpect(jsonPath("$.payload.answer").value("""
+                    각 구장에 위치한 굿즈샵에서 원하는 응원 도구를 구매할 수 있어요!
+                    잠실 야구장의 경우, 지하철 2호선 '종합운동장역' 6번 출구 앞에 위치한 야구 용품샵 '유니크 스포츠'를 이용할 수 있어요! 홈팀인 엘지 트윈스와 두산 베어스의 굿즈 뿐만 아니라, 원정팀들의 굿즈도 있으니 한 번 방문해보세요!
+                    종합운동장역을 나가기 전, 역사에 위치한 ‘라커디움파크 종합운동장역점’에서도 굿즈를 판매 중이에요!"""))
                 .andExpect(jsonPath("$.payload.imgUrl").isEmpty())
+                .andExpect(jsonPath("$.payload.linkName").isEmpty())
+                .andExpect(jsonPath("$.payload.link").isEmpty())
 
                 // docs
                 .andDo(MockMvcRestDocumentationWrapper.document("chatbot/guide",
@@ -87,8 +93,10 @@ public class ChatbotControllerTest extends ControllerTestConfig {
                                                 fieldWithPath("code").type(JsonFieldType.STRING).description("응답 코드"),
                                                 fieldWithPath("message").type(JsonFieldType.STRING).description("응답 메시지"),
                                                 fieldWithPath("payload").type(JsonFieldType.OBJECT).description("응답 데이터"),
-                                                fieldWithPath("payload.answers").type(JsonFieldType.ARRAY).description("답변 목록"),
-                                                fieldWithPath("payload.imgUrl").type(JsonFieldType.STRING).description("이미지 URL").optional()
+                                                fieldWithPath("payload.answer").type(JsonFieldType.STRING).description("답변"),
+                                                fieldWithPath("payload.imgUrl").type(JsonFieldType.STRING).description("이미지 URL").optional(),
+                                                fieldWithPath("payload.linkName").type(JsonFieldType.STRING).description("링크 버튼 이름").optional(),
+                                                fieldWithPath("payload.link").type(JsonFieldType.STRING).description("링크 URL").optional()
                                         )
                                         .responseSchema(Schema.schema("GetGuideChatbotAnswerResponse"))
                                         .build()
