@@ -1,6 +1,6 @@
-package kusitms.backend.chatbot.infrastructure;
+package kusitms.backend.chatbot.domain.service;
 
-import kusitms.backend.chatbot.dto.request.ChatbotRequestDto;
+import kusitms.backend.chatbot.application.dto.request.ChatbotRequestDto;
 import reactor.core.publisher.Mono;
 
 public interface ChatbotApiClient {
