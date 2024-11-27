@@ -5,4 +5,6 @@ public interface GuideAnswer {
     String getStadiumName();
     String getAnswer();
     String getImgUrl();
+    String getLinkName();
+    String getLink();
 }
