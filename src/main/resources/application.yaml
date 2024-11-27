@@ -1,0 +1,116 @@
+server:
+  port: 8080
+twilio:
+  account_sid: ${TWILIO_ACCOUNT_SID}
+  auth_token: ${TWILIO_AUTH_TOKEN}
+  from_number: ${TWILIO_FROM_NUMBER}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+  show-actuator: true
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+        show_sql: true
+  datasource:
+    url: ${DATA_URL}
+    username: ${DATA_USERNAME}
+    password: ${DATA_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jwt:
+    secret: ${JWT_SECRET}
+    redirect:
+      onboarding: ${JWT_REDIRECT_ONBOARDING}
+      base: ${JWT_REDIRECT_BASE}
+    register-token:
+      expiration-time: ${REGISTER_TOKEN_EXPIRATION_TIME}    # 5 minute
+    access-token:
+      expiration-time: ${ACCESS_TOKEN_EXPIRATION_TIME}    # 1 hour
+    refresh-token:
+      expiration-time: ${REFRESH_TOKEN_EXPIRATION_TIME}  # 14 days
+
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-name: Kakao
+            client-id: ${KAKAO_CLIENT_ID}
+            client-secret: ${KAKAO_CLIENT_SECRET}
+            redirect-uri: ${KAKAO_REDIRECT_URI}
+            client-authentication-method: client_secret_post
+            authorization-grant-type: authorization_code
+            scope:
+              - profile_nickname
+              - account_email
+          google:
+            client-name: Google
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            redirect-uri: ${GOOGLE_REDIRECT_URI}
+            authorization-grant-type: authorization_code
+            scope:
+              - email
+              - profile
+          naver:
+            client-name: Naver
+            client-id: ${NAVER_CLIENT_ID}
+            client-secret: ${NAVER_CLIENT_SECRET}
+            redirect-uri: ${NAVER_REDIRECT_URI}
+            authorization-grant-type: authorization_code
+            scope:
+              - email
+              - profile
+        provider:
+          kakao:
+            authorization-uri: ${KAKAO_AUTHORIZATION_URI}
+            token-uri: ${KAKAO_TOKEN_URI}
+            user-info-uri: ${KAKAO_USER_INFO_URI}
+            user-name-attribute: ${KAKAO_USER_NAME_ATTRIBUTE}
+          naver:
+            authorization-uri: ${NAVER_AUTHORIZATION_URI}
+            token-uri: ${NAVER_TOKEN_URI}
+            user-info-uri: ${NAVER_USER_INFO_URI}
+            user-name-attribute: ${NAVER_USER_NAME_ATTRIBUTE}
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+  web:
+    resources:
+      static-locations: classpath:/static/
+
+clova:
+  api:
+    url: ${CLOVA_API_URL}
+    api-key: ${CLOVA_API_KEY}
+    api-gateway-key: ${CLOVA_API_GATEWAY_KEY}
+  prompt:
+    baseball: ${BASEBALL_PROMPT}
+
+cloud:
+  aws:
+    s3:
+      endpoint: ${S3_ENDPOINT}
+      chatbot-directory: ${S3_CHATBOT_DIRECTORY}
+      guide-directory: ${S3_GUIDE_DIRECTORY}
+      recommendation-directory: ${S3_RECOMMENDATION_DIRECTORY}
+    credentials:
+      access-key: ${S3_ACCESS_KEY}
+      secret-key: ${S3_SECRET_KEY}
+      bucket: ${S3_BUCKET}
+    region:
+      static: ${S3_REGION}
+      auto: false
+    stack:
+      auto: false
