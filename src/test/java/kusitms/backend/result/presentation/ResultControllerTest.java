@@ -1,4 +1,4 @@
-package kusitms.backend.result;
+package kusitms.backend.result.presentation;
 
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;

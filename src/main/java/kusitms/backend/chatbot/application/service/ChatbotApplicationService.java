@@ -77,7 +77,7 @@ public class ChatbotApplicationService {
                                 .filter(answer -> answer.getStadiumName() == null) // 기본 답변 찾기
                                 .findFirst()
                 )
-                .map(answer -> GetGuideChatbotAnswerResponseDto.of(answer.getAnswers(), answer.getImgUrl()))
+                .map(answer -> GetGuideChatbotAnswerResponseDto.of(answer.getAnswer(), answer.getImgUrl(), answer.getLinkName(), answer.getLink()))
                 .orElseThrow(() -> new CustomException(ChatbotErrorStatus._NOT_FOUND_GUIDE_CHATBOT_ANSWER)); // 답변 없을 때 예외
     }
 
