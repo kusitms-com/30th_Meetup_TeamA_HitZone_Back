@@ -83,7 +83,7 @@ public class FoodControllerTest extends ControllerTestConfig {
                                         .tag("Stadium")
                                         .description("해당 구장의 음식 목록을 조회한다.")
                                         .queryParameters(
-                                                parameterWithName("stadiumName").description("구장명 [예시 : 잠실종합운동장]"),
+                                                parameterWithName("stadiumName").description("구장명 [예시 : 잠실종합운동장 (잠실)]"),
                                                 parameterWithName("boundary").description("구장 영역(내부 or 외부) [예시 : 내부]"),
                                                 parameterWithName("course").description("구장 코스(식사 or 후식) - 내부일때는 꼭 입력해주세요 [예시 : 후식]").optional()
                                         )

@@ -75,7 +75,7 @@ public class EntertainmentControllerTest extends ControllerTestConfig {
                                         .tag("Stadium")
                                         .description("해당 구장의 즐길거리 목록을 조회한다.")
                                         .queryParameters(
-                                                parameterWithName("stadiumName").description("구장명 [예시 : 잠실종합운동장]"),
+                                                parameterWithName("stadiumName").description("구장명 [예시 : 잠실종합운동장 (잠실)]"),
                                                 parameterWithName("boundary").description("구장 영역 (내부 or 외부) [예시 : 내부]")
                                         )
                                         .responseFields(
