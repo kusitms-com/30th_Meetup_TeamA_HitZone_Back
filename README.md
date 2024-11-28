@@ -1,8 +1,8 @@
-## ⚾️ HitZone Backend
+# ⚾️ 나에게 가장 Fit한 Zone에서 야구를 즐겨보세요, HitZone❗️
 
-### 사용 스택 & 선정 이유
+![슬로건](https://github.com/user-attachments/assets/e28c1bf5-3e66-427d-bf96-00b43f6a363e)
 
-🛠 **Stacks**
+## 🛠 사용 스택 & 선정 이유
 
 - `Spring Boot 3.3.4`
 - `JDK 17`
@@ -17,20 +17,20 @@
 - `NCP Container Registry` : Docker Image를 관리하는데 사용하였습니다.
 - `Github Actions` : CICD 작업을 수행하는데 활용하였습니다.
 
-### 시스템 아키텍처
+## 🌐 시스템 아키텍처
 
 <img width="755" alt="히트존_아키텍처" src="https://github.com/user-attachments/assets/ea164722-083b-4f62-bcf3-a3a9f0c98172">
 
-### ERD
+## 🧱 ERD
 
 <img width="1162" alt="히트존_ERD" src="https://github.com/user-attachments/assets/68a9d4bb-efc1-4504-9b0a-fc21bd015150">
 
-### **Issue & PR**
+## ✅ Issue & PR
 
 - `Code Review & Approve` 룰 설정
     - 상대방이 `Approve` 올린 사람이 `Merge`
 
-### Branch
+## 🔀 Branch
 
 - 생성한 이슈에 따라서 브랜치 생성 `Ex) feature/#4/login`
 - `main branch` : 개발 최종 완료 시 merge
@@ -39,7 +39,7 @@
 - `hotfix branch` : 배포 이후 긴급 수정
 - `refactor branch` : 리팩토링 진행
 
-### **Commit Message**
+## 💬 Commit Message
 
 - 이슈 번호 붙여서 커밋 `Ex) #4 [feat] : 로그인 기능을 추가한다`
 - Body는 추가 설명 필요하면 사용
@@ -55,7 +55,7 @@
 | **rename** | 패키지 혹은 폴더명, 클래스명 수정 (단독으로 시행하였을 시) |
 | **remove** | 패키지 혹은 폴더, 클래스를 삭제하였을 때 (단독으로 시행하였을 시) |
 
-### Naming
+## 📛 Naming
 
 - **패키지명** : 한 단어 소문자 사용 `Ex) service`
 - **클래스명** : 파스칼 케이스 사용 `Ex) JwtUtil`
@@ -64,7 +64,7 @@
 - **상수명** : 대문자 사용 `Ex) EXPIRATION_TIME`
 - **컬럼명** : 스네이크 케이스 사용 `Ex) user_id`
 
-### Package
+## 📦 Package
 
 > DDD 방식을 사용하였습니다.
 
@@ -92,11 +92,11 @@
 - stadium
 - user
 
-### API Documentation
+## 📑 API Documentation
 
-[REST Docs + Swagger 📑](https://git.hitzone.store/swagger-ui/index.html#/Chatbot/chatbot%2Fguide_1)
+[REST Docs + Swagger API 문서](https://git.hitzone.store/swagger-ui/index.html#/Chatbot/chatbot%2Fguide_1)
 
-### API Response
+## 📩 API Response
 
 ```json
 {
@@ -118,11 +118,11 @@
 - `message` : 성공 메세지, 커스텀 가능
 - `payload` : 데이터가 들어가는 곳
 
-### 1차 리팩토링 진행
+## ♻️ 1차 리팩토링 진행
 
 [[A팀] 백엔드 파트 코드리뷰용 PR by bbbang105 · Pull Request #44 · KUSITMS-30th-TEAM-A/backend](https://github.com/KUSITMS-30th-TEAM-A/backend/pull/44)
 
-- 심사위원분께서 코드리뷰 해주신 코멘트를 기반으로 `refactor-v1` 브랜치에서 1차 리팩토링을 진행중입니다.
+- 심사위원분께서 코드리뷰 해주신 코멘트를 기반으로 `refactor-v1` 브랜치에서 1차 리팩토링을 완료하였습니다.
 
 <img width="866" alt="1" src="https://github.com/user-attachments/assets/5dfcda02-3f32-4886-8a91-3ce3ba348329">|<img width="866" alt="2" src="https://github.com/user-attachments/assets/078639ad-4868-4ac3-80e9-c4d9c052b81b">
 ---|---|
